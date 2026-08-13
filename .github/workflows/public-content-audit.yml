@@ -1,0 +1,78 @@
+name: Public content safety audit
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout public repository
+        uses: actions/checkout@v4
+
+      - name: Reject non-public file types and sensitive patterns
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import sys
+
+          root = Path('.')
+          blocked_suffixes = {
+              '.f', '.for', '.f90', '.f95', '.f03', '.f08',
+              '.py', '.c', '.cc', '.cpp', '.h', '.hpp',
+              '.exe', '.dll', '.lib', '.obj', '.pdb',
+              '.zip', '.7z', '.rar',
+              '.nc', '.sqlite', '.db', '.inp', '.dat', '.log', '.out',
+              '.csv', '.asc'
+          }
+
+          patterns = [
+              ('Windows absolute path', re.compile(r'\b[A-Za-z]:\\')),
+              ('private development branch', re.compile(r'\b(?:codex|autotest)/[A-Za-z0-9._/-]+', re.I)),
+              ('40-character Git SHA', re.compile(r'\b[0-9a-fA-F]{40}\b')),
+              ('explicit internal failure code', re.compile(r'\b(?:exit|failure|error)\s+code\s*[:=]?\s*\d{3,}\b', re.I)),
+          ]
+
+          findings = []
+          checked = 0
+
+          for path in root.rglob('*'):
+              if not path.is_file():
+                  continue
+              if any(part in {'.git', '.github'} for part in path.parts):
+                  continue
+
+              checked += 1
+              if path.suffix.lower() in blocked_suffixes:
+                  findings.append(f'{path}: blocked file type {path.suffix}')
+                  continue
+
+              if path.stat().st_size > 1_000_000:
+                  findings.append(f'{path}: file exceeds 1 MB public-information limit')
+                  continue
+
+              try:
+                  text = path.read_text(encoding='utf-8')
+              except UnicodeDecodeError:
+                  findings.append(f'{path}: non-UTF-8/binary content is not allowed')
+                  continue
+
+              for label, regex in patterns:
+                  if regex.search(text):
+                      findings.append(f'{path}: possible {label}')
+
+          if findings:
+              print('PUBLIC CONTENT SAFETY AUDIT FAILED')
+              for item in findings:
+                  print(' -', item)
+              sys.exit(1)
+
+          print(f'PUBLIC CONTENT SAFETY AUDIT PASSED: {checked} public files checked.')
+          PY
