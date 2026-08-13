@@ -11,7 +11,7 @@
   <link rel="canonical" href="https://youngteckhur.github.io/KDRUM-Public/">
   <style>
     :root { color-scheme: light dark; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; }
-    body { max-width: 980px; margin: 0 auto; padding: 32px 22px 70px; line-height: 1.65; }
+    body { max-width: 1180px; margin: 0 auto; padding: 32px 22px 70px; line-height: 1.65; }
     header { padding-bottom: 20px; border-bottom: 1px solid #9995; }
     h1 { font-size: 2.4rem; margin-bottom: .2rem; }
     h2 { margin-top: 2.2rem; }
@@ -22,9 +22,22 @@
     .status div { padding: 7px 0; border-bottom: 1px solid #9993; }
     .hero { margin: 24px 0 12px; }
     .hero img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid #9994; }
-    .hero figcaption { margin-top: 8px; font-size: .9rem; opacity: .8; }
+    .hero figcaption { margin-top: 8px; font-size: .9rem; opacity: .8; text-align: center; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; margin-top: 14px; }
+    .feature-card { border: 1px solid #9995; border-radius: 12px; padding: 16px; }
+    .feature-card h3 { margin: .05rem 0 .35rem; font-size: 1.02rem; }
+    .feature-card p { margin: .25rem 0; font-size: .94rem; }
+    .badge { font-size: .76rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; opacity: .78; }
     a { text-underline-offset: 3px; }
     footer { margin-top: 50px; padding-top: 18px; border-top: 1px solid #9995; font-size: .92rem; }
+    @media (max-width: 800px) {
+      .feature-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    }
+    @media (max-width: 560px) {
+      body { padding: 22px 14px 50px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .status { grid-template-columns: 1fr; }
+    }
   </style>
   <script type="application/ld+json">
   {
@@ -51,9 +64,51 @@
 </header>
 
 <figure class="hero">
-  <img src="assets/kdrum-hero-overview.jpg" alt="Conceptual overview of K-DRUM from distributed rainfall-runoff through river networks, bidirectional 1D-2D coupling, flood inundation, InputStudio, FloodViewer, and experimental estuary research.">
+  <img src="assets/kdrum-hero-overview.jpg" alt="Conceptual K-DRUM overview showing rainfall-runoff from a watershed through river routing, floodplain interaction, and estuary processes.">
   <figcaption>Conceptual overview for public introduction — not an actual simulation screenshot.</figcaption>
 </figure>
+
+<section>
+  <h2>Key capabilities</h2>
+  <p>The image above provides the overall basin-to-estuary concept. Detailed descriptions are kept as web text below so they remain readable on desktop and mobile screens.</p>
+  <div class="feature-grid">
+    <article class="feature-card">
+      <div class="badge">Established</div>
+      <h3>Distributed Rainfall-Runoff</h3>
+      <p>Grid-based rainfall, infiltration, evapotranspiration, surface and subsurface runoff, and kinematic routing.</p>
+    </article>
+    <article class="feature-card">
+      <div class="badge">Active development</div>
+      <h3>1D Dynamic-Wave River Network</h3>
+      <p>Unsteady-flow hydraulics for river networks, including branched and merged reaches.</p>
+    </article>
+    <article class="feature-card">
+      <div class="badge">Validated development</div>
+      <h3>Bidirectional 1D-2D Coupling</h3>
+      <p>Exchange of flow and water levels between 1D rivers and 2D floodplain domains.</p>
+    </article>
+    <article class="feature-card">
+      <div class="badge">Active development</div>
+      <h3>2D Flood Inundation</h3>
+      <p>Flood-depth and inundation-extent analysis over computational floodplain domains.</p>
+    </article>
+    <article class="feature-card">
+      <div class="badge">Active development</div>
+      <h3>K-DRUM InputStudio</h3>
+      <p>Project setup, geometry, time series, scenarios, quality checks, and model-input authoring.</p>
+    </article>
+    <article class="feature-card">
+      <div class="badge">Release candidate</div>
+      <h3>K-DRUM FloodViewer</h3>
+      <p>Visualization of spatial and time-varying hydrologic and hydraulic simulation results.</p>
+    </article>
+    <article class="feature-card">
+      <div class="badge">Experimental</div>
+      <h3>K-DRUM Estuary2DV</h3>
+      <p>Experimental longitudinal-vertical estuary hydrodynamics and salinity research.</p>
+    </article>
+  </div>
+</section>
 
 <section>
   <h2>Public information scope</h2>
