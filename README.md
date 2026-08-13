@@ -1,8 +1,12 @@
 # K-DRUM
 
+**Full name: K-water Grid-based Distributed Rainfall rUnoff Model**
+
 **K-DRUM is K-water's physically based, grid-based distributed hydrologic model for rainfall-runoff simulation and integrated watershed analysis.**
 
 K-DRUM은 K-water에서 개발해 온 물리적 기반의 격자형 분포형 강우-유출 모형입니다. 이 저장소는 K-DRUM의 공개 기술정보, 개발 상태, 연구 문헌과 비민감 정보를 제공하기 위한 공개 기술정보 저장소입니다.
+
+Public website: https://youngteckhur.github.io/KDRUM-Public/
 
 > **Public technical-information repository only.**  
 > This repository is not a substitute for K-water's official institutional information. K-water/MyWater should be treated as the authoritative source for institutional and official product information.  
@@ -67,6 +71,8 @@ This repository uses public maturity labels to distinguish established capabilit
 
 Public information is governed by [PUBLICATION_POLICY.md](PUBLICATION_POLICY.md). The public repository is intentionally **not** a mirror of private development repositories. A GitHub Actions safety audit checks public changes for blocked engineering file types and common leakage patterns before they are accepted as clean public information.
 
+Visual assets follow the same rule: only verified K-DRUM screenshots, independently created non-brand diagrams, QR codes that point to verified official URLs, and officially supplied institutional CI assets may be published. AI-generated or look-alike K-DRUM/K-water/MyWater brand symbols are not used.
+
 ## Public references
 
 A selected public bibliography is maintained in [PUBLICATIONS.md](PUBLICATIONS.md).
@@ -89,10 +95,11 @@ https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127
 
 ## Naming note
 
-Earlier publications have used more than one expanded English form for the K-DRUM acronym. This repository therefore uses **K-DRUM** as the canonical model name and avoids defining a new expanded form unless an authoritative institutional naming decision is made.
+This public site uses **K-water Grid-based Distributed Rainfall rUnoff Model** as the current canonical expansion of **K-DRUM**. Historical publications used several expanded English forms; their original titles and wording are preserved in the bibliography rather than silently rewritten.
 
 ---
 
 **Canonical model name:** K-DRUM  
+**Canonical expansion:** K-water Grid-based Distributed Rainfall rUnoff Model  
 **Development status:** Active development  
 **Public information baseline:** August 2026

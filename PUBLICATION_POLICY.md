@@ -14,6 +14,10 @@ Public content must answer **what K-DRUM is, what it has historically supported,
 - references already available in public academic or institutional sources
 - non-sensitive model-family and tool descriptions
 - public website metadata, sitemap, robots directives, and model-card information
+- verified screenshots deliberately approved for public use
+- independently created non-brand technical diagrams that do not imitate external logos or trademarks
+- QR codes that point only to verified public URLs
+- official institutional CI assets only when an authoritative original file and an appropriate use basis are available
 
 ## Never publish
 
@@ -28,6 +32,19 @@ Public content must answer **what K-DRUM is, what it has historically supported,
 - proprietary or restricted basin information
 - secrets, tokens, credentials, private keys, or environment configuration
 - unpublished numerical implementation details
+- AI-generated, reconstructed, or look-alike K-DRUM, K-water, MyWater, or other institutional brand symbols
+- third-party logos copied from the web without a verified official source and appropriate authorization or use basis
+
+## Visual-asset rule
+
+Public visual material must be traceable to one of these categories:
+
+1. **Verified K-DRUM screenshot** — captured from an actual K-DRUM tool or result and reviewed to ensure that it contains no private paths, restricted basin information, internal diagnostics, credentials, or unpublished implementation details.
+2. **Neutral technical diagram** — independently created for explanation, without fabricated brand marks or copied visual identity.
+3. **Official institutional asset** — supplied from an authoritative source and used only when the publication team has an appropriate basis to display it.
+4. **Verified QR code** — generated from a confirmed public URL and tested before publication.
+
+When provenance is uncertain, the visual asset is not published.
 
 ## Private-to-public control model
 
