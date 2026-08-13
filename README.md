@@ -6,8 +6,7 @@
 
 K-DRUM은 K-water에서 개발해 온 물리적 기반의 격자형 분포형 강우-유출 모형입니다. 이 저장소는 K-DRUM의 공개 기술정보, 개발 상태, 연구 문헌과 비민감 정보를 제공하기 위한 공개 기술정보 저장소입니다.
 
-Public website: https://youngteckhur.github.io/KDRUM-Public/  
-Korean page: https://youngteckhur.github.io/KDRUM-Public/ko/
+Public website: https://youngteckhur.github.io/KDRUM-Public/
 
 > **Public technical-information repository only.**  
 > This repository is not a substitute for K-water's official institutional information. K-water/MyWater should be treated as the authoritative source for institutional and official product information.  
