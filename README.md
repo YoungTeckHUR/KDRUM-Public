@@ -55,12 +55,17 @@ An **experimental** longitudinal-vertical (x-z) estuary hydrodynamics and salini
 
 ## Public status vocabulary
 
-This repository uses four maturity labels:
+This repository uses public maturity labels to distinguish established capability from work that remains under development:
 
 - **ESTABLISHED** — supported by the historical K-DRUM model family and published applications.
 - **VALIDATED DEVELOPMENT** — demonstrated in controlled development/regression testing, but not equivalent to a production certification.
 - **ACTIVE DEVELOPMENT** — implemented or actively being integrated, with verification still in progress.
+- **RELEASE CANDIDATE** — nearing a release target but still undergoing acceptance testing.
 - **EXPERIMENTAL** — research prototype or exploratory capability.
+
+## Publication safety
+
+Public information is governed by [PUBLICATION_POLICY.md](PUBLICATION_POLICY.md). The public repository is intentionally **not** a mirror of private development repositories. A GitHub Actions safety audit checks public changes for blocked engineering file types and common leakage patterns before they are accepted as clean public information.
 
 ## Public references
 
