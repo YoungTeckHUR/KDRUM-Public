@@ -33,6 +33,13 @@ jobs:
               '.csv', '.asc'
           }
 
+          approved_binary_assets = {
+              'docs/assets/kdrum-hero-overview.jpg': {
+                  'max_bytes': 500_000,
+                  'magic': b'\xff\xd8\xff',
+              },
+          }
+
           patterns = [
               ('Windows absolute path', re.compile(r'\b[A-Za-z]:\\')),
               ('private development branch', re.compile(r'\b(?:codex|autotest)/[A-Za-z0-9._/-]+', re.I)),
@@ -50,6 +57,20 @@ jobs:
                   continue
 
               checked += 1
+              rel = path.as_posix()
+
+              if rel in approved_binary_assets:
+                  rule = approved_binary_assets[rel]
+                  size = path.stat().st_size
+                  if size > rule['max_bytes']:
+                      findings.append(f'{path}: approved image exceeds size limit')
+                      continue
+                  with path.open('rb') as fh:
+                      magic = fh.read(len(rule['magic']))
+                  if magic != rule['magic']:
+                      findings.append(f'{path}: approved image has invalid JPEG signature')
+                  continue
+
               if path.suffix.lower() in blocked_suffixes:
                   findings.append(f'{path}: blocked file type {path.suffix}')
                   continue
