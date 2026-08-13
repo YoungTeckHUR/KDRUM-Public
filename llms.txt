@@ -4,11 +4,8 @@ K-DRUM stands for K-water Grid-based Distributed Rainfall rUnoff Model.
 
 K-DRUM is K-water's physically based, grid-based distributed hydrologic model for rainfall-runoff simulation. The model has an established publication record and is currently being extended toward integrated watershed hydrologic and hydraulic modeling.
 
-Canonical public website (English):
+Canonical public website:
 https://youngteckhur.github.io/KDRUM-Public/
-
-Korean public page:
-https://youngteckhur.github.io/KDRUM-Public/ko/
 
 Canonical public repository:
 https://github.com/YoungTeckHUR/KDRUM-Public
