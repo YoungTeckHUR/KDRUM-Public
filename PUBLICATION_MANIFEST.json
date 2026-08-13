@@ -1,0 +1,31 @@
+{
+  "repository_target": "YoungTeckHUR/KDRUM-Public",
+  "intended_visibility": "public",
+  "prepared_date": "2026-08-13",
+  "files": [
+    ".gitignore",
+    "CAPABILITIES.md",
+    "CHANGELOG_PUBLIC.md",
+    "DEVELOPMENT_STATUS.md",
+    "MODEL_CARD.md",
+    "PUBLICATIONS.md",
+    "PUBLICATION_MANIFEST.json",
+    "README.md",
+    "ROADMAP.md",
+    "docs/index.html",
+    "docs/llms.txt",
+    "docs/overview.md",
+    "docs/robots.txt",
+    "docs/sitemap.xml",
+    "llms.txt"
+  ],
+  "excluded_from_publication": [
+    "production source code",
+    "private validation datasets",
+    "internal diagnostics and failure logs",
+    "sensitive operation data",
+    "unpublished numerical/optimization implementation details",
+    "private Git branches and commit hashes",
+    "internal test-stage names and internal-only module identifiers"
+  ]
+}

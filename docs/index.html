@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>K-DRUM | Distributed Hydrologic and Hydraulic Modeling</title>
+  <meta name="description" content="Public technical information for K-DRUM, K-water's physically based grid-distributed rainfall-runoff model and its ongoing hydrologic-hydraulic development.">
+  <meta name="keywords" content="K-DRUM,KDRUM,K-water,distributed hydrologic model,rainfall-runoff,dynamic wave,1D-2D,flood inundation,hydraulic model,InputStudio,FloodViewer,Estuary2DV">
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+  <link rel="canonical" href="https://youngteckhur.github.io/KDRUM-Public/">
+  <style>
+    :root { color-scheme: light dark; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; }
+    body { max-width: 980px; margin: 0 auto; padding: 32px 22px 70px; line-height: 1.65; }
+    header { padding-bottom: 20px; border-bottom: 1px solid #9995; }
+    h1 { font-size: 2.4rem; margin-bottom: .2rem; }
+    h2 { margin-top: 2.2rem; }
+    .lead { font-size: 1.18rem; }
+    .note { padding: 14px 16px; border: 1px solid #9996; border-radius: 10px; }
+    .status { display: grid; grid-template-columns: minmax(220px,1fr) minmax(160px,.55fr); gap: 8px 18px; }
+    .status div { padding: 7px 0; border-bottom: 1px solid #9993; }
+    a { text-underline-offset: 3px; }
+    footer { margin-top: 50px; padding-top: 18px; border-top: 1px solid #9995; font-size: .92rem; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "K-DRUM Public Technical Information",
+    "description": "Public technical information for K-DRUM, K-water's physically based grid-distributed rainfall-runoff model and its ongoing hydrologic-hydraulic development.",
+    "dateModified": "2026-08-13",
+    "about": {
+      "@type": "Thing",
+      "name": "K-DRUM",
+      "alternateName": "KDRUM",
+      "description": "A physically based, grid-distributed hydrologic model developed by K-water and under active extension toward integrated hydrologic-hydraulic modeling."
+    },
+    "isPartOf": "https://github.com/YoungTeckHUR/KDRUM-Public"
+  }
+  </script>
+</head>
+<body>
+<header>
+  <h1>K-DRUM</h1>
+  <p class="lead"><strong>K-DRUM is K-water's physically based, grid-based distributed hydrologic model for rainfall-runoff simulation and integrated watershed analysis.</strong></p>
+  <p lang="ko">K-DRUM은 K-water에서 개발해 온 물리적 기반의 격자형 분포형 강우-유출 모형이며, 현재 유역 수문·수리 통합 해석 방향으로 확장 개발되고 있습니다.</p>
+</header>
+
+<section>
+  <h2>Public information scope</h2>
+  <p>This site is a public technical-information page for the current K-DRUM development context. It does not replace K-water's official institutional information; K-water/MyWater remains the authoritative source for institutional and official product information.</p>
+  <div class="note"><strong>Not published here:</strong> production source code, internal validation datasets, solver tuning details, development branches or commit identifiers, sensitive operational rules or data, failure diagnostics, proprietary basin inputs, and unpublished numerical implementation details.</div>
+</section>
+
+<section>
+  <h2>Established hydrologic background</h2>
+  <p>Published K-DRUM studies describe physically based grid-distributed rainfall-runoff simulation, spatial and radar rainfall, kinematic-wave routing, Green-Ampt infiltration, surface and subsurface runoff, long-term hydrology, snow-related processes, MPI parallelization, drought applications, and surface-water/groundwater coupling.</p>
+</section>
+
+<section>
+  <h2>Current development direction</h2>
+  <p>The current development program extends K-DRUM beyond its historical distributed rainfall-runoff role toward an integrated hydrologic and hydraulic modeling environment.</p>
+  <ul>
+    <li>1D dynamic-wave river-network hydraulics</li>
+    <li>branched and merged river networks</li>
+    <li>bidirectional 1D-2D river-floodplain coupling</li>
+    <li>2D flood-inundation analysis</li>
+    <li>hydraulic structures and reservoir-operation scenarios</li>
+    <li>high-resolution terrain, river alignment, and virtual channel-bed processing</li>
+    <li>NetCDF-centered integrated outputs and parallel computation</li>
+    <li>K-DRUM InputStudio project authoring</li>
+    <li>K-DRUM FloodViewer result visualization</li>
+    <li>experimental K-DRUM Estuary2DV hydrodynamics and salinity research</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Public maturity status</h2>
+  <div class="status">
+    <div>Distributed rainfall-runoff / kinematic routing</div><div><strong>Established</strong></div>
+    <div>MPI parallel-computation lineage</div><div><strong>Established</strong></div>
+    <div>1D dynamic-wave river networks</div><div><strong>Active development</strong></div>
+    <div>Bidirectional 1D-2D coupling</div><div><strong>Validated development</strong></div>
+    <div>2D flood-inundation analysis</div><div><strong>Active development</strong></div>
+    <div>ChannelBed high-resolution geometry</div><div><strong>Active development</strong></div>
+    <div>K-DRUM InputStudio</div><div><strong>Active development</strong></div>
+    <div>K-DRUM FloodViewer</div><div><strong>Release candidate</strong></div>
+    <div>K-DRUM Estuary2DV</div><div><strong>Experimental</strong></div>
+  </div>
+  <p>A development label is not equivalent to production certification.</p>
+</section>
+
+<section>
+  <h2>Public technical documents</h2>
+  <ul>
+    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/README.md">K-DRUM overview</a></li>
+    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md">Development status and maturity boundaries</a></li>
+    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/CAPABILITIES.md">Capabilities</a></li>
+    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/MODEL_CARD.md">Public model card</a></li>
+    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md">Selected public references</a></li>
+    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/ROADMAP.md">Public roadmap</a></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Official and research context</h2>
+  <p>K-DRUM is included in K-water's MyWater K-Series technical software context. The selected bibliography connects this public technical-information site to the established K-DRUM research record.</p>
+  <ul>
+    <li><a href="https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127">K-water MyWater K-Series</a></li>
+    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md">Selected K-DRUM publications</a></li>
+  </ul>
+</section>
+
+<footer>
+  <strong>Canonical model name:</strong> K-DRUM · <strong>Public information baseline:</strong> August 2026<br>
+  Historical publications have used more than one expanded English form of the K-DRUM acronym; this site therefore uses K-DRUM as the canonical model name.
+</footer>
+</body>
+</html>

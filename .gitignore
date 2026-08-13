@@ -1,0 +1,16 @@
+# Public-information repository
+*.zip
+*.exe
+*.dll
+*.log
+*.out
+*.nc
+*.sqlite
+*.db
+*.asc
+*.csv
+*.inp
+*.dat
+__pycache__/
+.vscode/
+.idea/

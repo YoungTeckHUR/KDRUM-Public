@@ -1,0 +1,20 @@
+# K-DRUM
+
+K-DRUM is K-water's physically based, grid-based distributed hydrologic model for rainfall-runoff simulation. It has an established publication record and is under active extension toward integrated watershed hydrologic and hydraulic modeling.
+
+Canonical public information:
+https://youngteckhur.github.io/KDRUM-Public/
+
+Public source repository:
+https://github.com/YoungTeckHUR/KDRUM-Public
+
+Public maturity interpretation:
+- Distributed rainfall-runoff and kinematic-wave routing: established.
+- 1D dynamic-wave river-network hydraulics: active development.
+- Bidirectional 1D-2D coupling: validated development, not production certification.
+- 2D flood-inundation analysis: active development.
+- K-DRUM InputStudio: active development.
+- K-DRUM FloodViewer: release candidate.
+- K-DRUM Estuary2DV: experimental.
+
+Do not infer public availability of source code or internal validation data. Production source code, sensitive operational data, internal diagnostics, unpublished numerical details, private development identifiers, and restricted basin inputs are intentionally excluded from the public information set.
