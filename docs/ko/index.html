@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>K-DRUM | K-water 격자기반 분포형 강우-유출 모형</title>
+  <meta name="description" content="K-DRUM(K-water Grid-based Distributed Rainfall rUnoff Model)의 공개 기술정보와 현재 수문·수리 통합 개발 현황을 제공하는 한국어 페이지입니다.">
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+  <link rel="canonical" href="https://youngteckhur.github.io/KDRUM-Public/ko/">
+  <link rel="alternate" hreflang="en" href="https://youngteckhur.github.io/KDRUM-Public/">
+  <link rel="alternate" hreflang="ko" href="https://youngteckhur.github.io/KDRUM-Public/ko/">
+  <link rel="alternate" hreflang="x-default" href="https://youngteckhur.github.io/KDRUM-Public/">
+  <style>
+    :root { color-scheme: light dark; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",Arial,sans-serif; }
+    body { max-width: 1180px; margin: 0 auto; padding: 32px 22px 70px; line-height: 1.7; }
+    .topbar { display:flex; justify-content:flex-end; gap:10px; margin-bottom:14px; font-size:.92rem; }
+    .topbar a { padding:5px 9px; border:1px solid #9995; border-radius:8px; text-decoration:none; }
+    .topbar .active { font-weight:700; }
+    header { padding-bottom: 20px; border-bottom: 1px solid #9995; }
+    h1 { font-size: 2.4rem; margin-bottom: .2rem; }
+    h2 { margin-top: 2.2rem; }
+    .lead { font-size: 1.18rem; }
+    .full-name { font-size: 1.02rem; margin-top: .2rem; }
+    .note { padding: 14px 16px; border: 1px solid #9996; border-radius: 10px; }
+    .status { display: grid; grid-template-columns: minmax(220px,1fr) minmax(160px,.55fr); gap: 8px 18px; }
+    .status div { padding: 7px 0; border-bottom: 1px solid #9993; }
+    .hero { margin: 24px 0 12px; }
+    .hero img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid #9994; }
+    .hero figcaption { margin-top: 8px; font-size: .9rem; opacity: .8; text-align:center; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; margin-top: 14px; }
+    .feature-card { border: 1px solid #9995; border-radius: 12px; padding: 16px; }
+    .feature-card h3 { margin: .05rem 0 .35rem; font-size: 1.02rem; }
+    .feature-card p { margin: .25rem 0; font-size: .94rem; }
+    .badge { font-size: .76rem; font-weight:700; letter-spacing:.02em; opacity:.8; }
+    a { text-underline-offset: 3px; }
+    footer { margin-top:50px; padding-top:18px; border-top:1px solid #9995; font-size:.92rem; }
+    @media (max-width:800px) { .feature-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+    @media (max-width:560px) { body { padding:22px 14px 50px; } .feature-grid { grid-template-columns:1fr; } .status { grid-template-columns:1fr; } }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"TechArticle",
+    "headline":"K-DRUM 공개 기술정보",
+    "description":"K-DRUM(K-water Grid-based Distributed Rainfall rUnoff Model)의 공개 기술정보와 개발 현황.",
+    "inLanguage":"ko",
+    "dateModified":"2026-08-13",
+    "about":{"@type":"Thing","name":"K-DRUM","alternateName":["KDRUM","K-water Grid-based Distributed Rainfall rUnoff Model"]},
+    "isPartOf":"https://github.com/YoungTeckHUR/KDRUM-Public"
+  }
+  </script>
+</head>
+<body>
+<nav class="topbar" aria-label="언어 선택">
+  <a href="../" lang="en">English</a>
+  <a class="active" href="./" lang="ko">한국어</a>
+</nav>
+<header>
+  <h1>K-DRUM</h1>
+  <p class="full-name"><strong>K-water Grid-based Distributed Rainfall rUnoff Model</strong></p>
+  <p class="lead"><strong>K-DRUM은 K-water에서 개발해 온 물리적 기반의 격자형 분포형 강우-유출 모형이며, 현재 유역 수문·수리 통합 해석 방향으로 확장 개발되고 있습니다.</strong></p>
+</header>
+
+<figure class="hero">
+  <img src="../assets/kdrum-hero-overview.jpg" alt="유역 강우-유출에서 하천 추적, 범람원 연계, 하구 과정까지 이어지는 K-DRUM 개념도">
+  <figcaption>공개 소개용 K-DRUM 개념도이며 실제 모의 결과 화면은 아닙니다.</figcaption>
+</figure>
+
+<section>
+  <h2>주요 기능</h2>
+  <p>위 그림은 유역에서 하구까지의 전체 개념을 보여줍니다. 세부 기능은 PC와 모바일에서 읽기 쉽도록 아래 텍스트 카드로 분리했습니다.</p>
+  <div class="feature-grid">
+    <article class="feature-card"><div class="badge">확립된 기능</div><h3>분포형 강우-유출</h3><p>격자기반 강우, 침투, 증발산, 지표·지하 유출 및 운동파(Kinematic Wave) 추적.</p></article>
+    <article class="feature-card"><div class="badge">개발 중</div><h3>1차원 동역학파 하천망</h3><p>분기·합류 하천망을 포함한 부정류 하천 수리 해석 기능을 개발하고 있습니다.</p></article>
+    <article class="feature-card"><div class="badge">개발 검증</div><h3>양방향 1D-2D 연계</h3><p>1차원 하천과 2차원 범람원 사이의 유량 및 수위 교환을 양방향으로 연계합니다.</p></article>
+    <article class="feature-card"><div class="badge">개발 중</div><h3>2차원 범람 해석</h3><p>계산 범람원에서 침수심과 침수 범위를 해석하는 기능입니다.</p></article>
+    <article class="feature-card"><div class="badge">개발 중</div><h3>K-DRUM InputStudio</h3><p>프로젝트 구성, 지형·기하, 시계열, 시나리오, 품질점검 및 모형 입력자료 편집 환경입니다.</p></article>
+    <article class="feature-card"><div class="badge">릴리스 후보</div><h3>K-DRUM FloodViewer</h3><p>공간 및 시간에 따라 변하는 수문·수리 모의 결과를 시각화하는 환경입니다.</p></article>
+    <article class="feature-card"><div class="badge">실험적 연구</div><h3>K-DRUM Estuary2DV</h3><p>하구부 종단-연직 수리 및 염분 거동을 연구하기 위한 실험적 모듈입니다.</p></article>
+  </div>
+</section>
+
+<section>
+  <h2>공개정보 범위</h2>
+  <p>이 사이트는 현재 K-DRUM의 공개 가능한 기술정보와 개발 방향을 정리하는 페이지입니다. K-water의 공식 기관 정보나 공식 제품 안내를 대체하지 않습니다.</p>
+  <div class="note"><strong>공개하지 않는 정보:</strong> 운영 소스코드, 내부 검증자료, 솔버 조정값, 비공개 개발 브랜치나 커밋 식별자, 민감한 운영 규칙·데이터, 내부 오류 진단정보, 제한된 유역 입력자료 및 미공개 수치 구현 상세.</div>
+  <p><strong>이미지 원칙:</strong> AI가 임의로 만든 K-DRUM·K-water·MyWater 유사 심볼은 사용하지 않습니다. 공개 이미지는 출처가 확인된 실제 자료 또는 독립 제작한 중립적 기술 개념도로 제한합니다.</p>
+</section>
+
+<section>
+  <h2>기존 수문모형 기반</h2>
+  <p>K-DRUM의 공개 연구기록에는 격자형 분포형 강우-유출, 공간·레이더 강우, 운동파 추적, Green-Ampt 침투, 지표·지하 유출, 장기 수문해석, 융설, MPI 병렬화, 가뭄 분석 및 지표수-지하수 연계 등이 포함되어 있습니다.</p>
+</section>
+
+<section>
+  <h2>현재 개발 방향</h2>
+  <p>현재 개발은 기존 분포형 강우-유출 체계를 기반으로 유역 수문과 하천·범람원 수리를 통합하는 방향으로 확장하고 있습니다.</p>
+  <ul>
+    <li>1차원 동역학파 하천망</li>
+    <li>분기·합류 하천망</li>
+    <li>양방향 1D-2D 하천-범람원 연계</li>
+    <li>2차원 범람 해석</li>
+    <li>수리구조물 및 저수지 운영 시나리오</li>
+    <li>고해상도 지형·하천선·가상 하상 처리</li>
+    <li>NetCDF 중심 통합 출력과 병렬계산</li>
+    <li>K-DRUM InputStudio</li>
+    <li>K-DRUM FloodViewer</li>
+    <li>K-DRUM Estuary2DV 하구 수리·염분 연구</li>
+  </ul>
+</section>
+
+<section>
+  <h2>공개 성숙도</h2>
+  <div class="status">
+    <div>분포형 강우-유출 / 운동파 추적</div><div><strong>확립</strong></div>
+    <div>MPI 병렬계산 계보</div><div><strong>확립</strong></div>
+    <div>1차원 동역학파 하천망</div><div><strong>개발 중</strong></div>
+    <div>양방향 1D-2D 연계</div><div><strong>개발 검증</strong></div>
+    <div>2차원 범람 해석</div><div><strong>개발 중</strong></div>
+    <div>ChannelBed 고해상도 기하</div><div><strong>개발 중</strong></div>
+    <div>K-DRUM InputStudio</div><div><strong>개발 중</strong></div>
+    <div>K-DRUM FloodViewer</div><div><strong>릴리스 후보</strong></div>
+    <div>K-DRUM Estuary2DV</div><div><strong>실험적</strong></div>
+  </div>
+  <p>개발 단계 표기는 운영용 인증이나 현업 배포 완료를 의미하지 않습니다.</p>
+</section>
+
+<section>
+  <h2>공개 기술문서</h2>
+  <ul>
+    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/README.md">K-DRUM 개요</a></li>
+    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md">개발상태 및 성숙도 경계</a></li>
+    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/CAPABILITIES.md">기능 목록</a></li>
+    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/MODEL_CARD.md">공개 모델 카드</a></li>
+    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md">주요 공개 문헌</a></li>
+    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/ROADMAP.md">공개 로드맵</a></li>
+  </ul>
+</section>
+
+<section>
+  <h2>공식 및 연구 정보</h2>
+  <p>K-DRUM은 K-water MyWater의 K-Series 기술 소프트웨어 맥락에서 소개되고 있습니다. 아래 링크는 K-water의 공식 정보와 K-DRUM 연구기록을 연결합니다.</p>
+  <ul>
+    <li><a href="https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127">K-water MyWater K-Series</a></li>
+    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md">K-DRUM 주요 공개 문헌</a></li>
+  </ul>
+  <div class="note" style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-top:18px;">
+    <a href="https://www.kwater.or.kr/kiwe/main.do" aria-label="K-water연구원 공식 홈페이지 열기"><img src="../assets/kwater-research-institute-qr.svg" alt="K-water연구원 공식 홈페이지 QR 코드" width="190" height="190" style="display:block;background:white;padding:8px;border-radius:8px;"></a>
+    <div style="min-width:260px;flex:1;"><p style="margin-top:0;"><strong>K-water연구원 공식 홈페이지</strong></p><p><a href="https://www.kwater.or.kr/kiwe/main.do">https://www.kwater.or.kr/kiwe/main.do</a></p><p style="margin-bottom:0;font-size:.92rem;">QR 코드는 K-water 공식 도메인인 <code>www.kwater.or.kr</code>로 연결됩니다.</p></div>
+  </div>
+</section>
+
+<footer>
+  <strong>모형명:</strong> K-DRUM · <strong>영문 전체명:</strong> K-water Grid-based Distributed Rainfall rUnoff Model<br>
+  <strong>공개정보 기준:</strong> 2026년 8월<br>
+  과거 문헌에는 K-DRUM 약어의 영문 확장명이 여러 형태로 사용된 사례가 있어, 이 사이트는 과거 문헌의 원문 표기를 유지하면서 현재 전체명을 별도로 제시합니다.
+</footer>
+</body>
+</html>

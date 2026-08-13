@@ -9,9 +9,15 @@
   <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
   <meta name="google-site-verification" content="6bVorUx-y-X0T3QGsCc57JBgOV071zBwRFJbmPsaaNI" />
   <link rel="canonical" href="https://youngteckhur.github.io/KDRUM-Public/">
+  <link rel="alternate" hreflang="en" href="https://youngteckhur.github.io/KDRUM-Public/">
+  <link rel="alternate" hreflang="ko" href="https://youngteckhur.github.io/KDRUM-Public/ko/">
+  <link rel="alternate" hreflang="x-default" href="https://youngteckhur.github.io/KDRUM-Public/">
   <style>
     :root { color-scheme: light dark; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; }
     body { max-width: 1180px; margin: 0 auto; padding: 32px 22px 70px; line-height: 1.65; }
+    .topbar { display:flex; justify-content:flex-end; gap:10px; margin-bottom:14px; font-size:.92rem; }
+    .topbar a { padding:5px 9px; border:1px solid #9995; border-radius:8px; text-decoration:none; }
+    .topbar .active { font-weight:700; }
     header { padding-bottom: 20px; border-bottom: 1px solid #9995; }
     h1 { font-size: 2.4rem; margin-bottom: .2rem; }
     h2 { margin-top: 2.2rem; }
@@ -30,9 +36,7 @@
     .badge { font-size: .76rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; opacity: .78; }
     a { text-underline-offset: 3px; }
     footer { margin-top: 50px; padding-top: 18px; border-top: 1px solid #9995; font-size: .92rem; }
-    @media (max-width: 800px) {
-      .feature-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
-    }
+    @media (max-width: 800px) { .feature-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
     @media (max-width: 560px) {
       body { padding: 22px 14px 50px; }
       .feature-grid { grid-template-columns: 1fr; }
@@ -45,6 +49,7 @@
     "@type": "TechArticle",
     "headline": "K-DRUM Public Technical Information",
     "description": "Public technical information for K-DRUM, the K-water Grid-based Distributed Rainfall rUnoff Model.",
+    "inLanguage": "en",
     "dateModified": "2026-08-13",
     "about": {
       "@type": "Thing",
@@ -57,6 +62,10 @@
   </script>
 </head>
 <body>
+<nav class="topbar" aria-label="Language selection">
+  <a class="active" href="./" lang="en">English</a>
+  <a href="ko/" lang="ko">한국어</a>
+</nav>
 <header>
   <h1>K-DRUM</h1>
   <p class="full-name"><strong>K-water Grid-based Distributed Rainfall rUnoff Model</strong></p>
@@ -72,41 +81,13 @@
   <h2>Key capabilities</h2>
   <p>The image above provides the overall basin-to-estuary concept. Detailed descriptions are kept as web text below so they remain readable on desktop and mobile screens.</p>
   <div class="feature-grid">
-    <article class="feature-card">
-      <div class="badge">Established</div>
-      <h3>Distributed Rainfall-Runoff</h3>
-      <p>Grid-based rainfall, infiltration, evapotranspiration, surface and subsurface runoff, and kinematic routing.</p>
-    </article>
-    <article class="feature-card">
-      <div class="badge">Active development</div>
-      <h3>1D Dynamic-Wave River Network</h3>
-      <p>Unsteady-flow hydraulics for river networks, including branched and merged reaches.</p>
-    </article>
-    <article class="feature-card">
-      <div class="badge">Validated development</div>
-      <h3>Bidirectional 1D-2D Coupling</h3>
-      <p>Exchange of flow and water levels between 1D rivers and 2D floodplain domains.</p>
-    </article>
-    <article class="feature-card">
-      <div class="badge">Active development</div>
-      <h3>2D Flood Inundation</h3>
-      <p>Flood-depth and inundation-extent analysis over computational floodplain domains.</p>
-    </article>
-    <article class="feature-card">
-      <div class="badge">Active development</div>
-      <h3>K-DRUM InputStudio</h3>
-      <p>Project setup, geometry, time series, scenarios, quality checks, and model-input authoring.</p>
-    </article>
-    <article class="feature-card">
-      <div class="badge">Release candidate</div>
-      <h3>K-DRUM FloodViewer</h3>
-      <p>Visualization of spatial and time-varying hydrologic and hydraulic simulation results.</p>
-    </article>
-    <article class="feature-card">
-      <div class="badge">Experimental</div>
-      <h3>K-DRUM Estuary2DV</h3>
-      <p>Experimental longitudinal-vertical estuary hydrodynamics and salinity research.</p>
-    </article>
+    <article class="feature-card"><div class="badge">Established</div><h3>Distributed Rainfall-Runoff</h3><p>Grid-based rainfall, infiltration, evapotranspiration, surface and subsurface runoff, and kinematic routing.</p></article>
+    <article class="feature-card"><div class="badge">Active development</div><h3>1D Dynamic-Wave River Network</h3><p>Unsteady-flow hydraulics for river networks, including branched and merged reaches.</p></article>
+    <article class="feature-card"><div class="badge">Validated development</div><h3>Bidirectional 1D-2D Coupling</h3><p>Exchange of flow and water levels between 1D rivers and 2D floodplain domains.</p></article>
+    <article class="feature-card"><div class="badge">Active development</div><h3>2D Flood Inundation</h3><p>Flood-depth and inundation-extent analysis over computational floodplain domains.</p></article>
+    <article class="feature-card"><div class="badge">Active development</div><h3>K-DRUM InputStudio</h3><p>Project setup, geometry, time series, scenarios, quality checks, and model-input authoring.</p></article>
+    <article class="feature-card"><div class="badge">Release candidate</div><h3>K-DRUM FloodViewer</h3><p>Visualization of spatial and time-varying hydrologic and hydraulic simulation results.</p></article>
+    <article class="feature-card"><div class="badge">Experimental</div><h3>K-DRUM Estuary2DV</h3><p>Experimental longitudinal-vertical estuary hydrodynamics and salinity research.</p></article>
   </div>
 </section>
 
@@ -175,14 +156,8 @@
     <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md">Selected K-DRUM publications</a></li>
   </ul>
   <div class="note" style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-top:18px;">
-    <a href="https://www.kwater.or.kr/kiwe/main.do" aria-label="Open K-water Research Institute official website">
-      <img src="assets/kwater-research-institute-qr.svg" alt="QR code for the K-water Research Institute official website" width="190" height="190" style="display:block;background:white;padding:8px;border-radius:8px;">
-    </a>
-    <div style="min-width:260px;flex:1;">
-      <p style="margin-top:0;"><strong>K-water Research Institute — Official Website</strong></p>
-      <p><a href="https://www.kwater.or.kr/kiwe/main.do">https://www.kwater.or.kr/kiwe/main.do</a></p>
-      <p style="margin-bottom:0;font-size:.92rem;">The QR code points only to the official <code>www.kwater.or.kr</code> domain.</p>
-    </div>
+    <a href="https://www.kwater.or.kr/kiwe/main.do" aria-label="Open K-water Research Institute official website"><img src="assets/kwater-research-institute-qr.svg" alt="QR code for the K-water Research Institute official website" width="190" height="190" style="display:block;background:white;padding:8px;border-radius:8px;"></a>
+    <div style="min-width:260px;flex:1;"><p style="margin-top:0;"><strong>K-water Research Institute — Official Website</strong></p><p><a href="https://www.kwater.or.kr/kiwe/main.do">https://www.kwater.or.kr/kiwe/main.do</a></p><p style="margin-bottom:0;font-size:.92rem;">The QR code points only to the official <code>www.kwater.or.kr</code> domain.</p></div>
   </div>
 </section>
 
