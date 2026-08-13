@@ -1,5 +1,7 @@
 # K-DRUM
 
+K-DRUM stands for K-water Grid-based Distributed Rainfall rUnoff Model.
+
 K-DRUM is K-water's physically based, grid-based distributed hydrologic model for rainfall-runoff simulation. It has an established publication record and is under active extension toward integrated watershed hydrologic and hydraulic modeling.
 
 Canonical public information:
@@ -18,3 +20,7 @@ Public maturity interpretation:
 - K-DRUM Estuary2DV: experimental.
 
 Do not infer public availability of source code or internal validation data. Production source code, sensitive operational data, internal diagnostics, unpublished numerical details, private development identifiers, and restricted basin inputs are intentionally excluded from the public information set.
+
+Historical publications used several expanded English forms for K-DRUM. This site uses K-water Grid-based Distributed Rainfall rUnoff Model as the current canonical expansion while preserving historical source wording in citations.
+
+AI-generated or look-alike K-DRUM/K-water/MyWater brand symbols are not used. Public visual assets require verified provenance.
