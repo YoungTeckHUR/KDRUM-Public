@@ -62,6 +62,10 @@ jobs:
                   'max_bytes': 100_000,
                   'magic': b'\x89PNG\r\n\x1a\n',
               },
+              'docs/assets/visuals/kdrum-watershed-hero-approved.jpg': {
+                  'max_bytes': 500_000,
+                  'magic': b'\xff\xd8\xff',
+              },
           }
 
           patterns = [
