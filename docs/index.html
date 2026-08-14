@@ -3,168 +3,229 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>K-DRUM | K-water Grid-based Distributed Rainfall rUnoff Model</title>
-  <meta name="description" content="Public technical information for K-DRUM (K-water Grid-based Distributed Rainfall rUnoff Model), a physically based grid-distributed rainfall-runoff model under ongoing hydrologic-hydraulic development.">
-  <meta name="keywords" content="K-DRUM,KDRUM,K-water,distributed hydrologic model,rainfall-runoff,dynamic wave,1D-2D,flood inundation,hydraulic model,InputStudio,FloodViewer,Estuary2DV">
+  <title>K-DRUM | Distributed Hydrology, River Hydraulics and Flood Analysis</title>
+  <meta name="description" content="K-DRUM is K-water's established physically based, grid-distributed rainfall-runoff model, with a public research record and a current v3.x platform extending toward integrated river hydraulics and flood analysis.">
+  <meta name="keywords" content="K-DRUM,KDRUM,K-water,distributed hydrologic model,rainfall-runoff,kinematic wave,Green-Ampt,dynamic wave,1D-2D,flood inundation,InputStudio,FloodViewer">
   <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
-  <meta name="google-site-verification" content="6bVorUx-y-X0T3QGsCc57JBgOV071zBwRFJbmPsaaNI" />
+  <meta name="google-site-verification" content="6bVorUx-y-X0T3QGsCc57JBgOV071zBwRFJbmPsaaNI">
   <link rel="canonical" href="https://youngteckhur.github.io/KDRUM-Public/">
   <link rel="alternate" hreflang="en" href="https://youngteckhur.github.io/KDRUM-Public/">
   <link rel="alternate" hreflang="ko" href="https://youngteckhur.github.io/KDRUM-Public/ko/">
   <link rel="alternate" hreflang="x-default" href="https://youngteckhur.github.io/KDRUM-Public/">
   <style>
-    :root { color-scheme: light dark; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; }
-    body { max-width: 1180px; margin: 0 auto; padding: 32px 22px 70px; line-height: 1.65; }
-    .topbar { display:flex; justify-content:flex-end; gap:10px; margin-bottom:14px; font-size:.92rem; }
-    .topbar a { padding:5px 9px; border:1px solid #9995; border-radius:8px; text-decoration:none; }
-    .topbar .active { font-weight:700; }
-    header { padding-bottom: 20px; border-bottom: 1px solid #9995; }
-    h1 { font-size: 2.4rem; margin-bottom: .2rem; }
-    h2 { margin-top: 2.2rem; }
-    .lead { font-size: 1.18rem; }
-    .full-name { font-size: 1.02rem; margin-top: .2rem; }
-    .note { padding: 14px 16px; border: 1px solid #9996; border-radius: 10px; }
-    .status { display: grid; grid-template-columns: minmax(220px,1fr) minmax(160px,.55fr); gap: 8px 18px; }
-    .status div { padding: 7px 0; border-bottom: 1px solid #9993; }
-    .hero { margin: 24px 0 12px; }
-    .hero img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid #9994; }
-    .hero figcaption { margin-top: 8px; font-size: .9rem; opacity: .8; text-align: center; }
-    .feature-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; margin-top: 14px; }
-    .feature-card { border: 1px solid #9995; border-radius: 12px; padding: 16px; }
-    .feature-card h3 { margin: .05rem 0 .35rem; font-size: 1.02rem; }
-    .feature-card p { margin: .25rem 0; font-size: .94rem; }
-    .badge { font-size: .76rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; opacity: .78; }
+    :root {
+      color-scheme: light dark;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      --accent: #1769aa;
+      --line: #7f8c9a55;
+      --soft: #6f7d8b18;
+      --muted: #687684;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { max-width: 1180px; margin: 0 auto; padding: 24px 24px 72px; line-height: 1.66; }
     a { text-underline-offset: 3px; }
-    footer { margin-top: 50px; padding-top: 18px; border-top: 1px solid #9995; font-size: .92rem; }
-    @media (max-width: 800px) { .feature-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
-    @media (max-width: 560px) {
-      body { padding: 22px 14px 50px; }
-      .feature-grid { grid-template-columns: 1fr; }
-      .status { grid-template-columns: 1fr; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 4px 0 18px; border-bottom: 1px solid var(--line); }
+    .site-name { font-weight: 760; letter-spacing: .02em; }
+    .nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px 14px; font-size: .91rem; }
+    .nav a { text-decoration: none; }
+    .language { display: inline-flex; gap: 6px; margin-left: 8px; }
+    .language a { padding: 5px 9px; border: 1px solid var(--line); border-radius: 8px; }
+    .language .active { font-weight: 750; }
+    .hero-copy { padding: 58px 0 34px; max-width: 970px; }
+    .eyebrow { margin: 0 0 10px; font-size: .82rem; font-weight: 760; letter-spacing: .11em; text-transform: uppercase; color: var(--accent); }
+    h1 { margin: 0; font-size: clamp(3.2rem, 8vw, 6.4rem); line-height: .98; letter-spacing: -.055em; }
+    .full-name { margin: 15px 0 0; font-size: clamp(1.02rem, 2.2vw, 1.32rem); font-weight: 720; }
+    .lead { max-width: 920px; margin: 22px 0 0; font-size: clamp(1.12rem, 2.3vw, 1.42rem); line-height: 1.55; }
+    .supporting { max-width: 900px; margin: 13px 0 0; font-size: 1.02rem; color: var(--muted); }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 25px; }
+    .button { display: inline-block; padding: 9px 13px; border: 1px solid var(--line); border-radius: 9px; text-decoration: none; font-weight: 680; }
+    .button.primary { background: var(--accent); color: white; border-color: var(--accent); }
+    .fact-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 13px; margin: 0 0 34px; }
+    .fact { padding: 17px; border: 1px solid var(--line); border-radius: 13px; background: var(--soft); }
+    .fact strong { display: block; margin-bottom: 5px; font-size: 1.02rem; }
+    .fact span { font-size: .92rem; color: var(--muted); }
+    .hero-image { margin: 0; }
+    .hero-image a { display: block; }
+    .hero-image img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 15px; }
+    .hero-image figcaption { margin-top: 8px; text-align: center; font-size: .88rem; color: var(--muted); }
+    section { padding-top: 54px; }
+    h2 { margin: 0 0 9px; font-size: clamp(1.65rem, 3.4vw, 2.25rem); letter-spacing: -.025em; }
+    .section-intro { max-width: 900px; margin-top: 0; color: var(--muted); }
+    .capability-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+    .card { padding: 19px; border: 1px solid var(--line); border-radius: 13px; }
+    .card h3 { margin: 0 0 7px; font-size: 1.07rem; }
+    .card p { margin: 0; font-size: .94rem; }
+    .two-column { display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; margin-top: 20px; }
+    .panel { padding: 21px; border: 1px solid var(--line); border-radius: 13px; }
+    .panel h3 { margin-top: 0; }
+    .clean-list { margin: 0; padding-left: 1.2rem; }
+    .clean-list li { margin: 8px 0; }
+    .workflow { display: grid; grid-template-columns: repeat(7, auto); align-items: center; justify-content: start; gap: 8px; margin-top: 20px; overflow-x: auto; padding-bottom: 5px; }
+    .step { min-width: 145px; padding: 13px 15px; border: 1px solid var(--line); border-radius: 10px; text-align: center; font-weight: 680; }
+    .arrow { color: var(--muted); font-size: 1.25rem; }
+    .evidence-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; margin-top: 20px; }
+    .evidence { padding: 17px; border-left: 4px solid var(--accent); background: var(--soft); border-radius: 0 11px 11px 0; }
+    .evidence strong { display: block; margin-bottom: 4px; }
+    .status-note { margin-top: 21px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 12px; }
+    .official { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; margin-top: 20px; padding: 22px; border: 1px solid var(--line); border-radius: 13px; }
+    .official img { display: block; width: 150px; height: 150px; padding: 6px; background: white; border-radius: 8px; }
+    .small { font-size: .9rem; color: var(--muted); }
+    footer { margin-top: 58px; padding-top: 21px; border-top: 1px solid var(--line); font-size: .9rem; color: var(--muted); }
+    @media (max-width: 900px) {
+      .fact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .capability-grid, .evidence-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .two-column { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 620px) {
+      body { padding: 18px 14px 50px; }
+      .topbar { align-items: flex-start; }
+      .nav > a:not(.keep) { display: none; }
+      .hero-copy { padding-top: 42px; }
+      .fact-grid, .capability-grid, .evidence-grid { grid-template-columns: 1fr; }
+      .official { grid-template-columns: 1fr; }
+      .official img { width: 128px; height: 128px; }
     }
   </style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "K-DRUM Public Technical Information",
-    "description": "Public technical information for K-DRUM, the K-water Grid-based Distributed Rainfall rUnoff Model.",
+    "headline": "K-DRUM: Distributed Hydrology, River Hydraulics and Flood Analysis",
+    "description": "Public technical overview of K-DRUM, K-water's established physically based grid-distributed rainfall-runoff model and its current v3.x integrated modeling platform.",
     "inLanguage": "en",
-    "dateModified": "2026-08-13",
+    "dateModified": "2026-08-14",
     "about": {
-      "@type": "Thing",
+      "@type": "SoftwareApplication",
       "name": "K-DRUM",
       "alternateName": ["KDRUM", "K-water Grid-based Distributed Rainfall rUnoff Model"],
-      "description": "A physically based, grid-distributed hydrologic model developed by K-water and under active extension toward integrated hydrologic-hydraulic modeling."
+      "applicationCategory": "Hydrologic and hydraulic modeling software"
     },
     "isPartOf": "https://github.com/YoungTeckHUR/KDRUM-Public"
   }
   </script>
 </head>
 <body>
-<nav class="topbar" aria-label="Language selection">
-  <a class="active" href="./" lang="en">English</a>
-  <a href="ko/" lang="ko">한국어</a>
-</nav>
-<header>
-  <h1>K-DRUM</h1>
-  <p class="full-name"><strong>K-water Grid-based Distributed Rainfall rUnoff Model</strong></p>
-  <p class="lead"><strong>K-DRUM is K-water's physically based, grid-based distributed hydrologic model for rainfall-runoff simulation and integrated watershed analysis.</strong></p>
-</header>
+  <nav class="topbar" aria-label="Primary navigation">
+    <div class="site-name">K-DRUM Public</div>
+    <div class="nav">
+      <a href="#capabilities">Capabilities</a>
+      <a href="#applications">Applications</a>
+      <a href="#platform">Platform</a>
+      <a href="#evidence">Evidence</a>
+      <span class="language">
+        <a class="active keep" href="./" lang="en">English</a>
+        <a class="keep" href="ko/" lang="ko">한국어</a>
+      </span>
+    </div>
+  </nav>
 
-<figure class="hero">
-  <img src="assets/kdrum-hero-overview.jpg" alt="Conceptual K-DRUM overview showing rainfall-runoff from a watershed through river routing, floodplain interaction, and estuary processes.">
-  <figcaption>Conceptual overview for public introduction — not an actual simulation screenshot.</figcaption>
-</figure>
+  <header class="hero-copy">
+    <p class="eyebrow">Distributed hydrology · river hydraulics · flood analysis</p>
+    <h1>K-DRUM</h1>
+    <p class="full-name">K-water Grid-based Distributed Rainfall rUnoff Model</p>
+    <p class="lead">An established, physically based grid-distributed hydrologic model from K-water, supported by a public research record in flood simulation, long-term hydrology, snowmelt, drought, parallel computation, and surface-water/groundwater coupling.</p>
+    <p class="supporting">The current v3.x generation builds on this hydrologic foundation to connect watershed runoff, river networks, floodplains, model preparation, and result interpretation within a progressively integrated platform.</p>
+    <div class="actions">
+      <a class="button primary" href="#capabilities">Explore the model</a>
+      <a class="button" href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md">Public research record</a>
+      <a class="button" href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md">Technical status</a>
+    </div>
+  </header>
 
-<section>
-  <h2>Key capabilities</h2>
-  <p>The image above provides the overall basin-to-estuary concept. Detailed descriptions are kept as web text below so they remain readable on desktop and mobile screens.</p>
-  <div class="feature-grid">
-    <article class="feature-card"><div class="badge">Established</div><h3>Distributed Rainfall-Runoff</h3><p>Grid-based rainfall, infiltration, evapotranspiration, surface and subsurface runoff, and kinematic routing.</p></article>
-    <article class="feature-card"><div class="badge">Active development</div><h3>1D Dynamic-Wave River Network</h3><p>Unsteady-flow hydraulics for river networks, including branched and merged reaches.</p></article>
-    <article class="feature-card"><div class="badge">Validated development</div><h3>Bidirectional 1D-2D Coupling</h3><p>Exchange of flow and water levels between 1D rivers and 2D floodplain domains.</p></article>
-    <article class="feature-card"><div class="badge">Active development</div><h3>2D Flood Inundation</h3><p>Flood-depth and inundation-extent analysis over computational floodplain domains.</p></article>
-    <article class="feature-card"><div class="badge">Active development</div><h3>K-DRUM InputStudio</h3><p>Project setup, geometry, time series, scenarios, quality checks, and model-input authoring.</p></article>
-    <article class="feature-card"><div class="badge">Release candidate</div><h3>K-DRUM FloodViewer</h3><p>Visualization of spatial and time-varying hydrologic and hydraulic simulation results.</p></article>
-    <article class="feature-card"><div class="badge">Experimental</div><h3>K-DRUM Estuary2DV</h3><p>Experimental longitudinal-vertical estuary hydrodynamics and salinity research.</p></article>
+  <div class="fact-grid" aria-label="K-DRUM at a glance">
+    <div class="fact"><strong>Established hydrologic core</strong><span>Distributed rainfall-runoff, Green-Ampt infiltration, surface/subsurface runoff and kinematic routing.</span></div>
+    <div class="fact"><strong>Long public research lineage</strong><span>Documented applications from the late 2000s through 2026.</span></div>
+    <div class="fact"><strong>Scalable computation</strong><span>Published MPI parallelization and continued parallel-computation development.</span></div>
+    <div class="fact"><strong>Integrated current generation</strong><span>River hydraulics, 1D-2D interaction, inundation, authoring and visualization.</span></div>
   </div>
-</section>
 
-<section>
-  <h2>Public information scope</h2>
-  <p>This site is a public technical-information page for the current K-DRUM development context. It does not replace K-water's official institutional information; K-water/MyWater remains the authoritative source for institutional and official product information.</p>
-  <div class="note"><strong>Not published here:</strong> production source code, internal validation datasets, solver tuning details, development branches or commit identifiers, sensitive operational rules or data, failure diagnostics, proprietary basin inputs, and unpublished numerical implementation details.</div>
-  <p><strong>Visual-asset policy:</strong> AI-generated or look-alike K-DRUM, K-water, MyWater, or other institutional brand symbols are not used. Public images require verified provenance or must be independently created neutral technical diagrams.</p>
-</section>
+  <figure class="hero-image">
+    <a href="assets/kdrum-hero-overview.jpg" aria-label="Open the K-DRUM conceptual overview at full size">
+      <img src="assets/kdrum-hero-overview.jpg" width="1600" height="900" fetchpriority="high" alt="Conceptual overview of K-DRUM from basin rainfall-runoff through river routing, floodplain interaction and estuary processes.">
+    </a>
+    <figcaption>Conceptual overview. Detailed explanations are kept as web text rather than embedded in the image; select the image to view it at full size.</figcaption>
+  </figure>
 
-<section>
-  <h2>Established hydrologic background</h2>
-  <p>Published K-DRUM studies describe physically based grid-distributed rainfall-runoff simulation, spatial and radar rainfall, kinematic-wave routing, Green-Ampt infiltration, surface and subsurface runoff, long-term hydrology, snow-related processes, MPI parallelization, drought applications, and surface-water/groundwater coupling.</p>
-</section>
+  <main>
+    <section id="capabilities">
+      <h2>A model built from spatial hydrology outward</h2>
+      <p class="section-intro">K-DRUM's defining foundation is a physically based, grid-distributed representation of watershed response. The current platform extends that foundation toward a continuous hydrologic-hydraulic workflow.</p>
+      <div class="capability-grid">
+        <article class="card"><h3>Spatial rainfall-runoff processes</h3><p>Grid rainfall, infiltration, evapotranspiration, surface runoff, subsurface runoff and spatial water-balance processes.</p></article>
+        <article class="card"><h3>Event and long-term simulation</h3><p>Public studies include flood events, long-term runoff, evapotranspiration, snow accumulation and snowmelt applications.</p></article>
+        <article class="card"><h3>Flow routing and river networks</h3><p>Established kinematic-wave routing is being complemented by current-generation 1D dynamic-wave river-network hydraulics.</p></article>
+        <article class="card"><h3>River-floodplain interaction</h3><p>Current v3.x extensions include two-way 1D-2D exchange and two-dimensional inundation analysis for integrated flood studies.</p></article>
+        <article class="card"><h3>Terrain and channel geometry</h3><p>High-resolution terrain, river alignment, cross-section preparation and virtual channel-bed processing support hydraulic model construction.</p></article>
+        <article class="card"><h3>Preparation and interpretation tools</h3><p>InputStudio supports project authoring and quality checks; FloodViewer supports spatial and time-varying result interpretation.</p></article>
+      </div>
+    </section>
 
-<section>
-  <h2>Current development direction</h2>
-  <p>The current development program extends K-DRUM beyond its historical distributed rainfall-runoff role toward an integrated hydrologic and hydraulic modeling environment.</p>
-  <ul>
-    <li>1D dynamic-wave river-network hydraulics</li>
-    <li>branched and merged river networks</li>
-    <li>bidirectional 1D-2D river-floodplain coupling</li>
-    <li>2D flood-inundation analysis</li>
-    <li>hydraulic structures and reservoir-operation scenarios</li>
-    <li>high-resolution terrain, river alignment, and virtual channel-bed processing</li>
-    <li>NetCDF-centered integrated outputs and parallel computation</li>
-    <li>K-DRUM InputStudio project authoring</li>
-    <li>K-DRUM FloodViewer result visualization</li>
-    <li>experimental K-DRUM Estuary2DV hydrodynamics and salinity research</li>
-  </ul>
-</section>
+    <section id="applications">
+      <h2>Publicly documented application themes</h2>
+      <p class="section-intro">The selected public record shows that K-DRUM has been used as a research and analysis framework across different watershed conditions and questions.</p>
+      <div class="evidence-grid">
+        <div class="evidence"><strong>Flood simulation with radar and grid rainfall</strong><span>Spatial rainfall forcing and distributed runoff analysis for flood events.</span></div>
+        <div class="evidence"><strong>Parallel computation for large domains</strong><span>Published work on MPI-based acceleration of distributed rainfall-runoff calculation.</span></div>
+        <div class="evidence"><strong>Long-term runoff and snowmelt</strong><span>Applications considering seasonal snow cover, snowmelt and long-duration hydrology.</span></div>
+        <div class="evidence"><strong>Drought and water-balance analysis</strong><span>Use of spatial hydrologic processes for watershed water-balance interpretation.</span></div>
+        <div class="evidence"><strong>Surface-water/groundwater coupling</strong><span>Research linking K-DRUM with groundwater-flow models for integrated water-cycle studies.</span></div>
+        <div class="evidence"><strong>Wildfire and extreme-rainfall response</strong><span>Recent research examining post-wildfire runoff response under extreme rainfall.</span></div>
+      </div>
+    </section>
 
-<section>
-  <h2>Public maturity status</h2>
-  <div class="status">
-    <div>Distributed rainfall-runoff / kinematic routing</div><div><strong>Established</strong></div>
-    <div>MPI parallel-computation lineage</div><div><strong>Established</strong></div>
-    <div>1D dynamic-wave river networks</div><div><strong>Active development</strong></div>
-    <div>Bidirectional 1D-2D coupling</div><div><strong>Validated development</strong></div>
-    <div>2D flood-inundation analysis</div><div><strong>Active development</strong></div>
-    <div>ChannelBed high-resolution geometry</div><div><strong>Active development</strong></div>
-    <div>K-DRUM InputStudio</div><div><strong>Active development</strong></div>
-    <div>K-DRUM FloodViewer</div><div><strong>Release candidate</strong></div>
-    <div>K-DRUM Estuary2DV</div><div><strong>Experimental</strong></div>
-  </div>
-  <p>A development label is not equivalent to production certification.</p>
-</section>
+    <section id="platform">
+      <h2>The current K-DRUM platform</h2>
+      <p class="section-intro">The current program is organized as a model ecosystem rather than a single executable: preparation, simulation, standardized outputs and interpretation are treated as connected parts of the workflow.</p>
+      <div class="workflow" aria-label="K-DRUM workflow">
+        <div class="step">InputStudio</div><div class="arrow">→</div>
+        <div class="step">K-DRUM Core</div><div class="arrow">→</div>
+        <div class="step">Integrated outputs</div><div class="arrow">→</div>
+        <div class="step">FloodViewer</div>
+      </div>
+      <div class="two-column">
+        <div class="panel">
+          <h3>Core and supporting components</h3>
+          <ul class="clean-list">
+            <li><strong>K-DRUM Core:</strong> distributed hydrology and the current hydrologic-hydraulic simulation engine.</li>
+            <li><strong>InputStudio:</strong> project configuration, time series, geometry, scenarios and consistency checks.</li>
+            <li><strong>FloodViewer:</strong> integrated visualization of spatial and time-dependent simulation results.</li>
+            <li><strong>ChannelBed:</strong> reusable high-resolution terrain and channel-geometry processing.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Research extensions</h3>
+          <p><strong>Estuary2DV</strong> is maintained as an independent longitudinal-vertical hydrodynamics and salinity research prototype for future controlled coupling with river hydraulics and structure operation.</p>
+          <p class="small">Research extensions are presented separately from the established hydrologic core so that scope and maturity remain clear.</p>
+        </div>
+      </div>
+    </section>
 
-<section>
-  <h2>Public technical documents</h2>
-  <ul>
-    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/README.md">K-DRUM overview</a></li>
-    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md">Development status and maturity boundaries</a></li>
-    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/CAPABILITIES.md">Capabilities</a></li>
-    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/MODEL_CARD.md">Public model card</a></li>
-    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md">Selected public references</a></li>
-    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/ROADMAP.md">Public roadmap</a></li>
-  </ul>
-</section>
+    <section id="evidence">
+      <h2>Evidence, maturity and interpretation</h2>
+      <p class="section-intro">The hydrologic core is established through the public K-DRUM research record. Current hydraulic and platform extensions are being validated progressively and should be interpreted according to their documented maturity.</p>
+      <div class="status-note">
+        <strong>Objective status boundary.</strong> The homepage summarizes what K-DRUM is and why it is technically relevant. Detailed claims about production readiness are maintained separately in the <a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md">public development-status table</a> and <a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/MODEL_CARD.md">model card</a>.
+      </div>
+      <div class="official">
+        <div>
+          <h3>Official and research context</h3>
+          <p>K-DRUM is included in K-water's MyWater K-Series technical-software context. The public bibliography connects this overview to published and institutional research records.</p>
+          <p><a href="https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127">K-water MyWater K-Series</a><br>
+          <a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md">Selected K-DRUM public references</a><br>
+          <a href="https://www.kwater.or.kr/kiwe/main.do">K-water Research Institute official website</a></p>
+          <p class="small">The QR code points only to the official <code>www.kwater.or.kr</code> domain.</p>
+        </div>
+        <a href="https://www.kwater.or.kr/kiwe/main.do" aria-label="Open the K-water Research Institute official website">
+          <img src="assets/kwater-research-institute-qr.svg" alt="QR code for the K-water Research Institute official website">
+        </a>
+      </div>
+    </section>
+  </main>
 
-<section>
-  <h2>Official and research context</h2>
-  <p>K-DRUM is included in K-water's MyWater K-Series technical software context. The selected bibliography connects this public technical-information site to the established K-DRUM research record.</p>
-  <ul>
-    <li><a href="https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127">K-water MyWater K-Series</a></li>
-    <li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md">Selected K-DRUM publications</a></li>
-  </ul>
-  <div class="note" style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-top:18px;">
-    <a href="https://www.kwater.or.kr/kiwe/main.do" aria-label="Open K-water Research Institute official website"><img src="assets/kwater-research-institute-qr.svg" alt="QR code for the K-water Research Institute official website" width="190" height="190" style="display:block;background:white;padding:8px;border-radius:8px;"></a>
-    <div style="min-width:260px;flex:1;"><p style="margin-top:0;"><strong>K-water Research Institute — Official Website</strong></p><p><a href="https://www.kwater.or.kr/kiwe/main.do">https://www.kwater.or.kr/kiwe/main.do</a></p><p style="margin-bottom:0;font-size:.92rem;">The QR code points only to the official <code>www.kwater.or.kr</code> domain.</p></div>
-  </div>
-</section>
-
-<footer>
-  <strong>Canonical model name:</strong> K-DRUM · <strong>Full name:</strong> K-water Grid-based Distributed Rainfall rUnoff Model<br>
-  <strong>Public information baseline:</strong> August 2026<br>
-  Historical publications used several expanded English forms of the K-DRUM acronym. This site preserves historical publication wording while using the current canonical expansion above.
-</footer>
+  <footer>
+    <strong>K-DRUM</strong> — K-water Grid-based Distributed Rainfall rUnoff Model · Public information baseline: August 2026.<br>
+    This site provides public technical context; production source code, restricted datasets, sensitive operational information and unpublished implementation details are not distributed here. Visual assets are limited to reviewed K-DRUM materials, neutral technical diagrams, verified QR codes and appropriately sourced official assets.
+  </footer>
 </body>
 </html>
