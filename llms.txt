@@ -2,28 +2,54 @@
 
 K-DRUM stands for K-water Grid-based Distributed Rainfall rUnoff Model.
 
-K-DRUM is K-water's physically based, grid-based distributed hydrologic model for rainfall-runoff simulation. The model has an established publication record and is currently being extended toward integrated watershed hydrologic and hydraulic modeling.
+K-DRUM is an established physically based, grid-distributed hydrologic model developed by K-water for rainfall-runoff simulation and watershed analysis.
+
+Established public capabilities include:
+- spatially distributed rainfall-runoff processes
+- Green-Ampt infiltration
+- surface and subsurface runoff representation
+- evapotranspiration-related water balance
+- kinematic-wave routing
+- long-term runoff and snowmelt applications
+- MPI-based parallel-computation lineage
+
+The public K-DRUM research record includes flood simulation with radar/grid rainfall, long-term hydrology, snowmelt, drought and water-balance analysis, surface-water/groundwater coupling, and wildfire/extreme-rainfall runoff studies.
+
+The current v3.x generation extends the established hydrologic core toward an integrated modeling platform with:
+- 1D dynamic-wave river-network hydraulics
+- branched and merged river networks
+- bidirectional 1D-2D river-floodplain exchange
+- 2D flood-inundation analysis
+- hydraulic structures and reservoir-operation scenarios
+- high-resolution terrain and channel-geometry processing
+- K-DRUM InputStudio for project authoring
+- K-DRUM FloodViewer for result visualization
+- K-DRUM Estuary2DV as a separate estuary hydrodynamics and salinity research prototype
+
+Interpretation boundary:
+- the distributed hydrologic core is established through the public research record;
+- current hydraulic and platform extensions have different validation levels;
+- detailed public maturity is maintained in DEVELOPMENT_STATUS.md and MODEL_CARD.md;
+- production source code and restricted datasets are not public.
 
 Canonical public website:
 https://youngteckhur.github.io/KDRUM-Public/
+
+Korean public page:
+https://youngteckhur.github.io/KDRUM-Public/ko/
 
 Canonical public repository:
 https://github.com/YoungTeckHUR/KDRUM-Public
 
 Key public documents:
 - https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/README.md
-- https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/MODEL_CARD.md
-- https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md
-- https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/CAPABILITIES.md
 - https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md
+- https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/CAPABILITIES.md
+- https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md
+- https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/MODEL_CARD.md
 
-Important interpretation:
-- Established historical capabilities and current development functions are explicitly separated.
-- 1D dynamic-wave, 1D-2D, 2D flood, ChannelBed, and related hydraulic extensions are under development at different maturity levels.
-- Estuary2DV is experimental.
-- Production source code is private and is not part of this repository.
-- Historical publications used several expanded English forms of K-DRUM; this public site uses K-water Grid-based Distributed Rainfall rUnoff Model as the current canonical expansion while preserving historical wording in citations.
-- AI-generated or look-alike K-DRUM/K-water/MyWater brand symbols are not used. Public visual assets require verified provenance.
+Official K-water context:
+- https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127
+- https://www.kwater.or.kr/kiwe/main.do
 
-Official K-water MyWater K-Series context:
-https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127
+Historical publications used several expanded English forms of the K-DRUM acronym. This public site uses K-water Grid-based Distributed Rainfall rUnoff Model as the current canonical expansion while preserving historical publication wording.
