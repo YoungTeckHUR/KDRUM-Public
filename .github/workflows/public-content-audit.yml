@@ -46,6 +46,22 @@ jobs:
                   'max_bytes': 100_000,
                   'magic': b'\x89PNG\r\n\x1a\n',
               },
+              'docs/assets/branding/kdrum-symbol-approved.png': {
+                  'max_bytes': 100_000,
+                  'magic': b'\x89PNG\r\n\x1a\n',
+              },
+              'docs/assets/branding/kdrum-symbol-web.png': {
+                  'max_bytes': 100_000,
+                  'magic': b'\x89PNG\r\n\x1a\n',
+              },
+              'docs/assets/branding/kdrum-symbol-compact.png': {
+                  'max_bytes': 100_000,
+                  'magic': b'\x89PNG\r\n\x1a\n',
+              },
+              'docs/assets/branding/kwater-official-ci.png': {
+                  'max_bytes': 100_000,
+                  'magic': b'\x89PNG\r\n\x1a\n',
+              },
           }
 
           patterns = [
