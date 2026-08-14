@@ -3,181 +3,50 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>K-DRUM | 분포형 수문·하천 수리·홍수해석 플랫폼</title>
-  <meta name="description" content="K-DRUM은 K-water가 개발해 온 물리적 기반의 격자형 분포형 강우-유출 모형입니다. 공개 연구성과와 현행 v3.x 수문·수리 통합 플랫폼을 객관적으로 소개합니다.">
-  <meta name="keywords" content="K-DRUM,KDRUM,K-water,분포형 수문모형,강우유출,운동파,Green-Ampt,동역학파,1D-2D,범람해석,InputStudio,FloodViewer">
+  <title>K-DRUM | 분포형 수문·하천수리·홍수해석</title>
+  <meta name="description" content="K-DRUM은 K-water가 개발해 온 물리적 기반의 격자형 분포형 수문모형입니다. 현재 v3.x 체계는 유역 수문, 하천 수리, 1D-2D 범람원 상호작용, 입력자료 작성과 결과 시각화를 연결합니다.">
+  <meta name="keywords" content="K-DRUM,KDRUM,K-water,분포형 수문모형,강우유출,운동파,Green-Ampt,동역학파,1D-2D,홍수범람,InputStudio,FloodViewer">
   <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+  <meta name="theme-color" content="#0b5f88">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="K-DRUM | 분포형 수문·하천수리·홍수해석">
+  <meta property="og:description" content="K-DRUM과 현재 v3.x 통합 모형 플랫폼의 공개 기술 소개 페이지입니다.">
+  <meta property="og:url" content="https://youngteckhur.github.io/KDRUM-Public/ko/">
+  <meta property="og:site_name" content="K-DRUM Public">
+  <meta name="twitter:card" content="summary">
   <link rel="canonical" href="https://youngteckhur.github.io/KDRUM-Public/ko/">
   <link rel="alternate" hreflang="en" href="https://youngteckhur.github.io/KDRUM-Public/">
   <link rel="alternate" hreflang="ko" href="https://youngteckhur.github.io/KDRUM-Public/ko/">
   <link rel="alternate" hreflang="x-default" href="https://youngteckhur.github.io/KDRUM-Public/">
   <style>
-    :root { color-scheme:light dark; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",Arial,sans-serif; --accent:#1769aa; --accent-2:#0b8b8f; --line:#7f8c9a55; --soft:#6f7d8b18; --muted:#687684; }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body { max-width:1180px; margin:0 auto; padding:24px 24px 72px; line-height:1.72; word-break:keep-all; }
-    a { text-underline-offset:3px; }
-    .topbar { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:4px 0 18px; border-bottom:1px solid var(--line); }
-    .site-name { font-weight:760; letter-spacing:.02em; }
-    .nav { display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:8px 14px; font-size:.91rem; }
-    .nav a { text-decoration:none; }
-    .language { display:inline-flex; gap:6px; margin-left:8px; }
-    .language a { padding:5px 9px; border:1px solid var(--line); border-radius:8px; }
-    .language .active { font-weight:750; }
-    .hero-copy { padding:56px 0 30px; max-width:970px; }
-    .eyebrow { margin:0 0 10px; font-size:.82rem; font-weight:760; letter-spacing:.08em; color:var(--accent); }
-    h1 { margin:0; font-size:clamp(3.2rem,8vw,6.4rem); line-height:.98; letter-spacing:-.055em; }
-    .full-name { margin:15px 0 0; font-size:clamp(1.02rem,2.2vw,1.32rem); font-weight:720; }
-    .lead { max-width:930px; margin:22px 0 0; font-size:clamp(1.12rem,2.3vw,1.42rem); line-height:1.62; }
-    .supporting { max-width:900px; margin:13px 0 0; font-size:1.02rem; color:var(--muted); }
-    .actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:25px; }
-    .button { display:inline-block; padding:9px 13px; border:1px solid var(--line); border-radius:9px; text-decoration:none; font-weight:680; }
-    .button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
-    .fact-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:13px; margin:0 0 30px; }
-    .fact { padding:17px; border:1px solid var(--line); border-radius:13px; background:var(--soft); }
-    .fact strong { display:block; margin-bottom:5px; font-size:1.02rem; }
-    .fact span { font-size:.92rem; color:var(--muted); }
-    .system-visual { margin:0; border:1px solid var(--line); border-radius:16px; overflow:hidden; background:#edf6fb; }
-    .system-visual svg { display:block; width:100%; height:auto; }
-    .system-visual figcaption { padding:9px 14px 11px; text-align:center; font-size:.88rem; color:var(--muted); background:color-mix(in srgb, Canvas 94%, transparent); }
-    .visual-key { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin:12px 0 0; }
-    .visual-key span { padding:5px 9px; border:1px solid var(--line); border-radius:999px; font-size:.86rem; }
-    section { padding-top:54px; }
-    h2 { margin:0 0 9px; font-size:clamp(1.65rem,3.4vw,2.25rem); letter-spacing:-.025em; }
-    .section-intro { max-width:900px; margin-top:0; color:var(--muted); }
-    .capability-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:20px; }
-    .card { padding:19px; border:1px solid var(--line); border-radius:13px; }
-    .card h3 { margin:0 0 7px; font-size:1.07rem; }
-    .card p { margin:0; font-size:.94rem; }
-    .two-column { display:grid; grid-template-columns:1.15fr .85fr; gap:22px; margin-top:20px; }
-    .panel { padding:21px; border:1px solid var(--line); border-radius:13px; }
-    .panel h3 { margin-top:0; }
-    .clean-list { margin:0; padding-left:1.2rem; }
-    .clean-list li { margin:8px 0; }
-    .workflow { display:grid; grid-template-columns:repeat(7,auto); align-items:center; justify-content:start; gap:8px; margin-top:20px; overflow-x:auto; padding-bottom:5px; }
-    .step { min-width:145px; padding:13px 15px; border:1px solid var(--line); border-radius:10px; text-align:center; font-weight:680; }
-    .arrow { color:var(--muted); font-size:1.25rem; }
-    .evidence-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:13px; margin-top:20px; }
-    .evidence { padding:17px; border-left:4px solid var(--accent); background:var(--soft); border-radius:0 11px 11px 0; }
-    .evidence strong { display:block; margin-bottom:4px; }
-    .status-note { margin-top:21px; padding:18px 20px; border:1px solid var(--line); border-radius:12px; }
-    .official { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:center; margin-top:20px; padding:22px; border:1px solid var(--line); border-radius:13px; }
-    .official img { display:block; width:150px; height:150px; padding:6px; background:white; border-radius:8px; }
-    .small { font-size:.9rem; color:var(--muted); }
-    footer { margin-top:58px; padding-top:21px; border-top:1px solid var(--line); font-size:.9rem; color:var(--muted); }
-    @media (max-width:900px) { .fact-grid{grid-template-columns:repeat(2,minmax(0,1fr));} .capability-grid,.evidence-grid{grid-template-columns:repeat(2,minmax(0,1fr));} .two-column{grid-template-columns:1fr;} }
-    @media (max-width:620px) { body{padding:18px 14px 50px;} .topbar{align-items:flex-start;} .nav>a:not(.keep){display:none;} .hero-copy{padding-top:42px;} .fact-grid,.capability-grid,.evidence-grid{grid-template-columns:1fr;} .official{grid-template-columns:1fr;} .official img{width:128px;height:128px;} }
+    :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",Arial,sans-serif;--bg:#fff;--text:#17202a;--muted:#5f6d79;--line:#d8e0e7;--soft:#f4f8fb;--soft2:#eef7f7;--accent:#1769aa;--accent2:#0b8b8f;--deep:#0b4e70;--ok:#166534;--dev:#9a5a00;--rc:#6b3fa0;--shadow:0 10px 30px rgba(18,48,71,.08)}
+    @media(prefers-color-scheme:dark){:root{--bg:#10161c;--text:#edf3f7;--muted:#a9b7c3;--line:#34414b;--soft:#172129;--soft2:#132426;--accent:#6dbcf2;--accent2:#67d0d4;--deep:#9ad7f5;--ok:#7ddc91;--dev:#ffc36a;--rc:#c9a7f3;--shadow:none}}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);line-height:1.68;word-break:keep-all}.wrap{width:min(1180px,calc(100% - 40px));margin:auto}a{color:inherit;text-underline-offset:3px}.skip{position:absolute;left:-9999px;top:8px;background:var(--bg);border:2px solid var(--accent);padding:8px 12px;border-radius:8px;z-index:20}.skip:focus{left:12px}.topbar{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}.topbar-inner{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:18px}.site-name{font-weight:800;letter-spacing:.02em;white-space:nowrap}.nav{display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:thin;padding:8px 0}.nav a{text-decoration:none;white-space:nowrap;padding:7px 9px;border-radius:8px;font-size:.92rem}.nav a:hover,.nav a:focus-visible{background:var(--soft);outline:none}.language{display:inline-flex;gap:4px;margin-left:6px}.language a{border:1px solid var(--line)}.language .active{font-weight:800;border-color:var(--accent)}
+    .hero{padding:64px 0 34px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:34px;align-items:center}.eyebrow{margin:0 0 10px;color:var(--accent);font-size:.82rem;font-weight:800;letter-spacing:.08em}.hero h1{margin:0;font-size:clamp(4rem,8vw,6.8rem);line-height:.92;letter-spacing:-.06em}.full-name{margin:16px 0 0;font-size:clamp(1rem,2vw,1.25rem);font-weight:760}.lead{margin:22px 0 0;max-width:760px;font-size:clamp(1.13rem,2vw,1.4rem);line-height:1.55}.supporting{margin:13px 0 0;max-width:770px;color:var(--muted)}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}.button{display:inline-block;padding:9px 13px;border:1px solid var(--line);border-radius:9px;text-decoration:none;font-weight:720}.button.primary{background:var(--accent);border-color:var(--accent);color:#fff}.button:hover,.button:focus-visible{transform:translateY(-1px);outline:2px solid transparent;box-shadow:0 0 0 3px rgba(23,105,170,.16)}
+    .hero-visual{border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#cceafa 0%,#f5fbfd 46%,#dbe8c5 46%,#c7dcaf 100%);overflow:hidden;box-shadow:var(--shadow)}.hero-visual svg{display:block;width:100%;height:auto}.hero-visual figcaption{padding:9px 12px;text-align:center;background:var(--bg);color:var(--muted);font-size:.86rem}
+    .facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:10px 0 0}.fact{padding:17px;border:1px solid var(--line);border-radius:13px;background:var(--soft)}.fact strong{display:block;margin-bottom:5px}.fact span{font-size:.91rem;color:var(--muted)}section{padding:58px 0 0}h2{margin:0 0 8px;font-size:clamp(1.7rem,3vw,2.3rem);letter-spacing:-.025em}.section-intro{margin:0;max-width:900px;color:var(--muted)}
+    .architecture{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin-top:22px}.arch{position:relative;padding:18px 14px;border:1px solid var(--line);border-radius:12px;text-align:center;background:var(--bg)}.arch:not(:last-child)::after{content:"→";position:absolute;right:-10px;top:50%;transform:translateY(-50%);z-index:2;width:20px;color:var(--muted);font-weight:800}.arch b{display:block;font-size:.96rem}.arch small{display:block;margin-top:4px;color:var(--muted)}
+    .status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:22px}.status-card{padding:19px;border:1px solid var(--line);border-radius:13px}.status-card h3{margin:0 0 8px;font-size:1.08rem}.badge{display:inline-block;margin-bottom:10px;padding:3px 8px;border-radius:999px;border:1px solid currentColor;font-size:.76rem;font-weight:800;letter-spacing:.02em}.established{color:var(--ok)}.development{color:var(--dev)}.validated{color:var(--accent2)}.release{color:var(--rc)}.status-card p{margin:0;font-size:.94rem;color:var(--muted)}
+    .application-grid,.tool-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:22px}.card{padding:19px;border:1px solid var(--line);border-radius:13px}.card h3{margin:0 0 7px;font-size:1.06rem}.card p{margin:0;font-size:.94rem;color:var(--muted)}.tool-grid .card{background:var(--soft2)}
+    .two-column{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:22px}.panel{padding:21px;border:1px solid var(--line);border-radius:13px}.panel h3{margin:0 0 10px}.clean-list{margin:0;padding-left:1.2rem}.clean-list li{margin:7px 0}.official{display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center;margin-top:15px;padding:22px;border:1px solid var(--line);border-radius:13px}.official img{display:block;width:138px;height:138px;padding:6px;background:#fff;border-radius:8px}.small{font-size:.9rem;color:var(--muted)}.boundary{margin-top:15px;padding:18px 20px;border-left:4px solid var(--accent);background:var(--soft);border-radius:0 10px 10px 0}footer{margin-top:60px;padding:22px 0 42px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+    @media(max-width:900px){.hero-grid{grid-template-columns:1fr}.hero-visual{max-width:760px}.facts{grid-template-columns:repeat(2,1fr)}.architecture{grid-template-columns:1fr}.arch:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-18px;transform:translateX(-50%);background:var(--bg)}.application-grid,.tool-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:640px){.wrap{width:min(100% - 28px,1180px)}.topbar-inner{align-items:flex-start;flex-direction:column;gap:0;padding:8px 0}.site-name{padding-top:4px}.nav{width:100%;padding:5px 0 8px}.hero{padding-top:42px}.hero h1{font-size:clamp(3.7rem,20vw,5.4rem)}.facts,.status-grid,.application-grid,.tool-grid,.two-column{grid-template-columns:1fr}.official{grid-template-columns:1fr}.official img{width:124px;height:124px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button:hover{transform:none}}
   </style>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"K-DRUM: 분포형 수문·하천 수리·홍수해석 플랫폼","description":"K-water가 개발해 온 K-DRUM의 확립된 분포형 수문기반과 현행 v3.x 수문·수리 통합 플랫폼에 대한 공개 기술개요.","inLanguage":"ko","dateModified":"2026-08-14","about":{"@type":"SoftwareApplication","name":"K-DRUM","alternateName":["KDRUM","K-water Grid-based Distributed Rainfall rUnoff Model"],"applicationCategory":"수문·수리 모형 소프트웨어"},"isPartOf":"https://github.com/YoungTeckHUR/KDRUM-Public"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"K-DRUM: 분포형 수문·하천수리·홍수해석","description":"K-DRUM과 현재 v3.x 통합 모형 플랫폼의 공개 기술 소개.","inLanguage":"ko","dateModified":"2026-08-14","about":{"@type":"SoftwareApplication","name":"K-DRUM","alternateName":["KDRUM","K-water Grid-based Distributed Rainfall rUnoff Model"],"applicationCategory":"Hydrologic and hydraulic modeling software"},"isPartOf":"https://github.com/YoungTeckHUR/KDRUM-Public"}</script>
 </head>
 <body>
-  <nav class="topbar" aria-label="주요 메뉴">
-    <div class="site-name">K-DRUM Public</div>
-    <div class="nav"><a href="#capabilities">모형 특성</a><a href="#applications">적용 연구</a><a href="#platform">플랫폼</a><a href="#evidence">근거와 현황</a><span class="language"><a class="keep" href="../" lang="en">English</a><a class="active keep" href="./" lang="ko">한국어</a></span></div>
-  </nav>
-
-  <header class="hero-copy">
-    <p class="eyebrow">분포형 수문 · 하천 수리 · 홍수해석</p>
-    <h1>K-DRUM</h1>
-    <p class="full-name">K-water Grid-based Distributed Rainfall rUnoff Model</p>
-    <p class="lead">K-water가 개발해 온 물리적 기반의 격자형 분포형 수문모형으로, 홍수유출, 장기 수문해석, 융설, 가뭄, 병렬계산, 지표수–지하수 연계 등 다양한 공개 연구성과를 축적해 왔습니다.</p>
-    <p class="supporting">현행 v3.x 체계는 이 확립된 수문 기반 위에 유역유출, 하천망, 범람원, 입력자료 구성과 결과 해석을 연결하는 통합 플랫폼으로 확장되고 있습니다.</p>
-    <div class="actions"><a class="button primary" href="#capabilities">모형 살펴보기</a><a class="button" href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md">공개 연구기록</a><a class="button" href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md">상세 기술현황</a></div>
-  </header>
-
-  <div class="fact-grid" aria-label="K-DRUM 한눈에 보기">
-    <div class="fact"><strong>확립된 수문 핵심기능</strong><span>분포형 강우-유출, Green-Ampt 침투, 지표·지하 유출 및 운동파 추적.</span></div>
-    <div class="fact"><strong>장기간 축적된 공개 연구</strong><span>2000년대 후반부터 2026년까지 이어지는 적용 연구기록.</span></div>
-    <div class="fact"><strong>대규모 계산 확장성</strong><span>MPI 병렬화 공개 연구와 지속적인 병렬계산 체계.</span></div>
-    <div class="fact"><strong>현행 통합 세대</strong><span>하천 수리, 1D-2D 연계, 범람, 입력편집과 결과 시각화.</span></div>
-  </div>
-
-  <figure class="system-visual" aria-labelledby="visual-title visual-desc">
-    <svg viewBox="0 0 1600 720" role="img" xmlns="http://www.w3.org/2000/svg">
-      <title id="visual-title">K-DRUM 유역-하구 통합 개념도</title>
-      <desc id="visual-desc">격자형 유역의 강우, 저수지와 하천 추적, 범람원 교환, 도시구간과 하구를 나타내는 확장 가능한 개념도입니다.</desc>
-      <defs>
-        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe6fb"/><stop offset="1" stop-color="#f7fbfd"/></linearGradient>
-        <linearGradient id="hill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#315f55"/><stop offset="1" stop-color="#79a36f"/></linearGradient>
-        <linearGradient id="plain" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9fc58a"/><stop offset="1" stop-color="#d6d19a"/></linearGradient>
-        <linearGradient id="water" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1769aa"/><stop offset="1" stop-color="#36a9c5"/></linearGradient>
-        <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="#ffffff" stroke-opacity=".42" stroke-width="2"/></pattern>
-        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#123047" flood-opacity=".18"/></filter>
-      </defs>
-      <rect width="1600" height="720" fill="url(#sky)"/>
-      <circle cx="1330" cy="112" r="62" fill="#ffe59a" opacity=".9"/>
-      <g fill="#fff" opacity=".9"><ellipse cx="190" cy="105" rx="74" ry="31"/><ellipse cx="250" cy="110" rx="88" ry="38"/><ellipse cx="305" cy="102" rx="55" ry="28"/></g>
-      <g stroke="#2a86bd" stroke-width="6" stroke-linecap="round" opacity=".78"><path d="M165 148l-18 38"/><path d="M205 148l-18 38"/><path d="M245 148l-18 38"/><path d="M285 148l-18 38"/><path d="M325 148l-18 38"/></g>
-      <path d="M0 372L205 167 350 302 505 133 650 300 770 210 900 352V720H0Z" fill="url(#hill)"/>
-      <path d="M0 372L205 167 350 302 505 133 650 300 770 210 900 352V620H0Z" fill="url(#grid)" opacity=".76"/>
-      <path d="M735 365C870 330 970 330 1080 365C1210 407 1320 390 1600 330V720H730Z" fill="url(#plain)"/>
-      <path d="M1090 505C1225 455 1375 450 1600 408V720H1090Z" fill="#66b9c7" opacity=".86"/>
-      <path d="M1130 535C1290 500 1435 500 1600 470V720H1130Z" fill="#2d88b8" opacity=".58"/>
-      <ellipse cx="610" cy="358" rx="185" ry="71" fill="#287fb3" opacity=".92" filter="url(#shadow)"/>
-      <path d="M720 330v113" stroke="#d7dce0" stroke-width="28"/><path d="M706 330h28v113h-28z" fill="#aab5bd"/><path d="M721 443C760 458 790 472 820 492" fill="none" stroke="#dfeff4" stroke-width="18" stroke-linecap="round"/>
-      <path d="M801 486C910 528 930 582 1033 563C1127 545 1155 490 1240 502C1340 516 1420 574 1600 538" fill="none" stroke="url(#water)" stroke-width="62" stroke-linecap="round" filter="url(#shadow)"/>
-      <path d="M817 476C914 514 941 560 1030 546C1113 533 1155 475 1242 486C1344 499 1426 555 1600 521" fill="none" stroke="#bfefff" stroke-opacity=".42" stroke-width="13" stroke-linecap="round"/>
-      <path d="M900 520C935 494 986 486 1032 501C1071 514 1092 544 1082 570C1038 602 971 602 923 574Z" fill="#58aee0" opacity=".47"/>
-      <g fill="#d8e3e8" stroke="#6f7f88" stroke-width="3" filter="url(#shadow)"><rect x="1037" y="366" width="50" height="98"/><rect x="1097" y="332" width="65" height="132"/><rect x="1171" y="382" width="44" height="82"/><rect x="1222" y="348" width="58" height="116"/></g>
-      <g fill="#8499a6"><rect x="1050" y="384" width="10" height="16"/><rect x="1067" y="384" width="10" height="16"/><rect x="1112" y="352" width="12" height="17"/><rect x="1134" y="352" width="12" height="17"/><rect x="1241" y="367" width="12" height="17"/></g>
-      <g fill="#397c5b"><circle cx="925" cy="438" r="28"/><rect x="920" y="440" width="10" height="44" fill="#6f5a3e"/><circle cx="1320" cy="430" r="30"/><rect x="1315" y="432" width="10" height="48" fill="#6f5a3e"/></g>
-      <g fill="#6ea764" opacity=".88"><path d="M1250 626q22-62 44 0q22-70 46 0q20-58 42 0z"/><path d="M1400 600q20-54 42 0q18-65 42 0q19-50 40 0z"/></g>
-      <g fill="#0b5f88" opacity=".82"><path d="M860 468l26 8-22 15z"/><path d="M985 536l26 3-20 17z"/><path d="M1138 510l26-4-17 20z"/><path d="M1384 526l27 4-22 16z"/></g>
-      <rect x="22" y="22" width="1556" height="676" rx="20" fill="none" stroke="#24485c" stroke-opacity=".18" stroke-width="3"/>
-    </svg>
-    <figcaption>외부 이미지 파일을 불러오지 않는 벡터 개념도이므로 모든 화면 크기에서 선명하게 표시됩니다.</figcaption>
-  </figure>
-  <div class="visual-key" aria-label="개념도 구성"><span>분포형 유역</span><span>저수지와 하천망</span><span>하천-범람원 교환</span><span>도시구간과 하구</span></div>
-
-  <main>
-    <section id="capabilities">
-      <h2>공간 수문과정에서 출발한 통합 모형</h2>
-      <p class="section-intro">K-DRUM의 핵심은 유역반응을 물리적 기반의 격자 단위로 표현하는 데 있습니다. 현행 플랫폼은 이 기반을 하천과 범람원까지 연속적으로 확장합니다.</p>
-      <div class="capability-grid">
-        <article class="card"><h3>공간 분포형 강우-유출</h3><p>격자 강우, 침투, 증발산, 지표유출, 지하유출과 공간 물수지 과정을 함께 표현합니다.</p></article>
-        <article class="card"><h3>홍수사상과 장기 수문해석</h3><p>단일 호우사상뿐 아니라 장기유출, 융설, 가뭄과 물순환 연구에 적용된 공개 기록이 있습니다.</p></article>
-        <article class="card"><h3>유출추적과 하천 수리</h3><p>확립된 운동파 추적을 기반으로 단면형 1차원 동역학파 하천망 해석까지 확장하고 있습니다.</p></article>
-        <article class="card"><h3>하천-범람원 상호작용</h3><p>1차원 하천과 2차원 범람원 사이의 양방향 교환을 통해 홍수범람을 해석합니다.</p></article>
-        <article class="card"><h3>지형과 하천기하</h3><p>고해상도 지형, 하천선, 횡단면과 미계측 구간의 가상 하상 처리 체계를 개발하고 있습니다.</p></article>
-        <article class="card"><h3>입력구성과 결과해석</h3><p>InputStudio가 프로젝트 구성과 품질점검을, FloodViewer가 공간·시계열 결과 해석을 지원합니다.</p></article>
-      </div>
-    </section>
-
-    <section id="applications">
-      <h2>공개 연구기록으로 확인되는 적용 분야</h2>
-      <p class="section-intro">선정된 공개 문헌과 기관 연구기록은 홍수, 물순환, 대규모 계산과 연계모형 분야의 적용을 보여줍니다.</p>
-      <div class="evidence-grid">
-        <div class="evidence"><strong>레이더·격자강우 기반 홍수유출</strong>공간 강우정보를 활용한 분포형 홍수유출 해석.</div>
-        <div class="evidence"><strong>대유역 병렬계산</strong>MPI 기반 병렬화와 대규모 유역 계산 확장.</div>
-        <div class="evidence"><strong>장기유출과 융설</strong>장기간 물수지와 적설·융설 과정을 함께 고려한 적용.</div>
-        <div class="evidence"><strong>가뭄과 유역 물수지</strong>개별 호우를 넘어선 분포형 장기 수문분석.</div>
-        <div class="evidence"><strong>지표수–지하수 연계</strong>K-DRUM과 지하수모형을 결합한 물순환 연구.</div>
-        <div class="evidence"><strong>복합 유역교란</strong>산불피해 이후 극한호우가 유출반응에 미치는 영향 분석.</div>
-      </div>
-    </section>
-
-    <section id="platform">
-      <h2>현행 K-DRUM 플랫폼</h2>
-      <p class="section-intro">현행 플랫폼은 서로 분리된 파일의 집합이 아니라, 입력자료 작성에서 계산과 결과해석까지 이어지는 작업흐름으로 구성됩니다.</p>
-      <div class="workflow" aria-label="K-DRUM 플랫폼 작업흐름"><div class="step">InputStudio</div><div class="arrow">→</div><div class="step">K-DRUM Core</div><div class="arrow">→</div><div class="step">통합 출력</div><div class="arrow">→</div><div class="step">FloodViewer</div></div>
-      <div class="two-column">
-        <div class="panel"><h3>플랫폼이 연결하는 요소</h3><ul class="clean-list"><li>유역 강우-유출과 물리 수문과정</li><li>하천망 유출추적과 수리해석</li><li>하천-범람원 연계와 홍수범람</li><li>지형, 하천기하와 수리구조물</li><li>NetCDF 중심 결과교환과 시각화</li></ul></div>
-        <div class="panel"><h3>연구 확장모듈</h3><p>ChannelBed는 고해상도 하천기하를 재사용 가능한 계산모듈로 제공합니다. Estuary2DV는 하구 종단-연직 수리와 염분 연구를 위한 독립 연구 프로토타입으로 관리됩니다.</p></div>
-      </div>
-    </section>
-
-    <section id="evidence">
-      <h2>공개 근거와 기술적 경계</h2>
-      <p class="section-intro">이 사이트는 공개 근거로 뒷받침되는 설명과 세부 개발현황을 구분합니다.</p>
-      <div class="two-column">
-        <div class="panel"><h3>공개 근거자료</h3><ul class="clean-list"><li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md">주요 공개 문헌</a></li><li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/CAPABILITIES.md">기능 개요</a></li><li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/MODEL_CARD.md">공개 모델 카드</a></li></ul></div>
-        <div class="panel"><h3>상세 현행 상태</h3><p>분포형 수문 핵심기능은 공개 연구기록으로 확립되어 있습니다. 하천 수리, 1D-2D, 2D 범람, 입력편집과 시각화 구성요소의 세부 성숙도는 <a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md">공개 개발현황표</a>에서 별도로 확인할 수 있습니다.</p></div>
-      </div>
-      <div class="official"><div><h3>K-water 및 연구 맥락</h3><p>K-DRUM은 K-water MyWater의 K-Series 기술 소프트웨어 맥락에서 소개되고 있습니다. 기관의 공식 정보는 K-water 공식 홈페이지에서 확인해야 합니다.</p><p><a href="https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127">MyWater K-Series 안내</a> · <a href="https://www.kwater.or.kr/kiwe/main.do">K-water연구원</a></p><p class="small">이 페이지는 독립적인 공개 기술정보 페이지이며 K-water의 공식 기관 홈페이지로 표시하지 않습니다.</p></div><a href="https://www.kwater.or.kr/kiwe/main.do" aria-label="K-water연구원 공식 홈페이지 열기"><img src="../assets/kwater-research-institute-qr.svg" alt="K-water연구원 공식 홈페이지 QR 코드" width="150" height="150"></a></div>
-      <div class="status-note"><strong>공개 경계.</strong> 운영 소스코드, 제한된 데이터셋, 민감한 운영정보, 내부 진단자료와 미공개 구현 상세는 배포하지 않습니다. 공개 시각자료는 출처가 확인된 자산 또는 중립적 기술개념도만 사용하며, 임의 제작한 기관 심볼은 사용하지 않습니다.</div>
-    </section>
-  </main>
-
-  <footer><strong>K-DRUM</strong> — K-water Grid-based Distributed Rainfall rUnoff Model · 공개정보 기준: 2026년 8월.</footer>
+<a class="skip" href="#main">본문으로 바로가기</a>
+<nav class="topbar" aria-label="주요 메뉴"><div class="wrap topbar-inner"><div class="site-name">K-DRUM Public</div><div class="nav"><a href="#architecture">모형구조</a><a href="#capabilities">기능</a><a href="#applications">활용</a><a href="#tools">도구</a><a href="#evidence">근거</a><span class="language"><a href="../" lang="en">English</a><a class="active" href="./" lang="ko" aria-current="page">한국어</a></span></div></div></nav>
+<header class="hero"><div class="wrap hero-grid"><div><p class="eyebrow">분포형 수문 · 하천 수리 · 홍수해석</p><h1>K-DRUM</h1><p class="full-name">K-water Grid-based Distributed Rainfall rUnoff Model</p><p class="lead">K-water가 개발해 온 물리적 기반의 격자형 분포형 수문모형으로, 현재는 유역에서 하천·범람원까지 연결하는 통합 해석 플랫폼으로 확장되고 있습니다.</p><p class="supporting">K-DRUM의 수문 핵심기능은 홍수유출, 장기유출, 융설, 가뭄, 병렬계산, 지표수-지하수 연계 등 공개 연구성과를 통해 축적되어 왔습니다. 현행 v3.x 체계에서는 하천 수리, 1D-2D 상호교환, 홍수범람, 입력자료 작성, 결과 시각화 기능을 추가하고 있으며 각 기능의 성숙도는 별도로 구분하여 공개합니다.</p><div class="actions"><a class="button primary" href="#architecture">모형 구조 보기</a><a class="button" href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md">공개 연구성과</a><a class="button" href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md">개발 현황</a></div></div><figure class="hero-visual"><svg viewBox="0 0 760 540" role="img" xmlns="http://www.w3.org/2000/svg" aria-labelledby="visual-title visual-desc"><title id="visual-title">K-DRUM 유역-범람원 개념도</title><desc id="visual-desc">격자형 산지 유역의 강우가 저수지와 하천망을 거쳐 범람원 및 도시 구간으로 흐르는 개념도입니다.</desc><defs><pattern id="g" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M34 0H0V34" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.5"/></pattern><linearGradient id="w" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#1769aa"/><stop offset="1" stop-color="#42b5cf"/></linearGradient></defs><g fill="#fff" opacity=".95"><ellipse cx="112" cy="78" rx="54" ry="24"/><ellipse cx="157" cy="80" rx="58" ry="28"/></g><g stroke="#298bc0" stroke-width="5" stroke-linecap="round"><path d="M95 112l-15 32M126 112l-15 32M157 112l-15 32M188 112l-15 32"/></g><path d="M0 310L115 158l83 90 105-142 108 157 80-86 96 133v230H0z" fill="#568564"/><path d="M0 310L115 158l83 90 105-142 108 157 80-86 96 133v160H0z" fill="url(#g)"/><ellipse cx="355" cy="308" rx="92" ry="38" fill="#287fb3"/><path d="M410 328C455 357 474 389 525 383c55-7 74-49 126-34 38 11 64 41 109 47" fill="none" stroke="url(#w)" stroke-width="42" stroke-linecap="round"/><path d="M500 392c45-25 87-21 121 8 22 18 25 43 7 60-48 20-112 11-148-19-10-19-4-35 20-49z" fill="#67b9e5" opacity=".58"/><g fill="#d9e3e9" stroke="#6d7d87" stroke-width="2"><rect x="590" y="270" width="36" height="76"/><rect x="634" y="246" width="48" height="100"/><rect x="690" y="284" width="34" height="62"/></g><g fill="#0b5f88"><path d="M453 351l21 6-18 12zM548 374l21-2-15 15zM664 365l21 4-18 12z"/></g></svg><figcaption>개념적 시스템 구성 — 분포형 유역, 저수지·하천 추적, 하천-범람원 상호작용.</figcaption></figure></div></header>
+<main id="main" class="wrap">
+<div class="facts" aria-label="K-DRUM 한눈에 보기"><div class="fact"><strong>물리기반 분포형 수문 핵심</strong><span>격자 단위 강우유출, 침투, 증발산, 지표·지하 유출을 계산합니다.</span></div><div class="fact"><strong>사상홍수부터 장기해석까지</strong><span>홍수, 융설, 가뭄, 유역 물수지 관련 공개 적용사례가 있습니다.</span></div><div class="fact"><strong>병렬계산 개발 이력</strong><span>MPI 기반 병렬화 연구를 통해 대유역 계산 체계를 발전시켜 왔습니다.</span></div><div class="fact"><strong>현행 v3.x 통합 플랫폼</strong><span>하천수리, 범람원 연계, 입력 편집과 결과 시각화를 통합 중입니다.</span></div></div>
+<section id="architecture"><h2>모형 구조를 한눈에</h2><p class="section-intro">기상·강우와 공간지형 자료에서 시작하여 분포형 수문과정, 하천망 추적, 하천-범람원 상호작용을 거쳐 통합 결과와 시각화로 이어지는 하나의 해석 흐름으로 구성합니다.</p><div class="architecture"><div class="arch"><b>기상·공간자료</b><small>강우 · 기상 · DEM</small></div><div class="arch"><b>분포형 수문</b><small>침투 · 증발산 · 유출</small></div><div class="arch"><b>하천 네트워크</b><small>운동파 / 동역학파</small></div><div class="arch"><b>범람원 상호작용</b><small>1D-2D 교환 · 범람</small></div><div class="arch"><b>결과·해석</b><small>통합출력 · FloodViewer</small></div></div></section>
+<section id="capabilities"><h2>기능과 성숙도를 함께 표시합니다</h2><p class="section-intro">기존 공개 연구로 확립된 수문 기능과 현재 개발 중인 수리·소프트웨어 기능을 구분합니다. 아래 표시는 모든 기능이 동일한 수준으로 운영 가능하다는 의미가 아닙니다.</p><div class="status-grid"><article class="status-card"><span class="badge established">확립된 기능</span><h3>분포형 수문 핵심</h3><p>공간 강우유출, Green-Ampt 침투, 지표·지하 유출, 운동파 추적, 장기수문 및 융설 적용은 공개 연구성과로 뒷받침됩니다.</p></article><article class="status-card"><span class="badge development">개발 중</span><h3>1D 하천수리와 2D 홍수해석</h3><p>단면 기반 동역학파 하천망, 분기·합류 수리, 수리구조물 및 2D 범람해석은 통합과 검증을 계속하고 있습니다.</p></article><article class="status-card"><span class="badge validated">개발 검증 완료</span><h3>양방향 1D-2D 연계</h3><p>통제된 개발 검증조건에서 하천과 범람원 간 양방향 물 교환이 작동함을 확인했습니다. 이는 모든 유역에 대한 운영 인증을 의미하지 않습니다.</p></article><article class="status-card"><span class="badge release">릴리스 후보</span><h3>K-DRUM FloodViewer</h3><p>통합 결과뷰어는 릴리스 후보 단계이며, InputStudio와 지형·단면 관련 도구는 계속 개발 중입니다.</p></article></div><p class="small">전체 성숙도 표와 검증 범위는 <a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md">DEVELOPMENT_STATUS.md</a>에서 확인할 수 있습니다.</p></section>
+<section id="applications"><h2>공개 연구성과로 확인되는 활용 분야</h2><p class="section-intro">선정된 공개 문헌과 기관 기록을 통해 K-DRUM의 홍수·물순환·계산수문 분야 적용 이력을 확인할 수 있습니다.</p><div class="application-grid"><article class="card"><h3>레이더·격자강우</h3><p>공간 강우정보를 활용한 분포형 홍수유출 해석.</p></article><article class="card"><h3>병렬계산</h3><p>대유역 계산을 위한 MPI 기반 병렬화 연구.</p></article><article class="card"><h3>장기유출·융설</h3><p>장기간 물수지와 적설·융설을 함께 고려한 적용.</p></article><article class="card"><h3>가뭄·유역 물수지</h3><p>단일 홍수사상을 넘어선 분포형 장기 수문분석.</p></article><article class="card"><h3>지표수-지하수 연계</h3><p>K-DRUM과 지하수 모형의 연계 적용 연구.</p></article><article class="card"><h3>복합 유역교란</h3><p>산불 피해 이후 극한호우에 따른 강우유출 변화 분석.</p></article></div></section>
+<section id="tools"><h2>현재의 K-DRUM 플랫폼 도구</h2><p class="section-intro">현행 v3.x 개발은 개별 파일을 각각 수정하는 방식에서 벗어나 프로젝트 작성, 모의계산, 결과해석이 연결되는 일관된 환경을 지향합니다.</p><div class="tool-grid"><article class="card"><h3>K-DRUM Core</h3><p>분포형 수문과 현행 수문·수리 계산을 담당하는 핵심 엔진입니다.</p></article><article class="card"><h3>InputStudio</h3><p>프로젝트 설정, 시계열, 지형·단면, 시나리오, 일관성 점검과 입력자료 생성을 지원합니다.</p></article><article class="card"><h3>FloodViewer</h3><p>수문·수리 결과를 공간과 시간 변화 관점에서 통합 시각화합니다.</p></article><article class="card"><h3>ChannelBed</h3><p>고해상도 지형, 하천기하와 가상 하상고 생성을 위한 재사용형 처리 모듈입니다.</p></article><article class="card"><h3>통합 NetCDF 출력</h3><p>계산엔진과 결과뷰어 사이의 표준화된 결과 교환을 위한 출력 현대화 체계입니다.</p></article><article class="card"><h3>Estuary2DV 연구 프로토타입</h3><p>하구 종·연직 수리와 염분을 대상으로 별도 검증 중인 실험적 연구모형입니다.</p></article></div></section>
+<section id="evidence"><h2>공개 근거와 기술 공개 범위</h2><p class="section-intro">이 저장소는 공개 기술정보를 제공하기 위한 공간입니다. 외부 근거가 있는 설명과 상세 개발상태를 구분하고, 운영용 생산 소스코드는 배포하지 않습니다.</p><div class="two-column"><div class="panel"><h3>공개 기술자료</h3><ul class="clean-list"><li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md">선정 논문 및 기관 기록</a></li><li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/CAPABILITIES.md">기능 개요</a></li><li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/MODEL_CARD.md">공개 모델카드</a></li><li><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/ROADMAP.md">공개 로드맵</a></li></ul></div><div class="panel"><h3>현재 기능 설명을 읽는 방법</h3><p>기존 분포형 수문 기능은 공개 연구 이력이 확립되어 있습니다. 반면 하천수리, 1D-2D, 2D, 입력편집 및 시각화 기능은 기능별로 서로 다른 개발 성숙도와 검증 범위를 갖습니다.</p><p><a href="https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md">상세 공개 개발현황 보기 →</a></p></div></div><div class="official"><div><h3>K-water 및 연구 맥락</h3><p>K-DRUM은 K-water MyWater의 K-Series 기술 소프트웨어 맥락에서 소개되어 있습니다. 기관 공식정보는 K-water 공식 홈페이지를 통해 확인하는 것이 원칙입니다.</p><p><a href="https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127">MyWater K-Series</a> · <a href="https://www.kwater.or.kr/kiwe/main.do">K-water 연구원</a></p><p class="small">이 페이지는 K-DRUM 공개 기술정보 페이지이며 K-water의 공식 기관 홈페이지를 대신하지 않습니다.</p></div><a href="https://www.kwater.or.kr/kiwe/main.do" aria-label="K-water 연구원 공식 홈페이지 열기"><img src="../assets/kwater-research-institute-qr.svg" alt="K-water 연구원 공식 홈페이지 QR 코드" width="138" height="138"></a></div><div class="boundary"><strong>공개 범위.</strong> 생산용 소스코드, 제한된 입력자료, 민감한 운영정보, 내부 진단자료 및 미공개 수치구현 세부사항은 이 저장소에서 배포하지 않습니다.</div></section>
+</main>
+<footer><div class="wrap"><strong>K-DRUM</strong> — K-water Grid-based Distributed Rainfall rUnoff Model · 공개 정보 기준: 2026년 8월.</div></footer>
 </body>
 </html>
