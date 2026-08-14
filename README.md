@@ -1,105 +1,87 @@
 # K-DRUM
 
-**Full name: K-water Grid-based Distributed Rainfall rUnoff Model**
+**K-water Grid-based Distributed Rainfall rUnoff Model**
 
-**K-DRUM is K-water's physically based, grid-based distributed hydrologic model for rainfall-runoff simulation and integrated watershed analysis.**
+K-DRUM is K-water's physically based, grid-distributed hydrologic model for rainfall-runoff simulation. It has an established public research record and is currently maintained in a **v3.x** development line that extends the hydrologic core toward integrated river hydraulics, floodplain interaction, flood-inundation analysis, project authoring, and result visualization.
 
-K-DRUM은 K-water에서 개발해 온 물리적 기반의 격자형 분포형 강우-유출 모형입니다. 이 저장소는 K-DRUM의 공개 기술정보, 개발 상태, 연구 문헌과 비민감 정보를 제공하기 위한 공개 기술정보 저장소입니다.
+K-DRUM은 K-water가 개발해 온 물리적 기반의 격자형 분포형 강우-유출 모형입니다. 확립된 수문 핵심기능과 공개 연구성과를 기반으로, 현행 v3.x 체계에서는 하천 수리, 하천–범람원 연계, 범람해석, 입력자료 편집과 결과 시각화를 통합하는 방향으로 확장되고 있습니다.
 
-Public website: https://youngteckhur.github.io/KDRUM-Public/
+- Public website: https://youngteckhur.github.io/KDRUM-Public/
+- Korean page: https://youngteckhur.github.io/KDRUM-Public/ko/
 
-> **Public technical-information repository only.**  
-> This repository is not a substitute for K-water's official institutional information. K-water/MyWater should be treated as the authoritative source for institutional and official product information.  
-> Production source code, validation datasets, internal diagnostics, operational data, and unpublished implementation details are not distributed here.
+## What K-DRUM is
 
-## Background
+K-DRUM represents watershed response on a spatial grid. Its established hydrologic foundation includes distributed rainfall-runoff processes, Green-Ampt infiltration, surface and subsurface runoff, evapotranspiration-related water balance, and kinematic-wave routing.
 
-K-DRUM has been developed and applied since the late 2000s for distributed hydrologic analysis. Published research has described applications including radar-rainfall flood simulation, kinematic-wave routing, Green-Ampt infiltration, MPI parallelization, long-term runoff and snow processes, drought analysis, and surface-water/groundwater coupling.
+The model family has been applied in public research to flood simulation with radar/grid rainfall, parallel computation, long-term runoff and snowmelt, drought and water-balance analysis, surface-water/groundwater coupling, and recent wildfire/extreme-rainfall runoff studies.
 
-K-DRUM is also listed in K-water's MyWater **K-Series** technical software family as a physically based, grid-scale distributed model for rainfall-runoff analysis.
+## Established foundation
 
-## Current development direction
+Public K-DRUM research supports the following high-level capabilities:
 
-The current K-DRUM development program is extending the original distributed rainfall-runoff framework toward a more integrated hydrologic and hydraulic modeling system.
+- physically based, grid-distributed rainfall-runoff simulation
+- spatial rainfall forcing, including radar/grid rainfall applications
+- Green-Ampt infiltration
+- surface and subsurface runoff representation
+- kinematic-wave flow routing
+- long-term runoff and evapotranspiration-related water balance
+- snow accumulation and snowmelt applications
+- MPI-based parallel-computation lineage
 
-Current development areas include:
+## Current v3.x platform
 
-- distributed rainfall-runoff and physical hydrology
-- kinematic-wave routing
-- 1D dynamic-wave river-network hydraulics
-- branched and merged river networks
-- bidirectional 1D-2D hydraulic coupling
-- 2D flood-inundation analysis
-- hydraulic structures and reservoir-operation scenarios
-- high-resolution terrain, river alignment, and virtual channel-bed processing
-- NetCDF-based integrated outputs
-- parallel computation
-- project authoring through **K-DRUM InputStudio**
-- result visualization through **K-DRUM FloodViewer**
-- experimental estuary and salinity research through **K-DRUM Estuary2DV**
+The current generation builds on the established hydrologic core and organizes K-DRUM as a connected modeling platform:
 
-These functions are at different stages of maturity. See [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) before interpreting a development function as production-ready.
+- **K-DRUM Core** — distributed hydrology and current hydrologic-hydraulic simulation engine
+- **K-DRUM InputStudio** — project configuration, time series, geometry, scenarios, consistency checks, and engine-input generation
+- **K-DRUM FloodViewer** — integrated visualization of spatial and time-varying simulation results
+- **K-DRUM ChannelBed** — reusable high-resolution terrain, river-geometry, and virtual channel-bed processing
+- **K-DRUM Estuary2DV** — independent estuary hydrodynamics and salinity research prototype
 
-## Model family
+Current hydraulic extensions include 1D dynamic-wave river-network hydraulics, branched and merged networks, bidirectional 1D-2D river-floodplain exchange, 2D flood-inundation analysis, hydraulic structures, and reservoir-operation scenarios. These components have different validation levels; see [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) for the public maturity boundary.
 
-### K-DRUM Core
-The hydrologic and hydraulic simulation engine. Current development is in the **v3.x** line.
+## Publicly documented application themes
 
-### K-DRUM InputStudio
-An object-centered project and input authoring environment under active development. It manages model objects, geometry, time series, scenarios, quality checks, and generation of engine-compatible inputs.
+The selected public record includes:
 
-### K-DRUM FloodViewer
-A visualization environment under release-candidate development for spatial and time-varying hydrologic and hydraulic results.
+- flood simulation using spatial and radar rainfall
+- parallel computation for distributed rainfall-runoff modeling
+- long-term runoff, snow accumulation, and snowmelt
+- drought and watershed water-balance analysis
+- surface-water/groundwater model coupling
+- wildfire and extreme-rainfall runoff response
 
-### K-DRUM ChannelBed
-A development module for high-resolution river geometry and virtual channel-bed generation, designed so that the calculation core can be reused by K-DRUM and external authoring workflows.
+See [PUBLICATIONS.md](PUBLICATIONS.md) for the selected bibliography.
 
-### K-DRUM Estuary2DV
-An **experimental** longitudinal-vertical (x-z) estuary hydrodynamics and salinity prototype. It is being verified independently before future coupling with K-DRUM river hydraulics and hydraulic-structure operation.
+## How to interpret this repository
 
-## Public status vocabulary
+This repository is a **public technical-information repository**, not a distribution of the production source code.
 
-This repository uses public maturity labels to distinguish established capability from work that remains under development:
+The homepage presents K-DRUM's established foundation, technical relevance, current platform, and public research evidence. Detailed readiness claims are kept separately in:
 
-- **ESTABLISHED** — supported by the historical K-DRUM model family and published applications.
-- **VALIDATED DEVELOPMENT** — demonstrated in controlled development/regression testing, but not equivalent to a production certification.
-- **ACTIVE DEVELOPMENT** — implemented or actively being integrated, with verification still in progress.
-- **RELEASE CANDIDATE** — nearing a release target but still undergoing acceptance testing.
-- **EXPERIMENTAL** — research prototype or exploratory capability.
+- [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md)
+- [CAPABILITIES.md](CAPABILITIES.md)
+- [MODEL_CARD.md](MODEL_CARD.md)
+- [ROADMAP.md](ROADMAP.md)
 
-## Publication safety
+Production source code, restricted model inputs, internal validation datasets, sensitive operational data, private diagnostics, and unpublished implementation details are not published here.
 
-Public information is governed by [PUBLICATION_POLICY.md](PUBLICATION_POLICY.md). The public repository is intentionally **not** a mirror of private development repositories. A GitHub Actions safety audit checks public changes for blocked engineering file types and common leakage patterns before they are accepted as clean public information.
+## Visual-material rule
 
-Visual assets follow the same rule: only verified K-DRUM screenshots, independently created non-brand diagrams, QR codes that point to verified official URLs, and officially supplied institutional CI assets may be published. AI-generated or look-alike K-DRUM/K-water/MyWater brand symbols are not used.
-
-## Public references
-
-A selected public bibliography is maintained in [PUBLICATIONS.md](PUBLICATIONS.md).
-
-Important historical references include research on:
-
-- GIS/radar-rainfall distributed flood simulation
-- MPI-based parallelization
-- long-term snowmelt and runoff
-- drought analysis
-- surface-water/groundwater coupling
-- recent wildfire and extreme-rainfall runoff analysis
+Public images are limited to reviewed K-DRUM materials, independently created neutral technical diagrams, verified QR codes, and appropriately sourced official institutional assets. AI-generated or look-alike K-DRUM, K-water, or MyWater brand symbols are not used.
 
 ## Official context
 
-K-DRUM is included in the K-water MyWater **K-Series** technical software listing.
+K-DRUM is included in K-water's MyWater **K-Series** technical-software context.
 
-Official K-Series listing:  
-https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127
+- K-water MyWater K-Series: https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127
+- K-water Research Institute: https://www.kwater.or.kr/kiwe/main.do
 
 ## Naming note
 
-This public site uses **K-water Grid-based Distributed Rainfall rUnoff Model** as the current canonical expansion of **K-DRUM**. Historical publications used several expanded English forms; their original titles and wording are preserved in the bibliography rather than silently rewritten.
+The current canonical expansion used by this public site is **K-water Grid-based Distributed Rainfall rUnoff Model**. Historical publications used several expanded English forms of the acronym; original publication titles and source wording are preserved rather than rewritten.
 
 ---
 
 **Canonical model name:** K-DRUM  
-**Canonical expansion:** K-water Grid-based Distributed Rainfall rUnoff Model  
-**Development status:** Active development  
-**Public information baseline:** August 2026
+**Current public baseline:** v3.x / August 2026
