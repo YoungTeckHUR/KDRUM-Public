@@ -38,6 +38,14 @@ jobs:
                   'max_bytes': 500_000,
                   'magic': b'\xff\xd8\xff',
               },
+              'docs/assets/kdrum-symbol.png': {
+                  'max_bytes': 100_000,
+                  'magic': b'\x89PNG\r\n\x1a\n',
+              },
+              'docs/assets/kwater-ci.png': {
+                  'max_bytes': 100_000,
+                  'magic': b'\x89PNG\r\n\x1a\n',
+              },
           }
 
           patterns = [
@@ -68,7 +76,7 @@ jobs:
                   with path.open('rb') as fh:
                       magic = fh.read(len(rule['magic']))
                   if magic != rule['magic']:
-                      findings.append(f'{path}: approved image has invalid JPEG signature')
+                      findings.append(f'{path}: approved image has invalid file signature')
                   continue
 
               if path.suffix.lower() in blocked_suffixes:
