@@ -1,1 +1,1 @@
-(placeholder)
+(()=>{const b=document.createElement('script');b.src='../assets/visuals/tech-description-runtime-base.js';b.onload=()=>{const e=document.createElement('script');e.src='../assets/visuals/tech-popup-enhancer.js';document.head.appendChild(e)};document.head.appendChild(b)})();
