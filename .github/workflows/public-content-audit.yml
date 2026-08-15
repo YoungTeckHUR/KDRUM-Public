@@ -70,6 +70,18 @@ jobs:
                   'max_bytes': 500_000,
                   'magic': b'\xff\xd8\xff',
               },
+              'docs/assets/visuals/explainers/01-grid-distributed.jpg': {
+                  'max_bytes': 200_000,
+                  'magic': b'\xff\xd8\xff',
+              },
+              'docs/assets/visuals/explainers/02-rainfall-runoff.jpg': {
+                  'max_bytes': 200_000,
+                  'magic': b'\xff\xd8\xff',
+              },
+              'docs/assets/visuals/explainers/03-river-1d.jpg': {
+                  'max_bytes': 200_000,
+                  'magic': b'\xff\xd8\xff',
+              },
           }
 
           patterns = [
