@@ -76,11 +76,23 @@
 
   document.documentElement.dataset.kdrumBrandRuntime='ready';
 
+  function finalizePublicCopy(){
+    const viewer=document.querySelector('[data-kdrum1d-viewer]');
+    if(viewer) viewer.setAttribute('data-kdrum-1d-viewer','1');
+    document.documentElement.dataset.kdrumPublicCopyLinked='ready';
+  }
+
   function loadPublicCopy(){
-    if(document.querySelector('script[data-kdrum-public-copy]'))return;
+    const existing=document.querySelector('script[data-kdrum-public-copy]');
+    if(existing){
+      if(document.documentElement.dataset.kdrumPublicCopy==='ready')finalizePublicCopy();
+      else existing.addEventListener('load',finalizePublicCopy,{once:true});
+      return;
+    }
     const copy=document.createElement('script');
     copy.dataset.kdrumPublicCopy='1';
     copy.src=(ko?'../assets/':'assets/')+'public-copy-runtime-v2.js';
+    copy.addEventListener('load',finalizePublicCopy,{once:true});
     document.head.appendChild(copy);
   }
 
