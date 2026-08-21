@@ -11,8 +11,6 @@
   }
 
   if(heroMark){
-    // The approved compact asset trims presentation whitespace while retaining
-    // the reviewed symbol artwork, so the hero does not need transform-based cropping.
     heroMark.src=base+'kdrum-symbol-compact.png';
     heroMark.dataset.brandAsset='compact-hero';
     if(!heroMark.parentElement?.classList.contains('brand-symbol-frame')){
@@ -78,25 +76,14 @@
 
   document.documentElement.dataset.kdrumBrandRuntime='ready';
 
-  function loadProductGuard(){
-    if(document.querySelector('script[data-kdrum-product-guard]'))return;
-    const guard=document.createElement('script');
-    guard.dataset.kdrumProductGuard='1';
-    guard.src=(ko?'../assets/':'assets/')+'public-product-name-guard.js';
-    document.head.appendChild(guard);
-  }
-
   function loadPublicCopy(){
     if(document.querySelector('script[data-kdrum-public-copy]'))return;
     const copy=document.createElement('script');
     copy.dataset.kdrumPublicCopy='1';
     copy.src=(ko?'../assets/':'assets/')+'public-copy-runtime-v2.js';
-    copy.addEventListener('load',loadProductGuard,{once:true});
     document.head.appendChild(copy);
   }
 
-  // Load the comprehensive capability atlas after branding has stabilized.
-  // The atlas is bilingual and derives its asset path from the document language.
   const existingAtlas=document.querySelector('script[data-kdrum-capability-atlas]');
   if(!existingAtlas){
     const atlas=document.createElement('script');
