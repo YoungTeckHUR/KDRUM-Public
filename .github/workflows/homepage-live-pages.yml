@@ -163,7 +163,7 @@ jobs:
                 await tabs.nth(i).click();
                 total+=await page.locator('.catlas-card').count();
               }
-              if(total!==40){result={ok:false,attempt,stage:'atlas-count',metrics,total,errors};await page.close();return result;}
+              if(total!==45){result={ok:false,attempt,stage:'atlas-count',metrics,total,errors};await page.close();return result;}
 
               const card=await findCard(page,'wb');
               if(!card){result={ok:false,attempt,stage:'water-balance-card-missing',metrics,total,errors};await page.close();return result;}
