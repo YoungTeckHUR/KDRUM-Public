@@ -1,4 +1,9 @@
 (()=>{
+const brand=document.createElement('script');
+brand.src='assets/branding/brand-runtime.js';
+brand.defer=true;
+document.head.appendChild(brand);
+
 const FACTS={
 'Grid-based distributed modeling':{s:'ESTABLISHED',sum:'K-DRUM represents watershed response on computational grids so that terrain, soil, rainfall and hydrologic state can vary spatially and runoff can be transferred downstream through the grid and river network.',now:'This is part of the established public hydrologic foundation of K-DRUM.',lim:'Results depend on the consistency and resolution of DEM, soil, land-cover and rainfall inputs.',ev:'CAPABILITIES.md · PUBLICATIONS.md',doc:'CAPABILITIES.md'},
 'Rainfall-to-runoff simulation':{s:'ESTABLISHED',sum:'Rainfall is linked with interception, infiltration, soil-water storage, evapotranspiration, surface runoff and subsurface runoff before generated flow is collected into the river network.',now:'Green-Ampt infiltration, surface/subsurface runoff and kinematic-wave routing are supported by the public K-DRUM research record.',lim:'Event results are sensitive to initial moisture and soil parameters; continuous simulations also require consistent storage and evapotranspiration accounting.',ev:'CAPABILITIES.md · PUBLICATIONS.md',doc:'CAPABILITIES.md'},

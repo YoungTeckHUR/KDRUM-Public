@@ -1,0 +1,206 @@
+name: Homepage browser smoke
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout public repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Chromium test runtime
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start local homepage server
+        run: |
+          python3 -m http.server 8000 --directory docs >/tmp/kdrum-http.log 2>&1 &
+          for i in {1..20}; do
+            if curl -fsS http://127.0.0.1:8000/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/kdrum-http.log
+          exit 1
+
+      - name: Run rendered browser checks
+        run: |
+          mkdir -p browser-artifacts
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+
+          const cases = [
+            {name:'en-desktop', url:'http://127.0.0.1:8000/', viewport:{width:1440,height:1000}, dialog:'#kexp-en-dialog', heroFrame:82},
+            {name:'ko-desktop', url:'http://127.0.0.1:8000/ko/', viewport:{width:1440,height:1000}, dialog:'#kexp-dialog', heroFrame:82},
+            {name:'en-mobile', url:'http://127.0.0.1:8000/', viewport:{width:390,height:844}, dialog:'#kexp-en-dialog', heroFrame:60},
+            {name:'ko-mobile', url:'http://127.0.0.1:8000/ko/', viewport:{width:390,height:844}, dialog:'#kexp-dialog', heroFrame:60},
+          ];
+
+          (async()=>{
+            const browser = await chromium.launch();
+            const failures = [];
+            const report = {};
+
+            for (const c of cases) {
+              const page = await browser.newPage({viewport:c.viewport});
+              const browserErrors = [];
+              page.on('console', msg => { if (msg.type() === 'error') browserErrors.push(`console: ${msg.text()}`); });
+              page.on('pageerror', err => browserErrors.push(`pageerror: ${err.message}`));
+
+              await page.goto(c.url, {waitUntil:'networkidle'});
+              await page.waitForFunction(() => document.documentElement.dataset.kdrumBrandRuntime === 'ready', null, {timeout:8000});
+
+              const metrics = await page.evaluate(() => {
+                const nav = document.querySelector('.site-mark');
+                const hero = document.querySelector('.brand-symbol');
+                const frame = document.querySelector('.brand-symbol-frame');
+                const ns = getComputedStyle(nav);
+                const hs = getComputedStyle(hero);
+                const nr = nav.getBoundingClientRect();
+                const fr = frame.getBoundingClientRect();
+                return {
+                  navSrc: nav.getAttribute('src'),
+                  heroSrc: hero.getAttribute('src'),
+                  navWidth: nr.width,
+                  navHeight: nr.height,
+                  frameWidth: fr.width,
+                  frameHeight: fr.height,
+                  heroCssWidth: parseFloat(hs.width),
+                  heroCssHeight: parseFloat(hs.height),
+                  navPadding: ns.paddingTop,
+                  heroPadding: hs.paddingTop,
+                  heroTransform: hs.transform,
+                  scrollWidth: document.documentElement.scrollWidth,
+                  clientWidth: document.documentElement.clientWidth,
+                };
+              });
+              report[c.name] = {metrics, browserErrors};
+
+              const near = (a,b) => Math.abs(a-b) <= 1.1;
+              if (!metrics.navSrc.includes('branding/kdrum-symbol-compact.png')) failures.push(`${c.name}: navigation mark is not the canonical compact asset`);
+              if (!metrics.heroSrc.includes('branding/kdrum-symbol-web.png')) failures.push(`${c.name}: hero mark is not the canonical web asset`);
+              if (!near(metrics.navWidth,32) || !near(metrics.navHeight,32)) failures.push(`${c.name}: navigation mark is ${metrics.navWidth}x${metrics.navHeight}, expected 32x32`);
+              if (!near(metrics.frameWidth,c.heroFrame) || !near(metrics.frameHeight,c.heroFrame)) failures.push(`${c.name}: hero frame is ${metrics.frameWidth}x${metrics.frameHeight}, expected ${c.heroFrame}x${c.heroFrame}`);
+              if (!near(metrics.heroCssWidth,c.heroFrame) || !near(metrics.heroCssHeight,c.heroFrame)) failures.push(`${c.name}: hero artwork layout size does not fill its frame`);
+              if (metrics.navPadding !== '1px') failures.push(`${c.name}: navigation mark padding is ${metrics.navPadding}, expected 1px`);
+              if (metrics.heroPadding !== '0px') failures.push(`${c.name}: hero artwork padding is ${metrics.heroPadding}, expected 0px`);
+              if (metrics.heroTransform === 'none') failures.push(`${c.name}: hero artwork is not enlarged within the tightened frame`);
+              if (metrics.scrollWidth > metrics.clientWidth + 1) failures.push(`${c.name}: horizontal overflow ${metrics.scrollWidth} > ${metrics.clientWidth}`);
+              if (browserErrors.length) failures.push(`${c.name}: browser errors: ${browserErrors.join(' | ')}`);
+
+              await page.locator('.hero').screenshot({path:`browser-artifacts/${c.name}-hero.png`});
+
+              const firstFeature = page.locator('#features .feature').first();
+              await firstFeature.click();
+              const dialog = page.locator(c.dialog);
+              await dialog.waitFor({state:'visible', timeout:5000});
+              const dialogText = (await dialog.innerText()).trim();
+              if (dialogText.length < 40) failures.push(`${c.name}: technical popup opened but contains too little content`);
+              if (c.name.startsWith('ko-')) {
+                const statusRows = await dialog.locator('.kexp-statusrow').count();
+                if (statusRows !== 1) failures.push(`${c.name}: expected one public-status row, found ${statusRows}`);
+              }
+              if (c.name.endsWith('desktop')) await dialog.screenshot({path:`browser-artifacts/${c.name}-popup.png`});
+              await page.keyboard.press('Escape');
+              await page.close();
+            }
+
+            fs.writeFileSync('browser-artifacts/metrics.json', JSON.stringify(report, null, 2));
+            await browser.close();
+
+            if (failures.length) {
+              console.error('HOMEPAGE BROWSER SMOKE FAILED');
+              failures.forEach(x => console.error(' -', x));
+              process.exit(1);
+            }
+            console.log('HOMEPAGE BROWSER SMOKE PASSED');
+          })().catch(err => { console.error(err); process.exit(1); });
+          NODE
+
+      - name: Verify deployed GitHub Pages after main push
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+          const targets = [
+            {name:'live-en', url:'https://youngteckhur.github.io/KDRUM-Public/'},
+            {name:'live-ko', url:'https://youngteckhur.github.io/KDRUM-Public/ko/'},
+          ];
+
+          (async()=>{
+            const browser = await chromium.launch();
+            const failures = [];
+
+            for (const target of targets) {
+              let passed = false;
+              let last = 'not checked';
+              for (let attempt=1; attempt<=30 && !passed; attempt++) {
+                const page = await browser.newPage({viewport:{width:1440,height:1000}});
+                const errors = [];
+                page.on('console', msg => { if (msg.type() === 'error') errors.push(`console: ${msg.text()}`); });
+                page.on('pageerror', err => errors.push(`pageerror: ${err.message}`));
+                try {
+                  await page.goto(target.url, {waitUntil:'domcontentloaded', timeout:20000});
+                  await page.waitForFunction(() => document.documentElement.dataset.kdrumBrandRuntime === 'ready', null, {timeout:5000});
+                  const m = await page.evaluate(() => {
+                    const frame = document.querySelector('.brand-symbol-frame');
+                    const nav = document.querySelector('.site-mark');
+                    if (!frame || !nav) return null;
+                    const fr = frame.getBoundingClientRect();
+                    return {
+                      frameWidth: fr.width,
+                      frameHeight: fr.height,
+                      navSrc: nav.getAttribute('src'),
+                      scrollWidth: document.documentElement.scrollWidth,
+                      clientWidth: document.documentElement.clientWidth,
+                    };
+                  });
+                  if (m && Math.abs(m.frameWidth-82) <= 1.1 && Math.abs(m.frameHeight-82) <= 1.1 && m.navSrc.includes('branding/kdrum-symbol-compact.png') && m.scrollWidth <= m.clientWidth + 1 && errors.length === 0) {
+                    passed = true;
+                    await page.locator('.hero').screenshot({path:`browser-artifacts/${target.name}-hero.png`});
+                    console.log(`${target.name}: deployed page verified on attempt ${attempt}`);
+                  } else {
+                    last = JSON.stringify({metrics:m, errors});
+                  }
+                } catch (err) {
+                  last = err.message;
+                }
+                await page.close();
+                if (!passed) await sleep(10000);
+              }
+              if (!passed) failures.push(`${target.name}: live GitHub Pages did not reach the expected deployment state: ${last}`);
+            }
+
+            await browser.close();
+            if (failures.length) {
+              console.error('LIVE GITHUB PAGES VERIFICATION FAILED');
+              failures.forEach(x => console.error(' -', x));
+              process.exit(1);
+            }
+            console.log('LIVE GITHUB PAGES VERIFICATION PASSED');
+          })().catch(err => { console.error(err); process.exit(1); });
+          NODE
+
+      - name: Upload rendered screenshots and metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: homepage-browser-smoke
+          path: browser-artifacts/
+          if-no-files-found: error

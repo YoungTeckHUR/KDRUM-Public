@@ -25,9 +25,6 @@
   }
 
   function removeLegacyFeatureHandlers(){
-    // The Korean page still contains the early three-card master-dialog listener.
-    // Replace the feature nodes once after page parsing so the unified runtime
-    // owns every feature card and the same facts-first path is used everywhere.
     document.querySelectorAll('#features .feature').forEach(el=>{
       const clone=el.cloneNode(true);
       clone.removeAttribute('data-master-explainer');
@@ -55,12 +52,13 @@
 
     const dlg=document.createElement('dialog');
     dlg.id='kexp-dialog';
-    dlg.innerHTML='<div class="kexp-bar"><strong id="kexp-title"></strong><button class="kexp-close" type="button">닫기</button></div><div class="kexp-body"><p class="kexp-desc" id="kexp-desc"></p><div class="kexp-visual" id="kexp-visual"></div></div>';
+    dlg.innerHTML='<div class="kexp-bar"><strong id="kexp-title"></strong><button class="kexp-close" type="button">닫기</button></div><div class="kexp-body"><p class="kexp-desc" id="kexp-desc"></p><div class="kexp-visual" id="kexp-visual"><img id="kexp-img" alt="" hidden><div class="kexp-concept" id="kexp-concept" hidden><span>입력자료</span><span>물리과정</span><span>수치계산</span><span>결과분석</span></div></div></div>';
     document.body.appendChild(dlg);
 
     const ttl=dlg.querySelector('#kexp-title');
     const desc=dlg.querySelector('#kexp-desc');
-    const vis=dlg.querySelector('#kexp-visual');
+    const img=dlg.querySelector('#kexp-img');
+    const concept=dlg.querySelector('#kexp-concept');
     dlg.querySelector('.kexp-close').onclick=()=>dlg.close();
     dlg.onclick=e=>{if(e.target===dlg)dlg.close()};
 
@@ -78,9 +76,15 @@
       ttl.textContent=t;
       desc.textContent=d;
       if(images[t]){
-        vis.innerHTML='<img src="'+base+'explainers/'+images[t]+'" alt="'+t+' 설명 이미지">';
+        img.src=base+'explainers/'+images[t];
+        img.alt=t+' 설명 이미지';
+        img.hidden=false;
+        concept.hidden=true;
       }else{
-        vis.innerHTML='<div class="kexp-concept"><span>입력자료</span><span>물리과정</span><span>수치계산</span><span>결과분석</span></div>';
+        img.removeAttribute('src');
+        img.alt='';
+        img.hidden=true;
+        concept.hidden=false;
       }
       dlg.showModal();
     }
@@ -104,9 +108,6 @@
       });
     });
 
-    // Load the richer technical layer only after #kexp-dialog exists.
-    // PR #31 added this facts-first chain, but it was not reachable from the
-    // page runtime. Keeping the handoff here makes the execution order explicit.
     const details=document.createElement('script');
     details.src=base+'tech-description-runtime.js';
     document.head.appendChild(details);
