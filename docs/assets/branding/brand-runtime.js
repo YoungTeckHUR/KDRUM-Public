@@ -56,6 +56,25 @@
         transform:none;
         flex:none;
       }
+      .mywater-link-badge{
+        width:112px;
+        min-height:112px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        gap:2px;
+        padding:10px 8px;
+        border-radius:9px;
+        background:#fff;
+        color:#075795;
+        text-align:center;
+        line-height:1.2;
+        box-shadow:0 5px 18px rgba(0,0,0,.18);
+      }
+      .mywater-link-badge strong{font-size:1rem;color:#075795}
+      .mywater-link-badge span{font-size:.82rem;font-weight:800;color:#0b6cae}
+      .mywater-link-badge small{margin-top:5px;font-size:.7rem;font-weight:800;color:#31566e}
       @media(max-width:640px){
         .brand-symbol-frame{
           width:60px;
@@ -79,6 +98,23 @@
   function finalizePublicCopy(){
     const viewer=document.querySelector('[data-kdrum-1d-viewer],[data-kdrum1d-viewer]');
     if(viewer)viewer.setAttribute('data-kdrum-1d-viewer','1');
+
+    const official=document.querySelector('#references .official');
+    const oldImage=official?.querySelector('img');
+    const link=oldImage?.closest('a');
+    if(link&&oldImage){
+      link.href='https://www.water.or.kr/kor/board/index.do?bid=BD_00026&menuId=15_126_128&mode=list';
+      link.target='_blank';
+      link.rel='noopener';
+      link.setAttribute('aria-label',ko?'MyWater K-Series에서 K-DRUM 확인':'Open K-DRUM in MyWater K-Series');
+      const badge=document.createElement('span');
+      badge.className='mywater-link-badge';
+      badge.innerHTML=ko
+        ?'<strong>MyWater</strong><span>K-Series</span><small>K-DRUM 확인 →</small>'
+        :'<strong>MyWater</strong><span>K-Series</span><small>Open K-DRUM →</small>';
+      oldImage.replaceWith(badge);
+    }
+
     document.documentElement.dataset.kdrumPublicCopyLinked='ready';
   }
 
