@@ -164,7 +164,11 @@
       }
 
       for(const p of info.querySelectorAll(':scope>p')){
-        if(p.querySelector('a'))p.classList.add('mywater-links');
+        if(!p.querySelector('a'))continue;
+        p.classList.add('mywater-links');
+        for(const node of [...p.childNodes]){
+          if(node.nodeType===Node.TEXT_NODE)node.remove();
+        }
       }
     }
     const badge=official.querySelector('.mywater-link-badge');
