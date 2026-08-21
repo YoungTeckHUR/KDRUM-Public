@@ -132,6 +132,15 @@
     }
   }
 
+  function loadDesignSystem(){
+    const existing=document.querySelector('script[data-kdrum-design-system]');
+    if(existing)return;
+    const design=document.createElement('script');
+    design.dataset.kdrumDesignSystem='2';
+    design.src=(ko?'../assets/':'assets/')+'design-system-v2.js';
+    document.head.appendChild(design);
+  }
+
   function finalizePublicCopy(){
     const viewer=document.querySelector('[data-kdrum-1d-viewer],[data-kdrum1d-viewer]');
     if(viewer)viewer.setAttribute('data-kdrum-1d-viewer','1');
@@ -161,6 +170,7 @@
       });
     }
 
+    loadDesignSystem();
     document.documentElement.dataset.kdrumPublicCopyLinked='ready';
   }
 
