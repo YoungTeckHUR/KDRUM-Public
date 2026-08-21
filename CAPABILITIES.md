@@ -109,12 +109,12 @@ MPI has a public K-DRUM research lineage, while current serial/OpenMP/MPI consis
 
 ## MyWater K-Series public access
 
-K-DRUM is listed in K-water's MyWater K-Series technical-software program. MyWater states that K-Series software made available on the K-water website may be used free of charge by external individuals subject to the K-Series terms of use.
+MyWater lists K-DRUM in K-water's K-Series technical-software program as a physically based, grid-unit distributed model for rainfall-runoff analysis. MyWater also states that K-Series software made available on the website may be used free of charge by individuals outside K-water subject to the published terms of use.
 
-K-DRUM은 **MyWater 물정보포털 K-Series에서 무료로 내려받아 사용할 수 있으며**, 다운로드 버전과 사용조건은 MyWater에 게시된 최신 안내와 이용약관을 확인해야 합니다.
+K-DRUM은 **K-water 기술 SW 대국민 개방정책에 따라 MyWater 물정보포털 K-Series에서 무료로 내려받아 사용할 수 있습니다.** 다운로드 버전과 사용조건은 MyWater에 게시된 최신 안내 및 이용약관을 확인해야 합니다.
 
 - MyWater K-Series: https://www.water.or.kr/kor/board/index.do?bid=BD_00026&menuId=15_126_128&mode=list
-- K-Series technical-software terms: https://www.water.or.kr/kor/menu/sub.do?menuId=15_126
+- K-Series technical-software terms: https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127
 
 ## Public interpretation boundary
 
