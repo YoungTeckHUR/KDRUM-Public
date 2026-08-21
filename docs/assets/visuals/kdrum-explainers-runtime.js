@@ -52,13 +52,13 @@
 
     const dlg=document.createElement('dialog');
     dlg.id='kexp-dialog';
-    dlg.innerHTML='<div class="kexp-bar"><strong id="kexp-title"></strong><button class="kexp-close" type="button">닫기</button></div><div class="kexp-body"><p class="kexp-desc" id="kexp-desc"></p><div class="kexp-visual" id="kexp-visual"><img id="kexp-img" alt="" hidden><div class="kexp-concept" id="kexp-concept" hidden><span>입력자료</span><span>물리과정</span><span>수치계산</span><span>결과분석</span></div></div></div>';
+    dlg.innerHTML='<div class="kexp-bar"><strong id="kexp-title"></strong><button class="kexp-close" type="button">닫기</button></div><div class="kexp-body"><p class="kexp-desc" id="kexp-desc"></p><div class="kexp-visual" id="kexp-visual"><img id="kexp-img" alt="" hidden><div class="kexp-concept" id="kexp-visual-concept" hidden><span>입력자료</span><span>물리과정</span><span>수치계산</span><span>결과분석</span></div></div></div>';
     document.body.appendChild(dlg);
 
     const ttl=dlg.querySelector('#kexp-title');
     const desc=dlg.querySelector('#kexp-desc');
     const img=dlg.querySelector('#kexp-img');
-    const concept=dlg.querySelector('#kexp-concept');
+    const concept=dlg.querySelector('#kexp-visual-concept');
     dlg.querySelector('.kexp-close').onclick=()=>dlg.close();
     dlg.onclick=e=>{if(e.target===dlg)dlg.close()};
 

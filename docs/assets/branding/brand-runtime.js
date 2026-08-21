@@ -10,8 +10,10 @@
   }
 
   if(heroMark){
-    heroMark.src=base+'kdrum-symbol-web.png';
-    heroMark.dataset.brandAsset='web';
+    // The approved compact asset trims presentation whitespace while retaining
+    // the reviewed symbol artwork, so the hero does not need transform-based cropping.
+    heroMark.src=base+'kdrum-symbol-compact.png';
+    heroMark.dataset.brandAsset='compact-hero';
     if(!heroMark.parentElement?.classList.contains('brand-symbol-frame')){
       const frame=document.createElement('span');
       frame.className='brand-symbol-frame';
@@ -38,7 +40,7 @@
         height:82px;
         display:grid;
         place-items:center;
-        overflow:hidden;
+        overflow:visible;
         border-radius:12px;
         background:#fff;
         box-shadow:0 10px 26px rgba(0,0,0,.24);
@@ -47,13 +49,12 @@
       .brand-symbol-frame .brand-symbol{
         width:100%;
         height:100%;
-        padding:0;
-        border-radius:0;
-        background:transparent;
+        padding:1px;
+        border-radius:11px;
+        background:#fff;
         box-shadow:none;
         object-fit:contain;
-        transform:scale(1.12);
-        transform-origin:center;
+        transform:none;
         flex:none;
       }
       @media(max-width:640px){
@@ -65,9 +66,9 @@
         .brand-symbol-frame .brand-symbol{
           width:100%;
           height:100%;
-          padding:0;
-          border-radius:0;
-          transform:scale(1.12);
+          padding:1px;
+          border-radius:8px;
+          transform:none;
         }
       }
     `;

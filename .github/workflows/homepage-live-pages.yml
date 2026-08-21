@@ -9,11 +9,12 @@ on:
 
 permissions:
   contents: read
+  pages: read
   statuses: write
 
 jobs:
   live-pages:
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Set up Node.js
@@ -26,165 +27,235 @@ jobs:
           npm install --no-save playwright@1.55.0
           npx playwright install --with-deps chromium
 
+      - name: Wait for GitHub Pages build for this exact commit
+        id: pages_build
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.sha }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import time
+          import urllib.request
+
+          token=os.environ['GH_TOKEN']
+          sha=os.environ['SHA']
+          repo=os.environ['REPOSITORY']
+          url=f'https://api.github.com/repos/{repo}/pages/builds?per_page=100'
+          headers={
+              'Accept':'application/vnd.github+json',
+              'Authorization':f'Bearer {token}',
+              'X-GitHub-Api-Version':'2022-11-28',
+              'User-Agent':'KDRUM-Pages-QA',
+          }
+
+          deadline=time.monotonic()+600.0
+          attempt=0
+          last=None
+          while time.monotonic() < deadline:
+              attempt+=1
+              remaining=deadline-time.monotonic()
+              timeout=max(1.0,min(20.0,remaining))
+              req=urllib.request.Request(url,headers=headers)
+              try:
+                  with urllib.request.urlopen(req,timeout=timeout) as r:
+                      builds=json.load(r)
+                  build=next((item for item in builds if item.get('commit')==sha),None)
+                  if build:
+                      last={'commit':build.get('commit'),'status':build.get('status'),'error':build.get('error')}
+                      print(f'exact Pages build attempt {attempt}: {last}')
+                      if build.get('status')=='built':
+                          print('Exact GitHub Pages build is published.')
+                          raise SystemExit(0)
+                      if build.get('status')=='errored':
+                          raise SystemExit(f'GitHub Pages build for current commit errored: {build.get("error")}')
+                  else:
+                      last={'commit':sha,'status':'not-listed-yet'}
+                      print(f'exact Pages build attempt {attempt}: not listed yet')
+              except SystemExit:
+                  raise
+              except Exception as e:
+                  last={'request_error':str(e)}
+                  print(f'Pages build attempt {attempt} request error: {e}')
+
+              remaining=deadline-time.monotonic()
+              if remaining<=0:
+                  break
+              time.sleep(min(10.0,remaining))
+
+          raise SystemExit(f'Exact GitHub Pages build did not become ready within 10 minutes: {last}')
+          PY
+
       - name: Verify deployed English and Korean Pages
         id: live_verify
+        if: steps.pages_build.outcome == 'success'
         continue-on-error: true
+        env:
+          SHA: ${{ github.sha }}
         run: |
           mkdir -p live-artifacts
           node <<'NODE'
           const { chromium } = require('playwright');
           const fs = require('fs');
           const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+          const sha=process.env.SHA;
+          const LIVE_WINDOW_MS=10*60*1000;
 
-          const targets = [
-            {
-              name: 'live-en',
-              url: 'https://youngteckhur.github.io/KDRUM-Public/',
-              dialog: '#kexp-en-dialog',
-              korean: false,
-            },
-            {
-              name: 'live-ko',
-              url: 'https://youngteckhur.github.io/KDRUM-Public/ko/',
-              dialog: '#kexp-dialog',
-              korean: true,
-            },
+          const targets=[
+            {name:'live-en',url:'https://youngteckhur.github.io/KDRUM-Public/',dialog:'#kexp-en-dialog',title:'Grid-based distributed modeling',korean:false},
+            {name:'live-ko',url:'https://youngteckhur.github.io/KDRUM-Public/ko/',dialog:'#kexp-dialog',title:'격자 기반 분포형 모형',korean:true},
           ];
 
-          (async()=>{
-            const browser = await chromium.launch();
-            const failures = [];
-            const report = {};
+          function timeoutWithin(deadline,maxMs){
+            const remaining=deadline-Date.now();
+            if(remaining<250)throw new Error('live verification deadline exceeded');
+            return Math.min(maxMs,remaining);
+          }
 
-            for (const target of targets) {
-              let passed = false;
-              let last = 'not checked';
+          async function inspectTarget(browser,target,attempt,deadline){
+            const page=await browser.newPage({viewport:{width:1440,height:1000}});
+            const errors=[];
+            page.on('console',msg=>{if(msg.type()==='error')errors.push(`console: ${msg.text()}`)});
+            page.on('pageerror',err=>errors.push(`pageerror: ${err.message}`));
+            let result={ok:false,attempt,errors};
 
-              for (let attempt = 1; attempt <= 30 && !passed; attempt++) {
-                const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
-                const errors = [];
-                page.on('console', msg => {
-                  if (msg.type() === 'error') errors.push(`console: ${msg.text()}`);
-                });
-                page.on('pageerror', err => errors.push(`pageerror: ${err.message}`));
+            try{
+              const cacheBust=`qa=${encodeURIComponent(sha)}-${attempt}`;
+              const url=target.url+(target.url.includes('?')?'&':'?')+cacheBust;
+              await page.goto(url,{waitUntil:'networkidle',timeout:timeoutWithin(deadline,20000)});
+              await page.waitForFunction(
+                ()=>document.documentElement.dataset.kdrumBrandRuntime==='ready',
+                null,
+                {timeout:timeoutWithin(deadline,6000)}
+              );
 
-                try {
-                  await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: 20000 });
-                  await page.waitForFunction(
-                    () => document.documentElement.dataset.kdrumBrandRuntime === 'ready',
-                    null,
-                    { timeout: 6000 },
-                  );
+              const metrics=await page.evaluate(()=>{
+                const frame=document.querySelector('.brand-symbol-frame');
+                const nav=document.querySelector('.site-mark');
+                const hero=document.querySelector('.brand-symbol');
+                if(!frame||!nav||!hero)return null;
+                const fr=frame.getBoundingClientRect();
+                const hs=getComputedStyle(hero);
+                return {
+                  frameWidth:fr.width,
+                  frameHeight:fr.height,
+                  navSrc:nav.getAttribute('src'),
+                  heroSrc:hero.getAttribute('src'),
+                  heroTransform:hs.transform,
+                  scrollWidth:document.documentElement.scrollWidth,
+                  clientWidth:document.documentElement.clientWidth,
+                };
+              });
 
-                  const metrics = await page.evaluate(() => {
-                    const frame = document.querySelector('.brand-symbol-frame');
-                    const nav = document.querySelector('.site-mark');
-                    const hero = document.querySelector('.brand-symbol');
-                    if (!frame || !nav || !hero) return null;
-                    const fr = frame.getBoundingClientRect();
-                    return {
-                      frameWidth: fr.width,
-                      frameHeight: fr.height,
-                      navSrc: nav.getAttribute('src'),
-                      heroSrc: hero.getAttribute('src'),
-                      scrollWidth: document.documentElement.scrollWidth,
-                      clientWidth: document.documentElement.clientWidth,
-                    };
-                  });
-
-                  const basicOk = Boolean(
-                    metrics &&
-                    Math.abs(metrics.frameWidth - 82) <= 1.1 &&
-                    Math.abs(metrics.frameHeight - 82) <= 1.1 &&
-                    metrics.navSrc.includes('branding/kdrum-symbol-compact.png') &&
-                    metrics.heroSrc.includes('branding/kdrum-symbol-web.png') &&
-                    metrics.scrollWidth <= metrics.clientWidth + 1
-                  );
-
-                  if (!basicOk) {
-                    last = JSON.stringify({ attempt, metrics, errors });
-                    await page.close();
-                    if (attempt < 30) await sleep(10000);
-                    continue;
-                  }
-
-                  await page.locator('#features .feature').first().click();
-                  const dialog = page.locator(target.dialog);
-                  await dialog.waitFor({ state: 'visible', timeout: 6000 });
-                  const dialogText = (await dialog.innerText()).trim();
-                  const statusRows = target.korean ? await dialog.locator('.kexp-statusrow').count() : null;
-                  const popupOk = dialogText.length >= 40 && (!target.korean || statusRows === 1);
-
-                  if (popupOk && errors.length === 0) {
-                    passed = true;
-                    report[target.name] = {
-                      attempt,
-                      metrics,
-                      dialogTextLength: dialogText.length,
-                      statusRows,
-                      errors,
-                    };
-                    await page.locator('.hero').screenshot({ path: `live-artifacts/${target.name}-hero.png` });
-                    await dialog.screenshot({ path: `live-artifacts/${target.name}-popup.png` });
-                    console.log(`${target.name}: live page verified on attempt ${attempt}`);
-                  } else {
-                    last = JSON.stringify({
-                      attempt,
-                      metrics,
-                      dialogTextLength: dialogText.length,
-                      statusRows,
-                      errors,
-                    });
-                  }
-                } catch (err) {
-                  last = `${err.name}: ${err.message}`;
-                }
-
+              const basicOk=Boolean(
+                metrics &&
+                Math.abs(metrics.frameWidth-82)<=1.1 &&
+                Math.abs(metrics.frameHeight-82)<=1.1 &&
+                metrics.navSrc.includes('branding/kdrum-symbol-compact.png') &&
+                metrics.heroSrc.includes('branding/kdrum-symbol-compact.png') &&
+                metrics.heroTransform==='none' &&
+                metrics.scrollWidth<=metrics.clientWidth+1
+              );
+              if(!basicOk){
+                result={ok:false,attempt,stage:'branding',metrics,errors};
                 await page.close();
-                if (!passed && attempt < 30) await sleep(10000);
+                return result;
               }
 
-              if (!passed) failures.push(`${target.name}: ${last}`);
+              await page.locator('#features .feature').first().click({timeout:timeoutWithin(deadline,5000)});
+              const dialog=page.locator(target.dialog);
+              await dialog.waitFor({state:'visible',timeout:timeoutWithin(deadline,5000)});
+              await page.waitForTimeout(Math.min(150,Math.max(0,deadline-Date.now())));
+
+              let popup={};
+              let popupOk=false;
+              if(target.korean){
+                popup={
+                  title:(await dialog.locator('#kexp-title').innerText()).trim(),
+                  statusRows:await dialog.locator('.kexp-statusrow').count(),
+                  status:(await dialog.locator('.kexp-statusrow .kexp-status').first().innerText()).trim(),
+                  tech:(await dialog.locator('#kexp-techdesc').innerText()).trim(),
+                  visualConcepts:await dialog.locator('#kexp-visual-concept').count(),
+                };
+                popupOk=popup.title===target.title && popup.statusRows===1 && popup.status.length>0 && popup.tech.length>=20 && popup.visualConcepts===1;
+              }else{
+                popup={
+                  title:(await dialog.locator('#kexp-en-title').innerText()).trim(),
+                  status:(await dialog.locator('#kexp-en-status').innerText()).trim(),
+                  summary:(await dialog.locator('#kexp-en-summary').innerText()).trim(),
+                };
+                popupOk=popup.title===target.title && popup.status.length>0 && popup.summary.length>=20;
+              }
+
+              result={ok:popupOk&&errors.length===0,attempt,stage:'popup',metrics,popup,errors};
+              if(result.ok){
+                await page.locator('.hero').screenshot({path:`live-artifacts/${target.name}-hero.png`});
+                await dialog.screenshot({path:`live-artifacts/${target.name}-popup.png`});
+              }
+            }catch(err){
+              result={ok:false,attempt,stage:'exception',error:`${err.name}: ${err.message}`,errors};
+            }
+            await page.close();
+            return result;
+          }
+
+          (async()=>{
+            const browser=await chromium.launch();
+            const failures=[];
+            const report={};
+            const deadline=Date.now()+LIVE_WINDOW_MS;
+
+            for(const target of targets){
+              let final=null;
+              let attempt=0;
+              while(Date.now()<deadline){
+                attempt+=1;
+                final=await inspectTarget(browser,target,attempt,deadline);
+                console.log(`${target.name} attempt ${attempt}: ${JSON.stringify(final)}`);
+                if(final.ok)break;
+                const remaining=deadline-Date.now();
+                if(remaining<=0)break;
+                await sleep(Math.min(10000,remaining));
+              }
+              report[target.name]=final;
+              if(!final?.ok)failures.push(`${target.name}: live content did not reach expected state within the shared 10-minute window: ${JSON.stringify(final)}`);
             }
 
-            fs.writeFileSync('live-artifacts/live-metrics.json', JSON.stringify(report, null, 2));
+            fs.writeFileSync('live-artifacts/live-metrics.json',JSON.stringify(report,null,2));
             await browser.close();
-
-            if (failures.length) {
+            if(failures.length){
               console.error('LIVE GITHUB PAGES VERIFICATION FAILED');
-              failures.forEach(x => console.error(' -', x));
+              failures.forEach(x=>console.error(' -',x));
               process.exit(1);
             }
             console.log('LIVE GITHUB PAGES VERIFICATION PASSED');
-          })().catch(err => {
-            console.error(err);
-            process.exit(1);
-          });
+          })().catch(err=>{console.error(err);process.exit(1)});
           NODE
 
       - name: Publish live verification commit status
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
+          PAGES_OUTCOME: ${{ steps.pages_build.outcome }}
           LIVE_OUTCOME: ${{ steps.live_verify.outcome }}
           SHA: ${{ github.sha }}
           REPOSITORY: ${{ github.repository }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           payload=$(python3 - <<'PY'
-          import json
-          import os
-
-          ok = os.environ['LIVE_OUTCOME'] == 'success'
+          import json, os
+          ok=os.environ['PAGES_OUTCOME']=='success' and os.environ['LIVE_OUTCOME']=='success'
           print(json.dumps({
-              'state': 'success' if ok else 'failure',
-              'context': 'homepage-live-pages',
-              'description': 'Live EN/KO GitHub Pages verified' if ok else 'Live EN/KO GitHub Pages verification failed',
-              'target_url': os.environ['RUN_URL'],
+            'state':'success' if ok else 'failure',
+            'context':'homepage-live-pages',
+            'description':'Exact Pages build + EN/KO popup verified' if ok else 'Pages build/live verification failed',
+            'target_url':os.environ['RUN_URL'],
           }))
           PY
           )
-
           curl -fsS -X POST \
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
@@ -200,6 +271,6 @@ jobs:
           path: live-artifacts/
           if-no-files-found: warn
 
-      - name: Fail job when live verification failed
-        if: steps.live_verify.outcome != 'success'
+      - name: Fail job when verification failed
+        if: steps.pages_build.outcome != 'success' || steps.live_verify.outcome != 'success'
         run: exit 1
