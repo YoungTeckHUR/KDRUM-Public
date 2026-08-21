@@ -1,5 +1,18 @@
 # K-DRUM Public Information Changelog
 
+## 2026-08-21 — Homepage brand balance and rendered-browser QA
+
+Refined the public K-DRUM symbol presentation after reviewing rendered English/Korean desktop and mobile pages in Chromium.
+
+Updated:
+
+- switched navigation and hero marks to the canonical reviewed branding assets
+- reduced the oversized white plate around the hero symbol while enlarging the internal grid/river artwork within the frame
+- preserved the full approved symbol artwork rather than modifying the source image
+- added rendered Chromium checks for English/Korean desktop and mobile pages, popup opening, console errors, horizontal overflow and brand dimensions
+- fixed a Korean technical-popup DOM timing error exposed by the real browser test
+- removed a duplicated public-status badge row found during screenshot review
+
 ## 2026-08-21 — Bilingual homepage runtime and public-status review
 
 Reviewed and repaired the public GitHub Pages presentation without publishing production source code or private engineering details.
