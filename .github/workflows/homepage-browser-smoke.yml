@@ -45,10 +45,10 @@ jobs:
           const fs = require('fs');
 
           const cases = [
-            {name:'en-desktop', url:'http://127.0.0.1:8000/', viewport:{width:1440,height:1000}, dialog:'#kexp-en-dialog', heroWidth:88},
-            {name:'ko-desktop', url:'http://127.0.0.1:8000/ko/', viewport:{width:1440,height:1000}, dialog:'#kexp-dialog', heroWidth:88},
-            {name:'en-mobile', url:'http://127.0.0.1:8000/', viewport:{width:390,height:844}, dialog:'#kexp-en-dialog', heroWidth:64},
-            {name:'ko-mobile', url:'http://127.0.0.1:8000/ko/', viewport:{width:390,height:844}, dialog:'#kexp-dialog', heroWidth:64},
+            {name:'en-desktop', url:'http://127.0.0.1:8000/', viewport:{width:1440,height:1000}, dialog:'#kexp-en-dialog', heroFrame:82},
+            {name:'ko-desktop', url:'http://127.0.0.1:8000/ko/', viewport:{width:1440,height:1000}, dialog:'#kexp-dialog', heroFrame:82},
+            {name:'en-mobile', url:'http://127.0.0.1:8000/', viewport:{width:390,height:844}, dialog:'#kexp-en-dialog', heroFrame:60},
+            {name:'ko-mobile', url:'http://127.0.0.1:8000/ko/', viewport:{width:390,height:844}, dialog:'#kexp-dialog', heroFrame:60},
           ];
 
           (async()=>{
@@ -59,9 +59,7 @@ jobs:
             for (const c of cases) {
               const page = await browser.newPage({viewport:c.viewport});
               const browserErrors = [];
-              page.on('console', msg => {
-                if (msg.type() === 'error') browserErrors.push(`console: ${msg.text()}`);
-              });
+              page.on('console', msg => { if (msg.type() === 'error') browserErrors.push(`console: ${msg.text()}`); });
               page.on('pageerror', err => browserErrors.push(`pageerror: ${err.message}`));
 
               await page.goto(c.url, {waitUntil:'networkidle'});
@@ -70,21 +68,23 @@ jobs:
               const metrics = await page.evaluate(() => {
                 const nav = document.querySelector('.site-mark');
                 const hero = document.querySelector('.brand-symbol');
+                const frame = document.querySelector('.brand-symbol-frame');
                 const ns = getComputedStyle(nav);
                 const hs = getComputedStyle(hero);
                 const nr = nav.getBoundingClientRect();
-                const hr = hero.getBoundingClientRect();
+                const fr = frame.getBoundingClientRect();
                 return {
                   navSrc: nav.getAttribute('src'),
                   heroSrc: hero.getAttribute('src'),
                   navWidth: nr.width,
                   navHeight: nr.height,
-                  heroWidth: hr.width,
-                  heroHeight: hr.height,
+                  frameWidth: fr.width,
+                  frameHeight: fr.height,
+                  heroCssWidth: parseFloat(hs.width),
+                  heroCssHeight: parseFloat(hs.height),
                   navPadding: ns.paddingTop,
                   heroPadding: hs.paddingTop,
-                  navRadius: ns.borderRadius,
-                  heroRadius: hs.borderRadius,
+                  heroTransform: hs.transform,
                   scrollWidth: document.documentElement.scrollWidth,
                   clientWidth: document.documentElement.clientWidth,
                 };
@@ -95,9 +95,11 @@ jobs:
               if (!metrics.navSrc.includes('branding/kdrum-symbol-compact.png')) failures.push(`${c.name}: navigation mark is not the canonical compact asset`);
               if (!metrics.heroSrc.includes('branding/kdrum-symbol-web.png')) failures.push(`${c.name}: hero mark is not the canonical web asset`);
               if (!near(metrics.navWidth,32) || !near(metrics.navHeight,32)) failures.push(`${c.name}: navigation mark is ${metrics.navWidth}x${metrics.navHeight}, expected 32x32`);
-              if (!near(metrics.heroWidth,c.heroWidth) || !near(metrics.heroHeight,c.heroWidth)) failures.push(`${c.name}: hero mark is ${metrics.heroWidth}x${metrics.heroHeight}, expected ${c.heroWidth}x${c.heroWidth}`);
+              if (!near(metrics.frameWidth,c.heroFrame) || !near(metrics.frameHeight,c.heroFrame)) failures.push(`${c.name}: hero frame is ${metrics.frameWidth}x${metrics.frameHeight}, expected ${c.heroFrame}x${c.heroFrame}`);
+              if (!near(metrics.heroCssWidth,c.heroFrame) || !near(metrics.heroCssHeight,c.heroFrame)) failures.push(`${c.name}: hero artwork layout size does not fill its frame`);
               if (metrics.navPadding !== '1px') failures.push(`${c.name}: navigation mark padding is ${metrics.navPadding}, expected 1px`);
-              if (metrics.heroPadding !== '2px') failures.push(`${c.name}: hero mark padding is ${metrics.heroPadding}, expected 2px`);
+              if (metrics.heroPadding !== '0px') failures.push(`${c.name}: hero artwork padding is ${metrics.heroPadding}, expected 0px`);
+              if (metrics.heroTransform === 'none') failures.push(`${c.name}: hero artwork is not enlarged within the tightened frame`);
               if (metrics.scrollWidth > metrics.clientWidth + 1) failures.push(`${c.name}: horizontal overflow ${metrics.scrollWidth} > ${metrics.clientWidth}`);
               if (browserErrors.length) failures.push(`${c.name}: browser errors: ${browserErrors.join(' | ')}`);
 
@@ -123,10 +125,7 @@ jobs:
               process.exit(1);
             }
             console.log('HOMEPAGE BROWSER SMOKE PASSED');
-          })().catch(err => {
-            console.error(err);
-            process.exit(1);
-          });
+          })().catch(err => { console.error(err); process.exit(1); });
           NODE
 
       - name: Upload rendered screenshots and metrics
