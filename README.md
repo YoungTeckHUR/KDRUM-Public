@@ -2,7 +2,7 @@
 
 **K-water Grid-based Distributed Rainfall rUnoff Model**
 
-K-DRUM is K-water's physically based, grid-unit distributed rainfall-runoff model. It has an established public research record and is currently maintained in a **v3.x** development line that extends rainfall-runoff simulation toward one-dimensional river hydraulics, river-floodplain interaction, two-dimensional flood-inundation analysis, project authoring, and result visualization.
+K-DRUM is K-water's physically based, grid-based distributed rainfall-runoff model. It has an established public research record and is currently maintained in a **v3.x** development line that extends rainfall-runoff simulation toward one-dimensional river hydraulics, river-floodplain interaction, two-dimensional flood-inundation analysis, project authoring, and result visualization.
 
 K-DRUM은 K-water가 개발해 온 **물리적 기반의 격자단위 분포형 강우유출모형**입니다. 공개 연구성과와 확립된 강우유출 해석기능을 기반으로, 현행 v3.x 체계에서는 1차원 하천수리해석, 하천-홍수터 연계, 2차원 홍수범람해석, 입력자료 작성과 결과분석 기능을 함께 확장하고 있습니다.
 
@@ -19,7 +19,7 @@ The model family has been applied in public research to flood runoff with radar/
 
 Public K-DRUM research supports the following high-level capabilities:
 
-- physically based, grid-unit distributed rainfall-runoff simulation
+- physically based, grid-based distributed rainfall-runoff simulation
 - spatial rainfall forcing, including radar/grid rainfall applications
 - Green-Ampt infiltration
 - surface and subsurface runoff representation
@@ -74,12 +74,12 @@ Public images are limited to reviewed K-DRUM materials, independently created ne
 
 ## MyWater K-Series public access
 
-K-DRUM is included in K-water's MyWater **K-Series** technical-software program. MyWater states that K-Series software made available on the K-water website may be used free of charge by external individuals subject to the published K-Series terms of use.
+K-DRUM is listed in K-water's MyWater **K-Series** technical-software program. MyWater describes K-Series as K-water technical know-how implemented as a strategic software package for integrated water-management analysis and control. MyWater also states that K-Series software made available on the website may be used free of charge by individuals outside K-water subject to the published terms of use.
 
-K-DRUM은 K-water의 기술 SW 대국민 개방 취지에 따라 **MyWater 물정보포털 K-Series에서 무료로 내려받아 사용할 수 있으며**, 실제 다운로드 버전과 사용조건은 MyWater에 게시된 최신 K-Series 이용약관을 따라야 합니다.
+K-DRUM은 **K-water 기술 SW 대국민 개방정책에 따라 MyWater 물정보포털 K-Series에서 무료로 내려받아 사용할 수 있습니다.** 다만 실제 다운로드 버전과 사용조건은 MyWater에 게시된 최신 K-Series 안내 및 이용약관을 확인해야 합니다.
 
 - MyWater K-Series: https://www.water.or.kr/kor/board/index.do?bid=BD_00026&menuId=15_126_128&mode=list
-- K-Series technical-software terms: https://www.water.or.kr/kor/menu/sub.do?menuId=15_126
+- K-Series technical-software terms: https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127
 - K-water Research Institute: https://www.kwater.or.kr/kiwe/main.do
 
 ## Naming note
