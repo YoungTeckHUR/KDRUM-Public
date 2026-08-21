@@ -132,6 +132,71 @@ jobs:
           })().catch(err => { console.error(err); process.exit(1); });
           NODE
 
+      - name: Verify deployed GitHub Pages after main push
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+          const targets = [
+            {name:'live-en', url:'https://youngteckhur.github.io/KDRUM-Public/'},
+            {name:'live-ko', url:'https://youngteckhur.github.io/KDRUM-Public/ko/'},
+          ];
+
+          (async()=>{
+            const browser = await chromium.launch();
+            const failures = [];
+
+            for (const target of targets) {
+              let passed = false;
+              let last = 'not checked';
+              for (let attempt=1; attempt<=30 && !passed; attempt++) {
+                const page = await browser.newPage({viewport:{width:1440,height:1000}});
+                const errors = [];
+                page.on('console', msg => { if (msg.type() === 'error') errors.push(`console: ${msg.text()}`); });
+                page.on('pageerror', err => errors.push(`pageerror: ${err.message}`));
+                try {
+                  await page.goto(target.url, {waitUntil:'domcontentloaded', timeout:20000});
+                  await page.waitForFunction(() => document.documentElement.dataset.kdrumBrandRuntime === 'ready', null, {timeout:5000});
+                  const m = await page.evaluate(() => {
+                    const frame = document.querySelector('.brand-symbol-frame');
+                    const nav = document.querySelector('.site-mark');
+                    if (!frame || !nav) return null;
+                    const fr = frame.getBoundingClientRect();
+                    return {
+                      frameWidth: fr.width,
+                      frameHeight: fr.height,
+                      navSrc: nav.getAttribute('src'),
+                      scrollWidth: document.documentElement.scrollWidth,
+                      clientWidth: document.documentElement.clientWidth,
+                    };
+                  });
+                  if (m && Math.abs(m.frameWidth-82) <= 1.1 && Math.abs(m.frameHeight-82) <= 1.1 && m.navSrc.includes('branding/kdrum-symbol-compact.png') && m.scrollWidth <= m.clientWidth + 1 && errors.length === 0) {
+                    passed = true;
+                    await page.locator('.hero').screenshot({path:`browser-artifacts/${target.name}-hero.png`});
+                    console.log(`${target.name}: deployed page verified on attempt ${attempt}`);
+                  } else {
+                    last = JSON.stringify({metrics:m, errors});
+                  }
+                } catch (err) {
+                  last = err.message;
+                }
+                await page.close();
+                if (!passed) await sleep(10000);
+              }
+              if (!passed) failures.push(`${target.name}: live GitHub Pages did not reach the expected deployment state: ${last}`);
+            }
+
+            await browser.close();
+            if (failures.length) {
+              console.error('LIVE GITHUB PAGES VERIFICATION FAILED');
+              failures.forEach(x => console.error(' -', x));
+              process.exit(1);
+            }
+            console.log('LIVE GITHUB PAGES VERIFICATION PASSED');
+          })().catch(err => { console.error(err); process.exit(1); });
+          NODE
+
       - name: Upload rendered screenshots and metrics
         if: always()
         uses: actions/upload-artifact@v4
