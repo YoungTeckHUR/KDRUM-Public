@@ -39,7 +39,6 @@ jobs:
           import json
           import os
           import time
-          import urllib.parse
           import urllib.request
 
           token=os.environ['GH_TOKEN']
@@ -53,20 +52,25 @@ jobs:
               'User-Agent':'KDRUM-Pages-QA',
           }
 
+          deadline=time.monotonic()+600.0
+          attempt=0
           last=None
-          for attempt in range(1, 61):
-              req=urllib.request.Request(url, headers=headers)
+          while time.monotonic() < deadline:
+              attempt+=1
+              remaining=deadline-time.monotonic()
+              timeout=max(1.0,min(20.0,remaining))
+              req=urllib.request.Request(url,headers=headers)
               try:
-                  with urllib.request.urlopen(req, timeout=20) as r:
+                  with urllib.request.urlopen(req,timeout=timeout) as r:
                       builds=json.load(r)
-                  build=next((item for item in builds if item.get('commit') == sha), None)
+                  build=next((item for item in builds if item.get('commit')==sha),None)
                   if build:
                       last={'commit':build.get('commit'),'status':build.get('status'),'error':build.get('error')}
                       print(f'exact Pages build attempt {attempt}: {last}')
-                      if build.get('status') == 'built':
+                      if build.get('status')=='built':
                           print('Exact GitHub Pages build is published.')
                           raise SystemExit(0)
-                      if build.get('status') == 'errored':
+                      if build.get('status')=='errored':
                           raise SystemExit(f'GitHub Pages build for current commit errored: {build.get("error")}')
                   else:
                       last={'commit':sha,'status':'not-listed-yet'}
@@ -76,9 +80,13 @@ jobs:
               except Exception as e:
                   last={'request_error':str(e)}
                   print(f'Pages build attempt {attempt} request error: {e}')
-              time.sleep(10)
 
-          raise SystemExit(f'Exact GitHub Pages build did not become ready: {last}')
+              remaining=deadline-time.monotonic()
+              if remaining<=0:
+                  break
+              time.sleep(min(10.0,remaining))
+
+          raise SystemExit(f'Exact GitHub Pages build did not become ready within 10 minutes: {last}')
           PY
 
       - name: Verify deployed English and Korean Pages
@@ -94,13 +102,20 @@ jobs:
           const fs = require('fs');
           const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
           const sha=process.env.SHA;
+          const LIVE_WINDOW_MS=10*60*1000;
 
-          const targets = [
+          const targets=[
             {name:'live-en',url:'https://youngteckhur.github.io/KDRUM-Public/',dialog:'#kexp-en-dialog',title:'Grid-based distributed modeling',korean:false},
             {name:'live-ko',url:'https://youngteckhur.github.io/KDRUM-Public/ko/',dialog:'#kexp-dialog',title:'격자 기반 분포형 모형',korean:true},
           ];
 
-          async function inspectTarget(browser,target,attempt){
+          function timeoutWithin(deadline,maxMs){
+            const remaining=deadline-Date.now();
+            if(remaining<250)throw new Error('live verification deadline exceeded');
+            return Math.min(maxMs,remaining);
+          }
+
+          async function inspectTarget(browser,target,attempt,deadline){
             const page=await browser.newPage({viewport:{width:1440,height:1000}});
             const errors=[];
             page.on('console',msg=>{if(msg.type()==='error')errors.push(`console: ${msg.text()}`)});
@@ -110,8 +125,12 @@ jobs:
             try{
               const cacheBust=`qa=${encodeURIComponent(sha)}-${attempt}`;
               const url=target.url+(target.url.includes('?')?'&':'?')+cacheBust;
-              await page.goto(url,{waitUntil:'networkidle',timeout:30000});
-              await page.waitForFunction(()=>document.documentElement.dataset.kdrumBrandRuntime==='ready',null,{timeout:8000});
+              await page.goto(url,{waitUntil:'networkidle',timeout:timeoutWithin(deadline,20000)});
+              await page.waitForFunction(
+                ()=>document.documentElement.dataset.kdrumBrandRuntime==='ready',
+                null,
+                {timeout:timeoutWithin(deadline,6000)}
+              );
 
               const metrics=await page.evaluate(()=>{
                 const frame=document.querySelector('.brand-symbol-frame');
@@ -146,10 +165,10 @@ jobs:
                 return result;
               }
 
-              await page.locator('#features .feature').first().click();
+              await page.locator('#features .feature').first().click({timeout:timeoutWithin(deadline,5000)});
               const dialog=page.locator(target.dialog);
-              await dialog.waitFor({state:'visible',timeout:6000});
-              await page.waitForTimeout(150);
+              await dialog.waitFor({state:'visible',timeout:timeoutWithin(deadline,5000)});
+              await page.waitForTimeout(Math.min(150,Math.max(0,deadline-Date.now())));
 
               let popup={};
               let popupOk=false;
@@ -187,19 +206,22 @@ jobs:
             const browser=await chromium.launch();
             const failures=[];
             const report={};
+            const deadline=Date.now()+LIVE_WINDOW_MS;
 
             for(const target of targets){
               let final=null;
-              // A Pages build can report built before the CDN edge serves the new content.
-              // Retry the rendered live URL for up to ten minutes.
-              for(let attempt=1;attempt<=60;attempt++){
-                final=await inspectTarget(browser,target,attempt);
+              let attempt=0;
+              while(Date.now()<deadline){
+                attempt+=1;
+                final=await inspectTarget(browser,target,attempt,deadline);
                 console.log(`${target.name} attempt ${attempt}: ${JSON.stringify(final)}`);
                 if(final.ok)break;
-                if(attempt<60)await sleep(10000);
+                const remaining=deadline-Date.now();
+                if(remaining<=0)break;
+                await sleep(Math.min(10000,remaining));
               }
               report[target.name]=final;
-              if(!final?.ok)failures.push(`${target.name}: live content did not reach expected state: ${JSON.stringify(final)}`);
+              if(!final?.ok)failures.push(`${target.name}: live content did not reach expected state within the shared 10-minute window: ${JSON.stringify(final)}`);
             }
 
             fs.writeFileSync('live-artifacts/live-metrics.json',JSON.stringify(report,null,2));
