@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   live-pages:
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Set up Node.js
@@ -39,12 +39,13 @@ jobs:
           import json
           import os
           import time
+          import urllib.parse
           import urllib.request
 
           token=os.environ['GH_TOKEN']
           sha=os.environ['SHA']
           repo=os.environ['REPOSITORY']
-          url=f'https://api.github.com/repos/{repo}/pages/builds/latest'
+          url=f'https://api.github.com/repos/{repo}/pages/builds?per_page=100'
           headers={
               'Accept':'application/vnd.github+json',
               'Authorization':f'Bearer {token}',
@@ -57,16 +58,24 @@ jobs:
               req=urllib.request.Request(url, headers=headers)
               try:
                   with urllib.request.urlopen(req, timeout=20) as r:
-                      data=json.load(r)
-                  last={'commit':data.get('commit'),'status':data.get('status'),'error':data.get('error')}
-                  print(f'pages build attempt {attempt}: {last}')
-                  if data.get('commit') == sha and data.get('status') == 'built':
-                      print('Exact GitHub Pages build is published.')
-                      raise SystemExit(0)
-                  if data.get('commit') == sha and data.get('status') == 'errored':
-                      raise SystemExit('GitHub Pages build for current commit errored')
+                      builds=json.load(r)
+                  build=next((item for item in builds if item.get('commit') == sha), None)
+                  if build:
+                      last={'commit':build.get('commit'),'status':build.get('status'),'error':build.get('error')}
+                      print(f'exact Pages build attempt {attempt}: {last}')
+                      if build.get('status') == 'built':
+                          print('Exact GitHub Pages build is published.')
+                          raise SystemExit(0)
+                      if build.get('status') == 'errored':
+                          raise SystemExit(f'GitHub Pages build for current commit errored: {build.get("error")}')
+                  else:
+                      last={'commit':sha,'status':'not-listed-yet'}
+                      print(f'exact Pages build attempt {attempt}: not listed yet')
+              except SystemExit:
+                  raise
               except Exception as e:
-                  print(f'pages build attempt {attempt} request error: {e}')
+                  last={'request_error':str(e)}
+                  print(f'Pages build attempt {attempt} request error: {e}')
               time.sleep(10)
 
           raise SystemExit(f'Exact GitHub Pages build did not become ready: {last}')
@@ -76,16 +85,103 @@ jobs:
         id: live_verify
         if: steps.pages_build.outcome == 'success'
         continue-on-error: true
+        env:
+          SHA: ${{ github.sha }}
         run: |
           mkdir -p live-artifacts
           node <<'NODE'
           const { chromium } = require('playwright');
           const fs = require('fs');
+          const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+          const sha=process.env.SHA;
 
           const targets = [
             {name:'live-en',url:'https://youngteckhur.github.io/KDRUM-Public/',dialog:'#kexp-en-dialog',title:'Grid-based distributed modeling',korean:false},
             {name:'live-ko',url:'https://youngteckhur.github.io/KDRUM-Public/ko/',dialog:'#kexp-dialog',title:'격자 기반 분포형 모형',korean:true},
           ];
+
+          async function inspectTarget(browser,target,attempt){
+            const page=await browser.newPage({viewport:{width:1440,height:1000}});
+            const errors=[];
+            page.on('console',msg=>{if(msg.type()==='error')errors.push(`console: ${msg.text()}`)});
+            page.on('pageerror',err=>errors.push(`pageerror: ${err.message}`));
+            let result={ok:false,attempt,errors};
+
+            try{
+              const cacheBust=`qa=${encodeURIComponent(sha)}-${attempt}`;
+              const url=target.url+(target.url.includes('?')?'&':'?')+cacheBust;
+              await page.goto(url,{waitUntil:'networkidle',timeout:30000});
+              await page.waitForFunction(()=>document.documentElement.dataset.kdrumBrandRuntime==='ready',null,{timeout:8000});
+
+              const metrics=await page.evaluate(()=>{
+                const frame=document.querySelector('.brand-symbol-frame');
+                const nav=document.querySelector('.site-mark');
+                const hero=document.querySelector('.brand-symbol');
+                if(!frame||!nav||!hero)return null;
+                const fr=frame.getBoundingClientRect();
+                const hs=getComputedStyle(hero);
+                return {
+                  frameWidth:fr.width,
+                  frameHeight:fr.height,
+                  navSrc:nav.getAttribute('src'),
+                  heroSrc:hero.getAttribute('src'),
+                  heroTransform:hs.transform,
+                  scrollWidth:document.documentElement.scrollWidth,
+                  clientWidth:document.documentElement.clientWidth,
+                };
+              });
+
+              const basicOk=Boolean(
+                metrics &&
+                Math.abs(metrics.frameWidth-82)<=1.1 &&
+                Math.abs(metrics.frameHeight-82)<=1.1 &&
+                metrics.navSrc.includes('branding/kdrum-symbol-compact.png') &&
+                metrics.heroSrc.includes('branding/kdrum-symbol-compact.png') &&
+                metrics.heroTransform==='none' &&
+                metrics.scrollWidth<=metrics.clientWidth+1
+              );
+              if(!basicOk){
+                result={ok:false,attempt,stage:'branding',metrics,errors};
+                await page.close();
+                return result;
+              }
+
+              await page.locator('#features .feature').first().click();
+              const dialog=page.locator(target.dialog);
+              await dialog.waitFor({state:'visible',timeout:6000});
+              await page.waitForTimeout(150);
+
+              let popup={};
+              let popupOk=false;
+              if(target.korean){
+                popup={
+                  title:(await dialog.locator('#kexp-title').innerText()).trim(),
+                  statusRows:await dialog.locator('.kexp-statusrow').count(),
+                  status:(await dialog.locator('.kexp-statusrow .kexp-status').first().innerText()).trim(),
+                  tech:(await dialog.locator('#kexp-techdesc').innerText()).trim(),
+                  visualConcepts:await dialog.locator('#kexp-visual-concept').count(),
+                };
+                popupOk=popup.title===target.title && popup.statusRows===1 && popup.status.length>0 && popup.tech.length>=20 && popup.visualConcepts===1;
+              }else{
+                popup={
+                  title:(await dialog.locator('#kexp-en-title').innerText()).trim(),
+                  status:(await dialog.locator('#kexp-en-status').innerText()).trim(),
+                  summary:(await dialog.locator('#kexp-en-summary').innerText()).trim(),
+                };
+                popupOk=popup.title===target.title && popup.status.length>0 && popup.summary.length>=20;
+              }
+
+              result={ok:popupOk&&errors.length===0,attempt,stage:'popup',metrics,popup,errors};
+              if(result.ok){
+                await page.locator('.hero').screenshot({path:`live-artifacts/${target.name}-hero.png`});
+                await dialog.screenshot({path:`live-artifacts/${target.name}-popup.png`});
+              }
+            }catch(err){
+              result={ok:false,attempt,stage:'exception',error:`${err.name}: ${err.message}`,errors};
+            }
+            await page.close();
+            return result;
+          }
 
           (async()=>{
             const browser=await chromium.launch();
@@ -93,78 +189,17 @@ jobs:
             const report={};
 
             for(const target of targets){
-              const page=await browser.newPage({viewport:{width:1440,height:1000}});
-              const errors=[];
-              page.on('console',msg=>{if(msg.type()==='error')errors.push(`console: ${msg.text()}`)});
-              page.on('pageerror',err=>errors.push(`pageerror: ${err.message}`));
-
-              try{
-                await page.goto(target.url,{waitUntil:'networkidle',timeout:30000});
-                await page.waitForFunction(()=>document.documentElement.dataset.kdrumBrandRuntime==='ready',null,{timeout:8000});
-
-                const metrics=await page.evaluate(()=>{
-                  const frame=document.querySelector('.brand-symbol-frame');
-                  const nav=document.querySelector('.site-mark');
-                  const hero=document.querySelector('.brand-symbol');
-                  if(!frame||!nav||!hero)return null;
-                  const fr=frame.getBoundingClientRect();
-                  const hs=getComputedStyle(hero);
-                  return {
-                    frameWidth:fr.width,
-                    frameHeight:fr.height,
-                    navSrc:nav.getAttribute('src'),
-                    heroSrc:hero.getAttribute('src'),
-                    heroTransform:hs.transform,
-                    scrollWidth:document.documentElement.scrollWidth,
-                    clientWidth:document.documentElement.clientWidth,
-                  };
-                });
-
-                if(!metrics||Math.abs(metrics.frameWidth-82)>1.1||Math.abs(metrics.frameHeight-82)>1.1) failures.push(`${target.name}: hero frame mismatch`);
-                if(!metrics?.navSrc.includes('branding/kdrum-symbol-compact.png')) failures.push(`${target.name}: navigation asset mismatch`);
-                if(!metrics?.heroSrc.includes('branding/kdrum-symbol-compact.png')) failures.push(`${target.name}: hero asset mismatch`);
-                if(metrics?.heroTransform!=='none') failures.push(`${target.name}: hero artwork is transform-cropped`);
-                if(metrics&&metrics.scrollWidth>metrics.clientWidth+1) failures.push(`${target.name}: horizontal overflow`);
-
-                await page.locator('#features .feature').first().click();
-                const dialog=page.locator(target.dialog);
-                await dialog.waitFor({state:'visible',timeout:6000});
-                await page.waitForTimeout(150);
-
-                let popup={};
-                if(target.korean){
-                  popup={
-                    title:(await dialog.locator('#kexp-title').innerText()).trim(),
-                    statusRows:await dialog.locator('.kexp-statusrow').count(),
-                    status:(await dialog.locator('.kexp-statusrow .kexp-status').first().innerText()).trim(),
-                    tech:(await dialog.locator('#kexp-techdesc').innerText()).trim(),
-                    visualConcepts:await dialog.locator('#kexp-visual-concept').count(),
-                  };
-                  if(popup.title!==target.title)failures.push(`${target.name}: popup title mismatch`);
-                  if(popup.statusRows!==1)failures.push(`${target.name}: status row count ${popup.statusRows}`);
-                  if(!popup.status)failures.push(`${target.name}: popup status empty`);
-                  if(popup.tech.length<20)failures.push(`${target.name}: technical description empty/stale`);
-                  if(popup.visualConcepts!==1)failures.push(`${target.name}: visual fallback id is not unique`);
-                }else{
-                  popup={
-                    title:(await dialog.locator('#kexp-en-title').innerText()).trim(),
-                    status:(await dialog.locator('#kexp-en-status').innerText()).trim(),
-                    summary:(await dialog.locator('#kexp-en-summary').innerText()).trim(),
-                  };
-                  if(popup.title!==target.title)failures.push(`${target.name}: popup title mismatch`);
-                  if(!popup.status)failures.push(`${target.name}: popup status empty`);
-                  if(popup.summary.length<20)failures.push(`${target.name}: facts summary empty/stale`);
-                }
-
-                if(errors.length)failures.push(`${target.name}: browser errors after popup: ${errors.join(' | ')}`);
-
-                report[target.name]={metrics,popup,errors};
-                await page.locator('.hero').screenshot({path:`live-artifacts/${target.name}-hero.png`});
-                await dialog.screenshot({path:`live-artifacts/${target.name}-popup.png`});
-              }catch(err){
-                failures.push(`${target.name}: ${err.name}: ${err.message}`);
+              let final=null;
+              // A Pages build can report built before the CDN edge serves the new content.
+              // Retry the rendered live URL for up to ten minutes.
+              for(let attempt=1;attempt<=60;attempt++){
+                final=await inspectTarget(browser,target,attempt);
+                console.log(`${target.name} attempt ${attempt}: ${JSON.stringify(final)}`);
+                if(final.ok)break;
+                if(attempt<60)await sleep(10000);
               }
-              await page.close();
+              report[target.name]=final;
+              if(!final?.ok)failures.push(`${target.name}: live content did not reach expected state: ${JSON.stringify(final)}`);
             }
 
             fs.writeFileSync('live-artifacts/live-metrics.json',JSON.stringify(report,null,2));
