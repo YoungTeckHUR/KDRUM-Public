@@ -1,0 +1,94 @@
+name: Homepage runtime audit
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  homepage-runtime:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout public repository
+        uses: actions/checkout@v4
+
+      - name: Verify homepage script wiring and public status sync
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('.')
+          pages = [Path('docs/index.html'), Path('docs/ko/index.html')]
+
+          def text(path):
+              return path.read_text(encoding='utf-8')
+
+          findings = []
+
+          # Every local script referenced by either homepage must exist.
+          for page in pages:
+              html = text(page)
+              for src in re.findall(r'<script[^>]+src=["\']([^"\']+)["\']', html, flags=re.I):
+                  if '://' in src or src.startswith('//'):
+                      continue
+                  target = (page.parent / src).resolve()
+                  try:
+                      target.relative_to(root.resolve())
+                  except ValueError:
+                      findings.append(f'{page}: script escapes repository: {src}')
+                      continue
+                  if not target.is_file():
+                      findings.append(f'{page}: missing local script: {src}')
+
+          ko_runtime = text(Path('docs/assets/visuals/kdrum-explainers-runtime.js'))
+          detail_runtime = text(Path('docs/assets/visuals/tech-description-runtime.js'))
+          en_html = text(Path('docs/index.html'))
+          en_runtime = text(Path('docs/assets/visuals/kdrum-explainers-runtime-en.js'))
+
+          if 'tech-description-runtime.js' not in ko_runtime:
+              findings.append('Korean runtime does not load tech-description-runtime.js')
+          if 'removeLegacyFeatureHandlers' not in ko_runtime:
+              findings.append('Korean runtime does not neutralize legacy feature handlers')
+          if 'tech-popup-facts-first.js' not in detail_runtime:
+              findings.append('Facts-first layer is not in the Korean detail runtime chain')
+          if 'assets/visuals/kdrum-explainers-runtime-en.js' not in en_html:
+              findings.append('English homepage does not load the English explainer runtime')
+
+          expected_en = {
+              'Grid-based distributed modeling', 'Rainfall-to-runoff simulation',
+              '1D river hydraulics', '2D floodplain analysis', 'Rainfall & weather',
+              'Watershed hydrology', 'River', 'Floodplain', 'Result analysis',
+              'Distributed hydrology', 'River hydraulics & 2D flooding',
+              '1D-2D coupling', 'FloodViewer', 'Flood runoff & radar rainfall',
+              'Long-term runoff & snowmelt', 'Drought & water cycle',
+              'Parallel computation', 'Surface water-groundwater coupling',
+              'Wildfire & extreme rainfall', 'K-DRUM Core', 'InputStudio',
+              'ChannelBed', 'Integrated output', 'Estuary2DV',
+              'Publications & research', 'Capabilities', 'Development status',
+              'Model Card'
+          }
+          for title in sorted(expected_en):
+              if title not in en_runtime:
+                  findings.append(f'English runtime missing facts entry: {title}')
+
+          status = text(Path('DEVELOPMENT_STATUS.md'))
+          sitemap = text(Path('docs/sitemap.xml'))
+          if 'Status reviewed: 2026-08-21' not in status:
+              findings.append('DEVELOPMENT_STATUS.md review date is not 2026-08-21')
+          if sitemap.count('<lastmod>2026-08-21</lastmod>') != 2:
+              findings.append('sitemap lastmod values are not synchronized to 2026-08-21')
+
+          if findings:
+              print('HOMEPAGE RUNTIME AUDIT FAILED')
+              for item in findings:
+                  print(' -', item)
+              raise SystemExit(1)
+
+          print('HOMEPAGE RUNTIME AUDIT PASSED')
+          print(f'Checked {len(pages)} homepage files and {len(expected_en)} English explainer topics.')
+          PY
