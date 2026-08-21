@@ -1,8 +1,10 @@
 # K-DRUM Public Development Status
 
-**Status date: 2026-08-13**
+**Status reviewed: 2026-08-21**
 
 This file describes public-facing maturity only. It intentionally does not expose source code, internal solver settings, validation datasets, development branches, failure diagnostics, or unpublished numerical implementation details.
+
+The August 21, 2026 review confirms the current public maturity boundary below. Ongoing internal development has **not** been used to promote any capability beyond the validation level supported for public description.
 
 | Capability / component | Public status | Public interpretation |
 |---|---|---|
@@ -14,8 +16,8 @@ This file describes public-facing maturity only. It intentionally does not expos
 | Long-term hydrology / evapotranspiration | **ESTABLISHED** | Used in long-term watershed applications |
 | Snow accumulation and snowmelt | **ESTABLISHED** | Published long-term snow application |
 | MPI-based parallel computation | **ESTABLISHED** | Published and retained as a development direction |
-| 1D dynamic-wave river network | **ACTIVE DEVELOPMENT** | River-network hydraulic extension under integration and QA |
-| Branched/merged river-network hydraulics | **ACTIVE DEVELOPMENT** | Part of the current dynamic-wave development track |
+| 1D dynamic-wave river network | **ACTIVE DEVELOPMENT** | River-network hydraulic extension remains under integration, regression and QA |
+| Branched/merged river-network hydraulics | **ACTIVE DEVELOPMENT** | Network reliability and junction behavior remain active development topics |
 | Bidirectional 1D-2D coupling | **VALIDATED DEVELOPMENT** | Demonstrated in controlled development validation; not a production certification |
 | 2D flood-inundation solver | **ACTIVE DEVELOPMENT** | Integrated development capability under verification |
 | Full shallow-water-equation option | **ACTIVE DEVELOPMENT** | Specialized solver path; not the default public production claim |
@@ -30,6 +32,8 @@ This file describes public-facing maturity only. It intentionally does not expos
 ## Current Core baseline
 
 Current K-DRUM Core development is in the **v3.x** line. Patch-level internal identifiers may change more frequently than this public page and are intentionally not published here.
+
+The public status of the 1D river-network track remains **ACTIVE DEVELOPMENT** while numerical reliability, network coupling, production integration and regression evidence continue to be strengthened. Internal implementation progress does not by itself change the public maturity label.
 
 ## 1D-2D validation boundary
 
