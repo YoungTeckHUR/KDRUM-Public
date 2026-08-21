@@ -1,0 +1,222 @@
+:root{
+  --kds-bg:#07141f;
+  --kds-bg-deep:#06111a;
+  --kds-surface:#0d1d28;
+  --kds-surface-2:#112633;
+  --kds-surface-3:#163140;
+  --kds-line:#294756;
+  --kds-line-strong:#3d697d;
+  --kds-text:#f3f8fb;
+  --kds-muted:#b7c6cf;
+  --kds-blue:#2f91e8;
+  --kds-cyan:#48c4e8;
+  --kds-teal:#4ecbb2;
+  --kds-green:#87c990;
+  --kds-amber:#efbd69;
+  --kds-violet:#b6a0e7;
+  --kds-red:#df8a8a;
+  --kds-shadow:0 16px 40px rgba(0,0,0,.20);
+}
+
+body{background:var(--kds-bg);color:var(--kds-text)}
+.topbar{background:rgba(5,15,23,.96);border-bottom-color:#233c4a;box-shadow:0 8px 24px rgba(0,0,0,.16)}
+.topbar .nav a{color:#c7d4dc}
+.topbar .nav a:hover,.topbar .nav a:focus-visible{background:#112735;color:#fff}
+.topbar .language .active{background:#0d3043;border-color:#42bfe4;color:#fff}
+
+.hero{min-height:650px;border-bottom:1px solid #203a48;background:linear-gradient(135deg,#06131e 0%,#071927 62%,#082130 100%)}
+.hero .eyebrow{color:#55cbed}
+.hero .lead{color:#f5f9fb;letter-spacing:-.015em}
+.hero .supporting{color:#c5d1d8}
+.hero .button{transition:transform .18s ease,border-color .18s ease,background .18s ease}
+.hero .button:hover,.hero .button:focus-visible{transform:translateY(-1px);border-color:#6bcbea;outline:none}
+.hero .button.primary{background:linear-gradient(135deg,#148fe8,#0878cc);box-shadow:0 10px 26px rgba(0,131,220,.22)}
+
+main>section{padding:76px 0 72px;scroll-margin-top:84px}
+main>section+section{margin-top:0}
+#capabilities{padding:76px 0 72px;background:var(--kds-bg)}
+#architecture,#platform{background:linear-gradient(180deg,#0a1823 0%,#0d1f2b 100%);border-top:1px solid #203a48;border-bottom:1px solid #203a48}
+#research,#references{background:linear-gradient(180deg,#07141f 0%,#081722 100%)}
+main h2{color:#f5f9fb;letter-spacing:-.035em;line-height:1.16}
+.section-intro{color:var(--kds-muted);max-width:940px}
+
+/* Capability navigation and cards */
+#capabilities{--group-accent:var(--kds-blue)}
+#capabilities[data-active-group="forcing"]{--group-accent:#4ca8e8}
+#capabilities[data-active-group="hydrology"]{--group-accent:var(--kds-teal)}
+#capabilities[data-active-group="terrain"]{--group-accent:var(--kds-green)}
+#capabilities[data-active-group="audit"]{--group-accent:var(--kds-amber)}
+#capabilities[data-active-group="river"]{--group-accent:#70b9e7}
+#capabilities[data-active-group="flood"]{--group-accent:#879ff0}
+#capabilities[data-active-group="transport"]{--group-accent:var(--kds-violet)}
+#capabilities[data-active-group="platform"]{--group-accent:#5cc8d4}
+
+#capabilities .catlas-head{align-items:center;gap:28px}
+#capabilities .catlas-head p{color:var(--kds-muted);font-size:1rem;line-height:1.72}
+#capabilities .catlas-count{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:7px 12px;border:1px solid #31596c;border-radius:999px;background:#0e2633;color:#aee9fa;font-weight:800}
+#capabilities .catlas-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;overflow:visible;padding:22px 0 8px}
+#capabilities .catlas-tab{display:flex;align-items:center;justify-content:flex-start;min-height:56px;padding:10px 13px;border-radius:12px;white-space:normal;text-align:left;line-height:1.38;color:#c6d4dc;background:#0c1c27;border-color:#294856;transition:transform .16s ease,border-color .16s ease,background .16s ease,color .16s ease}
+#capabilities .catlas-tab:hover,#capabilities .catlas-tab:focus-visible{transform:translateY(-1px);border-color:#4b8298;outline:none;color:#fff}
+#capabilities .catlas-tab[aria-selected="true"]{background:linear-gradient(135deg,color-mix(in srgb,var(--group-accent) 25%,#0c2431),#102b39);border-color:var(--group-accent);box-shadow:inset 3px 0 0 var(--group-accent),0 8px 20px rgba(0,0,0,.14);color:#fff}
+#capabilities .catlas-group{margin-top:18px}
+#capabilities .catlas-group-head{grid-template-columns:minmax(0,1fr) minmax(250px,360px);gap:24px;padding:22px 24px;border-color:#31505f;border-left:4px solid var(--group-accent);border-radius:16px;background:linear-gradient(120deg,#102431 0%,#0d1e29 68%,color-mix(in srgb,var(--group-accent) 12%,#0d1e29) 100%);box-shadow:var(--kds-shadow)}
+#capabilities .catlas-group-head h3{font-size:1.38rem;color:#f5fafc}
+#capabilities .catlas-group-head p{font-size:.96rem;line-height:1.65;color:#b9c9d2}
+#capabilities .catlas-group-visual{min-height:70px;opacity:.94}
+#capabilities .catlas-group-visual svg{height:70px}
+#capabilities .catlas-group-visual svg text{fill:#d8f3fb!important}
+#capabilities .catlas-grid{gap:16px;margin-top:16px}
+#capabilities .catlas-card{--card-accent:var(--group-accent);min-height:190px;padding:19px 18px 17px;border-color:#2c4c5a;border-radius:15px;background:linear-gradient(180deg,#112631 0%,#0d1e29 100%);box-shadow:0 10px 28px rgba(0,0,0,.12);overflow:hidden;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+#capabilities .catlas-card::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:var(--card-accent)}
+#capabilities .catlas-card:hover,#capabilities .catlas-card:focus-visible{transform:translateY(-3px);border-color:var(--card-accent);box-shadow:0 18px 34px rgba(0,0,0,.22);outline:none}
+#capabilities .catlas-card h4{margin:0 0 9px;padding-right:58px;color:#f2f8fb;font-size:1.02rem;line-height:1.42;letter-spacing:-.015em}
+#capabilities .catlas-card p{color:#bac9d1;font-size:.9rem;line-height:1.65}
+#capabilities .catlas-mini{display:none}
+#capabilities .catlas-symbol{position:absolute;right:15px;top:17px;display:grid;place-items:center;min-width:42px;height:32px;padding:0 8px;border:1px solid color-mix(in srgb,var(--card-accent) 58%,#31515f);border-radius:9px;background:color-mix(in srgb,var(--card-accent) 12%,#102431);color:color-mix(in srgb,var(--card-accent) 72%,#fff);font-size:.72rem;font-weight:900;letter-spacing:.02em}
+#capabilities .catlas-status{max-width:calc(100% - 54px);padding:4px 8px;margin-bottom:12px;border-radius:999px;background:#0b1b25;font-size:.68rem;line-height:1.25}
+#capabilities .catlas-card[data-status^="ESTABLISHED"]{--card-accent:var(--kds-green)}
+#capabilities .catlas-card[data-status^="IMPLEMENTED"]{--card-accent:#63bce4}
+#capabilities .catlas-card[data-status^="ACTIVE"]{--card-accent:var(--kds-amber)}
+#capabilities .catlas-card[data-status^="VALIDATED"]{--card-accent:var(--kds-teal)}
+#capabilities .catlas-card[data-status^="RESEARCH"]{--card-accent:var(--kds-violet)}
+#capabilities .catlas-card[data-status^="DISABLED"]{--card-accent:var(--kds-red);opacity:.9}
+#capabilities .catlas-card[data-status^="RELEASE"]{--card-accent:#c3a8ef}
+#capabilities .catlas-card[data-status^="EXPERIMENTAL"]{--card-accent:#9daebb}
+#capabilities .catlas-card[data-status^="SEPARATE"]{--card-accent:var(--kds-amber)}
+
+/* Model workflow */
+#architecture .unit-chain{gap:8px;margin-top:20px}
+#architecture .unit-chip{background:#102531;border-color:#315260;color:#dcecf3}
+#architecture .architecture{counter-reset:kds-step;gap:12px}
+#architecture .arch{counter-increment:kds-step;min-height:116px;padding:24px 16px 18px;border-color:#2e4e5d;border-radius:14px;background:linear-gradient(180deg,#112632,#0d1e29);box-shadow:0 8px 22px rgba(0,0,0,.12)}
+#architecture .arch::before{content:"0" counter(kds-step);display:block;margin-bottom:9px;color:#69cbea;font-size:.72rem;font-weight:900;letter-spacing:.08em}
+#architecture .arch b{color:#f0f7fa;font-size:1.01rem}
+#architecture .arch small{margin-top:6px;color:#adc0ca;line-height:1.5}
+
+/* Research cards and horizontal history */
+#research .grid3{gap:16px}
+#research .card{min-height:132px;padding:21px 20px 19px;border-color:#2c4b59;border-radius:14px;background:linear-gradient(180deg,#102430,#0c1d28);box-shadow:0 8px 22px rgba(0,0,0,.10)}
+#research .card::after{display:none!important}
+#research .research-code{position:absolute;right:15px;top:15px;display:grid;place-items:center;min-width:46px;height:30px;padding:0 7px;border:1px solid #3e6e82;border-radius:8px;background:#112f3e;color:#8fdcf3;font-size:.68rem;font-weight:900}
+#research .card h3{padding-right:58px;color:#f1f7fa}
+#research .card p{color:#b6c7cf;line-height:1.62}
+#research .timeline{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin:36px 0 0;padding:28px 0 0;border-left:0;border-top:2px solid #31505f}
+#research .event{min-height:108px;padding:0 12px 8px}
+#research .event::before{left:12px;top:-35px;width:13px;height:13px;background:#54c8e9;box-shadow:0 0 0 5px #081722}
+#research .event b{color:#eaf5f9}
+#research .event span{display:block;margin-top:8px;color:#afc1ca;line-height:1.55}
+
+/* Program inventory */
+#platform .program-grid-v2{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:24px}
+#platform .program-grid-v2 .card{min-height:176px;padding:22px 20px 19px;border-color:#2f4e5d;border-radius:15px;background:linear-gradient(180deg,#122833,#0d1f2a);box-shadow:0 10px 28px rgba(0,0,0,.12)}
+#platform .program-grid-v2 .card::after{display:none!important}
+#platform .program-grid-v2 .card::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:var(--program-accent,#5dc8e0)}
+#platform .program-grid-v2 .card h3{margin:6px 0 8px;padding-right:56px;color:#f3f8fb;font-size:1.04rem}
+#platform .program-grid-v2 .card p{margin:0;color:#b8c8d0;line-height:1.62}
+#platform .program-grid-v2 [data-program-role="core"],#platform .program-grid-v2 [data-program-role="authoring"],#platform .program-grid-v2 [data-program-role="floodviewer"]{grid-column:span 4}
+#platform .program-grid-v2 [data-program-role="geometry"],#platform .program-grid-v2 [data-program-role="output"],#platform .program-grid-v2 [data-program-role="viewer1d"],#platform .program-grid-v2 [data-program-role="research"]{grid-column:span 3}
+#platform [data-program-role="core"]{--program-accent:#53c8e7;order:1}
+#platform [data-program-role="authoring"]{--program-accent:#78c6ef;order:2}
+#platform [data-program-role="floodviewer"]{--program-accent:#78d1b5;order:3}
+#platform [data-program-role="geometry"]{--program-accent:#91c986;order:4}
+#platform [data-program-role="output"]{--program-accent:#64b8e4;order:5}
+#platform [data-program-role="viewer1d"]{--program-accent:var(--kds-amber);order:6}
+#platform [data-program-role="research"]{--program-accent:var(--kds-violet);order:7}
+#platform .program-role{display:inline-flex;align-items:center;min-height:25px;padding:3px 8px;border:1px solid color-mix(in srgb,var(--program-accent) 55%,#365765);border-radius:999px;background:color-mix(in srgb,var(--program-accent) 11%,#10232f);color:color-mix(in srgb,var(--program-accent) 76%,#fff);font-size:.68rem;font-weight:850}
+#platform .program-code{position:absolute;right:15px;top:18px;display:grid;place-items:center;min-width:42px;height:30px;padding:0 7px;border-radius:8px;background:color-mix(in srgb,var(--program-accent) 15%,#10232f);border:1px solid color-mix(in srgb,var(--program-accent) 55%,#365765);color:color-mix(in srgb,var(--program-accent) 78%,#fff);font-size:.67rem;font-weight:900}
+#platform [data-program-role="viewer1d"]>.status{display:block;margin:0 58px 7px 0;color:#ffd58d;font-size:.7rem;line-height:1.35}
+
+/* References and MyWater */
+#references .links{gap:14px}
+#references .link-card{min-height:118px;padding:19px;border-color:#2c4b59;border-radius:14px;background:linear-gradient(180deg,#10232f,#0c1c27);transition:transform .17s ease,border-color .17s ease,background .17s ease}
+#references .link-card:hover,#references .link-card:focus-visible{transform:translateY(-2px);border-color:#4e8aa3;background:#112a38;outline:none}
+#references .official.mywater-callout-v2{position:relative;grid-template-columns:minmax(0,1fr) 210px;gap:32px;margin-top:24px;padding:28px 30px;border:1px solid #3c7189;border-left:5px solid #42bfe7;border-radius:17px;background:radial-gradient(circle at 92% 15%,rgba(47,145,232,.18),transparent 34%),linear-gradient(135deg,#102b3a 0%,#0d202c 66%,#102836 100%);box-shadow:var(--kds-shadow)}
+#references .mywater-kicker{display:inline-flex;margin-bottom:9px;padding:4px 8px;border:1px solid #4b8298;border-radius:999px;background:#0b2532;color:#8fe0f4;font-size:.71rem;font-weight:900;letter-spacing:.03em}
+#references .official h3{margin:0 0 10px;color:#f4f9fb;font-size:1.28rem}
+#references .official p{max-width:920px;color:#c0ced5;line-height:1.68}
+#references .official p strong{display:block;margin-top:10px;color:#fff;font-size:1.04rem;line-height:1.58}
+#references .mywater-links{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 8px}
+#references .mywater-links a{display:inline-flex;align-items:center;min-height:36px;padding:7px 10px;border:1px solid #47748a;border-radius:9px;background:#0d2836;color:#d8f2f9;text-decoration:none;font-size:.84rem;font-weight:760}
+#references .mywater-links a:hover,#references .mywater-links a:focus-visible{border-color:#70c6e3;background:#123447;outline:none}
+#references .official .small{margin-bottom:0;color:#9fb5c0}
+#references .mywater-primary-cta{align-self:stretch;display:flex;text-decoration:none;border-radius:14px}
+#references .mywater-link-badge{width:100%;min-height:150px;justify-content:center;border:1px solid rgba(255,255,255,.7);border-radius:14px;background:linear-gradient(150deg,#fff,#e9f6fb);box-shadow:0 14px 30px rgba(0,0,0,.20);transition:transform .18s ease,box-shadow .18s ease}
+#references .mywater-link-badge b{font-size:1.24rem}
+#references .mywater-link-badge span{font-size:.96rem}
+#references .mywater-link-badge small{font-size:.78rem}
+#references .mywater-primary-cta:hover .mywater-link-badge,#references .mywater-primary-cta:focus-visible .mywater-link-badge{transform:translateY(-2px);box-shadow:0 19px 36px rgba(0,0,0,.26)}
+
+/* Detail dialogs */
+#catlas-dialog{border-color:#47788e;border-radius:18px;background:#07151f;box-shadow:0 34px 100px rgba(0,0,0,.66)}
+#catlas-dialog .catlas-dbar{padding:16px 20px;background:linear-gradient(135deg,#0d3041,#0a2230);border-bottom-color:#365f72}
+#catlas-dialog .catlas-dbar strong{font-size:1.22rem;color:#f5fafc}
+#catlas-dialog .catlas-close{min-height:40px;padding:8px 14px;border-color:#4d7b90;background:#102c3a}
+#catlas-dialog .catlas-dbody{padding:22px}
+#catlas-dialog .catlas-dlead{color:#d8e5ea}
+#catlas-dialog .catlas-graphic{padding:16px;border-color:#355d70;border-radius:15px;background:radial-gradient(circle at 50% 30%,#123142,#091b27 72%)}
+#catlas-dialog .catlas-flow{counter-reset:kds-flow;gap:12px}
+#catlas-dialog .catlas-flow>div{counter-increment:kds-flow;position:relative;padding:16px 14px 14px 48px;border-color:#345b6d;border-radius:12px;background:#0e2633}
+#catlas-dialog .catlas-flow>div::before{content:"0" counter(kds-flow);position:absolute;left:13px;top:14px;display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:#17455b;color:#9ee7fa;font-size:.68rem;font-weight:900}
+#catlas-dialog .catlas-panels{gap:14px}
+#catlas-dialog .catlas-panel{padding:17px;border-color:#355b6d;border-radius:12px;background:#0d2330}
+#catlas-dialog .catlas-panel:first-child{border-left:3px solid #55c6e6}
+#catlas-dialog .catlas-panel:nth-child(2){border-left:3px solid #efbd69}
+#catlas-dialog .catlas-doc{margin-top:16px;border-color:#4b7d92;background:#103044}
+
+@media(max-width:1050px){
+  #capabilities .catlas-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #platform .program-grid-v2 [data-program-role]{grid-column:span 6}
+  #research .timeline{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:28px}
+}
+
+@media(max-width:640px){
+  .topbar{position:relative;box-shadow:none}
+  .topbar-inner{gap:2px;padding:7px 0 4px}
+  .topbar .nav{padding:5px 0 8px}
+  .topbar .nav a{padding:6px 8px;font-size:.84rem}
+  .hero{min-height:auto;padding:42px 0 50px}
+  .hero .brand-lockup{display:grid;grid-template-columns:60px minmax(0,1fr) 72px;gap:8px;align-items:center;flex-wrap:nowrap}
+  .hero .brand-symbol-frame{grid-column:1}
+  .hero h1{grid-column:2;font-size:clamp(2.5rem,12vw,3rem);letter-spacing:-.055em}
+  .hero .brand-divider{display:none}
+  .hero .kwater-lockup{grid-column:3;padding:3px 4px;border-radius:8px}
+  .hero .kwater-lockup img{width:64px}
+  .hero .full-name{font-size:.98rem;line-height:1.5}
+  .hero .lead{font-size:1.34rem;line-height:1.45}
+  .hero .supporting{font-size:.97rem;line-height:1.72}
+  main>section,#capabilities{padding:54px 0 50px;scroll-margin-top:16px}
+  main h2{font-size:1.85rem}
+  #capabilities .catlas-head{display:block}
+  #capabilities .catlas-count{margin-top:12px}
+  #capabilities .catlas-tabs{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding-top:18px}
+  #capabilities .catlas-tab{min-height:58px;padding:9px 10px;font-size:.79rem;line-height:1.4}
+  #capabilities .catlas-group-head{grid-template-columns:1fr;padding:19px 18px;gap:12px}
+  #capabilities .catlas-group-visual{min-height:54px}
+  #capabilities .catlas-group-visual svg{height:54px}
+  #capabilities .catlas-grid{grid-template-columns:1fr;gap:12px}
+  #capabilities .catlas-card{min-height:168px;padding:18px 16px}
+  #architecture .unit-chain{display:none}
+  #architecture .arch{min-height:104px}
+  #research .grid3{grid-template-columns:1fr;gap:12px}
+  #research .timeline{display:block;margin-top:28px;padding:0 0 0 22px;border-top:0;border-left:2px solid #31505f}
+  #research .event{min-height:auto;padding:0 0 22px}
+  #research .event::before{left:-29px;top:.45rem;box-shadow:0 0 0 4px #081722}
+  #platform .program-grid-v2{grid-template-columns:1fr;gap:12px}
+  #platform .program-grid-v2 [data-program-role]{grid-column:1}
+  #platform .program-grid-v2 .card{min-height:auto}
+  #references .links{grid-template-columns:1fr}
+  #references .official.mywater-callout-v2{grid-template-columns:1fr;gap:18px;padding:23px 20px;border-left-width:4px}
+  #references .official h3{font-size:1.18rem;line-height:1.45}
+  #references .official p{font-size:.94rem}
+  #references .mywater-links{display:grid;grid-template-columns:1fr}
+  #references .mywater-links a{width:100%}
+  #references .mywater-primary-cta{width:100%}
+  #references .mywater-link-badge{min-height:86px;flex-direction:row;gap:9px}
+  #references .mywater-link-badge small{margin:0 0 0 4px}
+  #catlas-dialog{width:calc(100vw - 18px);max-height:94vh}
+  #catlas-dialog .catlas-dbar{padding:12px 13px}
+  #catlas-dialog .catlas-dbar strong{font-size:1rem}
+  #catlas-dialog .catlas-dbody{padding:15px}
+  #catlas-dialog .catlas-graphic{min-height:160px;padding:8px}
+  #catlas-dialog .catlas-graphic svg{height:170px}
+}
