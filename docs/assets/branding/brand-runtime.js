@@ -78,12 +78,26 @@
 
   document.documentElement.dataset.kdrumBrandRuntime='ready';
 
+  function loadPublicCopy(){
+    if(document.querySelector('script[data-kdrum-public-copy]'))return;
+    const copy=document.createElement('script');
+    copy.dataset.kdrumPublicCopy='1';
+    copy.src=(ko?'../assets/':'assets/')+'public-copy-runtime.js';
+    document.head.appendChild(copy);
+  }
+
   // Load the comprehensive capability atlas after branding has stabilized.
   // The atlas is bilingual and derives its asset path from the document language.
-  if(!document.querySelector('script[data-kdrum-capability-atlas]')){
+  const existingAtlas=document.querySelector('script[data-kdrum-capability-atlas]');
+  if(!existingAtlas){
     const atlas=document.createElement('script');
     atlas.dataset.kdrumCapabilityAtlas='1';
     atlas.src=(ko?'../assets/':'assets/')+'capability-atlas.js';
+    atlas.addEventListener('load',loadPublicCopy,{once:true});
     document.head.appendChild(atlas);
+  }else if(document.documentElement.dataset.kdrumCapabilityAtlas==='ready'){
+    loadPublicCopy();
+  }else{
+    existingAtlas.addEventListener('load',loadPublicCopy,{once:true});
   }
 })();
