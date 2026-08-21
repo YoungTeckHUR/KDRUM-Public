@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  pages: read
   statuses: write
 
 jobs:
@@ -26,165 +27,178 @@ jobs:
           npm install --no-save playwright@1.55.0
           npx playwright install --with-deps chromium
 
+      - name: Wait for GitHub Pages build for this exact commit
+        id: pages_build
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.sha }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import time
+          import urllib.request
+
+          token=os.environ['GH_TOKEN']
+          sha=os.environ['SHA']
+          repo=os.environ['REPOSITORY']
+          url=f'https://api.github.com/repos/{repo}/pages/builds/latest'
+          headers={
+              'Accept':'application/vnd.github+json',
+              'Authorization':f'Bearer {token}',
+              'X-GitHub-Api-Version':'2022-11-28',
+              'User-Agent':'KDRUM-Pages-QA',
+          }
+
+          last=None
+          for attempt in range(1, 61):
+              req=urllib.request.Request(url, headers=headers)
+              try:
+                  with urllib.request.urlopen(req, timeout=20) as r:
+                      data=json.load(r)
+                  last={'commit':data.get('commit'),'status':data.get('status'),'error':data.get('error')}
+                  print(f'pages build attempt {attempt}: {last}')
+                  if data.get('commit') == sha and data.get('status') == 'built':
+                      print('Exact GitHub Pages build is published.')
+                      raise SystemExit(0)
+                  if data.get('commit') == sha and data.get('status') == 'errored':
+                      raise SystemExit('GitHub Pages build for current commit errored')
+              except Exception as e:
+                  print(f'pages build attempt {attempt} request error: {e}')
+              time.sleep(10)
+
+          raise SystemExit(f'Exact GitHub Pages build did not become ready: {last}')
+          PY
+
       - name: Verify deployed English and Korean Pages
         id: live_verify
+        if: steps.pages_build.outcome == 'success'
         continue-on-error: true
         run: |
           mkdir -p live-artifacts
           node <<'NODE'
           const { chromium } = require('playwright');
           const fs = require('fs');
-          const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
           const targets = [
-            {
-              name: 'live-en',
-              url: 'https://youngteckhur.github.io/KDRUM-Public/',
-              dialog: '#kexp-en-dialog',
-              korean: false,
-            },
-            {
-              name: 'live-ko',
-              url: 'https://youngteckhur.github.io/KDRUM-Public/ko/',
-              dialog: '#kexp-dialog',
-              korean: true,
-            },
+            {name:'live-en',url:'https://youngteckhur.github.io/KDRUM-Public/',dialog:'#kexp-en-dialog',title:'Grid-based distributed modeling',korean:false},
+            {name:'live-ko',url:'https://youngteckhur.github.io/KDRUM-Public/ko/',dialog:'#kexp-dialog',title:'격자 기반 분포형 모형',korean:true},
           ];
 
           (async()=>{
-            const browser = await chromium.launch();
-            const failures = [];
-            const report = {};
+            const browser=await chromium.launch();
+            const failures=[];
+            const report={};
 
-            for (const target of targets) {
-              let passed = false;
-              let last = 'not checked';
+            for(const target of targets){
+              const page=await browser.newPage({viewport:{width:1440,height:1000}});
+              const errors=[];
+              page.on('console',msg=>{if(msg.type()==='error')errors.push(`console: ${msg.text()}`)});
+              page.on('pageerror',err=>errors.push(`pageerror: ${err.message}`));
 
-              for (let attempt = 1; attempt <= 30 && !passed; attempt++) {
-                const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
-                const errors = [];
-                page.on('console', msg => {
-                  if (msg.type() === 'error') errors.push(`console: ${msg.text()}`);
+              try{
+                await page.goto(target.url,{waitUntil:'networkidle',timeout:30000});
+                await page.waitForFunction(()=>document.documentElement.dataset.kdrumBrandRuntime==='ready',null,{timeout:8000});
+
+                const metrics=await page.evaluate(()=>{
+                  const frame=document.querySelector('.brand-symbol-frame');
+                  const nav=document.querySelector('.site-mark');
+                  const hero=document.querySelector('.brand-symbol');
+                  if(!frame||!nav||!hero)return null;
+                  const fr=frame.getBoundingClientRect();
+                  const hs=getComputedStyle(hero);
+                  return {
+                    frameWidth:fr.width,
+                    frameHeight:fr.height,
+                    navSrc:nav.getAttribute('src'),
+                    heroSrc:hero.getAttribute('src'),
+                    heroTransform:hs.transform,
+                    scrollWidth:document.documentElement.scrollWidth,
+                    clientWidth:document.documentElement.clientWidth,
+                  };
                 });
-                page.on('pageerror', err => errors.push(`pageerror: ${err.message}`));
 
-                try {
-                  await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: 20000 });
-                  await page.waitForFunction(
-                    () => document.documentElement.dataset.kdrumBrandRuntime === 'ready',
-                    null,
-                    { timeout: 6000 },
-                  );
+                if(!metrics||Math.abs(metrics.frameWidth-82)>1.1||Math.abs(metrics.frameHeight-82)>1.1) failures.push(`${target.name}: hero frame mismatch`);
+                if(!metrics?.navSrc.includes('branding/kdrum-symbol-compact.png')) failures.push(`${target.name}: navigation asset mismatch`);
+                if(!metrics?.heroSrc.includes('branding/kdrum-symbol-compact.png')) failures.push(`${target.name}: hero asset mismatch`);
+                if(metrics?.heroTransform!=='none') failures.push(`${target.name}: hero artwork is transform-cropped`);
+                if(metrics&&metrics.scrollWidth>metrics.clientWidth+1) failures.push(`${target.name}: horizontal overflow`);
 
-                  const metrics = await page.evaluate(() => {
-                    const frame = document.querySelector('.brand-symbol-frame');
-                    const nav = document.querySelector('.site-mark');
-                    const hero = document.querySelector('.brand-symbol');
-                    if (!frame || !nav || !hero) return null;
-                    const fr = frame.getBoundingClientRect();
-                    return {
-                      frameWidth: fr.width,
-                      frameHeight: fr.height,
-                      navSrc: nav.getAttribute('src'),
-                      heroSrc: hero.getAttribute('src'),
-                      scrollWidth: document.documentElement.scrollWidth,
-                      clientWidth: document.documentElement.clientWidth,
-                    };
-                  });
+                await page.locator('#features .feature').first().click();
+                const dialog=page.locator(target.dialog);
+                await dialog.waitFor({state:'visible',timeout:6000});
+                await page.waitForTimeout(150);
 
-                  const basicOk = Boolean(
-                    metrics &&
-                    Math.abs(metrics.frameWidth - 82) <= 1.1 &&
-                    Math.abs(metrics.frameHeight - 82) <= 1.1 &&
-                    metrics.navSrc.includes('branding/kdrum-symbol-compact.png') &&
-                    metrics.heroSrc.includes('branding/kdrum-symbol-web.png') &&
-                    metrics.scrollWidth <= metrics.clientWidth + 1
-                  );
-
-                  if (!basicOk) {
-                    last = JSON.stringify({ attempt, metrics, errors });
-                    await page.close();
-                    if (attempt < 30) await sleep(10000);
-                    continue;
-                  }
-
-                  await page.locator('#features .feature').first().click();
-                  const dialog = page.locator(target.dialog);
-                  await dialog.waitFor({ state: 'visible', timeout: 6000 });
-                  const dialogText = (await dialog.innerText()).trim();
-                  const statusRows = target.korean ? await dialog.locator('.kexp-statusrow').count() : null;
-                  const popupOk = dialogText.length >= 40 && (!target.korean || statusRows === 1);
-
-                  if (popupOk && errors.length === 0) {
-                    passed = true;
-                    report[target.name] = {
-                      attempt,
-                      metrics,
-                      dialogTextLength: dialogText.length,
-                      statusRows,
-                      errors,
-                    };
-                    await page.locator('.hero').screenshot({ path: `live-artifacts/${target.name}-hero.png` });
-                    await dialog.screenshot({ path: `live-artifacts/${target.name}-popup.png` });
-                    console.log(`${target.name}: live page verified on attempt ${attempt}`);
-                  } else {
-                    last = JSON.stringify({
-                      attempt,
-                      metrics,
-                      dialogTextLength: dialogText.length,
-                      statusRows,
-                      errors,
-                    });
-                  }
-                } catch (err) {
-                  last = `${err.name}: ${err.message}`;
+                let popup={};
+                if(target.korean){
+                  popup={
+                    title:(await dialog.locator('#kexp-title').innerText()).trim(),
+                    statusRows:await dialog.locator('.kexp-statusrow').count(),
+                    status:(await dialog.locator('.kexp-statusrow .kexp-status').first().innerText()).trim(),
+                    tech:(await dialog.locator('#kexp-techdesc').innerText()).trim(),
+                    visualConcepts:await dialog.locator('#kexp-visual-concept').count(),
+                  };
+                  if(popup.title!==target.title)failures.push(`${target.name}: popup title mismatch`);
+                  if(popup.statusRows!==1)failures.push(`${target.name}: status row count ${popup.statusRows}`);
+                  if(!popup.status)failures.push(`${target.name}: popup status empty`);
+                  if(popup.tech.length<20)failures.push(`${target.name}: technical description empty/stale`);
+                  if(popup.visualConcepts!==1)failures.push(`${target.name}: visual fallback id is not unique`);
+                }else{
+                  popup={
+                    title:(await dialog.locator('#kexp-en-title').innerText()).trim(),
+                    status:(await dialog.locator('#kexp-en-status').innerText()).trim(),
+                    summary:(await dialog.locator('#kexp-en-summary').innerText()).trim(),
+                  };
+                  if(popup.title!==target.title)failures.push(`${target.name}: popup title mismatch`);
+                  if(!popup.status)failures.push(`${target.name}: popup status empty`);
+                  if(popup.summary.length<20)failures.push(`${target.name}: facts summary empty/stale`);
                 }
 
-                await page.close();
-                if (!passed && attempt < 30) await sleep(10000);
-              }
+                if(errors.length)failures.push(`${target.name}: browser errors after popup: ${errors.join(' | ')}`);
 
-              if (!passed) failures.push(`${target.name}: ${last}`);
+                report[target.name]={metrics,popup,errors};
+                await page.locator('.hero').screenshot({path:`live-artifacts/${target.name}-hero.png`});
+                await dialog.screenshot({path:`live-artifacts/${target.name}-popup.png`});
+              }catch(err){
+                failures.push(`${target.name}: ${err.name}: ${err.message}`);
+              }
+              await page.close();
             }
 
-            fs.writeFileSync('live-artifacts/live-metrics.json', JSON.stringify(report, null, 2));
+            fs.writeFileSync('live-artifacts/live-metrics.json',JSON.stringify(report,null,2));
             await browser.close();
-
-            if (failures.length) {
+            if(failures.length){
               console.error('LIVE GITHUB PAGES VERIFICATION FAILED');
-              failures.forEach(x => console.error(' -', x));
+              failures.forEach(x=>console.error(' -',x));
               process.exit(1);
             }
             console.log('LIVE GITHUB PAGES VERIFICATION PASSED');
-          })().catch(err => {
-            console.error(err);
-            process.exit(1);
-          });
+          })().catch(err=>{console.error(err);process.exit(1)});
           NODE
 
       - name: Publish live verification commit status
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
+          PAGES_OUTCOME: ${{ steps.pages_build.outcome }}
           LIVE_OUTCOME: ${{ steps.live_verify.outcome }}
           SHA: ${{ github.sha }}
           REPOSITORY: ${{ github.repository }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           payload=$(python3 - <<'PY'
-          import json
-          import os
-
-          ok = os.environ['LIVE_OUTCOME'] == 'success'
+          import json, os
+          ok=os.environ['PAGES_OUTCOME']=='success' and os.environ['LIVE_OUTCOME']=='success'
           print(json.dumps({
-              'state': 'success' if ok else 'failure',
-              'context': 'homepage-live-pages',
-              'description': 'Live EN/KO GitHub Pages verified' if ok else 'Live EN/KO GitHub Pages verification failed',
-              'target_url': os.environ['RUN_URL'],
+            'state':'success' if ok else 'failure',
+            'context':'homepage-live-pages',
+            'description':'Exact Pages build + EN/KO popup verified' if ok else 'Pages build/live verification failed',
+            'target_url':os.environ['RUN_URL'],
           }))
           PY
           )
-
           curl -fsS -X POST \
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
@@ -200,6 +214,6 @@ jobs:
           path: live-artifacts/
           if-no-files-found: warn
 
-      - name: Fail job when live verification failed
-        if: steps.live_verify.outcome != 'success'
+      - name: Fail job when verification failed
+        if: steps.pages_build.outcome != 'success' || steps.live_verify.outcome != 'success'
         run: exit 1
