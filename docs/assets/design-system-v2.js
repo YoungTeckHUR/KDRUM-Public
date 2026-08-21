@@ -30,19 +30,28 @@
     {role:'research',codes:['Estuary2DV'],labelKo:'연구 확장',labelEn:'Research extension',code:'X–Z'}
   ];
 
-  function ensureStylesheet(done){
-    let link=document.querySelector('link[data-kdrum-design-system]');
-    if(link){done();return;}
-    link=document.createElement('link');
-    link.rel='stylesheet';
-    link.href=assetBase+'design-system-v2.css';
-    link.dataset.kdrumDesignSystem='2';
-    let settled=false;
-    const finish=()=>{if(settled)return;settled=true;done();};
-    link.addEventListener('load',finish,{once:true});
-    link.addEventListener('error',finish,{once:true});
-    document.head.appendChild(link);
-    setTimeout(finish,2500);
+  function loadStylesheet(selector,href,datasetKey,datasetValue){
+    return new Promise(resolve=>{
+      const existing=document.querySelector(selector);
+      if(existing){resolve();return;}
+      const link=document.createElement('link');
+      link.rel='stylesheet';
+      link.href=href;
+      link.dataset[datasetKey]=datasetValue;
+      let settled=false;
+      const finish=()=>{if(settled)return;settled=true;resolve();};
+      link.addEventListener('load',finish,{once:true});
+      link.addEventListener('error',finish,{once:true});
+      document.head.appendChild(link);
+      setTimeout(finish,2500);
+    });
+  }
+
+  function ensureStylesheets(done){
+    Promise.all([
+      loadStylesheet('link[data-kdrum-design-system]',assetBase+'design-system-v2.css','kdrumDesignSystem','2'),
+      loadStylesheet('link[data-kdrum-design-polish]',assetBase+'design-system-v2-polish.css','kdrumDesignPolish','2')
+    ]).then(done,done);
   }
 
   function applyCapabilityDesign(){
@@ -140,6 +149,20 @@
         kicker.textContent=ko?'공식 배포 경로':'Official distribution channel';
         info.prepend(kicker);
       }
+
+      const paragraphs=[...info.querySelectorAll(':scope>p')];
+      const desktopCopy=paragraphs.find(p=>!p.querySelector('a')&&!p.classList.contains('small')&&!p.classList.contains('mywater-mobile-summary'));
+      if(desktopCopy)desktopCopy.classList.add('mywater-desktop-copy');
+      if(!info.querySelector('.mywater-mobile-summary')){
+        const summary=document.createElement('p');
+        summary.className='mywater-mobile-summary';
+        summary.innerHTML=ko
+          ?'<strong>K-DRUM은 MyWater K-Series에서 무료로 내려받아 사용할 수 있습니다.</strong> 다운로드 버전과 사용조건은 최신 이용약관을 확인해 주세요.'
+          :'<strong>K-DRUM is available for free download through MyWater K-Series.</strong> Please confirm the current version and terms of use on MyWater.';
+        const heading=info.querySelector('h3');
+        if(heading)heading.after(summary);else info.appendChild(summary);
+      }
+
       for(const p of info.querySelectorAll(':scope>p')){
         if(p.querySelector('a'))p.classList.add('mywater-links');
       }
@@ -158,6 +181,22 @@
     document.querySelector('.hero')?.classList.add('hero-design-v2');
   }
 
+  function refreshDynamicDesign(){
+    applyCapabilityDesign();
+    applyPlatformDesign();
+    applyMyWaterDesign();
+    applyDialogDesign();
+  }
+
+  function scheduleDynamicRefresh(){
+    setTimeout(refreshDynamicDesign,0);
+    setTimeout(refreshDynamicDesign,40);
+    requestAnimationFrame(()=>{
+      refreshDynamicDesign();
+      requestAnimationFrame(refreshDynamicDesign);
+    });
+  }
+
   function applyAll(){
     applyHeroDesign();
     applyCapabilityDesign();
@@ -174,12 +213,8 @@
     const card=event.target.closest('.catlas-card');
     const tab=event.target.closest('.catlas-tab');
     if(card)lastCapabilityId=card.dataset.id||'';
-    if(card||tab)queueMicrotask(()=>{
-      applyCapabilityDesign();
-      applyPlatformDesign();
-      applyDialogDesign();
-    });
+    if(card||tab)scheduleDynamicRefresh();
   },true);
 
-  ensureStylesheet(applyAll);
+  ensureStylesheets(applyAll);
 })();
