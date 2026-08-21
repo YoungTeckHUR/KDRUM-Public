@@ -111,6 +111,10 @@ jobs:
               await dialog.waitFor({state:'visible', timeout:5000});
               const dialogText = (await dialog.innerText()).trim();
               if (dialogText.length < 40) failures.push(`${c.name}: technical popup opened but contains too little content`);
+              if (c.name.startsWith('ko-')) {
+                const statusRows = await dialog.locator('.kexp-statusrow').count();
+                if (statusRows !== 1) failures.push(`${c.name}: expected one public-status row, found ${statusRows}`);
+              }
               if (c.name.endsWith('desktop')) await dialog.screenshot({path:`browser-artifacts/${c.name}-popup.png`});
               await page.keyboard.press('Escape');
               await page.close();
