@@ -72,7 +72,7 @@
         line-height:1.2;
         box-shadow:0 5px 18px rgba(0,0,0,.18);
       }
-      .mywater-link-badge strong{font-size:1rem;color:#075795}
+      .mywater-link-badge b{font-size:1rem;color:#075795}
       .mywater-link-badge span{font-size:.82rem;font-weight:800;color:#0b6cae}
       .mywater-link-badge small{margin-top:5px;font-size:.7rem;font-weight:800;color:#31566e}
       @media(max-width:640px){
@@ -95,6 +95,43 @@
 
   document.documentElement.dataset.kdrumBrandRuntime='ready';
 
+  function normalizeKoreanTechnicalTerms(){
+    if(!ko)return;
+    const statusMap={
+      'IMPLEMENTED / QA':'구현·검증',
+      'IMPLEMENTED / 품질검토':'구현·검증',
+      'ACTIVE MODERNIZATION / QA':'개선·검증 중',
+      'ACTIVE MODERNIZATION / 품질검토':'개선·검증 중'
+    };
+    for(const status of document.querySelectorAll('#capabilities .catlas-status,#catlas-dialog .catlas-status')){
+      const replacement=statusMap[status.textContent.trim()];
+      if(replacement)status.textContent=replacement;
+    }
+
+    const visualMap={
+      'QC':'품질검사',
+      'GRID':'격자',
+      'SLOPE':'경사',
+      'RIVER':'하천',
+      'BED':'하상',
+      'IN':'유입',
+      'OUT':'유출',
+      'WL':'수위',
+      'DAM':'댐',
+      '1D':'1차원',
+      '2D':'2차원',
+      'SRC':'발생',
+      'MOVE':'이송',
+      'INPUT':'입력',
+      'CORE':'해석',
+      'VIEW':'분석'
+    };
+    for(const label of document.querySelectorAll('#capabilities .catlas-group-visual text')){
+      const replacement=visualMap[label.textContent.trim()];
+      if(replacement)label.textContent=replacement;
+    }
+  }
+
   function finalizePublicCopy(){
     const viewer=document.querySelector('[data-kdrum-1d-viewer],[data-kdrum1d-viewer]');
     if(viewer)viewer.setAttribute('data-kdrum-1d-viewer','1');
@@ -110,9 +147,18 @@
       const badge=document.createElement('span');
       badge.className='mywater-link-badge';
       badge.innerHTML=ko
-        ?'<strong>MyWater</strong><span>K-Series</span><small>K-DRUM 확인 →</small>'
-        :'<strong>MyWater</strong><span>K-Series</span><small>Open K-DRUM →</small>';
+        ?'<b>MyWater</b><span>K-Series</span><small>K-DRUM 확인 →</small>'
+        :'<b>MyWater</b><span>K-Series</span><small>Open K-DRUM →</small>';
       oldImage.replaceWith(badge);
+    }
+
+    normalizeKoreanTechnicalTerms();
+    const capabilities=document.getElementById('capabilities');
+    if(capabilities&&!capabilities.dataset.kdrumTerminologyBound){
+      capabilities.dataset.kdrumTerminologyBound='1';
+      capabilities.addEventListener('click',event=>{
+        if(event.target.closest('.catlas-tab,.catlas-card'))queueMicrotask(normalizeKoreanTechnicalTerms);
+      });
     }
 
     document.documentElement.dataset.kdrumPublicCopyLinked='ready';
