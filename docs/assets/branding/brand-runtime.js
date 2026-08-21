@@ -77,8 +77,8 @@
   document.documentElement.dataset.kdrumBrandRuntime='ready';
 
   function finalizePublicCopy(){
-    const viewer=document.querySelector('[data-kdrum1d-viewer]');
-    if(viewer) viewer.setAttribute('data-kdrum-1d-viewer','1');
+    const viewer=document.querySelector('[data-kdrum-1d-viewer],[data-kdrum1d-viewer]');
+    if(viewer)viewer.setAttribute('data-kdrum-1d-viewer','1');
     document.documentElement.dataset.kdrumPublicCopyLinked='ready';
   }
 
@@ -96,16 +96,30 @@
     document.head.appendChild(copy);
   }
 
+  function loadViewerRuntime(){
+    const existing=document.querySelector('script[data-kdrum-viewer-runtime]');
+    if(existing){
+      if(document.documentElement.dataset.kdrumViewerRuntime==='ready')loadPublicCopy();
+      else existing.addEventListener('load',loadPublicCopy,{once:true});
+      return;
+    }
+    const viewer=document.createElement('script');
+    viewer.dataset.kdrumViewerRuntime='1';
+    viewer.src=(ko?'../assets/':'assets/')+'public-viewer-runtime.js';
+    viewer.addEventListener('load',loadPublicCopy,{once:true});
+    document.head.appendChild(viewer);
+  }
+
   const existingAtlas=document.querySelector('script[data-kdrum-capability-atlas]');
   if(!existingAtlas){
     const atlas=document.createElement('script');
     atlas.dataset.kdrumCapabilityAtlas='1';
     atlas.src=(ko?'../assets/':'assets/')+'capability-atlas.js';
-    atlas.addEventListener('load',loadPublicCopy,{once:true});
+    atlas.addEventListener('load',loadViewerRuntime,{once:true});
     document.head.appendChild(atlas);
   }else if(document.documentElement.dataset.kdrumCapabilityAtlas==='ready'){
-    loadPublicCopy();
+    loadViewerRuntime();
   }else{
-    existingAtlas.addEventListener('load',loadPublicCopy,{once:true});
+    existingAtlas.addEventListener('load',loadViewerRuntime,{once:true});
   }
 })();
