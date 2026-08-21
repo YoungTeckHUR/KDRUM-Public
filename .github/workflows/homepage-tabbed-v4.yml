@@ -1,0 +1,56 @@
+name: Homepage tabbed v4 audit
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tabbed-v4:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout public repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Check homepage JavaScript syntax
+        run: |
+          node --check docs/assets/experience-v4.js
+          node --check .github/scripts/homepage-v4-audit.cjs
+
+      - name: Install Chromium test runtime
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start local homepage server
+        run: |
+          python3 -m http.server 8000 --directory docs >/tmp/kdrum-http.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:8000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/kdrum-http.log
+          exit 1
+
+      - name: Verify tabbed information architecture, diagrams and actions
+        env:
+          BASE_URL: http://127.0.0.1:8000
+          AUDIT_DIR: homepage-v4-artifacts
+          AUDIT_LABEL: Homepage tabbed v4 audit
+        run: node .github/scripts/homepage-v4-audit.cjs
+
+      - name: Upload tabbed homepage screenshots and metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: homepage-tabbed-v4
+          path: homepage-v4-artifacts/
+          if-no-files-found: error
