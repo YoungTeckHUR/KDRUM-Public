@@ -1,5 +1,26 @@
 # K-DRUM Public Information Changelog
 
+## 2026-08-22 — Homepage visual-system and responsive-layout review
+
+Re-audited the rendered English and Korean homepage as a complete visual system on desktop and mobile, rather than relying only on functional smoke tests.
+
+Updated:
+
+- replaced the nearly uniform navy/cyan presentation with a restrained K-water-aligned palette using blue, teal, green, amber and violet accents to distinguish functional groups and public maturity states
+- converted the eight capability-group controls from a horizontally scrolling strip into a four-column desktop and two-column mobile navigation grid
+- replaced generic three-bar capability decorations with compact, capability-specific technical symbols and status-colored top rules
+- strengthened section hierarchy through alternating surfaces, clearer separators, consistent spacing, and improved title/body contrast
+- numbered the five model-workflow stages and simplified the mobile workflow presentation
+- reorganized the seven analysis/support programs from an unbalanced 3+3+1 layout into a balanced 3+4 desktop composition, while retaining a single-column mobile reading order
+- redesigned research cards and converted the desktop research history into a horizontal timeline
+- elevated the MyWater K-Series area into a clear official distribution/download callout, with a shorter mobile summary and more prominent K-DRUM access button
+- refined capability dialogs with a stronger header, numbered process steps, differentiated status/caution panels and improved mobile sizing
+- removed the sticky mobile header to prevent content overlap and aligned the K-DRUM and K-water marks on one mobile hero row
+- added a dedicated Chromium visual-design audit that captures full-page and section screenshots, checks color/layout hooks, verifies all 46 capability symbols, enforces the balanced program grid, and detects mobile overflow or excessive MyWater height
+- expanded post-merge GitHub Pages verification to check the deployed English/Korean desktop and mobile visual system for the exact merge commit
+
+No production source code, restricted model inputs, operational rules or unpublished numerical details were added.
+
 ## 2026-08-21 — Water-resources terminology, MyWater guidance and 1D results viewer
 
 Refined the public homepage terminology and program inventory so that public-facing Korean wording follows commonly used water-resources and civil-engineering terminology rather than internal development shorthand.
