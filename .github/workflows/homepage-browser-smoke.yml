@@ -100,7 +100,7 @@ jobs:
                 if(n<1)failures.push(`${c.name}: empty capability group at tab ${i}`);
                 if(c.deep)await page.locator('#capabilities').screenshot({path:`browser-artifacts/${c.name}-group-${i+1}.png`});
               }
-              if(total!==40)failures.push(`${c.name}: expected 40 capability items across groups, found ${total}`);
+              if(total!==45)failures.push(`${c.name}: expected 45 capability items across groups, found ${total}`);
 
               const toTest=c.deep?representative:['warmup','wb','dam-operation','dye'];
               for(const id of toTest){
