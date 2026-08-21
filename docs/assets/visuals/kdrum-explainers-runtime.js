@@ -1,1 +1,114 @@
-(()=>{const base='../assets/visuals/';const files=['tech-features.js','tech-architecture.js','tech-functions.js','tech-research.js','tech-platform.js','tech-resources.js'];Promise.all(files.map(f=>new Promise((ok,fail)=>{const s=document.createElement('script');s.src=base+f;s.onload=ok;s.onerror=fail;document.head.appendChild(s)}))).then(init);function init(){const css=`.kexp{cursor:pointer;transition:.16s transform,.16s border-color}.kexp:hover,.kexp:focus-visible{transform:translateY(-2px);border-color:#4bbde9!important;outline:none}#kexp-dialog{width:min(1120px,94vw);max-height:92vh;border:1px solid #416c88;border-radius:16px;padding:0;background:#07131e;color:#eef6fb;box-shadow:0 30px 90px rgba(0,0,0,.55)}#kexp-dialog::backdrop{background:rgba(0,0,0,.82)}.kexp-bar{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1px solid #29485e;background:#0b1b28}.kexp-close{border:1px solid #456b83;border-radius:8px;background:#102a3a;color:#eef6fb;padding:7px 12px;cursor:pointer}.kexp-body{padding:22px}.kexp-desc{margin:0 0 22px;color:#c8d7e0;font-size:1rem;line-height:1.9}.kexp-visual{min-height:280px;border:1px solid #29485e;border-radius:12px;background:linear-gradient(145deg,#0b2030,#071522);display:grid;place-items:center;overflow:hidden}.kexp-visual img{width:100%;height:auto;max-height:62vh;object-fit:contain}.kexp-concept{width:min(640px,90%);display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.kexp-concept span{padding:26px 8px;border:1px solid #315874;border-radius:12px;text-align:center;background:#102c3d;color:#9edfff;font-weight:800}@media(max-width:640px){.kexp-concept{grid-template-columns:repeat(2,1fr)}.kexp-body{padding:15px}}`;document.head.insertAdjacentHTML('beforeend','<style>'+css+'</style>');const dlg=document.createElement('dialog');dlg.id='kexp-dialog';dlg.innerHTML='<div class="kexp-bar"><strong id="kexp-title"></strong><button class="kexp-close" type="button">닫기</button></div><div class="kexp-body"><p class="kexp-desc" id="kexp-desc"></p><div class="kexp-visual" id="kexp-visual"></div></div>';document.body.appendChild(dlg);const ttl=dlg.querySelector('#kexp-title'),desc=dlg.querySelector('#kexp-desc'),vis=dlg.querySelector('#kexp-visual');dlg.querySelector('.kexp-close').onclick=()=>dlg.close();dlg.onclick=e=>{if(e.target===dlg)dlg.close()};const images={'격자 기반 분포형 모형':'01-grid-distributed.jpg','강우·유출 전 과정 모의':'02-rainfall-runoff.jpg','1D 하천수리 해석':'03-river-1d.jpg'};function title(el){return(el.querySelector('h3,b,strong')?.textContent||'').trim()}function open(el){const t=title(el),d=(window.KDRUM_TECH||{})[t];if(!d)return;ttl.textContent=t;desc.textContent=d;if(images[t])vis.innerHTML='<img src="'+base+'explainers/'+images[t]+'" alt="'+t+' 설명 이미지">';else vis.innerHTML='<div class="kexp-concept"><span>입력자료</span><span>물리과정</span><span>수치계산</span><span>결과분석</span></div>';dlg.showModal()}const specs=['#features .feature','#architecture .arch','#functions .card','#research .card','#platform .card','#references .link-card'];document.querySelectorAll(specs.join(',')).forEach(el=>{const t=title(el);if(!(window.KDRUM_TECH||{})[t])return;el.classList.add('kexp');el.tabIndex=0;if(el.tagName!=='A')el.setAttribute('role','button');el.addEventListener('click',e=>{if(el.tagName==='A')e.preventDefault();open(el)});el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(el)}})});}})();
+(()=>{
+  const base='../assets/visuals/';
+  const files=[
+    'tech-features.js',
+    'tech-architecture.js',
+    'tech-functions.js',
+    'tech-research.js',
+    'tech-platform.js',
+    'tech-resources.js'
+  ];
+
+  Promise.all(files.map(load)).then(()=>{
+    removeLegacyFeatureHandlers();
+    init();
+  });
+
+  function load(file){
+    return new Promise((ok,fail)=>{
+      const s=document.createElement('script');
+      s.src=base+file;
+      s.onload=ok;
+      s.onerror=fail;
+      document.head.appendChild(s);
+    });
+  }
+
+  function removeLegacyFeatureHandlers(){
+    // The Korean page still contains the early three-card master-dialog listener.
+    // Replace the feature nodes once after page parsing so the unified runtime
+    // owns every feature card and the same facts-first path is used everywhere.
+    document.querySelectorAll('#features .feature').forEach(el=>{
+      const clone=el.cloneNode(true);
+      clone.removeAttribute('data-master-explainer');
+      el.replaceWith(clone);
+    });
+  }
+
+  function init(){
+    const css=`
+      .kexp{cursor:pointer;transition:.16s transform,.16s border-color}
+      .kexp:hover,.kexp:focus-visible{transform:translateY(-2px);border-color:#4bbde9!important;outline:none}
+      #kexp-dialog{width:min(1120px,94vw);max-height:92vh;border:1px solid #416c88;border-radius:16px;padding:0;background:#07131e;color:#eef6fb;box-shadow:0 30px 90px rgba(0,0,0,.55)}
+      #kexp-dialog::backdrop{background:rgba(0,0,0,.82)}
+      .kexp-bar{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1px solid #29485e;background:#0b1b28}
+      .kexp-close{border:1px solid #456b83;border-radius:8px;background:#102a3a;color:#eef6fb;padding:7px 12px;cursor:pointer}
+      .kexp-body{padding:22px}
+      .kexp-desc{margin:0 0 22px;color:#c8d7e0;font-size:1rem;line-height:1.9}
+      .kexp-visual{min-height:280px;border:1px solid #29485e;border-radius:12px;background:linear-gradient(145deg,#0b2030,#071522);display:grid;place-items:center;overflow:hidden}
+      .kexp-visual img{width:100%;height:auto;max-height:62vh;object-fit:contain}
+      .kexp-concept{width:min(640px,90%);display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+      .kexp-concept span{padding:26px 8px;border:1px solid #315874;border-radius:12px;text-align:center;background:#102c3d;color:#9edfff;font-weight:800}
+      @media(max-width:640px){.kexp-concept{grid-template-columns:repeat(2,1fr)}.kexp-body{padding:15px}}
+    `;
+    document.head.insertAdjacentHTML('beforeend','<style>'+css+'</style>');
+
+    const dlg=document.createElement('dialog');
+    dlg.id='kexp-dialog';
+    dlg.innerHTML='<div class="kexp-bar"><strong id="kexp-title"></strong><button class="kexp-close" type="button">닫기</button></div><div class="kexp-body"><p class="kexp-desc" id="kexp-desc"></p><div class="kexp-visual" id="kexp-visual"></div></div>';
+    document.body.appendChild(dlg);
+
+    const ttl=dlg.querySelector('#kexp-title');
+    const desc=dlg.querySelector('#kexp-desc');
+    const vis=dlg.querySelector('#kexp-visual');
+    dlg.querySelector('.kexp-close').onclick=()=>dlg.close();
+    dlg.onclick=e=>{if(e.target===dlg)dlg.close()};
+
+    const images={
+      '격자 기반 분포형 모형':'01-grid-distributed.jpg',
+      '강우·유출 전 과정 모의':'02-rainfall-runoff.jpg',
+      '1D 하천수리 해석':'03-river-1d.jpg'
+    };
+
+    function title(el){return(el.querySelector('h3,b,strong')?.textContent||'').trim()}
+    function open(el){
+      const t=title(el);
+      const d=(window.KDRUM_TECH||{})[t];
+      if(!d)return;
+      ttl.textContent=t;
+      desc.textContent=d;
+      if(images[t]){
+        vis.innerHTML='<img src="'+base+'explainers/'+images[t]+'" alt="'+t+' 설명 이미지">';
+      }else{
+        vis.innerHTML='<div class="kexp-concept"><span>입력자료</span><span>물리과정</span><span>수치계산</span><span>결과분석</span></div>';
+      }
+      dlg.showModal();
+    }
+
+    const specs=['#features .feature','#architecture .arch','#functions .card','#research .card','#platform .card','#references .link-card'];
+    document.querySelectorAll(specs.join(',')).forEach(el=>{
+      const t=title(el);
+      if(!(window.KDRUM_TECH||{})[t])return;
+      el.classList.add('kexp');
+      el.tabIndex=0;
+      if(el.tagName!=='A')el.setAttribute('role','button');
+      el.addEventListener('click',e=>{
+        if(el.tagName==='A')e.preventDefault();
+        open(el);
+      });
+      el.addEventListener('keydown',e=>{
+        if(e.key==='Enter'||e.key===' '){
+          e.preventDefault();
+          open(el);
+        }
+      });
+    });
+
+    // Load the richer technical layer only after #kexp-dialog exists.
+    // PR #31 added this facts-first chain, but it was not reachable from the
+    // page runtime. Keeping the handoff here makes the execution order explicit.
+    const details=document.createElement('script');
+    details.src=base+'tech-description-runtime.js';
+    document.head.appendChild(details);
+  }
+})();
