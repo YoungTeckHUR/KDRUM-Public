@@ -78,11 +78,20 @@
 
   document.documentElement.dataset.kdrumBrandRuntime='ready';
 
+  function loadProductGuard(){
+    if(document.querySelector('script[data-kdrum-product-guard]'))return;
+    const guard=document.createElement('script');
+    guard.dataset.kdrumProductGuard='1';
+    guard.src=(ko?'../assets/':'assets/')+'public-product-name-guard.js';
+    document.head.appendChild(guard);
+  }
+
   function loadPublicCopy(){
     if(document.querySelector('script[data-kdrum-public-copy]'))return;
     const copy=document.createElement('script');
     copy.dataset.kdrumPublicCopy='1';
     copy.src=(ko?'../assets/':'assets/')+'public-copy-runtime-v2.js';
+    copy.addEventListener('load',loadProductGuard,{once:true});
     document.head.appendChild(copy);
   }
 
