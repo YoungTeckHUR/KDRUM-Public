@@ -1,5 +1,27 @@
 # K-DRUM Public Information Changelog
 
+## 2026-08-22 — Light, image-led homepage experience
+
+Rebuilt the English and Korean public homepage after reviewing the deployed page from a first-time user perspective. The redesign focuses on immediate comprehension, clear click affordances, visible download actions and concept imagery rather than a dark text-heavy catalogue.
+
+Updated:
+
+- changed the page-wide presentation to predominantly light surfaces with K-water blue reserved for primary actions and selected states
+- retained the watershed hero image while adding a prominent MyWater free-download action and clearer secondary paths
+- added a four-card **what users obtain** section for watershed runoff, river water level/discharge, flood inundation and water-balance reporting
+- added a four-panel result-concept gallery for spatial maps, hydrographs/time series, water-balance summaries and one-dimensional river-hydraulics results
+- explicitly labelled those result graphics as concept illustrations rather than numerical results from a specific basin
+- added a capability-specific concept illustration, technical code and **View details / 상세 보기** action to all 46 interactive capability cards
+- added concept illustrations to all seven program cards and six research/application cards while keeping those cards visibly static and non-clickable
+- rebuilt navigation around capabilities, model workflow, result concepts, research, programs and free download
+- rebuilt resource cards as clear links with visible action labels and strengthened the MyWater K-Series primary download card
+- kept the mobile header non-sticky, retained two-column capability navigation and prevented horizontal overflow
+- corrected the capability-dialog header and close-button contrast after direct mobile screenshot review
+- added dedicated Chromium checks for light surfaces, concept-image coverage, click/static distinction, target sizes and dialog-header contrast
+- replaced post-merge verification with an exact-commit EN/KO desktop/mobile test of the deployed light homepage
+
+The public boundary remains unchanged: no production model source, restricted basin data, operational reservoir rules, unpublished numerical settings, private validation data or viewer binaries are published.
+
 ## 2026-08-22 — Homepage visual-system and responsive-layout review
 
 Re-audited the rendered English and Korean homepage as a complete visual system on desktop and mobile, rather than relying only on functional smoke tests.
