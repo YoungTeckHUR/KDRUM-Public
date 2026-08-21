@@ -82,7 +82,7 @@
     if(document.querySelector('script[data-kdrum-public-copy]'))return;
     const copy=document.createElement('script');
     copy.dataset.kdrumPublicCopy='1';
-    copy.src=(ko?'../assets/':'assets/')+'public-copy-runtime.js';
+    copy.src=(ko?'../assets/':'assets/')+'public-copy-runtime-v2.js';
     document.head.appendChild(copy);
   }
 
