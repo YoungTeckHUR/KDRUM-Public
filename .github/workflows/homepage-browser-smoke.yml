@@ -29,9 +29,7 @@ jobs:
         run: |
           python3 -m http.server 8000 --directory docs >/tmp/kdrum-http.log 2>&1 &
           for i in {1..20}; do
-            if curl -fsS http://127.0.0.1:8000/ >/dev/null; then
-              exit 0
-            fi
+            if curl -fsS http://127.0.0.1:8000/ >/dev/null; then exit 0; fi
             sleep 1
           done
           cat /tmp/kdrum-http.log
@@ -44,108 +42,106 @@ jobs:
           const { chromium } = require('playwright');
           const fs = require('fs');
 
-          const cases = [
-            {name:'en-desktop', url:'http://127.0.0.1:8000/', viewport:{width:1440,height:1000}, dialog:'#kexp-en-dialog', heroFrame:82, title:'Grid-based distributed modeling', korean:false},
-            {name:'ko-desktop', url:'http://127.0.0.1:8000/ko/', viewport:{width:1440,height:1000}, dialog:'#kexp-dialog', heroFrame:82, title:'격자 기반 분포형 모형', korean:true},
-            {name:'en-mobile', url:'http://127.0.0.1:8000/', viewport:{width:390,height:844}, dialog:'#kexp-en-dialog', heroFrame:60, title:'Grid-based distributed modeling', korean:false},
-            {name:'ko-mobile', url:'http://127.0.0.1:8000/ko/', viewport:{width:390,height:844}, dialog:'#kexp-dialog', heroFrame:60, title:'격자 기반 분포형 모형', korean:true},
+          const cases=[
+            {name:'en-desktop',url:'http://127.0.0.1:8000/',viewport:{width:1440,height:1000},hero:82,korean:false,deep:true},
+            {name:'ko-desktop',url:'http://127.0.0.1:8000/ko/',viewport:{width:1440,height:1000},hero:82,korean:true,deep:true},
+            {name:'en-mobile',url:'http://127.0.0.1:8000/',viewport:{width:390,height:844},hero:60,korean:false,deep:false},
+            {name:'ko-mobile',url:'http://127.0.0.1:8000/ko/',viewport:{width:390,height:844},hero:60,korean:true,deep:false},
           ];
+          const representative=['rain-qc','warmup','slope-separate','river-infil','wb','optimization','dam-operation','coupling','sed-river','dye','wq','parallel'];
 
           (async()=>{
-            const browser = await chromium.launch();
-            const failures = [];
-            const report = {};
+            const browser=await chromium.launch();
+            const failures=[];
+            const report={};
 
-            for (const c of cases) {
-              const page = await browser.newPage({viewport:c.viewport});
-              const browserErrors = [];
-              page.on('console', msg => { if (msg.type() === 'error') browserErrors.push(`console: ${msg.text()}`); });
-              page.on('pageerror', err => browserErrors.push(`pageerror: ${err.message}`));
+            for(const c of cases){
+              const page=await browser.newPage({viewport:c.viewport});
+              const errors=[];
+              page.on('console',m=>{if(m.type()==='error')errors.push(`console: ${m.text()}`)});
+              page.on('pageerror',e=>errors.push(`pageerror: ${e.message}`));
 
-              await page.goto(c.url, {waitUntil:'networkidle'});
-              await page.waitForFunction(() => document.documentElement.dataset.kdrumBrandRuntime === 'ready', null, {timeout:8000});
+              await page.goto(c.url,{waitUntil:'networkidle'});
+              await page.waitForFunction(()=>document.documentElement.dataset.kdrumBrandRuntime==='ready',null,{timeout:8000});
+              await page.waitForFunction(()=>document.documentElement.dataset.kdrumCapabilityAtlas==='ready',null,{timeout:8000});
 
-              const metrics = await page.evaluate(() => {
-                const nav = document.querySelector('.site-mark');
-                const hero = document.querySelector('.brand-symbol');
-                const frame = document.querySelector('.brand-symbol-frame');
-                const ns = getComputedStyle(nav);
-                const hs = getComputedStyle(hero);
-                const nr = nav.getBoundingClientRect();
-                const fr = frame.getBoundingClientRect();
+              const base=await page.evaluate(()=>{
+                const nav=document.querySelector('.site-mark');
+                const hero=document.querySelector('.brand-symbol');
+                const frame=document.querySelector('.brand-symbol-frame');
+                const fr=frame.getBoundingClientRect();
+                const hr=hero.getBoundingClientRect();
                 return {
-                  navSrc: nav.getAttribute('src'),
-                  heroSrc: hero.getAttribute('src'),
-                  navWidth: nr.width,
-                  navHeight: nr.height,
-                  frameWidth: fr.width,
-                  frameHeight: fr.height,
-                  heroCssWidth: parseFloat(hs.width),
-                  heroCssHeight: parseFloat(hs.height),
-                  navPadding: ns.paddingTop,
-                  heroPadding: hs.paddingTop,
-                  heroTransform: hs.transform,
-                  scrollWidth: document.documentElement.scrollWidth,
-                  clientWidth: document.documentElement.clientWidth,
+                  navSrc:nav.getAttribute('src'),heroSrc:hero.getAttribute('src'),
+                  frameWidth:fr.width,frameHeight:fr.height,heroWidth:hr.width,heroHeight:hr.height,
+                  heroTransform:getComputedStyle(hero).transform,
+                  tabs:document.querySelectorAll('.catlas-tab').length,
+                  atlas:Boolean(document.querySelector('#capabilities')),
+                  oldFeaturesHidden:Boolean(document.querySelector('#features')?.hidden),
+                  oldFunctionsHidden:Boolean(document.querySelector('#functions')?.hidden),
+                  scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,
                 };
               });
+              const near=(a,b)=>Math.abs(a-b)<=1.1;
+              if(!base.navSrc.includes('branding/kdrum-symbol-compact.png')||!base.heroSrc.includes('branding/kdrum-symbol-compact.png'))failures.push(`${c.name}: canonical compact branding missing`);
+              if(!near(base.frameWidth,c.hero)||!near(base.frameHeight,c.hero)||!near(base.heroWidth,c.hero)||!near(base.heroHeight,c.hero))failures.push(`${c.name}: hero sizing mismatch ${JSON.stringify(base)}`);
+              if(base.heroTransform!=='none')failures.push(`${c.name}: hero transform cropping returned`);
+              if(!base.atlas||base.tabs!==8)failures.push(`${c.name}: capability atlas/tabs not ready`);
+              if(!base.oldFeaturesHidden||!base.oldFunctionsHidden)failures.push(`${c.name}: obsolete summary sections remain visible`);
+              if(base.scrollWidth>base.clientWidth+1)failures.push(`${c.name}: horizontal overflow`);
 
-              const near = (a,b) => Math.abs(a-b) <= 1.1;
-              if (!metrics.navSrc.includes('branding/kdrum-symbol-compact.png')) failures.push(`${c.name}: navigation mark is not the canonical compact asset`);
-              if (!metrics.heroSrc.includes('branding/kdrum-symbol-compact.png')) failures.push(`${c.name}: hero mark is not the canonical compact asset`);
-              if (!near(metrics.navWidth,32) || !near(metrics.navHeight,32)) failures.push(`${c.name}: navigation mark is ${metrics.navWidth}x${metrics.navHeight}, expected 32x32`);
-              if (!near(metrics.frameWidth,c.heroFrame) || !near(metrics.frameHeight,c.heroFrame)) failures.push(`${c.name}: hero frame is ${metrics.frameWidth}x${metrics.frameHeight}, expected ${c.heroFrame}x${c.heroFrame}`);
-              if (!near(metrics.heroCssWidth,c.heroFrame) || !near(metrics.heroCssHeight,c.heroFrame)) failures.push(`${c.name}: hero artwork does not fill its frame`);
-              if (metrics.navPadding !== '1px' || metrics.heroPadding !== '1px') failures.push(`${c.name}: expected 1px nav/hero padding`);
-              if (metrics.heroTransform !== 'none') failures.push(`${c.name}: hero artwork must not be transform-cropped`);
-              if (metrics.scrollWidth > metrics.clientWidth + 1) failures.push(`${c.name}: horizontal overflow ${metrics.scrollWidth} > ${metrics.clientWidth}`);
+              let total=0;
+              const tabCount=await page.locator('.catlas-tab').count();
+              for(let i=0;i<tabCount;i++){
+                const tab=page.locator('.catlas-tab').nth(i);
+                await tab.click();
+                const n=await page.locator('.catlas-card').count();
+                total+=n;
+                if(n<1)failures.push(`${c.name}: empty capability group at tab ${i}`);
+                if(c.deep)await page.locator('#capabilities').screenshot({path:`browser-artifacts/${c.name}-group-${i+1}.png`});
+              }
+              if(total!==45)failures.push(`${c.name}: expected 45 capability items across groups, found ${total}`);
 
-              await page.locator('.hero').screenshot({path:`browser-artifacts/${c.name}-hero.png`});
-
-              await page.locator('#features .feature').first().click();
-              const dialog = page.locator(c.dialog);
-              await dialog.waitFor({state:'visible', timeout:5000});
-              await page.waitForTimeout(150);
-
-              if (c.korean) {
-                const title=(await dialog.locator('#kexp-title').innerText()).trim();
-                const statusRows=await dialog.locator('.kexp-statusrow').count();
-                const status=(await dialog.locator('.kexp-statusrow .kexp-status').first().innerText()).trim();
-                const tech=(await dialog.locator('#kexp-techdesc').innerText()).trim();
-                const visualConcepts=await dialog.locator('#kexp-visual-concept').count();
-                if (title !== c.title) failures.push(`${c.name}: popup title mismatch: ${title}`);
-                if (statusRows !== 1) failures.push(`${c.name}: expected one public-status row, found ${statusRows}`);
-                if (!status) failures.push(`${c.name}: public-status field is empty`);
-                if (tech.length < 20) failures.push(`${c.name}: technical description was not populated`);
-                if (visualConcepts !== 1) failures.push(`${c.name}: expected one uniquely identified visual fallback panel`);
-              } else {
-                const title=(await dialog.locator('#kexp-en-title').innerText()).trim();
-                const status=(await dialog.locator('#kexp-en-status').innerText()).trim();
-                const summary=(await dialog.locator('#kexp-en-summary').innerText()).trim();
-                if (title !== c.title) failures.push(`${c.name}: popup title mismatch: ${title}`);
-                if (!status) failures.push(`${c.name}: public-status field is empty`);
-                if (summary.length < 20) failures.push(`${c.name}: facts summary was not populated`);
+              const toTest=c.deep?representative:['warmup','wb','dam-operation','dye'];
+              for(const id of toTest){
+                const found=await page.evaluate(id=>{
+                  for(const tab of document.querySelectorAll('.catlas-tab')){
+                    tab.click();
+                    if(document.querySelector(`.catlas-card[data-id="${id}"]`))return true;
+                  }
+                  return false;
+                },id);
+                if(!found){failures.push(`${c.name}: missing representative item ${id}`);continue;}
+                const card=page.locator(`.catlas-card[data-id="${id}"]`);
+                await card.click();
+                const dlg=page.locator('#catlas-dialog');
+                await dlg.waitFor({state:'visible',timeout:4000});
+                const check=await dlg.evaluate((el,id)=>({
+                  title:(el.querySelector('#catlas-title')?.textContent||'').trim(),
+                  status:(el.querySelector('.catlas-status')?.textContent||'').trim(),
+                  lead:(el.querySelector('.catlas-dlead')?.textContent||'').trim(),
+                  svg:el.querySelectorAll('.catlas-graphic svg').length,
+                  flow:el.querySelectorAll('.catlas-flow>div').length,
+                  panels:el.querySelectorAll('.catlas-panel').length,
+                  legacy:el.querySelectorAll('.catlas-legacy-note').length,
+                  id
+                }),id);
+                if(!check.title||!check.status||check.lead.length<20||check.svg!==1||check.flow!==3||check.panels<2)failures.push(`${c.name}: incomplete detail for ${id}: ${JSON.stringify(check)}`);
+                if(id==='wq'&&check.legacy!==1)failures.push(`${c.name}: disabled WQ item lacks redevelopment warning`);
+                if(c.deep&&['warmup','wb','slope-separate','dam-operation','dye'].includes(id))await dlg.screenshot({path:`browser-artifacts/${c.name}-${id}.png`});
+                await page.keyboard.press('Escape');
               }
 
-              // Check errors after click handlers, delayed callbacks and image/status enrichment.
-              if (browserErrors.length) failures.push(`${c.name}: browser errors after popup interaction: ${browserErrors.join(' | ')}`);
-
-              if (c.name.endsWith('desktop')) await dialog.screenshot({path:`browser-artifacts/${c.name}-popup.png`});
-              report[c.name]={metrics,browserErrors};
-              await page.keyboard.press('Escape');
+              if(errors.length)failures.push(`${c.name}: browser errors after atlas interaction: ${errors.join(' | ')}`);
+              report[c.name]={base,total,errors};
               await page.close();
             }
 
-            fs.writeFileSync('browser-artifacts/metrics.json', JSON.stringify(report, null, 2));
+            fs.writeFileSync('browser-artifacts/metrics.json',JSON.stringify(report,null,2));
             await browser.close();
-
-            if (failures.length) {
-              console.error('HOMEPAGE BROWSER SMOKE FAILED');
-              failures.forEach(x => console.error(' -', x));
-              process.exit(1);
-            }
+            if(failures.length){console.error('HOMEPAGE BROWSER SMOKE FAILED');failures.forEach(x=>console.error(' -',x));process.exit(1)}
             console.log('HOMEPAGE BROWSER SMOKE PASSED');
-          })().catch(err => { console.error(err); process.exit(1); });
+          })().catch(e=>{console.error(e);process.exit(1)});
           NODE
 
       - name: Upload rendered screenshots and metrics

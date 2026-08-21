@@ -89,7 +89,7 @@ jobs:
           raise SystemExit(f'Exact GitHub Pages build did not become ready within 10 minutes: {last}')
           PY
 
-      - name: Verify deployed English and Korean Pages
+      - name: Verify deployed English and Korean capability atlas
         id: live_verify
         if: steps.pages_build.outcome == 'success'
         continue-on-error: true
@@ -103,10 +103,9 @@ jobs:
           const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
           const sha=process.env.SHA;
           const LIVE_WINDOW_MS=10*60*1000;
-
           const targets=[
-            {name:'live-en',url:'https://youngteckhur.github.io/KDRUM-Public/',dialog:'#kexp-en-dialog',title:'Grid-based distributed modeling',korean:false},
-            {name:'live-ko',url:'https://youngteckhur.github.io/KDRUM-Public/ko/',dialog:'#kexp-dialog',title:'격자 기반 분포형 모형',korean:true},
+            {name:'live-en',url:'https://youngteckhur.github.io/KDRUM-Public/',title:'Basin water-balance audit',korean:false},
+            {name:'live-ko',url:'https://youngteckhur.github.io/KDRUM-Public/ko/',title:'유역 물수지 평가',korean:true},
           ];
 
           function timeoutWithin(deadline,maxMs){
@@ -115,22 +114,27 @@ jobs:
             return Math.min(maxMs,remaining);
           }
 
+          async function findCard(page,id){
+            const tabs=page.locator('.catlas-tab');
+            for(let i=0;i<await tabs.count();i++){
+              await tabs.nth(i).click();
+              const card=page.locator(`.catlas-card[data-id="${id}"]`);
+              if(await card.count())return card;
+            }
+            return null;
+          }
+
           async function inspectTarget(browser,target,attempt,deadline){
             const page=await browser.newPage({viewport:{width:1440,height:1000}});
             const errors=[];
             page.on('console',msg=>{if(msg.type()==='error')errors.push(`console: ${msg.text()}`)});
             page.on('pageerror',err=>errors.push(`pageerror: ${err.message}`));
             let result={ok:false,attempt,errors};
-
             try{
               const cacheBust=`qa=${encodeURIComponent(sha)}-${attempt}`;
-              const url=target.url+(target.url.includes('?')?'&':'?')+cacheBust;
-              await page.goto(url,{waitUntil:'networkidle',timeout:timeoutWithin(deadline,20000)});
-              await page.waitForFunction(
-                ()=>document.documentElement.dataset.kdrumBrandRuntime==='ready',
-                null,
-                {timeout:timeoutWithin(deadline,6000)}
-              );
+              await page.goto(target.url+'?'+cacheBust,{waitUntil:'networkidle',timeout:timeoutWithin(deadline,20000)});
+              await page.waitForFunction(()=>document.documentElement.dataset.kdrumBrandRuntime==='ready',null,{timeout:timeoutWithin(deadline,6000)});
+              await page.waitForFunction(()=>document.documentElement.dataset.kdrumCapabilityAtlas==='ready',null,{timeout:timeoutWithin(deadline,6000)});
 
               const metrics=await page.evaluate(()=>{
                 const frame=document.querySelector('.brand-symbol-frame');
@@ -138,66 +142,49 @@ jobs:
                 const hero=document.querySelector('.brand-symbol');
                 if(!frame||!nav||!hero)return null;
                 const fr=frame.getBoundingClientRect();
-                const hs=getComputedStyle(hero);
                 return {
-                  frameWidth:fr.width,
-                  frameHeight:fr.height,
-                  navSrc:nav.getAttribute('src'),
-                  heroSrc:hero.getAttribute('src'),
-                  heroTransform:hs.transform,
+                  frameWidth:fr.width,frameHeight:fr.height,
+                  navSrc:nav.getAttribute('src'),heroSrc:hero.getAttribute('src'),
+                  heroTransform:getComputedStyle(hero).transform,
+                  tabs:document.querySelectorAll('.catlas-tab').length,
+                  atlas:Boolean(document.querySelector('#capabilities')),
+                  oldFeaturesHidden:Boolean(document.querySelector('#features')?.hidden),
+                  oldFunctionsHidden:Boolean(document.querySelector('#functions')?.hidden),
                   scrollWidth:document.documentElement.scrollWidth,
                   clientWidth:document.documentElement.clientWidth,
                 };
               });
+              const basicOk=Boolean(metrics && metrics.atlas && metrics.tabs===8 && metrics.oldFeaturesHidden && metrics.oldFunctionsHidden && Math.abs(metrics.frameWidth-82)<=1.1 && Math.abs(metrics.frameHeight-82)<=1.1 && metrics.navSrc.includes('branding/kdrum-symbol-compact.png') && metrics.heroSrc.includes('branding/kdrum-symbol-compact.png') && metrics.heroTransform==='none' && metrics.scrollWidth<=metrics.clientWidth+1);
+              if(!basicOk){result={ok:false,attempt,stage:'atlas-base',metrics,errors};await page.close();return result;}
 
-              const basicOk=Boolean(
-                metrics &&
-                Math.abs(metrics.frameWidth-82)<=1.1 &&
-                Math.abs(metrics.frameHeight-82)<=1.1 &&
-                metrics.navSrc.includes('branding/kdrum-symbol-compact.png') &&
-                metrics.heroSrc.includes('branding/kdrum-symbol-compact.png') &&
-                metrics.heroTransform==='none' &&
-                metrics.scrollWidth<=metrics.clientWidth+1
-              );
-              if(!basicOk){
-                result={ok:false,attempt,stage:'branding',metrics,errors};
-                await page.close();
-                return result;
+              let total=0;
+              const tabs=page.locator('.catlas-tab');
+              for(let i=0;i<await tabs.count();i++){
+                await tabs.nth(i).click();
+                total+=await page.locator('.catlas-card').count();
               }
+              if(total!==45){result={ok:false,attempt,stage:'atlas-count',metrics,total,errors};await page.close();return result;}
 
-              await page.locator('#features .feature').first().click({timeout:timeoutWithin(deadline,5000)});
-              const dialog=page.locator(target.dialog);
+              const card=await findCard(page,'wb');
+              if(!card){result={ok:false,attempt,stage:'water-balance-card-missing',metrics,total,errors};await page.close();return result;}
+              await card.click({timeout:timeoutWithin(deadline,5000)});
+              const dialog=page.locator('#catlas-dialog');
               await dialog.waitFor({state:'visible',timeout:timeoutWithin(deadline,5000)});
-              await page.waitForTimeout(Math.min(150,Math.max(0,deadline-Date.now())));
-
-              let popup={};
-              let popupOk=false;
-              if(target.korean){
-                popup={
-                  title:(await dialog.locator('#kexp-title').innerText()).trim(),
-                  statusRows:await dialog.locator('.kexp-statusrow').count(),
-                  status:(await dialog.locator('.kexp-statusrow .kexp-status').first().innerText()).trim(),
-                  tech:(await dialog.locator('#kexp-techdesc').innerText()).trim(),
-                  visualConcepts:await dialog.locator('#kexp-visual-concept').count(),
-                };
-                popupOk=popup.title===target.title && popup.statusRows===1 && popup.status.length>0 && popup.tech.length>=20 && popup.visualConcepts===1;
-              }else{
-                popup={
-                  title:(await dialog.locator('#kexp-en-title').innerText()).trim(),
-                  status:(await dialog.locator('#kexp-en-status').innerText()).trim(),
-                  summary:(await dialog.locator('#kexp-en-summary').innerText()).trim(),
-                };
-                popupOk=popup.title===target.title && popup.status.length>0 && popup.summary.length>=20;
-              }
-
-              result={ok:popupOk&&errors.length===0,attempt,stage:'popup',metrics,popup,errors};
+              const popup={
+                title:(await dialog.locator('#catlas-title').innerText()).trim(),
+                status:(await dialog.locator('.catlas-status').first().innerText()).trim(),
+                lead:(await dialog.locator('.catlas-dlead').innerText()).trim(),
+                svg:await dialog.locator('.catlas-graphic svg').count(),
+                flow:await dialog.locator('.catlas-flow>div').count(),
+                panels:await dialog.locator('.catlas-panel').count(),
+              };
+              const popupOk=popup.title===target.title && popup.status.length>0 && popup.lead.length>=20 && popup.svg===1 && popup.flow===3 && popup.panels>=2;
+              result={ok:popupOk&&errors.length===0,attempt,stage:'capability-popup',metrics,total,popup,errors};
               if(result.ok){
-                await page.locator('.hero').screenshot({path:`live-artifacts/${target.name}-hero.png`});
-                await dialog.screenshot({path:`live-artifacts/${target.name}-popup.png`});
+                await page.locator('#capabilities').screenshot({path:`live-artifacts/${target.name}-atlas.png`});
+                await dialog.screenshot({path:`live-artifacts/${target.name}-water-balance.png`});
               }
-            }catch(err){
-              result={ok:false,attempt,stage:'exception',error:`${err.name}: ${err.message}`,errors};
-            }
+            }catch(err){result={ok:false,attempt,stage:'exception',error:`${err.name}: ${err.message}`,errors};}
             await page.close();
             return result;
           }
@@ -207,7 +194,6 @@ jobs:
             const failures=[];
             const report={};
             const deadline=Date.now()+LIVE_WINDOW_MS;
-
             for(const target of targets){
               let final=null;
               let attempt=0;
@@ -221,17 +207,12 @@ jobs:
                 await sleep(Math.min(10000,remaining));
               }
               report[target.name]=final;
-              if(!final?.ok)failures.push(`${target.name}: live content did not reach expected state within the shared 10-minute window: ${JSON.stringify(final)}`);
+              if(!final?.ok)failures.push(`${target.name}: capability atlas did not reach expected deployed state: ${JSON.stringify(final)}`);
             }
-
             fs.writeFileSync('live-artifacts/live-metrics.json',JSON.stringify(report,null,2));
             await browser.close();
-            if(failures.length){
-              console.error('LIVE GITHUB PAGES VERIFICATION FAILED');
-              failures.forEach(x=>console.error(' -',x));
-              process.exit(1);
-            }
-            console.log('LIVE GITHUB PAGES VERIFICATION PASSED');
+            if(failures.length){console.error('LIVE GITHUB PAGES VERIFICATION FAILED');failures.forEach(x=>console.error(' -',x));process.exit(1)}
+            console.log('LIVE GITHUB PAGES CAPABILITY ATLAS VERIFIED');
           })().catch(err=>{console.error(err);process.exit(1)});
           NODE
 
@@ -251,7 +232,7 @@ jobs:
           print(json.dumps({
             'state':'success' if ok else 'failure',
             'context':'homepage-live-pages',
-            'description':'Exact Pages build + EN/KO popup verified' if ok else 'Pages build/live verification failed',
+            'description':'Exact Pages build + EN/KO capability atlas verified' if ok else 'Pages build/live capability verification failed',
             'target_url':os.environ['RUN_URL'],
           }))
           PY

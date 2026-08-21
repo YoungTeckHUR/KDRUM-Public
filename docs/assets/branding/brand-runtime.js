@@ -1,6 +1,7 @@
 (()=>{
   const lang=(document.documentElement.lang||'en').toLowerCase();
-  const base=lang.startsWith('ko')?'../assets/branding/':'assets/branding/';
+  const ko=lang.startsWith('ko');
+  const base=ko?'../assets/branding/':'assets/branding/';
   const navMark=document.querySelector('.site-mark');
   const heroMark=document.querySelector('.brand-symbol');
 
@@ -76,4 +77,13 @@
   }
 
   document.documentElement.dataset.kdrumBrandRuntime='ready';
+
+  // Load the comprehensive capability atlas after branding has stabilized.
+  // The atlas is bilingual and derives its asset path from the document language.
+  if(!document.querySelector('script[data-kdrum-capability-atlas]')){
+    const atlas=document.createElement('script');
+    atlas.dataset.kdrumCapabilityAtlas='1';
+    atlas.src=(ko?'../assets/':'assets/')+'capability-atlas.js';
+    document.head.appendChild(atlas);
+  }
 })();
