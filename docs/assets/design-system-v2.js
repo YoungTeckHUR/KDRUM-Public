@@ -10,6 +10,21 @@
     document.head.appendChild(link);
   }
 
+  function loadV4Fix(){
+    if(!document.querySelector('link[data-kdrum-experience-v4-fix]')){
+      const link=document.createElement('link');
+      link.rel='stylesheet';
+      link.href=base+'experience-v4-fix.css';
+      link.dataset.kdrumExperienceV4Fix='1';
+      document.head.appendChild(link);
+    }
+    if(document.querySelector('script[data-kdrum-experience-v4-fix]'))return;
+    const script=document.createElement('script');
+    script.dataset.kdrumExperienceV4Fix='1';
+    script.src=base+'experience-v4-fix.js';
+    document.head.appendChild(script);
+  }
+
   function loadV4(){
     if(!document.querySelector('link[data-kdrum-experience-v4]')){
       const link=document.createElement('link');
@@ -18,10 +33,16 @@
       link.dataset.kdrumExperienceV4='1';
       document.head.appendChild(link);
     }
-    if(document.querySelector('script[data-kdrum-experience-v4]'))return;
+    const existing=document.querySelector('script[data-kdrum-experience-v4]');
+    if(existing){
+      if(document.documentElement.dataset.kdrumExperienceV4==='ready')loadV4Fix();
+      else existing.addEventListener('load',loadV4Fix,{once:true});
+      return;
+    }
     const script=document.createElement('script');
     script.dataset.kdrumExperienceV4='1';
     script.src=base+'experience-v4.js';
+    script.addEventListener('load',loadV4Fix,{once:true});
     document.head.appendChild(script);
   }
 
