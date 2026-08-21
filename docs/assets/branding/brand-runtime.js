@@ -52,7 +52,7 @@
         background:transparent;
         box-shadow:none;
         object-fit:contain;
-        transform:scale(1.16);
+        transform:scale(1.12);
         transform-origin:center;
         flex:none;
       }
@@ -67,7 +67,7 @@
           height:100%;
           padding:0;
           border-radius:0;
-          transform:scale(1.16);
+          transform:scale(1.12);
         }
       }
     `;
