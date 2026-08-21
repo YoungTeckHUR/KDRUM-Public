@@ -89,7 +89,7 @@ jobs:
           raise SystemExit(f'Exact GitHub Pages build did not become ready within 10 minutes: {last}')
           PY
 
-      - name: Verify deployed English and Korean capability atlas
+      - name: Verify deployed English and Korean homepage
         id: live_verify
         if: steps.pages_build.outcome == 'success'
         continue-on-error: true
@@ -118,6 +118,7 @@ jobs:
             const tabs=page.locator('.catlas-tab');
             for(let i=0;i<await tabs.count();i++){
               await tabs.nth(i).click();
+              await page.waitForTimeout(0);
               const card=page.locator(`.catlas-card[data-id="${id}"]`);
               if(await card.count())return card;
             }
@@ -135,6 +136,7 @@ jobs:
               await page.goto(target.url+'?'+cacheBust,{waitUntil:'networkidle',timeout:timeoutWithin(deadline,20000)});
               await page.waitForFunction(()=>document.documentElement.dataset.kdrumBrandRuntime==='ready',null,{timeout:timeoutWithin(deadline,6000)});
               await page.waitForFunction(()=>document.documentElement.dataset.kdrumCapabilityAtlas==='ready',null,{timeout:timeoutWithin(deadline,6000)});
+              await page.waitForFunction(()=>document.documentElement.dataset.kdrumPublicCopy==='ready',null,{timeout:timeoutWithin(deadline,6000)});
 
               const metrics=await page.evaluate(()=>{
                 const frame=document.querySelector('.brand-symbol-frame');
@@ -152,22 +154,32 @@ jobs:
                   oldFunctionsHidden:Boolean(document.querySelector('#functions')?.hidden),
                   scrollWidth:document.documentElement.scrollWidth,
                   clientWidth:document.documentElement.clientWidth,
+                  lead:(document.querySelector('.lead')?.textContent||'').trim(),
+                  official:(document.querySelector('#references .official')?.textContent||'').trim(),
+                  platformViewer:Boolean(document.querySelector('#platform [data-kdrum-1d-viewer]')),
+                  bodyText:document.body.innerText,
                 };
               });
-              const basicOk=Boolean(metrics && metrics.atlas && metrics.tabs===8 && metrics.oldFeaturesHidden && metrics.oldFunctionsHidden && Math.abs(metrics.frameWidth-82)<=1.1 && Math.abs(metrics.frameHeight-82)<=1.1 && metrics.navSrc.includes('branding/kdrum-symbol-compact.png') && metrics.heroSrc.includes('branding/kdrum-symbol-compact.png') && metrics.heroTransform==='none' && metrics.scrollWidth<=metrics.clientWidth+1);
-              if(!basicOk){result={ok:false,attempt,stage:'atlas-base',metrics,errors};await page.close();return result;}
+              const basicOk=Boolean(metrics && metrics.atlas && metrics.tabs===8 && metrics.oldFeaturesHidden && metrics.oldFunctionsHidden && metrics.platformViewer && Math.abs(metrics.frameWidth-82)<=1.1 && Math.abs(metrics.frameHeight-82)<=1.1 && metrics.navSrc.includes('branding/kdrum-symbol-compact.png') && metrics.heroSrc.includes('branding/kdrum-symbol-compact.png') && metrics.heroTransform==='none' && metrics.scrollWidth<=metrics.clientWidth+1 && metrics.official.includes('MyWater'));
+              if(!basicOk){result={ok:false,attempt,stage:'homepage-base',metrics,errors};await page.close();return result;}
+              if(target.korean){
+                if(!metrics.lead.includes('물리적 기반의 격자단위 분포형 강우유출모형')||metrics.bodyText.includes('격자형 분포형')||!metrics.official.includes('무료')){
+                  result={ok:false,attempt,stage:'korean-terminology',metrics,errors};await page.close();return result;
+                }
+              }
 
               let total=0;
               const tabs=page.locator('.catlas-tab');
               for(let i=0;i<await tabs.count();i++){
                 await tabs.nth(i).click();
+                await page.waitForTimeout(0);
                 total+=await page.locator('.catlas-card').count();
               }
-              if(total!==45){result={ok:false,attempt,stage:'atlas-count',metrics,total,errors};await page.close();return result;}
+              if(total!==46){result={ok:false,attempt,stage:'atlas-count',metrics,total,errors};await page.close();return result;}
 
-              const card=await findCard(page,'wb');
-              if(!card){result={ok:false,attempt,stage:'water-balance-card-missing',metrics,total,errors};await page.close();return result;}
-              await card.click({timeout:timeoutWithin(deadline,5000)});
+              const wb=await findCard(page,'wb');
+              if(!wb){result={ok:false,attempt,stage:'water-balance-card-missing',metrics,total,errors};await page.close();return result;}
+              await wb.click({timeout:timeoutWithin(deadline,5000)});
               const dialog=page.locator('#catlas-dialog');
               await dialog.waitFor({state:'visible',timeout:timeoutWithin(deadline,5000)});
               const popup={
@@ -179,10 +191,29 @@ jobs:
                 panels:await dialog.locator('.catlas-panel').count(),
               };
               const popupOk=popup.title===target.title && popup.status.length>0 && popup.lead.length>=20 && popup.svg===1 && popup.flow===3 && popup.panels>=2;
-              result={ok:popupOk&&errors.length===0,attempt,stage:'capability-popup',metrics,total,popup,errors};
+              await page.keyboard.press('Escape');
+
+              const viewer=await findCard(page,'viewer1d');
+              if(!viewer){result={ok:false,attempt,stage:'viewer-card-missing',metrics,total,popup,errors};await page.close();return result;}
+              await viewer.click({timeout:timeoutWithin(deadline,5000)});
+              await dialog.waitFor({state:'visible',timeout:timeoutWithin(deadline,5000)});
+              const viewerPopup={
+                title:(await dialog.locator('#catlas-title').innerText()).trim(),
+                status:(await dialog.locator('.catlas-status').first().innerText()).trim(),
+                lead:(await dialog.locator('.catlas-dlead').innerText()).trim(),
+                svg:await dialog.locator('.catlas-graphic svg').count(),
+                flow:await dialog.locator('.catlas-flow>div').count(),
+                panels:await dialog.locator('.catlas-panel').count(),
+              };
+              const viewerOk=viewerPopup.title=== (target.korean?'1차원 하천수리 결과 뷰어':'1D River Hydraulics Results Viewer') && viewerPopup.status.length>0 && viewerPopup.lead.length>=20 && viewerPopup.svg===1 && viewerPopup.flow===3 && viewerPopup.panels>=2;
+
+              result={ok:popupOk&&viewerOk&&errors.length===0,attempt,stage:'homepage-live',metrics,total,popup,viewerPopup,errors};
               if(result.ok){
+                await page.keyboard.press('Escape');
                 await page.locator('#capabilities').screenshot({path:`live-artifacts/${target.name}-atlas.png`});
-                await dialog.screenshot({path:`live-artifacts/${target.name}-water-balance.png`});
+                const viewer2=await findCard(page,'viewer1d');
+                await viewer2.click();
+                await dialog.screenshot({path:`live-artifacts/${target.name}-viewer1d.png`});
               }
             }catch(err){result={ok:false,attempt,stage:'exception',error:`${err.name}: ${err.message}`,errors};}
             await page.close();
@@ -207,12 +238,12 @@ jobs:
                 await sleep(Math.min(10000,remaining));
               }
               report[target.name]=final;
-              if(!final?.ok)failures.push(`${target.name}: capability atlas did not reach expected deployed state: ${JSON.stringify(final)}`);
+              if(!final?.ok)failures.push(`${target.name}: homepage did not reach expected deployed state: ${JSON.stringify(final)}`);
             }
             fs.writeFileSync('live-artifacts/live-metrics.json',JSON.stringify(report,null,2));
             await browser.close();
             if(failures.length){console.error('LIVE GITHUB PAGES VERIFICATION FAILED');failures.forEach(x=>console.error(' -',x));process.exit(1)}
-            console.log('LIVE GITHUB PAGES CAPABILITY ATLAS VERIFIED');
+            console.log('LIVE GITHUB PAGES HOMEPAGE VERIFIED');
           })().catch(err=>{console.error(err);process.exit(1)});
           NODE
 
@@ -232,7 +263,7 @@ jobs:
           print(json.dumps({
             'state':'success' if ok else 'failure',
             'context':'homepage-live-pages',
-            'description':'Exact Pages build + EN/KO capability atlas verified' if ok else 'Pages build/live capability verification failed',
+            'description':'Exact Pages build + EN/KO homepage verified' if ok else 'Pages build/live homepage verification failed',
             'target_url':os.environ['RUN_URL'],
           }))
           PY

@@ -48,7 +48,7 @@ jobs:
             {name:'en-mobile',url:'http://127.0.0.1:8000/',viewport:{width:390,height:844},hero:60,korean:false,deep:false},
             {name:'ko-mobile',url:'http://127.0.0.1:8000/ko/',viewport:{width:390,height:844},hero:60,korean:true,deep:false},
           ];
-          const representative=['rain-qc','warmup','slope-separate','river-infil','wb','optimization','dam-operation','coupling','sed-river','dye','wq','parallel'];
+          const representative=['rain-qc','warmup','slope-separate','river-infil','wb','optimization','dam-operation','coupling','sed-river','dye','wq','parallel','viewer1d'];
 
           (async()=>{
             const browser=await chromium.launch();
@@ -64,6 +64,7 @@ jobs:
               await page.goto(c.url,{waitUntil:'networkidle'});
               await page.waitForFunction(()=>document.documentElement.dataset.kdrumBrandRuntime==='ready',null,{timeout:8000});
               await page.waitForFunction(()=>document.documentElement.dataset.kdrumCapabilityAtlas==='ready',null,{timeout:8000});
+              await page.waitForFunction(()=>document.documentElement.dataset.kdrumPublicCopy==='ready',null,{timeout:8000});
 
               const base=await page.evaluate(()=>{
                 const nav=document.querySelector('.site-mark');
@@ -80,6 +81,10 @@ jobs:
                   oldFeaturesHidden:Boolean(document.querySelector('#features')?.hidden),
                   oldFunctionsHidden:Boolean(document.querySelector('#functions')?.hidden),
                   scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,
+                  lead:(document.querySelector('.lead')?.textContent||'').trim(),
+                  official:(document.querySelector('#references .official')?.textContent||'').trim(),
+                  platformViewer:Boolean(document.querySelector('#platform [data-kdrum-1d-viewer]')),
+                  bodyText:document.body.innerText,
                 };
               });
               const near=(a,b)=>Math.abs(a-b)<=1.1;
@@ -88,21 +93,30 @@ jobs:
               if(base.heroTransform!=='none')failures.push(`${c.name}: hero transform cropping returned`);
               if(!base.atlas||base.tabs!==8)failures.push(`${c.name}: capability atlas/tabs not ready`);
               if(!base.oldFeaturesHidden||!base.oldFunctionsHidden)failures.push(`${c.name}: obsolete summary sections remain visible`);
+              if(!base.platformViewer)failures.push(`${c.name}: separate 1D results viewer is missing from platform`);
+              if(!base.official.includes('MyWater')||!base.official.toLowerCase().includes('k-series'))failures.push(`${c.name}: MyWater K-Series guidance missing`);
               if(base.scrollWidth>base.clientWidth+1)failures.push(`${c.name}: horizontal overflow`);
+              if(c.korean){
+                if(!base.lead.includes('물리적 기반의 격자단위 분포형 강우유출모형'))failures.push(`${c.name}: canonical Korean model description missing`);
+                if(base.bodyText.includes('격자형 분포형'))failures.push(`${c.name}: deprecated '격자형 분포형' wording remains visible`);
+                if(base.bodyText.includes('Flood뷰어'))failures.push(`${c.name}: product name FloodViewer was incorrectly translated`);
+                if(!base.official.includes('무료'))failures.push(`${c.name}: free-use guidance missing near MyWater link`);
+              }
 
               let total=0;
               const tabCount=await page.locator('.catlas-tab').count();
               for(let i=0;i<tabCount;i++){
                 const tab=page.locator('.catlas-tab').nth(i);
                 await tab.click();
+                await page.waitForTimeout(0);
                 const n=await page.locator('.catlas-card').count();
                 total+=n;
                 if(n<1)failures.push(`${c.name}: empty capability group at tab ${i}`);
                 if(c.deep)await page.locator('#capabilities').screenshot({path:`browser-artifacts/${c.name}-group-${i+1}.png`});
               }
-              if(total!==45)failures.push(`${c.name}: expected 45 capability items across groups, found ${total}`);
+              if(total!==46)failures.push(`${c.name}: expected 46 capability items across groups, found ${total}`);
 
-              const toTest=c.deep?representative:['warmup','wb','dam-operation','dye'];
+              const toTest=c.deep?representative:['warmup','wb','dam-operation','dye','viewer1d'];
               for(const id of toTest){
                 const found=await page.evaluate(id=>{
                   for(const tab of document.querySelectorAll('.catlas-tab')){
@@ -111,6 +125,7 @@ jobs:
                   }
                   return false;
                 },id);
+                await page.waitForTimeout(0);
                 if(!found){failures.push(`${c.name}: missing representative item ${id}`);continue;}
                 const card=page.locator(`.catlas-card[data-id="${id}"]`);
                 await card.click();
@@ -128,7 +143,8 @@ jobs:
                 }),id);
                 if(!check.title||!check.status||check.lead.length<20||check.svg!==1||check.flow!==3||check.panels<2)failures.push(`${c.name}: incomplete detail for ${id}: ${JSON.stringify(check)}`);
                 if(id==='wq'&&check.legacy!==1)failures.push(`${c.name}: disabled WQ item lacks redevelopment warning`);
-                if(c.deep&&['warmup','wb','slope-separate','dam-operation','dye'].includes(id))await dlg.screenshot({path:`browser-artifacts/${c.name}-${id}.png`});
+                if(id==='viewer1d'&&c.korean&&!check.title.includes('1차원 하천수리 결과 뷰어'))failures.push(`${c.name}: 1D viewer terminology mismatch`);
+                if(c.deep&&['warmup','wb','slope-separate','dam-operation','dye','viewer1d'].includes(id))await dlg.screenshot({path:`browser-artifacts/${c.name}-${id}.png`});
                 await page.keyboard.press('Escape');
               }
 

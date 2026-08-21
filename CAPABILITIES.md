@@ -1,109 +1,120 @@
 # K-DRUM Capabilities
 
-This page summarizes the public-facing K-DRUM capability families. The more detailed feature-by-feature inventory is maintained in [CAPABILITY_ATLAS.md](CAPABILITY_ATLAS.md), and maturity labels are maintained in [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md).
+This page summarizes the public-facing K-DRUM capability families. The detailed inventory is maintained in [CAPABILITY_ATLAS.md](CAPABILITY_ATLAS.md), and maturity labels are maintained in [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md).
 
-The public description deliberately separates **established**, **implemented/QA**, **active-development**, **validated-development**, **research**, and **disabled/redevelopment** functions. The existence of a calculation path does not by itself mean universal production readiness.
+K-DRUM은 K-water가 개발한 **물리적 기반의 격자단위 분포형 강우유출모형**입니다. 이 문서는 강우유출, 하천수리, 홍수범람, 물수지, 매개변수 보정, 유사·물질추적 및 지원 프로그램을 수자원·토목 분야에서 일반적으로 사용하는 용어를 중심으로 정리합니다.
 
-## 1. Rainfall, forcing and input QA
+The public description deliberately separates established, implemented/verified, active-development, validated-development, research, and disabled/redevelopment functions. The existence of a calculation path does not by itself mean universal production readiness.
 
-K-DRUM supports spatial rainfall forcing and maintains multiple station-to-grid rainfall paths. Current input development also includes:
+## 1. Rainfall data and input-data quality control
 
-- Thiessen and IDW rainfall mapping
-- elevation-corrected IDW
-- rainfall quality-control checks
-- observed / predicted / missing rainfall summaries
-- input precheck and project-level consistency assessment
+- spatially distributed rainfall input
+- Thiessen-polygon and inverse-distance-weighted (IDW) rainfall distribution
+- elevation-corrected IDW rainfall distribution
+- rainfall-data quality checks
+- rainfall completeness / missing-data assessment
+- input-data precheck and project-level consistency assessment
 
-## 2. Continuous hydrology and model state
+## 2. Watershed hydrology and continuous simulation
 
-Established distributed-hydrology foundations include:
+Established distributed rainfall-runoff foundations include:
 
 - Green-Ampt infiltration
 - surface and subsurface runoff
-- kinematic-wave hillslope routing
-- continuous / long-term simulation
+- kinematic-wave hillslope runoff routing
+- continuous / long-term runoff simulation
 - evapotranspiration and soil-water accounting
 - snow accumulation and snowmelt
 
-Current state-management and long-term extensions also include:
+Current state-management and long-term extensions include:
 
 - warm-up / initial-state stabilization and target-flow diagnostics
-- HotStart / restart and checkpoint continuity
-- D-layer / delayed baseflow-return development
+- HotStart / state restart and checkpoint continuity
+- deeper-storage-layer (D-layer) / delayed baseflow-return development
 
-## 3. Terrain, slopes, channel representation and routing
+## 3. Hillslope, channel and terrain representation
 
 Publicly describable capabilities include:
 
-- separate hillslope and river hydraulic slope representations
-- established kinematic-wave channel routing
-- river-to-deeper-storage infiltration/exchange development
+- separate hillslope and channel slope representations
+- established kinematic-wave channel discharge routing
+- river infiltration / exchange with deeper storage
 - cross-section and river-geometry preparation
 - high-resolution terrain processing and ChannelBed development
 
-## 4. Water balance, calibration support and reporting
+## 4. Water balance, parameter calibration and result reporting
 
-Current Core QA and analysis development includes:
+Current Core verification and analysis development includes:
 
-- basin water-balance auditing
-- 1D-2D exchange water-balance accounting
-- consolidated run reporting
-- subbasin reporting
-- output-integrity and lifecycle checks
-- target-grid / target-site calibration and optimization metrics
-- combined subbasin-diagnosis and target-point calibration workflows
+- basin water-balance assessment
+- one-dimensional/two-dimensional exchange water balance
+- consolidated run-result reporting
+- subbasin result reporting
+- result-output integrity checks
+- target-point parameter calibration / optimization metrics
+- combined subbasin diagnosis and target-point calibration support
 
-The optimization path supports observation-based case comparison and multiple performance measures. Public wording does **not** describe this as universal automatic calibration of every subbasin.
+The optimization path supports observation-based case comparison and multiple performance measures. Public wording does **not** describe this as universal automatic parameter calibration of every subbasin.
 
-## 5. River hydraulics, structures and dam operation
+## 5. River hydraulics, hydraulic structures and dam operation
 
 Current hydraulic development includes:
 
-- cross-section-based 1D dynamic-wave river hydraulics
-- branched and confluence river-network hydraulics
+- cross-section-based one-dimensional dynamic-wave river-network analysis
+- branch / confluence river hydraulics
 - hydraulic structures
-- reservoir/dam-operation rules and release-component handling
-- forecast/pre-release and downstream-control development
-- multi-dam scenario evaluation and reoperation studies
+- dam / reservoir operation rules and release-component handling
+- forecast, pre-release and downstream-control development
+- multi-dam operation-scenario evaluation and reoperation studies
 
 Operational reservoir rules, restricted data and actual operating decisions are not published by this repository.
 
-## 6. Floodplain and 1D-2D hydraulics
+## 6. One-dimensional/two-dimensional coupling and flood-inundation analysis
 
 Current development includes:
 
-- bidirectional 1D-2D river/floodplain exchange
-- 2D Local-Inertia floodplain calculation
-- Full shallow-water-equation option
-- multi-resolution / patch-based 2D domains
+- bidirectional river-floodplain exchange between one-dimensional and two-dimensional domains
+- two-dimensional Local Inertia flood-inundation calculation
+- full shallow-water-equation option
+- multi-resolution / locally refined two-dimensional domains
 - direct rainfall, drainage and hydraulic-structure interaction
-- 2D particle / tracer-oriented analysis support
+- two-dimensional particle / material-tracking analysis support
 
-The 1D-2D exchange path has a **validated-development** boundary from controlled testing; this is not universal basin certification.
+The one-dimensional/two-dimensional exchange path has a **validated-development** boundary from controlled testing; this is not universal basin certification.
 
-## 7. Sediment, tracer and water-quality research functions
+## 7. Sediment, material tracking and water-quality research functions
 
 The current code base retains research calculation paths for:
 
-- hillslope sediment generation / erosion-deposition
-- river sediment transport / capacity and deposition
-- river dye / conservative-tracer transport
+- hillslope sediment generation, erosion and deposition
+- river sediment transport and deposition
+- river dye / conservative material tracking
 
-These are presented as **research functions** pending dedicated public validation documentation.
+These are presented as research functions pending dedicated public validation documentation.
 
-Historical/research water-quality process code also exists, but it is explicitly disabled/excluded from the current active build. It is therefore shown only as a **redevelopment candidate**, not as a current production capability.
+Historical/research water-quality process code also exists, but it is explicitly disabled/excluded from the current active build. It is therefore shown only as a redevelopment candidate, not as a current production capability.
 
-## 8. Performance, output exchange and user tools
+## 8. Parallel computation, result output and support programs
 
 The wider K-DRUM environment includes:
 
-- single-thread, OpenMP and MPI execution tracks
-- NetCDF-based integrated output
-- InputStudio project authoring and input QA
-- FloodViewer spatial/time-series result analysis
-- Estuary2DV as a separate experimental x-z estuary/salinity research prototype
+- serial, OpenMP and MPI execution tracks
+- NetCDF-based integrated result output
+- InputStudio project authoring and input-data checks
+- FloodViewer map/time-series result analysis
+- **1D River Hydraulics Results Viewer** — a separate program for longitudinal/cross-section results and water-level/discharge time series; under development and **not yet published to the public GitHub repositories**
+- Estuary2DV as a separate experimental longitudinal-vertical estuary hydrodynamics / salinity research model
 
-MPI has a public K-DRUM research lineage, while current ST/OMP/MPI consistency and runtime modernization remain active QA topics.
+MPI has a public K-DRUM research lineage, while current serial/OpenMP/MPI consistency and runtime modernization remain active verification topics.
+
+## MyWater K-Series public access
+
+MyWater lists K-DRUM in K-water's K-Series technical-software program as a physically based, grid-unit distributed model for rainfall-runoff analysis. MyWater also states that K-Series software made available on the website may be used free of charge by individuals outside K-water subject to the published terms of use.
+
+K-DRUM은 **K-water 기술 SW 대국민 개방정책에 따라 MyWater 물정보포털 K-Series에서 무료로 내려받아 사용할 수 있습니다.** 다운로드 버전과 사용조건은 MyWater에 게시된 최신 안내 및 이용약관을 확인해야 합니다.
+
+- MyWater K-Series: https://www.water.or.kr/kor/board/index.do?bid=BD_00026&menuId=15_126_128&mode=list
+- K-Series technical-software terms: https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127
 
 ## Public interpretation boundary
 

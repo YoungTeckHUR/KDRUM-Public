@@ -2,46 +2,50 @@
 
 **K-DRUM: K-water Grid-based Distributed Rainfall rUnoff Model**
 
-K-DRUM began as a physically based, grid-distributed rainfall-runoff model and has an established research record in Korean and international watershed applications.
+K-DRUM began as a physically based, grid-unit distributed rainfall-runoff model and has an established research record in Korean and international watershed applications.
 
-The current development direction broadens the model from distributed hydrology toward integrated watershed hydrology and hydraulics.
+The current development direction broadens the model from watershed rainfall-runoff simulation toward integrated river hydraulics and flood-inundation analysis.
 
 ## Conceptual development layers
 
-1. **Distributed hydrology**
-   - rainfall
+1. **Watershed rainfall-runoff hydrology**
+   - spatial rainfall
    - infiltration
    - soil-water processes
    - evapotranspiration
-   - snow
+   - snow accumulation and snowmelt
    - surface/subsurface runoff
 
-2. **Flow routing**
-   - kinematic-wave routing
+2. **Runoff and channel routing**
+   - kinematic-wave hillslope runoff routing
+   - kinematic-wave channel discharge routing
    - dynamic-wave river-network development
 
-3. **Hydraulic interaction**
-   - cross-section-based 1D rivers
-   - river-floodplain exchange
-   - 2D inundation
-   - structures
+3. **River hydraulics and flood-inundation interaction**
+   - cross-section-based one-dimensional river hydraulics
+   - bidirectional river-floodplain exchange
+   - two-dimensional flood-inundation analysis
+   - hydraulic structures
+   - dam / reservoir operation scenarios
 
-4. **High-resolution geometry**
+4. **High-resolution terrain and river geometry**
    - terrain
    - river alignment
    - cross sections
    - channel-bed generation
 
-5. **Model environment**
+5. **Input preparation, result output and analysis programs**
    - InputStudio
-   - NetCDF-centered outputs
+   - NetCDF-centered result output
    - FloodViewer
-   - automated QA/regression
+   - separate 1D River Hydraulics Results Viewer (under development; not yet published to the public GitHub repositories)
+   - automated verification / regression checks
 
 6. **Research extensions**
-   - estuarine hydrodynamics
+   - sediment transport
+   - dye / conservative material tracking
+   - longitudinal-vertical estuary hydrodynamics
    - salinity transport
-   - future predictive/operational coupling
 
 The public repository intentionally describes these layers without disclosing the production implementation.
 

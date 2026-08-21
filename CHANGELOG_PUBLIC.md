@@ -1,5 +1,21 @@
 # K-DRUM Public Information Changelog
 
+## 2026-08-21 — Water-resources terminology, MyWater guidance and 1D results viewer
+
+Refined the public homepage terminology and program inventory so that public-facing Korean wording follows commonly used water-resources and civil-engineering terminology rather than internal development shorthand.
+
+Updated:
+
+- standardized the primary Korean model description as **물리적 기반의 격자단위 분포형 강우유출모형**, consistent with the MyWater K-Series description
+- replaced developer-oriented Korean wording such as 1D/2D, QA, report, tracer and patch with one-dimensional/two-dimensional, quality/verification, result reporting, material tracking and locally refined analysis wording where appropriate
+- retained established product names such as FloodViewer, InputStudio and NetCDF without partial translation
+- added the separately developed **1차원 하천수리 결과 뷰어** to the public program inventory and capability interface, while clearly stating that it is not yet published to the public GitHub repositories
+- expanded the visible capability count from 45 repository-tracked items to **46 public-facing capabilities**, including the separate 1D results viewer
+- strengthened the MyWater section to explain that K-DRUM is available through K-water's K-Series technical-software public-access program and may be downloaded/used free of charge subject to the current MyWater terms of use
+- corrected the K-Series terms link to the current MyWater technical-software terms page
+- removed DOM-observer-based copy synchronization from consideration; dynamic terminology updates are limited to the capability tab/card interaction path
+- extended local and deployed Chromium QA to verify the 46-item inventory, the 1D viewer detail, MyWater/free-use guidance, canonical Korean model terminology, and preservation of product names
+
 ## 2026-08-21 — Comprehensive capability atlas redesign
 
 Rebuilt the public homepage capability presentation after reviewing the current K-DRUM Core, public documentation and development history for functionality that was missing from the earlier four-feature summary.
