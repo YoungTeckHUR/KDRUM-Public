@@ -1,87 +1,117 @@
 # K-DRUM Capabilities
 
-This page separates established model-family capabilities from functions that are still in development.
+This page summarizes the public-facing K-DRUM capability families. The more detailed feature-by-feature inventory is maintained in [CAPABILITY_ATLAS.md](CAPABILITY_ATLAS.md), and maturity labels are maintained in [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md).
 
-## Established hydrologic capabilities
+The public description deliberately separates **established**, **implemented/QA**, **active-development**, **validated-development**, **research**, and **disabled/redevelopment** functions. The existence of a calculation path does not by itself mean universal production readiness.
 
-Published K-DRUM research supports the following high-level descriptions:
+## 1. Rainfall, forcing and input QA
 
-- physically based grid-distributed rainfall-runoff modeling
-- spatially distributed rainfall forcing, including radar/grid rainfall applications
-- surface and subsurface runoff analysis
-- kinematic-wave routing for overland/channel flow
+K-DRUM supports spatial rainfall forcing and maintains multiple station-to-grid rainfall paths. Current input development also includes:
+
+- Thiessen and IDW rainfall mapping
+- elevation-corrected IDW
+- rainfall quality-control checks
+- observed / predicted / missing rainfall summaries
+- input precheck and project-level consistency assessment
+
+## 2. Continuous hydrology and model state
+
+Established distributed-hydrology foundations include:
+
 - Green-Ampt infiltration
-- long-term runoff simulation
-- evapotranspiration-related water-balance processes
-- snow accumulation and snowmelt extensions
-- basin-scale hydrologic analysis
-- MPI-based parallelization for large-domain computation
+- surface and subsurface runoff
+- kinematic-wave hillslope routing
+- continuous / long-term simulation
+- evapotranspiration and soil-water accounting
+- snow accumulation and snowmelt
 
-## Hydraulic development
+Current state-management and long-term extensions also include:
 
-Current development extends K-DRUM toward integrated watershed hydraulics:
+- warm-up / initial-state stabilization and target-flow diagnostics
+- HotStart / restart and checkpoint continuity
+- D-layer / delayed baseflow-return development
+
+## 3. Terrain, slopes, channel representation and routing
+
+Publicly describable capabilities include:
+
+- separate hillslope and river hydraulic slope representations
+- established kinematic-wave channel routing
+- river-to-deeper-storage infiltration/exchange development
+- cross-section and river-geometry preparation
+- high-resolution terrain processing and ChannelBed development
+
+## 4. Water balance, calibration support and reporting
+
+Current Core QA and analysis development includes:
+
+- basin water-balance auditing
+- 1D-2D exchange water-balance accounting
+- consolidated run reporting
+- subbasin reporting
+- output-integrity and lifecycle checks
+- target-grid / target-site calibration and optimization metrics
+- combined subbasin-diagnosis and target-point calibration workflows
+
+The optimization path supports observation-based case comparison and multiple performance measures. Public wording does **not** describe this as universal automatic calibration of every subbasin.
+
+## 5. River hydraulics, structures and dam operation
+
+Current hydraulic development includes:
 
 - cross-section-based 1D dynamic-wave river hydraulics
-- river networks with branching and confluence topology
-- bidirectional river-floodplain exchange
-- 2D flood-inundation computation
-- levee/barrier and hydraulic-domain representation
+- branched and confluence river-network hydraulics
 - hydraulic structures
-- reservoir/dam-operation scenarios
-- coupled hydraulic water-balance diagnostics
-- multi-resolution terrain and hydraulic grids
+- reservoir/dam-operation rules and release-component handling
+- forecast/pre-release and downstream-control development
+- multi-dam scenario evaluation and reoperation studies
 
-These features are under active validation. Refer to [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) for maturity labels.
+Operational reservoir rules, restricted data and actual operating decisions are not published by this repository.
 
-## High-resolution terrain and channel geometry
-
-Current research/development includes:
-
-- high-resolution DEM use
-- river centerline and hydraulic-axis consistency
-- cross-section preparation
-- virtual channel-bed generation for reaches with insufficient bed-survey information
-- separation of reusable ChannelBed calculation logic from K-DRUM-specific adapters
-- preparation of geometry for 1D and 2D hydraulic simulation
-
-## Data and output modernization
+## 6. Floodplain and 1D-2D hydraulics
 
 Current development includes:
 
-- NetCDF-based integrated outputs
-- standardized result exchange between the engine and viewer
-- project-level metadata and QA
-- reduced dependence on file-by-file manual editing
+- bidirectional 1D-2D river/floodplain exchange
+- 2D Local-Inertia floodplain calculation
+- Full shallow-water-equation option
+- multi-resolution / patch-based 2D domains
+- direct rainfall, drainage and hydraulic-structure interaction
+- 2D particle / tracer-oriented analysis support
 
-## InputStudio
+The 1D-2D exchange path has a **validated-development** boundary from controlled testing; this is not universal basin certification.
 
-K-DRUM InputStudio is being developed around a canonical project representation rather than treating every legacy engine file as an independent user-editing surface.
+## 7. Sediment, tracer and water-quality research functions
 
-Publicly describable goals/functions include:
+The current code base retains research calculation paths for:
 
-- project configuration
-- rainfall and meteorological time series
-- river reaches and cross sections
-- hydraulic structures
-- 1D-2D interfaces
-- spatial/2D domains
-- scenario authoring
-- topology and consistency checks
-- generation of engine-compatible K-DRUM inputs
+- hillslope sediment generation / erosion-deposition
+- river sediment transport / capacity and deposition
+- river dye / conservative-tracer transport
 
-## FloodViewer
+These are presented as **research functions** pending dedicated public validation documentation.
 
-K-DRUM FloodViewer is intended to provide integrated visualization of hydrologic and hydraulic results.
+Historical/research water-quality process code also exists, but it is explicitly disabled/excluded from the current active build. It is therefore shown only as a **redevelopment candidate**, not as a current production capability.
 
-Its current public maturity is **release candidate**.
+## 8. Performance, output exchange and user tools
 
-## Estuary2DV
+The wider K-DRUM environment includes:
 
-K-DRUM Estuary2DV is an independent longitudinal-vertical (x-z) research prototype for:
+- single-thread, OpenMP and MPI execution tracks
+- NetCDF-based integrated output
+- InputStudio project authoring and input QA
+- FloodViewer spatial/time-series result analysis
+- Estuary2DV as a separate experimental x-z estuary/salinity research prototype
 
-- estuarine hydrodynamics
-- salinity transport
-- tidal boundary interaction
-- future exchange with river hydraulics and hydraulic-structure operation
+MPI has a public K-DRUM research lineage, while current ST/OMP/MPI consistency and runtime modernization remain active QA topics.
 
-It remains **experimental** and should not be described as a production K-DRUM function.
+## Public interpretation boundary
+
+For detailed status and interpretation, use:
+
+- [Capability Atlas](CAPABILITY_ATLAS.md)
+- [Development Status](DEVELOPMENT_STATUS.md)
+- [Model Card](MODEL_CARD.md)
+- [Publications and Research](PUBLICATIONS.md)
+
+This repository does not publish production source code, restricted basin inputs, unpublished numerical tuning, operational reservoir rules, private validation datasets, or internal development identifiers.
