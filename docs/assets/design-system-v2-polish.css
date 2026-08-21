@@ -1,0 +1,19 @@
+#references .mywater-mobile-summary{display:none}
+
+@media(max-width:640px){
+  #references .official.mywater-callout-v2{gap:15px;padding:20px 17px}
+  #references .mywater-kicker{margin-bottom:7px}
+  #references .official h3{margin-bottom:8px;font-size:1.13rem}
+  #references .mywater-desktop-copy{display:none}
+  #references .mywater-mobile-summary{display:block;margin:0;color:#dceaf0;font-size:.93rem;font-weight:690;line-height:1.62}
+  #references .mywater-mobile-summary strong{display:inline;color:#fff;font-size:inherit}
+  #references .mywater-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:12px 0 7px}
+  #references .mywater-links a{width:100%;min-height:42px;padding:7px 8px;font-size:.76rem;line-height:1.35;text-align:center;justify-content:center}
+  #references .mywater-links a:nth-child(3){grid-column:1/-1;min-height:36px}
+  #references .official .small{margin:6px 0 0;font-size:.79rem;line-height:1.48}
+  #references .mywater-primary-cta{margin-top:1px}
+  #references .mywater-link-badge{min-height:76px;padding:9px 8px}
+  #references .mywater-link-badge b{font-size:1.08rem}
+  #references .mywater-link-badge span{font-size:.86rem}
+  #references .mywater-link-badge small{font-size:.72rem}
+}
