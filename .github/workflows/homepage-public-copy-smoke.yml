@@ -76,6 +76,7 @@ jobs:
               await page.waitForFunction(()=>document.documentElement.dataset.kdrumPublicCopy==='ready',null,{timeout:8000});
 
               const base=await page.evaluate(()=>({
+                lang:document.documentElement.lang,
                 title:document.title,
                 lead:(document.querySelector('.lead')?.textContent||'').trim(),
                 count:(document.querySelector('.catlas-count')?.textContent||'').trim(),
@@ -90,11 +91,11 @@ jobs:
               if(!base.official.includes('MyWater'))failures.push(`${c.name}: MyWater guidance missing`);
               if(!base.links.some(x=>x.includes('menuId=15_126_128')))failures.push(`${c.name}: MyWater K-Series link missing`);
               if(c.korean){
+                if(base.lang!=='ko')failures.push(`ko: language mismatch: ${base.lang}`);
                 if(base.lead!=='K-DRUM은 K-water에서 개발한 물리적 기반의 격자단위 분포형 강우유출모형입니다.')failures.push(`ko: canonical model description mismatch: ${base.lead}`);
                 if(base.count!=='45개 주요 기능')failures.push(`ko: capability count label mismatch: ${base.count}`);
                 if(!base.viewer.includes('1차원 하천수리 결과 뷰어')||!base.viewer.includes('GitHub 미공개'))failures.push(`ko: 1D viewer status wording missing`);
                 if(!base.official.includes('무료로 내려받아 사용할 수 있습니다'))failures.push(`ko: free MyWater download wording missing`);
-                if(document.documentElement.lang!=='ko')failures.push(`ko: language mismatch`);
                 const dwnet=await findCard(page,'dwnet');
                 if(!dwnet)failures.push('ko: dwnet card missing');
                 else if(!(await dwnet.locator('h4').innerText()).includes('1차원 동역학파 하천망 해석'))failures.push('ko: 1D hydraulic terminology not normalized');
