@@ -1,0 +1,138 @@
+name: Homepage browser smoke
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout public repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Chromium test runtime
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start local homepage server
+        run: |
+          python3 -m http.server 8000 --directory docs >/tmp/kdrum-http.log 2>&1 &
+          for i in {1..20}; do
+            if curl -fsS http://127.0.0.1:8000/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/kdrum-http.log
+          exit 1
+
+      - name: Run rendered browser checks
+        run: |
+          mkdir -p browser-artifacts
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+
+          const cases = [
+            {name:'en-desktop', url:'http://127.0.0.1:8000/', viewport:{width:1440,height:1000}, dialog:'#kexp-en-dialog', heroWidth:88},
+            {name:'ko-desktop', url:'http://127.0.0.1:8000/ko/', viewport:{width:1440,height:1000}, dialog:'#kexp-dialog', heroWidth:88},
+            {name:'en-mobile', url:'http://127.0.0.1:8000/', viewport:{width:390,height:844}, dialog:'#kexp-en-dialog', heroWidth:64},
+            {name:'ko-mobile', url:'http://127.0.0.1:8000/ko/', viewport:{width:390,height:844}, dialog:'#kexp-dialog', heroWidth:64},
+          ];
+
+          (async()=>{
+            const browser = await chromium.launch();
+            const failures = [];
+            const report = {};
+
+            for (const c of cases) {
+              const page = await browser.newPage({viewport:c.viewport});
+              const browserErrors = [];
+              page.on('console', msg => {
+                if (msg.type() === 'error') browserErrors.push(`console: ${msg.text()}`);
+              });
+              page.on('pageerror', err => browserErrors.push(`pageerror: ${err.message}`));
+
+              await page.goto(c.url, {waitUntil:'networkidle'});
+              await page.waitForFunction(() => document.documentElement.dataset.kdrumBrandRuntime === 'ready', null, {timeout:8000});
+
+              const metrics = await page.evaluate(() => {
+                const nav = document.querySelector('.site-mark');
+                const hero = document.querySelector('.brand-symbol');
+                const ns = getComputedStyle(nav);
+                const hs = getComputedStyle(hero);
+                const nr = nav.getBoundingClientRect();
+                const hr = hero.getBoundingClientRect();
+                return {
+                  navSrc: nav.getAttribute('src'),
+                  heroSrc: hero.getAttribute('src'),
+                  navWidth: nr.width,
+                  navHeight: nr.height,
+                  heroWidth: hr.width,
+                  heroHeight: hr.height,
+                  navPadding: ns.paddingTop,
+                  heroPadding: hs.paddingTop,
+                  navRadius: ns.borderRadius,
+                  heroRadius: hs.borderRadius,
+                  scrollWidth: document.documentElement.scrollWidth,
+                  clientWidth: document.documentElement.clientWidth,
+                };
+              });
+              report[c.name] = {metrics, browserErrors};
+
+              const near = (a,b) => Math.abs(a-b) <= 1.1;
+              if (!metrics.navSrc.includes('branding/kdrum-symbol-compact.png')) failures.push(`${c.name}: navigation mark is not the canonical compact asset`);
+              if (!metrics.heroSrc.includes('branding/kdrum-symbol-web.png')) failures.push(`${c.name}: hero mark is not the canonical web asset`);
+              if (!near(metrics.navWidth,32) || !near(metrics.navHeight,32)) failures.push(`${c.name}: navigation mark is ${metrics.navWidth}x${metrics.navHeight}, expected 32x32`);
+              if (!near(metrics.heroWidth,c.heroWidth) || !near(metrics.heroHeight,c.heroWidth)) failures.push(`${c.name}: hero mark is ${metrics.heroWidth}x${metrics.heroHeight}, expected ${c.heroWidth}x${c.heroWidth}`);
+              if (metrics.navPadding !== '1px') failures.push(`${c.name}: navigation mark padding is ${metrics.navPadding}, expected 1px`);
+              if (metrics.heroPadding !== '2px') failures.push(`${c.name}: hero mark padding is ${metrics.heroPadding}, expected 2px`);
+              if (metrics.scrollWidth > metrics.clientWidth + 1) failures.push(`${c.name}: horizontal overflow ${metrics.scrollWidth} > ${metrics.clientWidth}`);
+              if (browserErrors.length) failures.push(`${c.name}: browser errors: ${browserErrors.join(' | ')}`);
+
+              await page.locator('.hero').screenshot({path:`browser-artifacts/${c.name}-hero.png`});
+
+              const firstFeature = page.locator('#features .feature').first();
+              await firstFeature.click();
+              const dialog = page.locator(c.dialog);
+              await dialog.waitFor({state:'visible', timeout:5000});
+              const dialogText = (await dialog.innerText()).trim();
+              if (dialogText.length < 40) failures.push(`${c.name}: technical popup opened but contains too little content`);
+              if (c.name.endsWith('desktop')) await dialog.screenshot({path:`browser-artifacts/${c.name}-popup.png`});
+              await page.keyboard.press('Escape');
+              await page.close();
+            }
+
+            fs.writeFileSync('browser-artifacts/metrics.json', JSON.stringify(report, null, 2));
+            await browser.close();
+
+            if (failures.length) {
+              console.error('HOMEPAGE BROWSER SMOKE FAILED');
+              failures.forEach(x => console.error(' -', x));
+              process.exit(1);
+            }
+            console.log('HOMEPAGE BROWSER SMOKE PASSED');
+          })().catch(err => {
+            console.error(err);
+            process.exit(1);
+          });
+          NODE
+
+      - name: Upload rendered screenshots and metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: homepage-browser-smoke
+          path: browser-artifacts/
+          if-no-files-found: error
