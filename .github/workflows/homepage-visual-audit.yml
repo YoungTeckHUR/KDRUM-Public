@@ -20,6 +20,11 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Check homepage JavaScript syntax
+        run: |
+          node --check docs/assets/experience-v4.js
+          node --check .github/scripts/homepage-v4-audit.cjs
+
       - name: Install Chromium test runtime
         run: |
           npm install --no-save playwright@1.55.0
@@ -35,117 +40,12 @@ jobs:
           cat /tmp/kdrum-http.log
           exit 1
 
-      - name: Capture rendered layouts and design metrics
-        run: |
-          mkdir -p visual-audit
-          node <<'NODE'
-          const { chromium } = require('playwright');
-          const fs = require('fs');
-
-          const cases=[
-            {name:'en-desktop',url:'http://127.0.0.1:8000/',viewport:{width:1440,height:1000},mobile:false},
-            {name:'ko-desktop',url:'http://127.0.0.1:8000/ko/',viewport:{width:1440,height:1000},mobile:false},
-            {name:'en-mobile',url:'http://127.0.0.1:8000/',viewport:{width:390,height:844},mobile:true},
-            {name:'ko-mobile',url:'http://127.0.0.1:8000/ko/',viewport:{width:390,height:844},mobile:true},
-          ];
-
-          async function waitForCards(page){
-            await page.waitForFunction(()=>{
-              const cards=document.querySelectorAll('.catlas-card').length;
-              const symbols=document.querySelectorAll('.catlas-card .catlas-symbol').length;
-              const visuals=document.querySelectorAll('.catlas-card .ev3-card-visual').length;
-              return cards>0 && symbols===cards && visuals===cards;
-            },null,{timeout:5000});
-          }
-
-          (async()=>{
-            const browser=await chromium.launch();
-            const failures=[];
-            const report={};
-
-            for(const c of cases){
-              const page=await browser.newPage({viewport:c.viewport,deviceScaleFactor:1});
-              const errors=[];
-              page.on('console',m=>{if(m.type()==='error')errors.push(`console: ${m.text()}`)});
-              page.on('pageerror',e=>errors.push(`pageerror: ${e.message}`));
-              await page.goto(c.url,{waitUntil:'networkidle'});
-              await page.waitForFunction(()=>document.documentElement.dataset.kdrumBrandRuntime==='ready',null,{timeout:10000});
-              await page.waitForFunction(()=>document.documentElement.dataset.kdrumCapabilityAtlas==='ready',null,{timeout:10000});
-              await page.waitForFunction(()=>document.documentElement.dataset.kdrumPublicCopy==='ready',null,{timeout:10000});
-              await page.waitForFunction(()=>document.documentElement.dataset.kdrumExperienceV3Final==='ready',null,{timeout:10000});
-              await waitForCards(page);
-              await page.waitForTimeout(160);
-
-              await page.screenshot({path:`visual-audit/${c.name}-full.png`,fullPage:true});
-              for(const [name,selector] of Object.entries({
-                hero:'.hero',outcomes:'#outcomes',capabilities:'#capabilities',results:'#results',architecture:'#architecture',research:'#research',platform:'#platform',references:'#references'
-              })){
-                const el=page.locator(selector);
-                if(await el.count())await el.screenshot({path:`visual-audit/${c.name}-${name}.png`});
-              }
-
-              let total=0,symbols=0,visuals=0,actions=0;
-              const tabs=page.locator('.catlas-tab');
-              for(let i=0;i<await tabs.count();i++){
-                await tabs.nth(i).click();
-                await waitForCards(page);
-                total+=await page.locator('.catlas-card').count();
-                symbols+=await page.locator('.catlas-card .catlas-symbol').count();
-                visuals+=await page.locator('.catlas-card .ev3-card-visual').count();
-                actions+=await page.locator('.catlas-card .ev3-card-action').count();
-              }
-              await tabs.first().click();
-              await waitForCards(page);
-
-              const metrics=await page.evaluate(()=>{
-                const rect=e=>{if(!e)return null;const r=e.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,right:r.right,bottom:r.bottom}};
-                const css=e=>e?getComputedStyle(e):null;
-                const platformCards=[...document.querySelectorAll('#platform .card')].map(e=>({role:e.dataset.programRole,rect:rect(e),cursor:css(e).cursor}));
-                const rows={};
-                for(const card of platformCards){const y=Math.round(card.rect.y);rows[y]=(rows[y]||0)+1;}
-                const wrap=rect(document.querySelector('#capabilities .wrap'));
-                const tabRects=[...document.querySelectorAll('.catlas-tab')].map(rect);
-                return {
-                  ready:document.documentElement.dataset.kdrumExperienceV3Final,
-                  scrollWidth:document.documentElement.scrollWidth,
-                  clientWidth:document.documentElement.clientWidth,
-                  bodyBackground:css(document.body)?.backgroundColor,
-                  navPosition:css(document.querySelector('.topbar'))?.position,
-                  wrap,tabRects,
-                  platformCards,
-                  platformRows:Object.values(rows).sort((a,b)=>b-a),
-                  official:{rect:rect(document.querySelector('#references .official')),className:document.querySelector('#references .official')?.className||''},
-                  outcomes:document.querySelectorAll('#outcomes .ev3-outcome-card').length,
-                  results:document.querySelectorAll('#results .ev3-result-card').length,
-                  download:Boolean(document.querySelector('#references .ev3-download-primary')),
-                };
-              });
-
-              if(metrics.ready!=='ready')failures.push(`${c.name}: final experience not ready`);
-              if(metrics.scrollWidth>metrics.clientWidth+1)failures.push(`${c.name}: horizontal overflow`);
-              if(total!==46||symbols!==46||visuals!==46||actions!==46)failures.push(`${c.name}: capability totals ${total}/${symbols}/${visuals}/${actions}`);
-              if(metrics.outcomes!==4||metrics.results!==4)failures.push(`${c.name}: outcome/result sections incomplete`);
-              if(metrics.platformCards.length!==7||metrics.platformCards.some(x=>!x.role))failures.push(`${c.name}: program roles incomplete`);
-              if(metrics.platformCards.some(x=>x.cursor==='pointer'))failures.push(`${c.name}: static program cards look clickable`);
-              if(!metrics.official.className.includes('mywater-callout-v2')||!metrics.download)failures.push(`${c.name}: download panel incomplete`);
-              if(c.mobile&&metrics.navPosition==='sticky')failures.push(`${c.name}: mobile header remains sticky`);
-              if(c.mobile&&metrics.official.rect.height>560)failures.push(`${c.name}: MyWater callout too tall (${metrics.official.rect.height})`);
-              if(!c.mobile){
-                const within=metrics.tabRects.every(r=>r.x>=metrics.wrap.x-1&&r.right<=metrics.wrap.right+1);
-                if(!within)failures.push(`${c.name}: capability tabs exceed content width`);
-                if(JSON.stringify(metrics.platformRows)!==JSON.stringify([4,3]))failures.push(`${c.name}: expected 3+4 program layout, found ${JSON.stringify(metrics.platformRows)}`);
-              }
-              if(errors.length)failures.push(`${c.name}: ${errors.join(' | ')}`);
-              report[c.name]={metrics,total,symbols,visuals,actions,errors};
-              await page.close();
-            }
-
-            fs.writeFileSync('visual-audit/metrics.json',JSON.stringify(report,null,2));
-            await browser.close();
-            if(failures.length){console.error('VISUAL DESIGN AUDIT FAILED');failures.forEach(x=>console.error(' -',x));process.exit(1)}
-            console.log('VISUAL DESIGN AUDIT PASSED');
-          })().catch(e=>{console.error(e);process.exit(1)});
-          NODE
+      - name: Capture and verify the tabbed visual system
+        env:
+          BASE_URL: http://127.0.0.1:8000
+          AUDIT_DIR: visual-audit
+          AUDIT_LABEL: Homepage visual design audit
+        run: node .github/scripts/homepage-v4-audit.cjs
 
       - name: Upload visual audit
         if: always()
