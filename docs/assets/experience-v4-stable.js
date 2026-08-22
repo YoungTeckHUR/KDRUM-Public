@@ -182,6 +182,11 @@
       const value=heading.textContent.trim();
       if(value==='연구 연혁'||/^Research (history|timeline)$/i.test(value))heading.remove();
     });
+    const placeholder=document.createElement('details');
+    placeholder.className='ev4-history';
+    placeholder.hidden=true;
+    placeholder.dataset.emptyHistory='1';
+    research.append(placeholder);
   }
 
   function compactCopy(){
