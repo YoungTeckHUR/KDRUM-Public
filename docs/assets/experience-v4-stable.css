@@ -1,3 +1,8 @@
+html.ev4-experience .topbar{
+  position:static!important;
+  top:auto!important;
+  backdrop-filter:none!important;
+}
 html.ev4-experience .ev4-tab-wrap{
   position:static!important;
   top:auto!important;
@@ -9,6 +14,8 @@ html.ev4-experience .hero .ev3-hero-note,
 html.ev4-experience .hero .hero-note{display:none!important}
 html.ev4-experience .hero .ev4-facts{margin-top:13px!important}
 html.ev4-experience #capabilities .catlas-group-visual,
+html.ev4-experience #capabilities .ev3-group-concept,
+html.ev4-experience #capabilities .ev3-tab-mark,
 html.ev4-experience #capabilities .catlas-tab svg,
 html.ev4-experience #capabilities .catlas-tab img,
 html.ev4-experience #capabilities .catlas-tab .catlas-icon,
@@ -17,46 +24,87 @@ html.ev4-experience #capabilities .ev3-card-visual,
 html.ev4-experience #capabilities .catlas-mini{display:none!important}
 html.ev4-experience .ev4-panel>.ev4-section{padding:38px 0!important}
 html.ev4-experience #capabilities{padding:38px 0!important}
+html.ev4-experience #capabilities .catlas-tabs{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+html.ev4-experience #capabilities .catlas-tab{
+  min-height:52px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:0!important;
+  padding:9px 12px!important;
+}
+html.ev4-experience #capabilities .catlas-tab::before,
+html.ev4-experience #capabilities .catlas-tab::after{display:none!important;content:none!important}
 html.ev4-experience #capabilities .catlas-group-head{
   display:block!important;
   padding:15px 17px!important;
 }
 html.ev4-experience #capabilities .catlas-group-head h3{margin:0!important}
 html.ev4-experience #capabilities .catlas-grid{
-  align-items:stretch!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  align-items:start!important;
   grid-auto-rows:auto!important;
+  gap:10px!important;
+  margin-top:10px!important;
 }
-html.ev4-experience #capabilities .catlas-card{
-  min-height:0!important;
-  height:auto!important;
-  max-height:none!important;
-  padding:14px 14px 0!important;
+html.ev4-experience #capabilities .catlas-card,
+html.ev4-experience #capabilities .catlas-card.ev3-interactive-card{
+  aspect-ratio:auto!important;
+  min-height:188px!important;
+  height:188px!important;
+  max-height:188px!important;
+  align-self:start!important;
+  padding:13px 13px 0!important;
+  transform:none!important;
+}
+html.ev4-experience #capabilities .catlas-card:hover,
+html.ev4-experience #capabilities .catlas-card.ev3-interactive-card:hover,
+html.ev4-experience #capabilities .catlas-card:focus-visible,
+html.ev4-experience #capabilities .catlas-card.ev3-interactive-card:focus-visible{
+  transform:translateY(-2px)!important;
 }
 html.ev4-experience #capabilities .catlas-card h4{
-  margin:0 52px 5px 0!important;
-  line-height:1.36!important;
+  margin:0 50px 5px 0!important;
+  font-size:.96rem!important;
+  line-height:1.34!important;
+  display:-webkit-box!important;
+  -webkit-line-clamp:2!important;
+  -webkit-box-orient:vertical!important;
+  overflow:hidden!important;
 }
 html.ev4-experience #capabilities .catlas-card p{
-  margin:0 0 12px!important;
-  line-height:1.48!important;
+  margin:0 0 9px!important;
+  font-size:.82rem!important;
+  line-height:1.42!important;
   -webkit-line-clamp:2!important;
 }
-html.ev4-experience #capabilities .catlas-status{margin-bottom:7px!important}
-html.ev4-experience #capabilities .catlas-symbol{top:13px!important;right:13px!important}
+html.ev4-experience #capabilities .catlas-status{margin-bottom:6px!important}
+html.ev4-experience #capabilities .catlas-symbol{top:12px!important;right:12px!important}
 html.ev4-experience #capabilities .ev4-card-action{
-  min-height:46px!important;
-  margin:auto -14px 0!important;
-  padding:9px 13px!important;
+  min-height:44px!important;
+  margin:auto -13px 0!important;
+  padding:8px 12px!important;
 }
+html.ev4-experience #platform .program-grid-v2,
+html.ev4-experience #platform .tool-grid,
+html.ev4-experience #research .grid3{align-items:start!important}
 html.ev4-experience #platform .ev3-program-card,
 html.ev4-experience #platform .ev3-program-card:nth-child(n+4){
   min-height:0!important;
   height:auto!important;
+  max-height:none!important;
+  align-self:start!important;
 }
 html.ev4-experience #research .grid3>.card{
   min-height:0!important;
   height:auto!important;
+  max-height:none!important;
+  align-self:start!important;
 }
+html.ev4-experience #research details.ev4-history{display:none!important}
 html.ev4-experience #catlas-dialog .catlas-graphic{
   border-color:var(--ev4-line)!important;
   background:#f4f8fb!important;
@@ -64,13 +112,19 @@ html.ev4-experience #catlas-dialog .catlas-graphic{
 html.ev4-experience #catlas-dialog .ev4-diagram-label{color:var(--ev4-blue-dark)!important}
 html.ev4-experience #catlas-dialog .catlas-graphic svg text{fill:var(--ev4-ink)!important}
 @media(max-width:700px){
-  html.ev4-experience .ev4-panel>.ev4-section{padding:30px 0!important}
-  html.ev4-experience #capabilities{padding:30px 0!important}
-  html.ev4-experience #capabilities .catlas-tab{min-height:52px!important}
-  html.ev4-experience #capabilities .catlas-card{
-    min-height:0!important;
-    height:auto!important;
-    max-height:none!important;
+  html.ev4-experience .ev4-panel>.ev4-section{padding:28px 0!important}
+  html.ev4-experience #capabilities{padding:28px 0!important}
+  html.ev4-experience #capabilities .catlas-tabs{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:6px!important;
+  }
+  html.ev4-experience #capabilities .catlas-tab{min-height:48px!important;padding:7px 9px!important}
+  html.ev4-experience #capabilities .catlas-grid{grid-template-columns:1fr!important;gap:8px!important}
+  html.ev4-experience #capabilities .catlas-card,
+  html.ev4-experience #capabilities .catlas-card.ev3-interactive-card{
+    min-height:164px!important;
+    height:164px!important;
+    max-height:164px!important;
   }
   html.ev4-experience #architecture .architecture{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
@@ -78,7 +132,75 @@ html.ev4-experience #catlas-dialog .catlas-graphic svg text{fill:var(--ev4-ink)!
   }
   html.ev4-experience #architecture .arch{min-height:84px!important;padding:11px!important}
   html.ev4-experience #architecture .arch:last-child{grid-column:1/-1}
+  html.ev4-experience #platform .program-grid-v2,
+  html.ev4-experience #platform .tool-grid{display:grid!important;grid-template-columns:1fr!important;gap:8px!important}
   html.ev4-experience #platform .ev3-program-card,
-  html.ev4-experience #platform .ev3-program-card:nth-child(n+4){min-height:0!important}
-  html.ev4-experience #research .grid3>.card{min-height:0!important}
+  html.ev4-experience #platform .ev3-program-card:nth-child(n+4){
+    grid-column:auto!important;
+    min-height:0!important;
+    height:150px!important;
+    max-height:150px!important;
+    display:grid!important;
+    grid-template-columns:108px minmax(0,1fr)!important;
+    grid-template-rows:auto auto 1fr!important;
+    column-gap:12px!important;
+    padding:0 12px 10px!important;
+    overflow:hidden!important;
+  }
+  html.ev4-experience #platform .ev3-program-visual{
+    grid-column:1!important;
+    grid-row:1/4!important;
+    width:108px!important;
+    height:150px!important;
+    min-height:150px!important;
+    margin:0!important;
+    border-right:1px solid var(--ev4-line)!important;
+    border-bottom:0!important;
+  }
+  html.ev4-experience #platform .ev3-program-visual svg{width:100%!important;height:100%!important;max-height:none!important}
+  html.ev4-experience #platform .program-role,
+  html.ev4-experience #platform .status{grid-column:2!important;margin:9px 42px 2px 0!important;align-self:start!important}
+  html.ev4-experience #platform .program-code{right:8px!important;top:8px!important}
+  html.ev4-experience #platform .card h3{grid-column:2!important;margin:2px 42px 4px 0!important;font-size:.9rem!important}
+  html.ev4-experience #platform .card p{
+    grid-column:2!important;
+    margin:0!important;
+    font-size:.76rem!important;
+    line-height:1.42!important;
+    -webkit-line-clamp:3!important;
+  }
+  html.ev4-experience #research .grid3{grid-template-columns:1fr!important;gap:8px!important}
+  html.ev4-experience #research .grid3>.card{
+    min-height:0!important;
+    height:148px!important;
+    max-height:148px!important;
+    display:grid!important;
+    grid-template-columns:108px minmax(0,1fr)!important;
+    grid-template-rows:auto 1fr!important;
+    column-gap:12px!important;
+    padding:0 12px 10px!important;
+    overflow:hidden!important;
+  }
+  html.ev4-experience #research .ev4-research-visual{
+    grid-column:1!important;
+    grid-row:1/3!important;
+    width:108px!important;
+    height:148px!important;
+    min-height:148px!important;
+    margin:0!important;
+    border-right:1px solid var(--ev4-line)!important;
+    border-bottom:0!important;
+  }
+  html.ev4-experience #research .ev4-research-visual svg{width:100%!important;height:100%!important;max-height:none!important}
+  html.ev4-experience #research .card h3{grid-column:2!important;margin:13px 0 4px!important;font-size:.9rem!important}
+  html.ev4-experience #research .card p{
+    grid-column:2!important;
+    margin:0!important;
+    font-size:.76rem!important;
+    line-height:1.42!important;
+    display:-webkit-box!important;
+    -webkit-line-clamp:4!important;
+    -webkit-box-orient:vertical!important;
+    overflow:hidden!important;
+  }
 }
