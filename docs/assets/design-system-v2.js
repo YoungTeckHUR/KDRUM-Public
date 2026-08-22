@@ -2,91 +2,43 @@
   const ko=(document.documentElement.lang||'en').toLowerCase().startsWith('ko');
   const base=ko?'../assets/':'assets/';
 
-  if(!document.querySelector('link[data-kdrum-experience-v3-compat]')){
+  function addStyle(name,attr){
+    if(document.querySelector(`link[${attr}]`))return;
     const link=document.createElement('link');
     link.rel='stylesheet';
-    link.href=base+'experience-v3-compat.css';
-    link.dataset.kdrumExperienceV3Compat='1';
+    link.href=base+name;
+    link.setAttribute(attr,'1');
     document.head.appendChild(link);
   }
 
-  function loadV4FinalPolish(){
-    if(!document.querySelector('link[data-kdrum-experience-v4-final-polish]')){
-      const link=document.createElement('link');
-      link.rel='stylesheet';
-      link.href=base+'experience-v4-final-polish.css';
-      link.dataset.kdrumExperienceV4FinalPolish='1';
-      document.head.appendChild(link);
+  function addScript(name,attr,onload){
+    const existing=document.querySelector(`script[${attr}]`);
+    if(existing){
+      if(onload)existing.addEventListener('load',onload,{once:true});
+      return existing;
     }
-    const existing=document.querySelector('script[data-kdrum-experience-v4-final-polish]');
-    if(existing)return;
     const script=document.createElement('script');
-    script.dataset.kdrumExperienceV4FinalPolish='1';
-    script.src=base+'experience-v4-final-polish.js';
+    script.src=base+name;
+    script.setAttribute(attr,'1');
+    if(onload)script.addEventListener('load',onload,{once:true});
     document.head.appendChild(script);
+    return script;
   }
 
-  function loadV4Polish(){
-    if(!document.querySelector('link[data-kdrum-experience-v4-polish]')){
-      const link=document.createElement('link');
-      link.rel='stylesheet';
-      link.href=base+'experience-v4-polish.css';
-      link.dataset.kdrumExperienceV4Polish='1';
-      document.head.appendChild(link);
-    }
-    const existing=document.querySelector('script[data-kdrum-experience-v4-polish]');
-    if(existing){
-      if(document.documentElement.dataset.kdrumExperienceV4Polish==='ready')loadV4FinalPolish();
-      else existing.addEventListener('load',loadV4FinalPolish,{once:true});
-      return;
-    }
-    const script=document.createElement('script');
-    script.dataset.kdrumExperienceV4Polish='1';
-    script.src=base+'experience-v4-polish.js';
-    script.addEventListener('load',loadV4FinalPolish,{once:true});
-    document.head.appendChild(script);
-  }
+  addStyle('experience-v3-compat.css','data-kdrum-experience-v3-compat');
 
-  function loadV4Fix(){
-    if(!document.querySelector('link[data-kdrum-experience-v4-fix]')){
-      const link=document.createElement('link');
-      link.rel='stylesheet';
-      link.href=base+'experience-v4-fix.css';
-      link.dataset.kdrumExperienceV4Fix='1';
-      document.head.appendChild(link);
-    }
-    const existing=document.querySelector('script[data-kdrum-experience-v4-fix]');
-    if(existing){
-      if(document.documentElement.dataset.kdrumExperienceV4Fix==='ready')loadV4Polish();
-      else existing.addEventListener('load',loadV4Polish,{once:true});
-      return;
-    }
-    const script=document.createElement('script');
-    script.dataset.kdrumExperienceV4Fix='1';
-    script.src=base+'experience-v4-fix.js';
-    script.addEventListener('load',loadV4Polish,{once:true});
-    document.head.appendChild(script);
+  function loadStable(){
+    addStyle('experience-v4-stable.css','data-kdrum-experience-v4-stable');
+    addScript('experience-v4-stable.js','data-kdrum-experience-v4-stable');
   }
 
   function loadV4(){
-    if(!document.querySelector('link[data-kdrum-experience-v4]')){
-      const link=document.createElement('link');
-      link.rel='stylesheet';
-      link.href=base+'experience-v4.css';
-      link.dataset.kdrumExperienceV4='1';
-      document.head.appendChild(link);
-    }
-    const existing=document.querySelector('script[data-kdrum-experience-v4]');
-    if(existing){
-      if(document.documentElement.dataset.kdrumExperienceV4==='ready')loadV4Fix();
-      else existing.addEventListener('load',loadV4Fix,{once:true});
+    addStyle('experience-v4.css','data-kdrum-experience-v4');
+    if(document.documentElement.dataset.kdrumExperienceV4==='ready'){
+      loadStable();
       return;
     }
-    const script=document.createElement('script');
-    script.dataset.kdrumExperienceV4='1';
-    script.src=base+'experience-v4.js';
-    script.addEventListener('load',loadV4Fix,{once:true});
-    document.head.appendChild(script);
+    addScript('experience-v4.js','data-kdrum-experience-v4',loadStable);
   }
 
   function loadFinalizer(){
@@ -96,11 +48,7 @@
       else existing.addEventListener('load',loadV4,{once:true});
       return;
     }
-    const script=document.createElement('script');
-    script.dataset.kdrumExperienceV3Final='1';
-    script.src=base+'experience-v3-final.js';
-    script.addEventListener('load',loadV4,{once:true});
-    document.head.appendChild(script);
+    addScript('experience-v3-final.js','data-kdrum-experience-v3-final',loadV4);
   }
 
   const existing=document.querySelector('script[data-kdrum-experience-v3]');
@@ -109,9 +57,5 @@
     else existing.addEventListener('load',loadFinalizer,{once:true});
     return;
   }
-  const script=document.createElement('script');
-  script.dataset.kdrumExperienceV3='1';
-  script.src=base+'experience-v3.js';
-  script.addEventListener('load',loadFinalizer,{once:true});
-  document.head.appendChild(script);
+  addScript('experience-v3.js','data-kdrum-experience-v3',loadFinalizer);
 })();
