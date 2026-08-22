@@ -104,8 +104,10 @@
     if(!section||cleaningCapabilities)return;
     cleaningCapabilities=true;
     try{
-      section.querySelectorAll('.catlas-group-visual').forEach(node=>node.remove());
-      section.querySelectorAll('.catlas-tab svg,.catlas-tab img,.catlas-tab .catlas-icon,.catlas-tab .catlas-tab-icon').forEach(node=>node.remove());
+      section.querySelectorAll('.catlas-group-visual,.ev3-group-concept').forEach(node=>node.remove());
+      section.querySelectorAll('.catlas-tab').forEach(tab=>{
+        tab.querySelectorAll('.ev3-tab-mark,svg,img,.catlas-icon,.catlas-tab-icon').forEach(node=>node.remove());
+      });
       section.querySelectorAll('.catlas-card').forEach(ensureCardAction);
       const hint=section.querySelector('.ev3-click-hint,.ev4-click-hint');
       const hintText=ko?'파란색 버튼이 있는 항목만 상세 설명이 열립니다.':'Only cards with a blue action open detailed explanations.';
@@ -174,8 +176,12 @@
     const intro=research.querySelector('.section-intro');
     const copy=ko?'공개 연구주제와 적용분야를 정리했습니다.':'Public research themes and applications.';
     if(intro&&intro.textContent!==copy)intro.textContent=copy;
-    const details=research.querySelector('details.ev4-history');
-    if(details)details.open=false;
+    research.querySelectorAll('details.ev4-history').forEach(node=>node.remove());
+    research.querySelectorAll('.timeline,.ev3-timeline,[class*="history-timeline"],[class*="research-timeline"]').forEach(node=>node.remove());
+    research.querySelectorAll('h2,h3,h4').forEach(heading=>{
+      const value=heading.textContent.trim();
+      if(value==='연구 연혁'||/^Research (history|timeline)$/i.test(value))heading.remove();
+    });
   }
 
   function compactCopy(){
