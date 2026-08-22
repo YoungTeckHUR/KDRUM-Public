@@ -5,6 +5,9 @@
   const factLabels=ko
     ? ['K-water 개발','물리적 기반','연속·홍수사상 모의']
     : ['Developed by K-water','Physically based','Continuous & event simulation'];
+  const knownFacts=new Set(ko
+    ? ['K-water 개발','물리적 기반','격자단위 분포형','연속·홍수사상 모의','하천수리·범람 확장']
+    : ['Developed by K-water','Physically based','Grid-unit distributed','Continuous & event simulation','River and flood extensions']);
   const programDefs=[
     ['core',/K-DRUM Core/i,'engine'],
     ['authoring',/InputStudio/i,'input'],
@@ -20,6 +23,8 @@
     observed:'관측',peak:'첨두','rank / thread':'랭크·스레드',
     'boundary exchange':'경계정보 교환'
   }:{};
+  let cleaningCapabilities=false;
+  let capabilityCleanupQueued=false;
 
   const escapeHtml=value=>String(value||'').replace(/[&<>"']/g,ch=>({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
@@ -40,8 +45,16 @@
     const hero=document.querySelector('.hero');
     if(!hero)return;
     hero.querySelectorAll('.ev3-hero-facts,.hero-facts,.ev3-hero-note,.hero-note,.unit-chain,.ev4-facts').forEach(node=>node.remove());
+    hero.querySelectorAll('div,ul').forEach(node=>{
+      if(node.closest('.actions,.brand-lockup,.hero-visual'))return;
+      if(node.querySelector('h1,h2,h3,p,.actions,.brand-lockup'))return;
+      const children=[...node.children];
+      if(children.length<3||children.length>8)return;
+      const labels=children.map(child=>child.textContent.trim()).filter(value=>value.length<42);
+      if(labels.filter(value=>knownFacts.has(value)).length>=3)node.remove();
+    });
     const supporting=hero.querySelector('.supporting');
-    if(supporting){
+    if(supporting&&!hero.querySelector('.ev4-facts')){
       const facts=document.createElement('div');
       facts.className='ev4-facts';
       facts.innerHTML=factLabels.map(value=>`<span>${escapeHtml(value)}</span>`).join('');
@@ -68,26 +81,60 @@
     });
   }
 
-  function cleanCapabilities(){
-    const section=document.getElementById('capabilities');
-    if(!section)return;
-    section.querySelectorAll('.catlas-group-visual').forEach(node=>node.remove());
-    section.querySelectorAll('.catlas-tab svg,.catlas-tab img,.catlas-tab .catlas-icon,.catlas-tab .catlas-tab-icon').forEach(node=>node.remove());
-    section.querySelectorAll('.catlas-card').forEach(card=>{
-      card.querySelectorAll('.ev3-card-visual,.catlas-mini,.ev3-card-action,.ev4-card-action').forEach(node=>node.remove());
+  function ensureCardAction(card){
+    card.querySelectorAll('.ev3-card-visual,.catlas-mini,.ev3-card-action').forEach(node=>node.remove());
+    const actions=[...card.querySelectorAll(':scope > .ev4-card-action')];
+    const valid=actions.length===1&&actions[0].querySelector('span')?.textContent.trim()===actionText;
+    if(!valid){
+      actions.forEach(node=>node.remove());
       const action=document.createElement('span');
       action.className='ev4-card-action';
       action.innerHTML=`<span>${escapeHtml(actionText)}</span><b aria-hidden="true">→</b>`;
       card.append(action);
-      const title=card.querySelector('h4,h3')?.textContent.trim()||'';
-      card.classList.add('ev4-action-card');
-      card.dataset.ev4Interactive='1';
-      card.setAttribute('aria-label',`${title}. ${actionText}`);
+    }
+    const title=card.querySelector('h4,h3')?.textContent.trim()||'';
+    card.classList.add('ev4-action-card');
+    card.dataset.ev4Interactive='1';
+    const label=`${title}. ${actionText}`;
+    if(card.getAttribute('aria-label')!==label)card.setAttribute('aria-label',label);
+  }
+
+  function cleanCapabilities(){
+    const section=document.getElementById('capabilities');
+    if(!section||cleaningCapabilities)return;
+    cleaningCapabilities=true;
+    try{
+      section.querySelectorAll('.catlas-group-visual').forEach(node=>node.remove());
+      section.querySelectorAll('.catlas-tab svg,.catlas-tab img,.catlas-tab .catlas-icon,.catlas-tab .catlas-tab-icon').forEach(node=>node.remove());
+      section.querySelectorAll('.catlas-card').forEach(ensureCardAction);
+      const hint=section.querySelector('.ev3-click-hint,.ev4-click-hint');
+      const hintText=ko?'파란색 버튼이 있는 항목만 상세 설명이 열립니다.':'Only cards with a blue action open detailed explanations.';
+      if(hint&&hint.textContent!==hintText)hint.textContent=hintText;
+      const intro=section.querySelector('.catlas-head p,.section-intro');
+      const introText=ko?'분야별 기능과 공개 성숙도를 확인합니다.':'Review capabilities and public maturity by domain.';
+      if(intro&&intro.textContent!==introText)intro.textContent=introText;
+    }finally{
+      cleaningCapabilities=false;
+    }
+  }
+
+  function queueCapabilityCleanup(){
+    if(capabilityCleanupQueued)return;
+    capabilityCleanupQueued=true;
+    requestAnimationFrame(()=>{
+      capabilityCleanupQueued=false;
+      cleanCapabilities();
+      compactCopy();
+      localizeSvg();
     });
-    const hint=section.querySelector('.ev3-click-hint,.ev4-click-hint');
-    if(hint)hint.textContent=ko?'파란색 버튼이 있는 항목만 상세 설명이 열립니다.':'Only cards with a blue action open detailed explanations.';
-    const intro=section.querySelector('.catlas-head p,.section-intro');
-    if(intro)intro.textContent=ko?'분야별 기능과 공개 성숙도를 확인합니다.':'Review capabilities and public maturity by domain.';
+  }
+
+  function bindCapabilityObserver(){
+    const section=document.getElementById('capabilities');
+    if(!section||section.dataset.ev4StableObserved)return;
+    section.dataset.ev4StableObserved='1';
+    const observer=new MutationObserver(()=>queueCapabilityCleanup());
+    observer.observe(section,{childList:true,subtree:true});
   }
 
   function repairPrograms(){
@@ -109,7 +156,8 @@
       if(svg&&svg.dataset.diagram!==diagram)svg.dataset.diagram=diagram;
     });
     const intro=platform.querySelector('.section-intro');
-    if(intro)intro.textContent=ko?'입력자료 작성, 계산, 결과분석을 역할별로 구분합니다.':'Authoring, computation and result review are separated by role.';
+    const copy=ko?'입력자료 작성, 계산, 결과분석을 역할별로 구분합니다.':'Authoring, computation and result review are separated by role.';
+    if(intro&&intro.textContent!==copy)intro.textContent=copy;
   }
 
   function cleanResearch(){
@@ -124,7 +172,8 @@
       card.removeAttribute('role');
     });
     const intro=research.querySelector('.section-intro');
-    if(intro)intro.textContent=ko?'공개 연구주제와 적용분야를 정리했습니다.':'Public research themes and applications.';
+    const copy=ko?'공개 연구주제와 적용분야를 정리했습니다.':'Public research themes and applications.';
+    if(intro&&intro.textContent!==copy)intro.textContent=copy;
     const details=research.querySelector('details.ev4-history');
     if(details)details.open=false;
   }
@@ -142,7 +191,7 @@
     if(!ko)return;
     scope.querySelectorAll('svg text').forEach(node=>{
       const value=node.textContent.trim();
-      if(svgMap[value])node.textContent=svgMap[value];
+      if(svgMap[value]&&node.textContent!==svgMap[value])node.textContent=svgMap[value];
     });
   }
 
@@ -152,7 +201,7 @@
     dialog.classList.add('ev4-dialog');
     const doc=dialog.querySelector('.catlas-doc');
     if(doc){
-      doc.textContent=docText;
+      if(doc.textContent.trim()!==docText)doc.textContent=docText;
       doc.setAttribute('aria-label',docText);
     }
     localizeSvg(dialog);
@@ -168,15 +217,12 @@
     compactCopy();
     localizeSvg();
     repairDialog();
+    bindCapabilityObserver();
     document.documentElement.dataset.kdrumExperienceV4Stable='ready';
   }
 
   function settleCapabilities(){
-    [20,90,220].forEach(delay=>setTimeout(()=>{
-      cleanCapabilities();
-      compactCopy();
-      localizeSvg();
-    },delay));
+    [20,90,220,420].forEach(delay=>setTimeout(queueCapabilityCleanup,delay));
   }
 
   document.addEventListener('click',event=>{
@@ -197,7 +243,7 @@
       clearInterval(timer);
       cleanAll();
       setTimeout(cleanAll,120);
-      setTimeout(cleanAll,320);
+      setTimeout(cleanAll,360);
     }
   },50);
 })();
