@@ -2,6 +2,19 @@
   const ko=(document.documentElement.lang||'en').toLowerCase().startsWith('ko');
   const base=ko?'../assets/':'assets/';
 
+  document.addEventListener('click',event=>{
+    const link=event.target.closest('a[href="#main"]');
+    if(!link)return;
+    const main=document.getElementById('main');
+    if(!main)return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if(!main.hasAttribute('tabindex'))main.setAttribute('tabindex','-1');
+    history.replaceState(null,'','#main');
+    main.focus({preventScroll:true});
+    main.scrollIntoView({block:'start'});
+  },true);
+
   function addStyle(name,attr){
     if(document.querySelector(`link[${attr}]`))return;
     const link=document.createElement('link');
