@@ -1,0 +1,54 @@
+name: Apply K-water first-paint guard
+
+on:
+  push:
+    branches:
+      - agent/concept-visuals-v1-20260822
+
+permissions:
+  contents: write
+
+jobs:
+  patch-homepage-head:
+    if: ${{ !contains(github.event.head_commit.message, '[kwater-first-paint]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout concept-visual branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/concept-visuals-v1-20260822
+          fetch-depth: 0
+
+      - name: Add render-blocking light first-paint stylesheet
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          targets = [
+              (Path('docs/index.html'), 'assets/kwater-critical.css'),
+              (Path('docs/ko/index.html'), '../assets/kwater-critical.css'),
+          ]
+          for path, href in targets:
+              text = path.read_text(encoding='utf-8')
+              text = text.replace('<meta name="theme-color" content="#005596">', '<meta name="theme-color" content="#0066b3">')
+              if '<meta name="color-scheme" content="light">' not in text:
+                  text = text.replace('<meta name="theme-color" content="#0066b3">', '<meta name="theme-color" content="#0066b3">\n  <meta name="color-scheme" content="light">')
+              marker = f'<link rel="stylesheet" href="{href}" data-kdrum-kwater-critical>'
+              if marker not in text:
+                  text = text.replace('  </style>\n</head>', f'  </style>\n  {marker}\n</head>', 1)
+              if marker not in text:
+                  raise SystemExit(f'Failed to insert critical stylesheet into {path}')
+              path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit generated head patch
+        run: |
+          if git diff --quiet; then
+            echo "No first-paint changes required"
+            exit 0
+          fi
+          git config user.name "K-DRUM Homepage QA"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/index.html docs/ko/index.html
+          git commit -m "[kwater-first-paint] Prevent dark flash before homepage initialization"
+          git push origin HEAD:agent/concept-visuals-v1-20260822
