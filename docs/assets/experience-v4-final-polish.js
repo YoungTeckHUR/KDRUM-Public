@@ -10,6 +10,7 @@
     ['viewer1d',/1차원 하천수리 결과 뷰어|1D River Hydraulics Results Viewer/i,'viewer1d'],
     ['research',/Estuary2DV/i,'estuary']
   ];
+  const groupDiagrams={forcing:'radar',hydrology:'runoff',terrain:'terrain',audit:'balance',river:'river',flood:'flood',transport:'transport',platform:'program'};
   const svgMap=ko?{
     'soil · snow · canopy · deep storage':'토양·적설·수관차단·심부저류',
     Qout:'유출','ET / loss':'증발산·손실',depth:'침수심',simulated:'계산',
@@ -76,7 +77,19 @@
   function cleanCapabilities(){
     const cap=document.getElementById('capabilities');
     if(!cap)return;
-    cap.querySelectorAll('.ev3-card-visual,.catlas-group-visual').forEach(n=>n.remove());
+    cap.querySelectorAll('.ev3-card-visual').forEach(n=>n.remove());
+    const group=cap.querySelector('.catlas-tab[aria-selected="true"]')?.dataset.group||cap.dataset.activeGroup||'forcing';
+    let visual=cap.querySelector('.catlas-group-visual');
+    if(!visual){
+      visual=document.createElement('div');
+      visual.className='catlas-group-visual';
+      visual.setAttribute('aria-hidden','true');
+      cap.querySelector('.catlas-group-head')?.appendChild(visual);
+    }
+    if(visual){
+      visual.hidden=true;
+      visual.innerHTML=`<svg viewBox="0 0 1 1" data-diagram="${groupDiagrams[group]||'program'}" aria-hidden="true"></svg>`;
+    }
     cap.querySelectorAll('.catlas-card').forEach(card=>{
       card.classList.add('ev4-action-card');
       card.dataset.ev4Interactive='1';
