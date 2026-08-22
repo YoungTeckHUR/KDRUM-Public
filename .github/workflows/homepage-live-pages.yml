@@ -86,15 +86,35 @@ jobs:
           raise SystemExit(f'Exact Pages build did not become ready: {last}')
           PY
 
-      - name: Verify deployed tabbed homepage
+      - name: Verify deployed tabbed homepage after CDN propagation
         id: live_verify
         if: steps.pages_build.outcome == 'success'
         continue-on-error: true
         env:
-          BASE_URL: https://youngteckhur.github.io/KDRUM-Public
-          AUDIT_DIR: live-artifacts
-          AUDIT_LABEL: Live GitHub Pages tabbed v4 audit
-        run: node .github/scripts/homepage-v4-audit.cjs
+          SHA: ${{ github.sha }}
+        run: |
+          set +e
+          BASE='https://youngteckhur.github.io/KDRUM-Public'
+          for attempt in $(seq 1 40); do
+            echo "live verification attempt $attempt"
+            rm -rf live-artifacts
+            mkdir -p live-artifacts
+            marker_url="$BASE/assets/design-system-v2.js?deploy=$SHA-$attempt"
+            if curl -fsS -H 'Cache-Control: no-cache' "$marker_url" | grep -q 'experience-v4-stable.js'; then
+              BASE_URL="$BASE" AUDIT_DIR=live-artifacts AUDIT_LABEL='Live GitHub Pages tabbed v4 audit' \
+                node .github/scripts/homepage-v4-audit.cjs
+              rc=$?
+              if [ "$rc" -eq 0 ]; then
+                exit 0
+              fi
+              echo "Rendered audit has not converged yet (exit $rc)."
+            else
+              echo "Stable v4 asset has not propagated to the CDN yet."
+            fi
+            sleep 15
+          done
+          echo 'Live GitHub Pages did not pass within the 10-minute propagation window.'
+          exit 1
 
       - name: Publish live verification commit status
         if: always()
