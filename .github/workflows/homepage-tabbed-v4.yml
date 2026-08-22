@@ -1,4 +1,4 @@
-name: Homepage visual design audit
+name: Homepage tabbed v4 audit
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  visual-audit:
+  tabbed-v4:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout public repository
@@ -23,6 +23,7 @@ jobs:
       - name: Check homepage JavaScript syntax
         run: |
           node --check docs/assets/experience-v4.js
+          node --check docs/assets/experience-v4-stable.js
           node --check .github/scripts/homepage-v4-audit.cjs
 
       - name: Install Chromium test runtime
@@ -40,17 +41,17 @@ jobs:
           cat /tmp/kdrum-http.log
           exit 1
 
-      - name: Capture and verify the tabbed visual system
+      - name: Verify stable tabbed information architecture and interactions
         env:
           BASE_URL: http://127.0.0.1:8000
-          AUDIT_DIR: visual-audit
-          AUDIT_LABEL: Homepage visual design audit
+          AUDIT_DIR: homepage-v4-artifacts
+          AUDIT_LABEL: Homepage stable tabbed audit
         run: node .github/scripts/homepage-v4-audit.cjs
 
-      - name: Upload visual audit
+      - name: Upload tabbed homepage screenshots and metrics
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: homepage-visual-audit
-          path: visual-audit/
+          name: homepage-tabbed-v4
+          path: homepage-v4-artifacts/
           if-no-files-found: error

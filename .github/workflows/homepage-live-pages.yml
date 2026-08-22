@@ -17,10 +17,16 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout public repository
+        uses: actions/checkout@v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+
+      - name: Check deployed-audit JavaScript syntax
+        run: node --check .github/scripts/homepage-v4-audit.cjs
 
       - name: Install Chromium runtime
         run: |
@@ -80,175 +86,35 @@ jobs:
           raise SystemExit(f'Exact Pages build did not become ready: {last}')
           PY
 
-      - name: Verify deployed light homepage experience
+      - name: Verify deployed tabbed homepage after CDN propagation
         id: live_verify
         if: steps.pages_build.outcome == 'success'
         continue-on-error: true
         env:
           SHA: ${{ github.sha }}
         run: |
-          mkdir -p live-artifacts
-          node <<'NODE'
-          const { chromium } = require('playwright');
-          const fs = require('fs');
-          const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-          const sha=process.env.SHA;
-          const targets=[
-            {name:'live-en-desktop',url:'https://youngteckhur.github.io/KDRUM-Public/',viewport:{width:1440,height:1000},korean:false,mobile:false},
-            {name:'live-ko-desktop',url:'https://youngteckhur.github.io/KDRUM-Public/ko/',viewport:{width:1440,height:1000},korean:true,mobile:false},
-            {name:'live-en-mobile',url:'https://youngteckhur.github.io/KDRUM-Public/',viewport:{width:390,height:844},korean:false,mobile:true},
-            {name:'live-ko-mobile',url:'https://youngteckhur.github.io/KDRUM-Public/ko/',viewport:{width:390,height:844},korean:true,mobile:true},
-          ];
-          const rgb=s=>{const m=(s||'').match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);return m?m.slice(1).map(Number):null};
-          const light=s=>{const v=rgb(s);return Boolean(v&&((v[0]+v[1]+v[2])/3)>190)};
-
-          async function findCard(page,id){
-            const tabs=page.locator('.catlas-tab');
-            for(let i=0;i<await tabs.count();i++){
-              await tabs.nth(i).click();
-              await page.waitForTimeout(180);
-              const card=page.locator(`.catlas-card[data-id="${id}"]`);
-              if(await card.count())return card;
-            }
-            return null;
-          }
-
-          async function inspect(browser,target,attempt){
-            const page=await browser.newPage({viewport:target.viewport,deviceScaleFactor:1});
-            const errors=[];
-            page.on('console',m=>{if(m.type()==='error')errors.push(`console: ${m.text()}`)});
-            page.on('pageerror',e=>errors.push(`pageerror: ${e.message}`));
-            const result={ok:false,attempt,errors};
-            try{
-              await page.goto(`${target.url}?qa=${sha}-${attempt}`,{waitUntil:'networkidle',timeout:25000});
-              await page.waitForFunction(()=>document.documentElement.dataset.kdrumBrandRuntime==='ready',null,{timeout:8000});
-              await page.waitForFunction(()=>document.documentElement.dataset.kdrumCapabilityAtlas==='ready',null,{timeout:8000});
-              await page.waitForFunction(()=>document.documentElement.dataset.kdrumPublicCopy==='ready',null,{timeout:8000});
-              await page.waitForFunction(()=>document.documentElement.dataset.kdrumExperienceV3Final==='ready',null,{timeout:10000});
-              await page.waitForTimeout(250);
-
-              const base=await page.evaluate(()=>{
-                const q=s=>document.querySelector(s);
-                const qa=s=>[...document.querySelectorAll(s)];
-                const css=e=>e?getComputedStyle(e):null;
-                return {
-                  ready:document.documentElement.dataset.kdrumExperienceV3Final,
-                  bodyBackground:css(document.body)?.backgroundColor,
-                  topbarBackground:css(q('.topbar'))?.backgroundColor,
-                  navPosition:css(q('.topbar'))?.position,
-                  outcomes:qa('#outcomes .ev3-outcome-card').length,
-                  outcomeImages:qa('#outcomes svg').length,
-                  results:qa('#results .ev3-result-card').length,
-                  resultImages:qa('#results svg').length,
-                  programs:qa('#platform .ev3-program-card').length,
-                  programImages:qa('#platform .ev3-program-visual').length,
-                  programRoles:qa('#platform .card[data-program-role]').length,
-                  programPointer:qa('#platform .ev3-program-card').map(e=>css(e).cursor),
-                  resources:qa('#references .ev3-resource-link').length,
-                  resourceActions:qa('#references .ev3-link-action').length,
-                  downloadHref:q('#references .ev3-download-primary')?.href||'',
-                  clickHint:Boolean(q('#capabilities .ev3-click-hint')),
-                  scrollWidth:document.documentElement.scrollWidth,
-                  clientWidth:document.documentElement.clientWidth,
-                  officialText:(q('#references .official')?.textContent||'').trim(),
-                  lead:(q('.lead')?.textContent||'').trim(),
-                };
-              });
-
-              const hard=[];
-              if(base.ready!=='ready')hard.push('final runtime not ready');
-              if(!light(base.bodyBackground)||!light(base.topbarBackground))hard.push(`not light: ${base.bodyBackground}/${base.topbarBackground}`);
-              if(base.outcomes!==4||base.outcomeImages!==4)hard.push(`outcomes ${base.outcomes}/${base.outcomeImages}`);
-              if(base.results!==4||base.resultImages!==4)hard.push(`results ${base.results}/${base.resultImages}`);
-              if(base.programs!==7||base.programImages!==7||base.programRoles!==7)hard.push(`programs ${base.programs}/${base.programImages}/${base.programRoles}`);
-              if(base.programPointer.some(x=>x==='pointer'))hard.push('static program card uses pointer cursor');
-              if(base.resources!==4||base.resourceActions!==4)hard.push('resource actions incomplete');
-              if(!base.downloadHref.includes('menuId=15_126_128'))hard.push('MyWater primary action missing');
-              if(!base.clickHint)hard.push('interaction guidance missing');
-              if(base.scrollWidth>base.clientWidth+1)hard.push('horizontal overflow');
-              if(target.mobile&&base.navPosition==='sticky')hard.push('mobile header sticky');
-              if(!base.officialText.includes('MyWater'))hard.push('MyWater guidance missing');
-              if(target.korean){
-                if(!base.lead.includes('물리적 기반의 격자단위 분포형 강우유출모형'))hard.push('canonical Korean description missing');
-                if(!base.officialText.includes('무료로 내려받아 사용할 수 있습니다'))hard.push('Korean free-download wording missing');
-              }else if(!base.officialText.includes('free of charge'))hard.push('English free-download wording missing');
-
-              let total=0,visuals=0,actions=0,symbols=0;
-              const tabs=page.locator('.catlas-tab');
-              for(let i=0;i<await tabs.count();i++){
-                await tabs.nth(i).click();
-                await page.waitForTimeout(180);
-                total+=await page.locator('.catlas-card').count();
-                visuals+=await page.locator('.catlas-card .ev3-card-visual').count();
-                actions+=await page.locator('.catlas-card .ev3-card-action').count();
-                symbols+=await page.locator('.catlas-card .catlas-symbol').count();
-              }
-              if(total!==46||visuals!==46||actions!==46||symbols!==46)hard.push(`capabilities ${total}/${visuals}/${actions}/${symbols}`);
-
-              const dialogs={};
-              for(const id of ['wb','viewer1d']){
-                const card=await findCard(page,id);
-                if(!card){hard.push(`missing ${id}`);continue;}
-                await card.click();
-                const dlg=page.locator('#catlas-dialog');
-                await dlg.waitFor({state:'visible',timeout:5000});
-                const d=await dlg.evaluate(el=>({
-                  background:getComputedStyle(el).backgroundColor,
-                  title:(el.querySelector('#catlas-title')?.textContent||'').trim(),
-                  svg:el.querySelectorAll('.catlas-graphic svg').length,
-                  flow:el.querySelectorAll('.catlas-flow>div').length,
-                  panels:el.querySelectorAll('.catlas-panel').length,
-                }));
-                dialogs[id]=d;
-                if(!light(d.background)||!d.title||d.svg!==1||d.flow!==3||d.panels<2)hard.push(`dialog ${id} incomplete`);
-                await dlg.screenshot({path:`live-artifacts/${target.name}-${id}.png`});
-                await page.keyboard.press('Escape');
-              }
-
-              await page.screenshot({path:`live-artifacts/${target.name}-full.png`,fullPage:true});
-              for(const [name,selector] of Object.entries({hero:'.hero',outcomes:'#outcomes',capabilities:'#capabilities',results:'#results',platform:'#platform',references:'#references'})){
-                const el=page.locator(selector);
-                if(await el.count())await el.screenshot({path:`live-artifacts/${target.name}-${name}.png`});
-              }
-              result.base=base;
-              result.total=total;
-              result.visuals=visuals;
-              result.actions=actions;
-              result.symbols=symbols;
-              result.dialogs=dialogs;
-              result.hard=hard;
-              result.ok=hard.length===0&&errors.length===0;
-            }catch(error){
-              result.error=`${error.name}: ${error.message}`;
-            }
-            await page.close();
-            return result;
-          }
-
-          (async()=>{
-            const browser=await chromium.launch();
-            const report={};
-            const failures=[];
-            const deadline=Date.now()+10*60*1000;
-            for(const target of targets){
-              let final=null;
-              let attempt=0;
-              while(Date.now()<deadline){
-                attempt+=1;
-                final=await inspect(browser,target,attempt);
-                console.log(`${target.name} attempt ${attempt}: ${JSON.stringify(final)}`);
-                if(final.ok)break;
-                await sleep(10000);
-              }
-              report[target.name]=final;
-              if(!final?.ok)failures.push(`${target.name}: ${JSON.stringify(final)}`);
-            }
-            fs.writeFileSync('live-artifacts/live-metrics.json',JSON.stringify(report,null,2));
-            await browser.close();
-            if(failures.length){console.error('LIVE EXPERIENCE VERIFICATION FAILED');failures.forEach(x=>console.error(' -',x));process.exit(1)}
-            console.log('LIVE LIGHT IMAGE-LED HOMEPAGE VERIFIED');
-          })().catch(error=>{console.error(error);process.exit(1)});
-          NODE
+          set +e
+          BASE='https://youngteckhur.github.io/KDRUM-Public'
+          for attempt in $(seq 1 40); do
+            echo "live verification attempt $attempt"
+            rm -rf live-artifacts
+            mkdir -p live-artifacts
+            marker_url="$BASE/assets/design-system-v2.js?deploy=$SHA-$attempt"
+            if curl -fsS -H 'Cache-Control: no-cache' "$marker_url" | grep -q 'experience-v4-stable.js'; then
+              BASE_URL="$BASE" AUDIT_DIR=live-artifacts AUDIT_LABEL='Live GitHub Pages tabbed v4 audit' \
+                node .github/scripts/homepage-v4-audit.cjs
+              rc=$?
+              if [ "$rc" -eq 0 ]; then
+                exit 0
+              fi
+              echo "Rendered audit has not converged yet (exit $rc)."
+            else
+              echo "Stable v4 asset has not propagated to the CDN yet."
+            fi
+            sleep 15
+          done
+          echo 'Live GitHub Pages did not pass within the 10-minute propagation window.'
+          exit 1
 
       - name: Publish live verification commit status
         if: always()
@@ -266,7 +132,7 @@ jobs:
           print(json.dumps({
             'state':'success' if ok else 'failure',
             'context':'homepage-live-pages',
-            'description':'Exact Pages build + light EN/KO homepage verified' if ok else 'Pages build/live homepage verification failed',
+            'description':'Exact Pages build + tabbed EN/KO homepage verified' if ok else 'Pages build/live homepage verification failed',
             'target_url':os.environ['RUN_URL'],
           }))
           PY

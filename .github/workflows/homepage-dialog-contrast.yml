@@ -20,6 +20,12 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Check dialog and audit JavaScript syntax
+        run: |
+          node --check docs/assets/capability-atlas.js
+          node --check docs/assets/experience-v4.js
+          node --check .github/scripts/homepage-v4-audit.cjs
+
       - name: Install Chromium test runtime
         run: |
           npm install --no-save playwright@1.55.0
@@ -35,91 +41,12 @@ jobs:
           cat /tmp/kdrum-http.log
           exit 1
 
-      - name: Check representative dialog header contrast
-        run: |
-          mkdir -p dialog-contrast-artifacts
-          node <<'NODE'
-          const { chromium }=require('playwright');
-          const fs=require('fs');
-          const cases=[
-            {name:'en-desktop',url:'http://127.0.0.1:8000/',viewport:{width:1440,height:1000}},
-            {name:'ko-desktop',url:'http://127.0.0.1:8000/ko/',viewport:{width:1440,height:1000}},
-            {name:'en-mobile',url:'http://127.0.0.1:8000/',viewport:{width:390,height:844}},
-            {name:'ko-mobile',url:'http://127.0.0.1:8000/ko/',viewport:{width:390,height:844}},
-          ];
-          const ids=['dam-operation','viewer1d'];
-          const rgb=s=>{const m=(s||'').match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);return m?m.slice(1).map(Number):null};
-          const luminance=v=>{
-            if(!v)return 0;
-            const c=v.map(n=>{n/=255;return n<=.03928?n/12.92:Math.pow((n+.055)/1.055,2.4)});
-            return .2126*c[0]+.7152*c[1]+.0722*c[2];
-          };
-          const ratio=(a,b)=>{const x=luminance(rgb(a)),y=luminance(rgb(b));return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
-          async function findCard(page,id){
-            const tabs=page.locator('.catlas-tab');
-            for(let i=0;i<await tabs.count();i++){
-              await tabs.nth(i).click();
-              await page.waitForTimeout(180);
-              const card=page.locator(`.catlas-card[data-id="${id}"]`);
-              if(await card.count())return card;
-            }
-            return null;
-          }
-          (async()=>{
-            const browser=await chromium.launch();
-            const failures=[];
-            const report={};
-            for(const c of cases){
-              const page=await browser.newPage({viewport:c.viewport});
-              const errors=[];
-              page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
-              page.on('pageerror',e=>errors.push(e.message));
-              await page.goto(c.url,{waitUntil:'networkidle'});
-              await page.waitForFunction(()=>document.documentElement.dataset.kdrumExperienceV3Final==='ready',null,{timeout:10000});
-              const checks={};
-              for(const id of ids){
-                const card=await findCard(page,id);
-                if(!card){failures.push(`${c.name}: missing ${id}`);continue;}
-                await card.click();
-                const dlg=page.locator('#catlas-dialog');
-                await dlg.waitFor({state:'visible',timeout:5000});
-                const m=await dlg.evaluate(el=>{
-                  const header=el.querySelector('.catlas-dbar');
-                  const title=el.querySelector('#catlas-title');
-                  const close=el.querySelector('.catlas-close');
-                  const hs=getComputedStyle(header),ts=getComputedStyle(title),cs=getComputedStyle(close);
-                  const hr=header.getBoundingClientRect(),cr=close.getBoundingClientRect();
-                  return {
-                    headerBackground:hs.backgroundColor,
-                    titleColor:ts.color,
-                    title:(title.textContent||'').trim(),
-                    closeBackground:cs.backgroundColor,
-                    closeColor:cs.color,
-                    headerHeight:hr.height,
-                    closeWidth:cr.width,
-                    closeHeight:cr.height,
-                  };
-                });
-                m.titleContrast=ratio(m.headerBackground,m.titleColor);
-                m.closeContrast=ratio(m.closeBackground,m.closeColor);
-                checks[id]=m;
-                if(m.titleContrast<4.5)failures.push(`${c.name}/${id}: title contrast ${m.titleContrast.toFixed(2)}`);
-                if(m.closeContrast<4.5)failures.push(`${c.name}/${id}: close contrast ${m.closeContrast.toFixed(2)}`);
-                if(m.closeWidth<44||m.closeHeight<44)failures.push(`${c.name}/${id}: close target ${m.closeWidth}x${m.closeHeight}`);
-                if(!m.title)failures.push(`${c.name}/${id}: missing title`);
-                await dlg.screenshot({path:`dialog-contrast-artifacts/${c.name}-${id}.png`});
-                await page.keyboard.press('Escape');
-              }
-              if(errors.length)failures.push(`${c.name}: browser errors ${errors.join(' | ')}`);
-              report[c.name]={checks,errors};
-              await page.close();
-            }
-            fs.writeFileSync('dialog-contrast-artifacts/metrics.json',JSON.stringify(report,null,2));
-            await browser.close();
-            if(failures.length){console.error('DIALOG CONTRAST AUDIT FAILED');failures.forEach(x=>console.error(' -',x));process.exit(1)}
-            console.log('DIALOG CONTRAST AUDIT PASSED');
-          })().catch(e=>{console.error(e);process.exit(1)});
-          NODE
+      - name: Check representative dialogs, contrast and touch targets
+        env:
+          BASE_URL: http://127.0.0.1:8000
+          AUDIT_DIR: dialog-contrast-artifacts
+          AUDIT_LABEL: Homepage dialog contrast audit
+        run: node .github/scripts/homepage-v4-audit.cjs
 
       - name: Upload dialog screenshots and metrics
         if: always()
