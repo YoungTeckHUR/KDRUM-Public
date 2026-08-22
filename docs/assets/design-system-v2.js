@@ -43,6 +43,7 @@
   }
 
   function loadConceptVisuals(){
+    addStyle('kwater-brand-v1.css','data-kdrum-kwater-brand-v1');
     addStyle('concept-visuals-v1.css','data-kdrum-concept-visuals-v1');
     addScript('concept-visuals-v1.js','data-kdrum-concept-visuals-v1');
   }
