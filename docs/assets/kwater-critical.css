@@ -4,7 +4,7 @@ html,body{background:var(--kw-bg)!important;color:var(--kw-ink)!important}
 body{margin:0}
 .topbar{background:#fff!important;color:var(--kw-ink)!important;border-color:var(--kw-line)!important;box-shadow:0 4px 18px rgba(23,54,77,.07)!important}
 .topbar a,.site-name,.nav a{color:var(--kw-ink)!important}
-.hero{background:linear-gradient(135deg,#f9fcfe 0%,#eef7fb 56%,#e8f5ee 100%)!important;color:var(--kw-ink)!important}
+.hero{background-color:#f4f9fc!important;background-image:linear-gradient(135deg,#f9fcfe 0%,#eef7fb 56%,#e8f5ee 100%)!important;color:var(--kw-ink)!important}
 .hero:before{background:linear-gradient(90deg,rgba(249,252,254,.99) 0%,rgba(249,252,254,.96) 42%,rgba(238,247,251,.74) 68%,rgba(232,245,238,.28) 100%)!important}
 .hero h1,.hero .full-name,.hero .lead{color:var(--kw-ink)!important;text-shadow:none!important}
 .hero .supporting{color:var(--kw-muted)!important}
