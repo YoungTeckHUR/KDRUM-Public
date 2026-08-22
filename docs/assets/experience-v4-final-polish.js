@@ -73,6 +73,17 @@
     });
   }
 
+  function cleanCapabilities(){
+    const cap=document.getElementById('capabilities');
+    if(!cap)return;
+    cap.querySelectorAll('.ev3-card-visual,.catlas-group-visual').forEach(n=>n.remove());
+    cap.querySelectorAll('.catlas-card').forEach(card=>{
+      card.classList.add('ev4-action-card');
+      card.dataset.ev4Interactive='1';
+      card.querySelectorAll('.ev3-card-action').forEach(n=>n.remove());
+    });
+  }
+
   function compactCopy(){
     const exact=new Set(ko?
       ['사용자가 얻는 결과','결과 이해','결과 유형','개념 예시','구성 프로그램','정보']:
@@ -111,10 +122,10 @@
   }
 
   function repair(){
-    cleanHero(); repairPrograms(); compactCopy(); localizeSvg(); repairDialog(); bindTabs();
+    cleanHero(); cleanCapabilities(); repairPrograms(); compactCopy(); localizeSvg(); repairDialog(); bindTabs();
     document.documentElement.dataset.kdrumExperienceV4FinalPolish='ready';
   }
   document.addEventListener('click',e=>{if(e.target.closest('.catlas-card,.catlas-tab,.ev4-tab'))[0,40,120,300].forEach(d=>setTimeout(repair,d));},true);
   [0,40,120,300,700].forEach(d=>setTimeout(repair,d));
-  setInterval(()=>{if(document.getElementById('catlas-dialog')?.open||document.documentElement.dataset.ev4ActiveTab==='programs')repair();},300);
+  setInterval(()=>{if(document.getElementById('catlas-dialog')?.open||['capabilities','programs'].includes(document.documentElement.dataset.ev4ActiveTab))repair();},300);
 })();
