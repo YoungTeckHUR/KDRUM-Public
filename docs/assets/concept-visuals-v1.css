@@ -94,6 +94,12 @@ html.ev4-experience #references .concept-download .concept-badge{
   max-width:none;
   text-align:center;
 }
+html.ev4-experience #references .ev4-download-actions a{
+  min-height:46px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
 @media(max-width:1050px){
   html.ev4-experience #architecture .concept-workflow{height:290px;margin-top:18px}
 }
