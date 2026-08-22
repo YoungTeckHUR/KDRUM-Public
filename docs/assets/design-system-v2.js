@@ -27,15 +27,46 @@
   function addScript(name,attr,onload){
     const existing=document.querySelector(`script[${attr}]`);
     if(existing){
-      if(onload)existing.addEventListener('load',onload,{once:true});
+      if(onload){
+        if(existing.dataset.loaded==='1')onload();
+        else existing.addEventListener('load',onload,{once:true});
+      }
       return existing;
     }
     const script=document.createElement('script');
     script.src=base+name;
     script.setAttribute(attr,'1');
+    script.addEventListener('load',()=>{script.dataset.loaded='1';},{once:true});
     if(onload)script.addEventListener('load',onload,{once:true});
     document.head.appendChild(script);
     return script;
+  }
+
+  function loadConceptVisuals(){
+    addStyle('kwater-brand-v1.css','data-kdrum-kwater-brand-v1');
+    addStyle('concept-visuals-v1.css','data-kdrum-concept-visuals-v1');
+    addScript('concept-visuals-v1.js','data-kdrum-concept-visuals-v1');
+  }
+
+  function awaitStableAndLoadConcepts(){
+    if(document.documentElement.dataset.kdrumExperienceV4Stable==='ready'){
+      loadConceptVisuals();
+      return;
+    }
+    const observer=new MutationObserver(()=>{
+      if(document.documentElement.dataset.kdrumExperienceV4Stable==='ready'){
+        observer.disconnect();
+        loadConceptVisuals();
+      }
+    });
+    observer.observe(document.documentElement,{
+      attributes:true,
+      attributeFilter:['data-kdrum-experience-v4-stable']
+    });
+    setTimeout(()=>{
+      observer.disconnect();
+      loadConceptVisuals();
+    },12000);
   }
 
   addStyle('experience-v3-compat.css','data-kdrum-experience-v3-compat');
@@ -43,6 +74,7 @@
   function loadStable(){
     addStyle('experience-v4-stable.css','data-kdrum-experience-v4-stable');
     addScript('experience-v4-stable.js','data-kdrum-experience-v4-stable');
+    awaitStableAndLoadConcepts();
   }
 
   function loadV4(){

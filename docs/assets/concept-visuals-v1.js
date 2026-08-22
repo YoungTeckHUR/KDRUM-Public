@@ -1,0 +1,185 @@
+(()=>{
+  const ko=(document.documentElement.lang||'en').toLowerCase().startsWith('ko');
+  const base=ko?'../assets/concepts/':'assets/concepts/';
+  const copy=ko?{
+    concept:'개념도',
+    workflowCaption:'K-DRUM 해석체계 개념도',
+    workflowAlt:'강우와 입력자료가 격자 유역 수문해석, 하천수리해석, 홍수범람해석과 결과분석으로 이어지는 K-DRUM 전체 해석 흐름.',
+    runoffAlt:'공간적으로 분포한 강우가 유역 격자와 하천망을 따라 출구지점으로 모이고 시간에 따른 유량 수문곡선으로 나타나는 과정.',
+    floodAlt:'하천 주변 범람원에 분포한 침수범위와 위치별 침수심을 옅은 청색부터 짙은 청색까지 단계적으로 나타낸 개념도.',
+    balanceAlt:'강우가 유역에 입력되어 유출, 증발산, 저장량 변화와 심부손실로 배분되고 그 관계를 결과보고에서 점검하는 개념도.',
+    viewerAlt:'하천망의 지점을 선택해 종단면, 횡단면, 수위와 유량 시계열을 함께 조회하는 1차원 하천수리 결과 뷰어 개념 화면. 별도 개발 중이며 공개 GitHub에는 아직 등록되지 않았습니다.',
+    viewerBadge:'개념 이미지 · 별도 개발 중',
+    downloadAlt:'MyWater K-Series의 K-DRUM 배포 항목에서 모형 패키지를 사용자의 컴퓨터로 내려받는 공식 배포 경로 개념도.',
+    downloadBadge:'공식 다운로드 경로 개념도'
+  }:{
+    concept:'Concept illustration',
+    workflowCaption:'Conceptual K-DRUM workflow',
+    workflowAlt:'K-DRUM workflow from rainfall and forcing data through gridded watershed hydrology, river hydraulics, floodplain analysis and result review.',
+    runoffAlt:'Spatial rainfall is routed through gridded watershed cells and the river network to an outlet hydrograph.',
+    floodAlt:'Conceptual map of river-connected flood extent and spatially varying inundation depth across a floodplain.',
+    balanceAlt:'Conceptual water balance showing precipitation distributed among runoff, evapotranspiration, storage change and deep loss with reporting checks.',
+    viewerAlt:'Concept interface for selecting river-network locations and reviewing longitudinal profiles, cross sections, stage and discharge time series. Separate development; not yet published on public GitHub.',
+    viewerBadge:'Concept image · Separate development',
+    downloadAlt:'Conceptual official distribution path from the MyWater K-Series K-DRUM listing to a downloaded model package.',
+    downloadBadge:'Conceptual official download path'
+  };
+  const assets={
+    workflow:{file:'kdrum-workflow.svg',alt:copy.workflowAlt,badge:copy.workflowCaption},
+    runoff:{file:'runoff-hydrograph.svg',alt:copy.runoffAlt,badge:copy.concept},
+    flood:{file:'flood-depth-map.svg',alt:copy.floodAlt,badge:copy.concept},
+    balance:{file:'water-balance-report.svg',alt:copy.balanceAlt,badge:copy.concept},
+    viewer:{file:'viewer1d-concept.svg',alt:copy.viewerAlt,badge:copy.viewerBadge},
+    download:{file:'mywater-download.svg',alt:copy.downloadAlt,badge:copy.downloadBadge}
+  };
+  let applying=false;
+
+  function makeFigure(id,extra=''){
+    const spec=assets[id];
+    const figure=document.createElement('figure');
+    figure.className=`ev4-visual concept-figure concept-${id} ${extra}`.trim();
+    figure.dataset.conceptId=id;
+    const img=document.createElement('img');
+    img.src=base+spec.file;
+    img.alt=spec.alt;
+    img.decoding='async';
+    img.loading='eager';
+    img.width=id==='workflow'?1600:800;
+    img.height=id==='workflow'?900:600;
+    const caption=document.createElement('figcaption');
+    caption.className='concept-badge';
+    caption.textContent=spec.badge;
+    figure.append(img,caption);
+    return figure;
+  }
+
+  function cardTitle(card){
+    return card?.querySelector('h2,h3,h4,strong')?.textContent.trim()||'';
+  }
+
+  function findCard(root,patterns){
+    if(!root)return null;
+    return [...root.querySelectorAll('.card,.ev4-static-card,.ev3-outcome-card,.ev3-result-card')]
+      .find(card=>patterns.some(pattern=>pattern.test(cardTitle(card))))||null;
+  }
+
+  function retainLegacyDiagram(card){
+    if(!card)return;
+    [...card.children].forEach(node=>{
+      if(node.matches?.('.concept-figure'))return;
+      if(node.matches?.('.ev4-visual,.ev3-card-visual,.ev3-program-visual')){
+        node.classList.add('concept-legacy-diagram');
+        node.setAttribute('aria-hidden','true');
+      }
+    });
+  }
+
+  function replaceVisual(card,id,extra=''){
+    if(!card)return;
+    const current=card.querySelector(`:scope > [data-concept-id="${id}"]`);
+    if(current)return;
+    retainLegacyDiagram(card);
+    card.insertBefore(makeFigure(id,extra),card.firstChild);
+    card.dataset.conceptVisual=id;
+  }
+
+  function applyWorkflow(){
+    const section=document.getElementById('architecture');
+    if(!section)return;
+    const target=section.querySelector('.architecture');
+    if(!target)return;
+    section.classList.add('concept-workflow-ready');
+    if(section.querySelector(`:scope .concept-workflow[data-concept-id="workflow"]`))return;
+    target.before(makeFigure('workflow','concept-workflow'));
+  }
+
+  function applyOutcomeVisuals(){
+    const root=document.getElementById('outcomes');
+    replaceVisual(findCard(root,[/유역 유출과 수문곡선/i,/Watershed runoff/i]),'runoff');
+    replaceVisual(findCard(root,[/홍수범람 공간분포/i,/Flood-inundation patterns/i]),'flood');
+    replaceVisual(findCard(root,[/물수지와 결과보고/i,/Water balance & reporting/i]),'balance');
+  }
+
+  function applyResultVisuals(){
+    const root=document.getElementById('results');
+    replaceVisual(findCard(root,[/수문곡선.*시계열/i,/Hydrographs? & time series/i]),'runoff');
+    replaceVisual(findCard(root,[/물수지 평가/i,/Water-balance review/i]),'balance');
+    replaceVisual(findCard(root,[/1차원 하천수리 결과/i,/1D hydraulic results/i]),'viewer');
+  }
+
+  function applyViewerProgram(){
+    const root=document.getElementById('platform');
+    if(!root)return;
+    const card=[...root.querySelectorAll('.ev3-program-card,.card')].find(node=>
+      node.dataset.programRole==='viewer1d'||
+      /1차원 하천수리 결과 뷰어|1D River Hydraulics Results Viewer/i.test(cardTitle(node))
+    );
+    replaceVisual(card,'viewer','ev3-program-visual');
+  }
+
+  function applyDownload(){
+    const mark=document.querySelector('#references .ev4-download-mark');
+    if(!mark||mark.querySelector('[data-concept-id="download"]'))return;
+    mark.replaceChildren(makeFigure('download','concept-download'));
+  }
+
+  function applyAll(){
+    if(applying)return;
+    applying=true;
+    try{
+      applyWorkflow();
+      applyOutcomeVisuals();
+      applyResultVisuals();
+      applyViewerProgram();
+      applyDownload();
+      document.documentElement.dataset.kdrumConceptVisuals='ready';
+    }finally{
+      applying=false;
+    }
+  }
+
+  function schedule(){
+    [0,80,220,500].forEach(delay=>setTimeout(applyAll,delay));
+  }
+
+  function bindDownloadGuard(){
+    const mark=document.querySelector('#references .ev4-download-mark');
+    if(!mark||mark.dataset.conceptGuard)return;
+    mark.dataset.conceptGuard='1';
+    new MutationObserver(()=>{
+      if(!applying&&!mark.querySelector('[data-concept-id="download"]'))queueMicrotask(applyDownload);
+    }).observe(mark,{childList:true,subtree:true});
+  }
+
+  function start(){
+    applyAll();
+    bindDownloadGuard();
+    setTimeout(()=>{
+      applyAll();
+      bindDownloadGuard();
+    },520);
+  }
+
+  if(document.documentElement.dataset.kdrumExperienceV4Stable==='ready'){
+    start();
+  }else{
+    const observer=new MutationObserver(()=>{
+      if(document.documentElement.dataset.kdrumExperienceV4Stable==='ready'){
+        observer.disconnect();
+        start();
+      }
+    });
+    observer.observe(document.documentElement,{
+      attributes:true,
+      attributeFilter:['data-kdrum-experience-v4-stable']
+    });
+    setTimeout(()=>{
+      observer.disconnect();
+      start();
+    },12000);
+  }
+
+  document.addEventListener('click',event=>{
+    if(event.target.closest('.ev4-tab,#capabilities .catlas-tab'))schedule();
+  },true);
+})();
