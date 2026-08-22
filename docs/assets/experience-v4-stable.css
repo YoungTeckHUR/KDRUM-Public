@@ -8,6 +8,7 @@ html.ev4-experience .ev4-tab-wrap{
   top:auto!important;
   backdrop-filter:none!important;
 }
+html.ev4-experience:not([data-ev4-active-tab="overview"]) .hero{display:none!important}
 html.ev4-experience .hero .ev3-hero-facts,
 html.ev4-experience .hero .hero-facts,
 html.ev4-experience .hero .ev3-hero-note,
