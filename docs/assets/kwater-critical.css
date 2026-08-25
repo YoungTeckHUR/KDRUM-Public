@@ -1,0 +1,16 @@
+/* First-paint guard: keep the public homepage light before the JS design system initializes. */
+:root{color-scheme:light;--kw-blue:#0066b3;--kw-green:#4aa63d;--kw-orange:#f39800;--kw-ink:#17364d;--kw-muted:#5f7484;--kw-line:#cbdbe4;--kw-bg:#f7fafc;--kw-surface:#fff}
+html,body{background:var(--kw-bg)!important;color:var(--kw-ink)!important}
+body{margin:0}
+.topbar{background:#fff!important;color:var(--kw-ink)!important;border-color:var(--kw-line)!important;box-shadow:0 4px 18px rgba(23,54,77,.07)!important}
+.topbar a,.site-name,.nav a{color:var(--kw-ink)!important}
+.hero{background-color:#f4f9fc!important;background-image:linear-gradient(135deg,#f9fcfe 0%,#eef7fb 56%,#e8f5ee 100%)!important;color:var(--kw-ink)!important}
+.hero:before{background:linear-gradient(90deg,rgba(249,252,254,.99) 0%,rgba(249,252,254,.96) 42%,rgba(238,247,251,.74) 68%,rgba(232,245,238,.28) 100%)!important}
+.hero h1,.hero .full-name,.hero .lead{color:var(--kw-ink)!important;text-shadow:none!important}
+.hero .supporting{color:var(--kw-muted)!important}
+.hero .eyebrow{color:var(--kw-blue)!important}
+.feature,.card,.arch,.link-card,.official{background:#fff!important;color:var(--kw-ink)!important;border-color:var(--kw-line)!important}
+.feature p,.card p,.arch small,.link-card span,.section-intro,.small,footer{color:var(--kw-muted)!important}
+.button.primary{background:var(--kw-blue)!important;border-color:var(--kw-blue)!important;color:#fff!important}
+.button:not(.primary){background:#fff!important;border-color:#8bb7d1!important;color:#00508b!important}
+.skip{background:#fff!important;color:var(--kw-ink)!important;border-color:var(--kw-orange)!important}

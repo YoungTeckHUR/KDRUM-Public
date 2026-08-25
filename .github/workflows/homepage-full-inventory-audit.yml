@@ -1,0 +1,59 @@
+name: Homepage full subitem audit
+
+on:
+  pull_request:
+  push:
+    branches:
+      - agent/concept-visuals-v1-20260822
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full-inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout public repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Check audit and homepage JavaScript syntax
+        run: |
+          node --check .github/scripts/homepage-full-inventory-audit.cjs
+          node --check docs/assets/design-system-v2.js
+          node --check docs/assets/concept-visuals-v1.js
+
+      - name: Install Chromium test runtime
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start local homepage server
+        run: |
+          python3 -m http.server 8000 --directory docs >/tmp/kdrum-http.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:8000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/kdrum-http.log
+          exit 1
+
+      - name: Audit every homepage subitem and first paint
+        env:
+          BASE_URL: http://127.0.0.1:8000
+          AUDIT_DIR: homepage-full-inventory-artifacts
+          AUDIT_LABEL: K-DRUM full homepage inventory audit
+        run: node .github/scripts/homepage-full-inventory-audit.cjs
+
+      - name: Upload screenshots and metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: homepage-full-inventory
+          path: homepage-full-inventory-artifacts/
+          if-no-files-found: error

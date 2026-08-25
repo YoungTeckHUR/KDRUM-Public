@@ -1,0 +1,97 @@
+/* K-water three-colour visual system: blue, green and orange. */
+:root{
+  --kw-blue:#0066b3;
+  --kw-blue-dark:#004b87;
+  --kw-blue-soft:#e7f3fb;
+  --kw-green:#4aa63d;
+  --kw-green-dark:#2f7f2d;
+  --kw-green-soft:#edf7e9;
+  --kw-orange:#f39800;
+  --kw-orange-dark:#9b5800;
+  --kw-orange-soft:#fff4df;
+  --kw-ink:#17364d;
+  --kw-muted:#5f7484;
+  --kw-line:#cbdbe4;
+  --kw-bg:#f7fafc;
+  --kw-surface:#ffffff;
+  --kw-shadow:0 14px 32px rgba(23,54,77,.10);
+}
+html.ev4-experience{background:var(--kw-bg)!important;color-scheme:light}
+html.ev4-experience body{background:var(--kw-bg)!important;color:var(--kw-ink)!important}
+html.ev4-experience a{color:var(--kw-blue-dark)}
+html.ev4-experience :focus-visible{outline:3px solid var(--kw-orange)!important;outline-offset:3px}
+html.ev4-experience .topbar{background:rgba(255,255,255,.98)!important;border-bottom:1px solid var(--kw-line)!important;box-shadow:0 7px 22px rgba(23,54,77,.08)!important}
+html.ev4-experience .site-name,html.ev4-experience .nav>a{color:var(--kw-ink)!important}
+html.ev4-experience .nav>a:hover,html.ev4-experience .nav>a:focus-visible{background:var(--kw-blue-soft)!important;color:var(--kw-blue-dark)!important}
+html.ev4-experience .nav .ev3-nav-cta,html.ev4-experience .ev4-header-download{background:var(--kw-orange)!important;border-color:var(--kw-orange)!important;color:#382100!important;box-shadow:0 7px 18px rgba(243,152,0,.22)!important}
+html.ev4-experience .nav .ev3-nav-cta:hover,html.ev4-experience .ev4-header-download:hover{background:#ffad24!important;color:#2d1a00!important}
+html.ev4-experience .language .active{background:var(--kw-blue-soft)!important;border-color:#75acd0!important;color:var(--kw-blue-dark)!important}
+html.ev4-experience .hero.ev4-hero{background:linear-gradient(135deg,#fbfdff 0%,#edf6fb 58%,#edf7e9 100%)!important;color:var(--kw-ink)!important;border-bottom:1px solid var(--kw-line)!important}
+html.ev4-experience .hero.ev4-hero:before{background:linear-gradient(90deg,#fbfdff 0%,rgba(251,253,255,.97) 40%,rgba(237,246,251,.84) 63%,rgba(237,247,233,.30) 100%)!important}
+html.ev4-experience .hero.ev4-hero .eyebrow{color:var(--kw-blue)!important}
+html.ev4-experience .hero.ev4-hero h1,html.ev4-experience .hero.ev4-hero .full-name,html.ev4-experience .hero.ev4-hero .lead{color:var(--kw-ink)!important}
+html.ev4-experience .hero.ev4-hero .supporting{color:var(--kw-muted)!important}
+html.ev4-experience .hero.ev4-hero .button.primary{background:var(--kw-blue)!important;border-color:var(--kw-blue)!important;color:#fff!important}
+html.ev4-experience .hero.ev4-hero .button.primary:hover{background:var(--kw-blue-dark)!important}
+html.ev4-experience .hero.ev4-hero .button:not(.primary){background:#fff!important;border-color:#7fb0ce!important;color:var(--kw-blue-dark)!important}
+html.ev4-experience .hero.ev4-hero .ev4-inline-link{color:var(--kw-green-dark)!important}
+html.ev4-experience .ev4-facts span{border-color:#b9d5e4!important;background:#fff!important;color:var(--kw-ink)!important}
+html.ev4-experience .ev4-facts span:nth-child(2){border-color:#b9d9ae!important;background:var(--kw-green-soft)!important;color:var(--kw-green-dark)!important}
+html.ev4-experience .ev4-facts span:nth-child(3){border-color:#ffd293!important;background:var(--kw-orange-soft)!important;color:var(--kw-orange-dark)!important}
+html.ev4-experience .ev4-tab-wrap{background:rgba(247,250,252,.98)!important;border-color:var(--kw-line)!important}
+html.ev4-experience .ev4-tab{background:#fff!important;border-color:#b8ccd8!important;color:var(--kw-ink)!important}
+html.ev4-experience .ev4-tab:hover{background:var(--kw-blue-soft)!important;border-color:var(--kw-blue)!important}
+html.ev4-experience .ev4-tab[aria-selected="true"]{background:var(--kw-blue)!important;border-color:var(--kw-blue)!important;color:#fff!important;box-shadow:0 5px 15px rgba(0,102,179,.18)!important}
+html.ev4-experience .ev4-tab[data-tab="research"][aria-selected="true"]{background:var(--kw-green)!important;border-color:var(--kw-green)!important}
+html.ev4-experience .ev4-tab-download{border-color:#e5b86c!important;color:var(--kw-orange-dark)!important}
+html.ev4-experience .ev4-tab-download[aria-selected="true"]{background:var(--kw-orange)!important;border-color:var(--kw-orange)!important;color:#382100!important}
+html.ev4-experience .ev4-panel[data-panel="overview"]{background:#fff!important}
+html.ev4-experience .ev4-panel[data-panel="capabilities"]{background:#f2f8fc!important}
+html.ev4-experience .ev4-panel[data-panel="results"]{background:#fff!important}
+html.ev4-experience .ev4-panel[data-panel="programs"]{background:var(--kw-green-soft)!important}
+html.ev4-experience .ev4-panel[data-panel="research"]{background:#f7faf5!important}
+html.ev4-experience .ev4-panel[data-panel="download"]{background:#fff8eb!important}
+html.ev4-experience .ev4-section h2{color:var(--kw-ink)!important}
+html.ev4-experience .section-intro,html.ev4-experience .ev4-section-heading p,html.ev4-experience .catlas-head p{color:var(--kw-muted)!important}
+html.ev4-experience .ev4-static-card,html.ev4-experience #capabilities .catlas-card,html.ev4-experience #resources .ev4-resource-link{background:#fff!important;border-color:var(--kw-line)!important;color:var(--kw-ink)!important}
+html.ev4-experience .ev4-static-card h3,html.ev4-experience .ev4-static-card h4,html.ev4-experience #capabilities .catlas-card h4,html.ev4-experience #resources .ev4-resource-link strong{color:var(--kw-ink)!important}
+html.ev4-experience .ev4-static-card p,html.ev4-experience #capabilities .catlas-card p,html.ev4-experience #resources .ev4-resource-link>span:not(.ev3-link-action){color:var(--kw-muted)!important}
+html.ev4-experience #capabilities .catlas-tabs .catlas-tab{background:#fff!important;border-color:#b7cdd9!important;color:var(--kw-ink)!important}
+html.ev4-experience #capabilities .catlas-tabs .catlas-tab:hover{border-color:var(--kw-blue)!important;background:var(--kw-blue-soft)!important}
+html.ev4-experience #capabilities .catlas-tabs .catlas-tab[aria-selected="true"]{background:var(--kw-blue)!important;border-color:var(--kw-blue)!important;color:#fff!important}
+html.ev4-experience #capabilities .catlas-tabs .catlas-tab:nth-child(2)[aria-selected="true"],html.ev4-experience #capabilities .catlas-tabs .catlas-tab:nth-child(3)[aria-selected="true"],html.ev4-experience #capabilities .catlas-tabs .catlas-tab:nth-child(7)[aria-selected="true"]{background:var(--kw-green)!important;border-color:var(--kw-green)!important}
+html.ev4-experience #capabilities .catlas-tabs .catlas-tab:nth-child(4)[aria-selected="true"],html.ev4-experience #capabilities .catlas-tabs .catlas-tab:nth-child(5)[aria-selected="true"]{background:var(--kw-orange)!important;border-color:var(--kw-orange)!important;color:#382100!important}
+html.ev4-experience #capabilities .catlas-group-head{background:#fff!important;border-color:#b7ceda!important;border-left-color:var(--kw-blue)!important;box-shadow:var(--kw-shadow)!important}
+html.ev4-experience #capabilities .catlas-group-head h3{color:var(--kw-ink)!important}
+html.ev4-experience #capabilities .catlas-group-head p{color:var(--kw-muted)!important}
+html.ev4-experience #capabilities .catlas-card::before{background:var(--kw-blue)!important}
+html.ev4-experience #capabilities .catlas-card[data-status^="ESTABLISHED"]::before,html.ev4-experience #capabilities .catlas-card[data-status^="VALIDATED"]::before{background:var(--kw-green)!important}
+html.ev4-experience #capabilities .catlas-card[data-status^="ACTIVE"],html.ev4-experience #capabilities .catlas-card[data-status^="IMPLEMENTED"]{border-top-color:var(--kw-blue)!important}
+html.ev4-experience #capabilities .catlas-card[data-status^="RESEARCH"]::before,html.ev4-experience #capabilities .catlas-card[data-status^="EXPERIMENTAL"]::before,html.ev4-experience #capabilities .catlas-card[data-status^="DISABLED"]::before{background:var(--kw-orange)!important}
+html.ev4-experience #capabilities .catlas-status{background:#f4f8fa!important;border-color:#b9ced9!important;color:var(--kw-blue-dark)!important}
+html.ev4-experience #capabilities .catlas-card[data-status^="ESTABLISHED"] .catlas-status,html.ev4-experience #capabilities .catlas-card[data-status^="VALIDATED"] .catlas-status{background:var(--kw-green-soft)!important;border-color:#b7d9ae!important;color:var(--kw-green-dark)!important}
+html.ev4-experience #capabilities .catlas-card[data-status^="RESEARCH"] .catlas-status,html.ev4-experience #capabilities .catlas-card[data-status^="EXPERIMENTAL"] .catlas-status,html.ev4-experience #capabilities .catlas-card[data-status^="DISABLED"] .catlas-status{background:var(--kw-orange-soft)!important;border-color:#ffd18a!important;color:var(--kw-orange-dark)!important}
+html.ev4-experience #capabilities .ev4-card-action{background:var(--kw-blue)!important;color:#fff!important}
+html.ev4-experience #capabilities .catlas-card:hover .ev4-card-action{background:var(--kw-blue-dark)!important}
+html.ev4-experience #capabilities .catlas-card:hover,html.ev4-experience #capabilities .catlas-card:focus-visible{border-color:var(--kw-blue)!important;box-shadow:var(--kw-shadow)!important}
+html.ev4-experience #platform .program-role{background:var(--kw-green-soft)!important;border-color:#b7d9ae!important;color:var(--kw-green-dark)!important}
+html.ev4-experience #platform .status{color:var(--kw-orange-dark)!important}
+html.ev4-experience #resources .ev3-link-action{color:var(--kw-blue)!important}
+html.ev4-experience #references .official.ev4-download-panel{background:linear-gradient(135deg,var(--kw-blue-dark),var(--kw-blue) 56%,var(--kw-green))!important;color:#fff!important;box-shadow:0 18px 42px rgba(0,75,135,.22)!important}
+html.ev4-experience #references .mywater-kicker{border-color:rgba(255,255,255,.62)!important;background:rgba(243,152,0,.18)!important;color:#fff!important}
+html.ev4-experience #references .ev4-download-actions .ev4-download-primary{background:var(--kw-orange)!important;border-color:var(--kw-orange)!important;color:#382100!important;box-shadow:0 8px 18px rgba(243,152,0,.24)!important}
+html.ev4-experience #references .ev4-download-actions .ev4-download-primary:hover{background:#ffad24!important}
+html.ev4-experience #references .ev4-download-actions a:not(.ev4-download-primary){border-color:rgba(255,255,255,.70)!important;background:rgba(255,255,255,.10)!important;color:#fff!important}
+html.ev4-experience #catlas-dialog{background:#fff!important;color:var(--kw-ink)!important;border-color:#aac4d2!important}
+html.ev4-experience #catlas-dialog .catlas-dbar{background:#fff!important;border-bottom-color:var(--kw-line)!important}
+html.ev4-experience #catlas-dialog .catlas-dbar strong{color:var(--kw-ink)!important}
+html.ev4-experience #catlas-dialog .catlas-close{background:var(--kw-blue-soft)!important;border-color:#8ebbd2!important;color:var(--kw-blue-dark)!important}
+html.ev4-experience #catlas-dialog .catlas-status{background:var(--kw-green-soft)!important;border-color:#b7d9ae!important;color:var(--kw-green-dark)!important}
+html.ev4-experience #catlas-dialog .catlas-flow span{color:var(--kw-blue)!important}
+html.ev4-experience #catlas-dialog .catlas-panel{background:#f9fbfc!important;border-color:var(--kw-line)!important}
+html.ev4-experience #catlas-dialog .catlas-panel h4{color:var(--kw-ink)!important}
+html.ev4-experience #catlas-dialog .catlas-panel p{color:var(--kw-muted)!important}
+html.ev4-experience #catlas-dialog .catlas-doc{background:var(--kw-blue)!important;border-color:var(--kw-blue)!important;color:#fff!important}
+html.ev4-experience footer{background:#edf4f8!important;border-color:var(--kw-line)!important;color:var(--kw-muted)!important}
+html.ev4-experience .concept-badge{border-color:#aac8d8!important;color:var(--kw-blue-dark)!important}
+html.ev4-experience .concept-viewer .concept-badge{background:var(--kw-orange-soft)!important;border-color:#ffd18a!important;color:var(--kw-orange-dark)!important}
