@@ -1,0 +1,66 @@
+name: Materialize p18 public media
+
+on:
+  push:
+    branches:
+      - media/p18-20260912
+    paths:
+      - staging/p18/READY
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: media/p18-20260912
+          fetch-depth: 0
+
+      - name: Decode staged public media
+        shell: bash
+        run: |
+          if [ ! -f staging/p18/READY ]; then
+            echo "No staging marker; nothing to do."
+            exit 0
+          fi
+          python - <<'PY'
+          import base64
+          from pathlib import Path
+
+          specs = [
+              ("pdf", "docs/media/2026-09-12-p18/K-DRUM_v3.x_p18.pdf"),
+              ("video", "docs/media/2026-09-12-p18/KDRUM_Nature_to_Digital_22s_web.mp4"),
+              ("sprite", "docs/assets/presentation/2026-09-12-p18/kdrum_p18_feature_sprite.jpg"),
+              ("ref", "docs/media/2026-09-12-p18/07_Digital_Reference.jpg"),
+          ]
+          root = Path("staging/p18")
+          for key, target in specs:
+              parts = sorted(root.glob(f"{key}.part*.b64"))
+              if not parts:
+                  raise SystemExit(f"Missing staged parts for {key}")
+              encoded = "".join(p.read_text(encoding="ascii").strip() for p in parts)
+              data = base64.b64decode(encoded, validate=True)
+              out = Path(target)
+              out.parent.mkdir(parents=True, exist_ok=True)
+              out.write_bytes(data)
+              print(f"{key}: {len(data):,} bytes -> {target}")
+          PY
+
+      - name: Commit binary media and remove staging chunks
+        shell: bash
+        run: |
+          if [ ! -f staging/p18/READY ]; then exit 0; fi
+          rm -rf staging/p18
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/media/2026-09-12-p18 docs/assets/presentation/2026-09-12-p18 staging || true
+          if git diff --cached --quiet; then
+            echo "No generated changes."
+            exit 0
+          fi
+          git commit -m "Add p18 public presentation media"
+          git push origin HEAD:media/p18-20260912
