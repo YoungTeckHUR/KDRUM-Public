@@ -1,0 +1,30 @@
+{
+  "version": "p18-20260912",
+  "published_date": "2026-09-12",
+  "status": "public-reference",
+  "presentation_pdf": "K-DRUM_v3.x_p18.pdf",
+  "video_web": "KDRUM_Nature_to_Digital_22s_web.mp4",
+  "video_note": "AI-generated concept visualization for model introduction; not a direct K-DRUM numerical simulation result.",
+  "reference_image": "07_Digital_Reference.png",
+  "feature_images": [
+    "01_model_overview.jpg",
+    "02_water_cycle.jpg",
+    "03_spatial_heterogeneity.jpg",
+    "04_end_to_end_workflow.jpg",
+    "05_rainfall_input.jpg",
+    "06_snow_processes.jpg",
+    "07_continuous_hydrology.jpg",
+    "08_initial_state_adjustment.jpg",
+    "09_hot_start.jpg",
+    "10_runoff_routing.jpg",
+    "11_subbasin_calibration.jpg",
+    "12_solver_hierarchy.jpg",
+    "13_river_structures_operations.jpg",
+    "14_flood_1d_2d.jpg",
+    "15_sediment_tracer_particles.jpg",
+    "16_parallel_computing.jpg",
+    "17_outputs_verification.jpg",
+    "18_core_value_integration.jpg"
+  ],
+  "editable_pptx": "retained outside the public website repository"
+}
