@@ -1,0 +1,89 @@
+name: SEO metadata audit
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  seo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate sitemap and canonical language clusters
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+          from datetime import date
+          from urllib.parse import urlsplit
+          import xml.etree.ElementTree as ET
+          import re
+
+          base = 'https://youngteckhur.github.io/KDRUM-Public/'
+          pages = {'': 'index.html', 'ko/': 'ko/index.html',
+                   'media.html': 'media.html', 'seo-kdrum.html': 'seo-kdrum.html'}
+          cluster = {'en': base, 'ko': base + 'ko/', 'x-default': base}
+
+          class Metadata(HTMLParser):
+              def __init__(self, html):
+                  super().__init__()
+                  self.head = False
+                  self.canonical = []
+                  self.alternates = []
+                  self.feed(html)
+              def handle_starttag(self, tag, attrs):
+                  a = dict(attrs)
+                  if tag == 'head':
+                      self.head = True
+                  if tag == 'link':
+                      rel = a.get('rel', '').split()
+                      if 'canonical' in rel:
+                          assert self.head, 'canonical outside head'
+                          self.canonical.append(a.get('href'))
+                      if 'alternate' in rel and 'hreflang' in a:
+                          assert self.head, 'hreflang outside head'
+                          self.alternates.append((a['hreflang'], a.get('href')))
+                  if tag == 'meta' and a.get('name', '').lower() in ('robots', 'googlebot'):
+                      assert not {'noindex', 'none'} & set(a.get('content', '').lower().replace(',', ' ').split())
+              def handle_endtag(self, tag):
+                  if tag == 'head':
+                      self.head = False
+
+          for suffix, filename in pages.items():
+              meta = Metadata((Path('docs') / filename).read_text(encoding='utf-8'))
+              assert meta.canonical == [base + suffix], (filename, meta.canonical)
+              expected = cluster if suffix in ('', 'ko/') else {}
+              assert len(meta.alternates) == len(expected), filename
+              assert dict(meta.alternates) == expected, filename
+
+          raw = Path('docs/sitemap.xml').read_bytes()
+          assert not raw.startswith(b'\xef\xbb\xbf'), 'Keep sitemap UTF-8 without BOM'
+          text = raw.decode('utf-8', errors='strict')
+          assert text.startswith('<?xml version="1.0" encoding="UTF-8"?>')
+          ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9',
+                'x': 'http://www.w3.org/1999/xhtml'}
+          tree = ET.fromstring(text)
+          assert tree.tag == '{' + ns['s'] + '}urlset'
+          entries = tree.findall('s:url', ns)
+          urls = [entry.findtext('s:loc', namespaces=ns) for entry in entries]
+          assert len(urls) == len(set(urls)) == len(pages)
+          assert set(urls) == {base + suffix for suffix in pages}
+          for entry, url in zip(entries, urls):
+              parsed = urlsplit(url)
+              assert parsed.scheme == 'https' and not parsed.query and not parsed.fragment
+              assert url.startswith(base), 'GitHub Pages project base path missing'
+              modified = entry.findtext('s:lastmod', namespaces=ns)
+              assert re.fullmatch(r'\d{4}-\d{2}-\d{2}', modified)
+              assert date.fromisoformat(modified) <= date.today()
+              links = entry.findall('x:link', ns)
+              expected = cluster if url in (base, base + 'ko/') else {}
+              assert len(links) == len(expected)
+              assert all(link.get('rel') == 'alternate' for link in links)
+              assert {link.get('hreflang'): link.get('href') for link in links} == expected
+          print('PASS: four public sitemap URLs, self-canonicals, reciprocal home language cluster, UTF-8/XML and lastmod')
+          PY
