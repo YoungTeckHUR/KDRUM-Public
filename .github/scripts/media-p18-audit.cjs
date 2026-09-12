@@ -10,7 +10,8 @@ const results = [];
 fs.mkdirSync(output, {recursive:true});
 
 (async () => {
-  const browser = await chromium.launch({headless:true});
+  // Use the full browser for its PDF viewer and proprietary MP4 codecs.
+  const browser = await chromium.launch({headless:true,channel:process.env.MEDIA_BROWSER_CHANNEL || 'chrome'});
   try {
     for (const lang of ['en','ko']) {
       for (const width of [1440,390]) {

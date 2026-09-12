@@ -32,6 +32,7 @@ jobs:
         run: |
           npm install --no-save playwright@1.55.0
           npx playwright install --with-deps chromium
+          npx playwright install --with-deps chrome
 
       - name: Start local homepage server
         run: |
