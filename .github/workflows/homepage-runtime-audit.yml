@@ -77,11 +77,10 @@ jobs:
                   findings.append(f'English runtime missing facts entry: {title}')
 
           status = text(Path('DEVELOPMENT_STATUS.md'))
-          sitemap = text(Path('docs/sitemap.xml'))
           if 'Status reviewed: 2026-08-21' not in status:
               findings.append('DEVELOPMENT_STATUS.md review date is not 2026-08-21')
-          if sitemap.count('<lastmod>2026-08-21</lastmod>') != 2:
-              findings.append('sitemap lastmod values are not synchronized to 2026-08-21')
+          # Sitemap dates describe page changes, not the technical status review.
+          # XML, URL coverage and lastmod validity are checked by seo-audit.yml.
 
           if findings:
               print('HOMEPAGE RUNTIME AUDIT FAILED')
