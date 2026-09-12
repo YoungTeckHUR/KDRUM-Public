@@ -27,6 +27,7 @@ jobs:
           node --check docs/assets/experience-v4.js
           node --check .github/scripts/homepage-v4-audit.cjs
           node --check .github/scripts/media-p18-audit.cjs
+          node --check .github/scripts/pages-preview.cjs
 
       - name: Install Chromium test runtime
         run: |
@@ -36,9 +37,9 @@ jobs:
 
       - name: Start local homepage server
         run: |
-          python3 -m http.server 8000 --directory docs >/tmp/kdrum-http.log 2>&1 &
+          node .github/scripts/pages-preview.cjs >/tmp/kdrum-http.log 2>&1 &
           for i in {1..30}; do
-            if curl -fsS http://127.0.0.1:8000/ >/dev/null; then exit 0; fi
+            if curl -fsS http://127.0.0.1:8000/KDRUM-Public/ >/dev/null; then exit 0; fi
             sleep 1
           done
           cat /tmp/kdrum-http.log
@@ -46,7 +47,7 @@ jobs:
 
       - name: Run rendered browser checks
         env:
-          BASE_URL: http://127.0.0.1:8000
+          BASE_URL: http://127.0.0.1:8000/KDRUM-Public
           AUDIT_DIR: browser-artifacts
           AUDIT_LABEL: Homepage browser smoke
           AUDIT_SCREENSHOTS: '0'
@@ -54,7 +55,7 @@ jobs:
 
       - name: Verify p18 media, playback and bilingual navigation
         env:
-          BASE_URL: http://127.0.0.1:8000
+          BASE_URL: http://127.0.0.1:8000/KDRUM-Public
           AUDIT_DIR: browser-artifacts/p18
         run: node .github/scripts/media-p18-audit.cjs
 

@@ -13,6 +13,12 @@ fs.mkdirSync(output, {recursive:true});
   // Use the full browser for its PDF viewer and proprietary MP4 codecs.
   const browser = await chromium.launch({headless:true,channel:process.env.MEDIA_BROWSER_CHANNEL || 'chrome'});
   try {
+    const request = await browser.newContext();
+    const range = await request.request.get(`${base}/media/2026-09-12-p18/${manifest.video_web}`, {headers:{Range:'bytes=0-99'}});
+    assert.equal(range.status(),206,'Preview server must support byte ranges for MP4 seeking');
+    assert.match(range.headers()['content-range'],/^bytes 0-99\/\d+$/);
+    assert.equal((await range.body()).length,100);
+    await request.close();
     for (const lang of ['en','ko']) {
       for (const width of [1440,390]) {
         const name = `${lang}-${width}`;
@@ -81,6 +87,10 @@ fs.mkdirSync(output, {recursive:true});
         assert.ok(playback.frames>0);
         assert.ok(playback.duration>=20 && playback.duration<=24);
         await page.locator('video').evaluate(video=>{video.currentTime=video.duration-1;});
+        await page.waitForFunction(()=>{
+          const video=document.querySelector('video');
+          return !video.seeking && video.currentTime >= video.duration-2;
+        },null,{timeout:10000});
         await page.waitForFunction(()=>document.querySelector('video').ended,null,{timeout:15000});
         await page.locator('video').evaluate(video=>{video.currentTime=0;});
         const other = lang==='en'?'ko':'en';
