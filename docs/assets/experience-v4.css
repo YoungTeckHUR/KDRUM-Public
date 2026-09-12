@@ -54,7 +54,7 @@ html.ev4-experience .site-mark{
   border-radius:8px!important;
   box-shadow:none!important;
 }
-html.ev4-experience .nav{display:flex;align-items:center;justify-content:flex-end;gap:10px;overflow:visible}
+html.ev4-experience .nav{display:flex;align-items:center;justify-content:flex-end;gap:10px;overflow:visible;flex-wrap:wrap;min-width:0}
 html.ev4-experience .ev4-header-download{
   min-height:44px;
   display:inline-flex;

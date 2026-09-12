@@ -21,6 +21,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import re
+          import hashlib
           import sys
 
           root = Path('.')
@@ -84,6 +85,32 @@ jobs:
               },
           }
 
+
+          # Exact p18 publication assets, verified against the supplied public package.
+          approved_p18_assets = {
+              'docs/assets/presentation/2026-09-12-p18/01_model_overview.jpg': '48902d3ddc83e2338b0cb2cdb448becaba22e7c065411f18075d0063d8054f05',
+              'docs/assets/presentation/2026-09-12-p18/02_water_cycle.jpg': '09224fb4e6832d7882a036dc841a32d452024a490ade1bfc1550261ca1b9c5aa',
+              'docs/assets/presentation/2026-09-12-p18/03_spatial_heterogeneity.jpg': 'd549725fcbe33c8ac4c97458ea032abc350c7f8f9c599d1c4e5c8247acec585f',
+              'docs/assets/presentation/2026-09-12-p18/04_end_to_end_workflow.jpg': 'b495116bca28029695c70d4c524f8fbf0f7f93702b3c3015c2307e693a3346f6',
+              'docs/assets/presentation/2026-09-12-p18/05_rainfall_input.jpg': '17a9789e51dbdc5cc1a0800fe87aa65f5ca11540ba04a2d2446176b746312879',
+              'docs/assets/presentation/2026-09-12-p18/06_snow_processes.jpg': '2b1db8cef592f102f5a7d4df4e751f1410370932c5ac39255faa7cc1575ba2cb',
+              'docs/assets/presentation/2026-09-12-p18/07_continuous_hydrology.jpg': '109f1c03d8251bb5a36f80fd12ff4ad34ceabf9493a889f9cbcab70f55b9c208',
+              'docs/assets/presentation/2026-09-12-p18/08_initial_state_adjustment.jpg': '4b81f7c054c9f6a0d1f94be5533b6d9467d9a6de1b9bf973507ea341aac3ee0c',
+              'docs/assets/presentation/2026-09-12-p18/09_hot_start.jpg': '9388535b3e0fbf58973577c408aecae1ad4eeea9e40537bba6a1b6b8ca13caba',
+              'docs/assets/presentation/2026-09-12-p18/10_runoff_routing.jpg': '4c29aee0b0cd15a3841108a5666868fa5ed6e95d7d06034c49bedfc889691b37',
+              'docs/assets/presentation/2026-09-12-p18/11_subbasin_calibration.jpg': 'bd061d3311bc10539489e8fcddcdf08455c2a52693327a2a9442d3cde36964ca',
+              'docs/assets/presentation/2026-09-12-p18/12_solver_hierarchy.jpg': 'd01dfbdbf9bbfda57cdfd681251e6b4a63661d49a985df9129cb53f2e2e472fc',
+              'docs/assets/presentation/2026-09-12-p18/13_river_structures_operations.jpg': '7f8065c4d27b57e9a3b887359c5f915034f87bcd8ae6ace2cd29a4bee549f717',
+              'docs/assets/presentation/2026-09-12-p18/14_flood_1d_2d.jpg': 'f164e0aefc4bdc93eedc6074cd7ab1bc9dacc62a17ff3b47372ec2952a8c8dc1',
+              'docs/assets/presentation/2026-09-12-p18/15_sediment_tracer_particles.jpg': 'e7e0de46ed0b6758d68b0deff57d92de77cc16d2a52a657cb12169e549eb7f7e',
+              'docs/assets/presentation/2026-09-12-p18/16_parallel_computing.jpg': 'a27f6076c7d88dc77568181888c227eae3ac83b7810ccca78cdd9205fb08d524',
+              'docs/assets/presentation/2026-09-12-p18/17_outputs_verification.jpg': '3bec00c939137ae99d1eba7bec6defa5af9ca98cfa2b20abdbed9996254cab97',
+              'docs/assets/presentation/2026-09-12-p18/18_core_value_integration.jpg': '15225cd856d7ee9f09353d6d533471be6a37deee85f5455147e08166d7be30d1',
+              'docs/media/2026-09-12-p18/07_Digital_Reference.png': 'e8d8ad3e5539706e9d7b51af915f2ae73e9e8f52822d896f5585fbea982579af',
+              'docs/media/2026-09-12-p18/K-DRUM_v3.x_p18.pdf': '28fb9f4ca0c9a2b96330422dce575a7d8663964f6800b1ce899a1dbef5f8de75',
+              'docs/media/2026-09-12-p18/KDRUM_Nature_to_Digital_22s_web.mp4': '14b8173bdd1126049ad624ce4c335de72590f691dc46aab170d22bffe68dd54f',
+          }
+
           patterns = [
               ('Windows absolute path', re.compile(r'\b[A-Za-z]:\\')),
               ('private development branch', re.compile(r'\b(?:codex|autotest)/[A-Za-z0-9._/-]+', re.I)),
@@ -102,6 +129,11 @@ jobs:
 
               checked += 1
               rel = path.as_posix()
+
+              if rel in approved_p18_assets:
+                  if hashlib.sha256(path.read_bytes()).hexdigest() != approved_p18_assets[rel]:
+                      findings.append(f'{path}: p18 public asset checksum mismatch')
+                  continue
 
               if rel in approved_binary_assets:
                   rule = approved_binary_assets[rel]
@@ -132,6 +164,10 @@ jobs:
               for label, regex in patterns:
                   if regex.search(text):
                       findings.append(f'{path}: possible {label}')
+
+          for rel in approved_p18_assets:
+              if not Path(rel).is_file():
+                  findings.append(f'{rel}: missing p18 public asset')
 
           if findings:
               print('PUBLIC CONTENT SAFETY AUDIT FAILED')

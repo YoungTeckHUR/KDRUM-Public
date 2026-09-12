@@ -281,7 +281,11 @@
     download.className='ev3-nav-cta ev4-header-download';
     download.href=MYWATER;
     download.textContent=ko?'무료 다운로드':'Free download';
-    nav.append(download);
+    const mediaGuide=document.createElement('a');
+    mediaGuide.className='media-guide-link';
+    mediaGuide.href=ko?'../media.html?lang=ko':'media.html?lang=en';
+    mediaGuide.textContent=ko?'시각자료':'Visual Guide';
+    nav.append(mediaGuide,download);
     if(language)nav.append(language);
   }
 
