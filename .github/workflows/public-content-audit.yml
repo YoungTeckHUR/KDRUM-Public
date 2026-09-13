@@ -86,26 +86,28 @@ jobs:
           }
 
 
-          # Exact p18 publication assets, verified against the supplied public package.
+          # Original PDF/MP4/PNG remain byte-identical to the public package.
+          # Corrected feature JPEGs are rendered from physical PDF pages 4..21;
+          # the independent source audit below verifies content as well as hashes.
           approved_p18_assets = {
-              'docs/assets/presentation/2026-09-12-p18/01_model_overview.jpg': '48902d3ddc83e2338b0cb2cdb448becaba22e7c065411f18075d0063d8054f05',
-              'docs/assets/presentation/2026-09-12-p18/02_water_cycle.jpg': '09224fb4e6832d7882a036dc841a32d452024a490ade1bfc1550261ca1b9c5aa',
-              'docs/assets/presentation/2026-09-12-p18/03_spatial_heterogeneity.jpg': 'd549725fcbe33c8ac4c97458ea032abc350c7f8f9c599d1c4e5c8247acec585f',
-              'docs/assets/presentation/2026-09-12-p18/04_end_to_end_workflow.jpg': 'b495116bca28029695c70d4c524f8fbf0f7f93702b3c3015c2307e693a3346f6',
-              'docs/assets/presentation/2026-09-12-p18/05_rainfall_input.jpg': '17a9789e51dbdc5cc1a0800fe87aa65f5ca11540ba04a2d2446176b746312879',
-              'docs/assets/presentation/2026-09-12-p18/06_snow_processes.jpg': '2b1db8cef592f102f5a7d4df4e751f1410370932c5ac39255faa7cc1575ba2cb',
-              'docs/assets/presentation/2026-09-12-p18/07_continuous_hydrology.jpg': '109f1c03d8251bb5a36f80fd12ff4ad34ceabf9493a889f9cbcab70f55b9c208',
-              'docs/assets/presentation/2026-09-12-p18/08_initial_state_adjustment.jpg': '4b81f7c054c9f6a0d1f94be5533b6d9467d9a6de1b9bf973507ea341aac3ee0c',
-              'docs/assets/presentation/2026-09-12-p18/09_hot_start.jpg': '9388535b3e0fbf58973577c408aecae1ad4eeea9e40537bba6a1b6b8ca13caba',
-              'docs/assets/presentation/2026-09-12-p18/10_runoff_routing.jpg': '4c29aee0b0cd15a3841108a5666868fa5ed6e95d7d06034c49bedfc889691b37',
-              'docs/assets/presentation/2026-09-12-p18/11_subbasin_calibration.jpg': 'bd061d3311bc10539489e8fcddcdf08455c2a52693327a2a9442d3cde36964ca',
-              'docs/assets/presentation/2026-09-12-p18/12_solver_hierarchy.jpg': 'd01dfbdbf9bbfda57cdfd681251e6b4a63661d49a985df9129cb53f2e2e472fc',
-              'docs/assets/presentation/2026-09-12-p18/13_river_structures_operations.jpg': '7f8065c4d27b57e9a3b887359c5f915034f87bcd8ae6ace2cd29a4bee549f717',
-              'docs/assets/presentation/2026-09-12-p18/14_flood_1d_2d.jpg': 'f164e0aefc4bdc93eedc6074cd7ab1bc9dacc62a17ff3b47372ec2952a8c8dc1',
-              'docs/assets/presentation/2026-09-12-p18/15_sediment_tracer_particles.jpg': 'e7e0de46ed0b6758d68b0deff57d92de77cc16d2a52a657cb12169e549eb7f7e',
-              'docs/assets/presentation/2026-09-12-p18/16_parallel_computing.jpg': 'a27f6076c7d88dc77568181888c227eae3ac83b7810ccca78cdd9205fb08d524',
-              'docs/assets/presentation/2026-09-12-p18/17_outputs_verification.jpg': '3bec00c939137ae99d1eba7bec6defa5af9ca98cfa2b20abdbed9996254cab97',
-              'docs/assets/presentation/2026-09-12-p18/18_core_value_integration.jpg': '15225cd856d7ee9f09353d6d533471be6a37deee85f5455147e08166d7be30d1',
+              'docs/assets/presentation/2026-09-12-p18/01_model_overview.jpg': '7fedd24c22178c53d82459b9b3dce129d5d08e344033da8c664ea364b44aef1f',
+              'docs/assets/presentation/2026-09-12-p18/02_water_cycle.jpg': 'c685b20b1607cd3433c8b9b00cce65a00d141fbcd100805159c947e47146fa4a',
+              'docs/assets/presentation/2026-09-12-p18/03_spatial_heterogeneity.jpg': 'a683524c0b50234dac0c8867f2e7fc30369fbb98a998c3bce71a409668359985',
+              'docs/assets/presentation/2026-09-12-p18/04_end_to_end_workflow.jpg': '2b306845ea06c32b18acdcb53eb9aa6bc49c6af2fefaf6420b30056e86a4d698',
+              'docs/assets/presentation/2026-09-12-p18/05_rainfall_input.jpg': '760e63cb238b625669d0ddeb427f154451b5dd3a74e607179029fbf7e7aa7eea',
+              'docs/assets/presentation/2026-09-12-p18/06_snow_processes.jpg': 'a949c7f281d3e2e1d3610e8cd121a23b3b1427a43e7cfc9e5a05a9d1f5bd7c52',
+              'docs/assets/presentation/2026-09-12-p18/07_continuous_hydrology.jpg': '056f0782975de25116131375155cca839dea5aebf75420691fa29baa769b6d49',
+              'docs/assets/presentation/2026-09-12-p18/08_initial_state_adjustment.jpg': '1c2550513b1951206cba0b951790c8077c250ab270d60998694e3be60a7edb4a',
+              'docs/assets/presentation/2026-09-12-p18/09_hot_start.jpg': '6b9e473bb6bb0ec1f20c27469b48de83cf77ecc59b8ade3c27ad6aba19770908',
+              'docs/assets/presentation/2026-09-12-p18/10_runoff_routing.jpg': '0eaef13c8c5cba5e5eb98d93c76a73b27db5d0d27e04290b06992fc51f8a0ae6',
+              'docs/assets/presentation/2026-09-12-p18/11_subbasin_calibration.jpg': 'd686749192e76623705d78ed2319991788f005c369359e1c72bf2da26c69879e',
+              'docs/assets/presentation/2026-09-12-p18/12_solver_hierarchy.jpg': '5156646c9873f7dcf9e9c7c626642a2b16ab7954ec5e6246c04e19855b3a1eba',
+              'docs/assets/presentation/2026-09-12-p18/13_river_structures_operations.jpg': 'c337cbd23bac09bab7dc6f838a10ec75c26a5545543568cc9cdd9cc49988e253',
+              'docs/assets/presentation/2026-09-12-p18/14_flood_1d_2d.jpg': '2b55ae23e454e67a57c7345c7935e0dff4d58935c1e4198fa49596f4744aee40',
+              'docs/assets/presentation/2026-09-12-p18/15_sediment_tracer_particles.jpg': '70f7afb84731bd747a9826240ec7721a07691f68c078c061d330d33d0c202a5d',
+              'docs/assets/presentation/2026-09-12-p18/16_parallel_computing.jpg': '4ad555a29ace7b4d66d05c5c312ea4229f603b1a67afa568973973ec5feea6bc',
+              'docs/assets/presentation/2026-09-12-p18/17_outputs_verification.jpg': '05ac43cec47c893b1ade2d8489afbcbe40671c391ba69461456ae537bc11e45c',
+              'docs/assets/presentation/2026-09-12-p18/18_core_value_integration.jpg': '0f7e8153868aa429b2de79bb3194d4a480270c3377680fb8ea92c1c48f8500e8',
               'docs/media/2026-09-12-p18/07_Digital_Reference.png': 'e8d8ad3e5539706e9d7b51af915f2ae73e9e8f52822d896f5585fbea982579af',
               'docs/media/2026-09-12-p18/K-DRUM_v3.x_p18.pdf': '28fb9f4ca0c9a2b96330422dce575a7d8663964f6800b1ce899a1dbef5f8de75',
               'docs/media/2026-09-12-p18/KDRUM_Nature_to_Digital_22s_web.mp4': '14b8173bdd1126049ad624ce4c335de72590f691dc46aab170d22bffe68dd54f',
@@ -177,3 +179,30 @@ jobs:
 
           print(f'PUBLIC CONTENT SAFETY AUDIT PASSED: {checked} public files checked.')
           PY
+
+      - name: Set up source verification runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install pinned PDF and image verification libraries
+        run: python -m pip install PyMuPDF==1.26.7 Pillow==11.3.0
+
+      - name: Verify all 18 features against their actual source PDF pages
+        env:
+          AUDIT_DIR: .github/artifacts/p18-source
+        run: node .github/scripts/p18-source-audit.cjs
+
+      - name: Upload source mapping and visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p18-source-mapping
+          path: .github/artifacts/p18-source/
+          include-hidden-files: true
+          if-no-files-found: error

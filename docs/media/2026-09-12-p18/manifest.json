@@ -26,5 +26,153 @@
     "17_outputs_verification.jpg",
     "18_core_value_integration.jpg"
   ],
-  "editable_pptx": "retained outside the public website repository"
+  "editable_pptx": "retained outside the public website repository",
+  "source_pdf": {
+    "file": "K-DRUM_v3.x_p18.pdf",
+    "sha256": "28fb9f4ca0c9a2b96330422dce575a7d8663964f6800b1ce899a1dbef5f8de75",
+    "page_count": 22
+  },
+  "feature_render": {
+    "engine": "PyMuPDF",
+    "engine_version": "1.26.7",
+    "image_library": "Pillow",
+    "image_library_version": "11.3.0",
+    "width": 1600,
+    "height": 900,
+    "colorspace": "RGB",
+    "alpha": false,
+    "format": "JPEG",
+    "quality": 90,
+    "subsampling": 0,
+    "optimize": false,
+    "progressive": false
+  },
+  "feature_source_pages": [
+    {
+      "file": "01_model_overview.jpg",
+      "pdf_page": 4,
+      "feature_number": 1,
+      "title_en": "MODEL OVERVIEW",
+      "sha256": "7fedd24c22178c53d82459b9b3dce129d5d08e344033da8c664ea364b44aef1f"
+    },
+    {
+      "file": "02_water_cycle.jpg",
+      "pdf_page": 5,
+      "feature_number": 2,
+      "title_en": "WATERSHED WATER CYCLE",
+      "sha256": "c685b20b1607cd3433c8b9b00cce65a00d141fbcd100805159c947e47146fa4a"
+    },
+    {
+      "file": "03_spatial_heterogeneity.jpg",
+      "pdf_page": 6,
+      "feature_number": 3,
+      "title_en": "SPATIAL DISTRIBUTED HYDROLOGY",
+      "sha256": "a683524c0b50234dac0c8867f2e7fc30369fbb98a998c3bce71a409668359985"
+    },
+    {
+      "file": "04_end_to_end_workflow.jpg",
+      "pdf_page": 7,
+      "feature_number": 4,
+      "title_en": "END-TO-END WORKFLOW",
+      "sha256": "2b306845ea06c32b18acdcb53eb9aa6bc49c6af2fefaf6420b30056e86a4d698"
+    },
+    {
+      "file": "05_rainfall_input.jpg",
+      "pdf_page": 8,
+      "feature_number": 5,
+      "title_en": "PRECIPITATION INPUT",
+      "sha256": "760e63cb238b625669d0ddeb427f154451b5dd3a74e607179029fbf7e7aa7eea"
+    },
+    {
+      "file": "06_snow_processes.jpg",
+      "pdf_page": 9,
+      "feature_number": 6,
+      "title_en": "SNOW ACCUMULATION & MELT",
+      "sha256": "a949c7f281d3e2e1d3610e8cd121a23b3b1427a43e7cfc9e5a05a9d1f5bd7c52"
+    },
+    {
+      "file": "07_continuous_hydrology.jpg",
+      "pdf_page": 10,
+      "feature_number": 7,
+      "title_en": "CONTINUOUS HYDROLOGY",
+      "sha256": "056f0782975de25116131375155cca839dea5aebf75420691fa29baa769b6d49"
+    },
+    {
+      "file": "08_initial_state_adjustment.jpg",
+      "pdf_page": 11,
+      "feature_number": 8,
+      "title_en": "INITIAL STATE ADJUSTMENT",
+      "sha256": "1c2550513b1951206cba0b951790c8077c250ab270d60998694e3be60a7edb4a"
+    },
+    {
+      "file": "09_hot_start.jpg",
+      "pdf_page": 12,
+      "feature_number": 9,
+      "title_en": "HOT START & STATE INHERITANCE",
+      "sha256": "6b9e473bb6bb0ec1f20c27469b48de83cf77ecc59b8ade3c27ad6aba19770908"
+    },
+    {
+      "file": "10_runoff_routing.jpg",
+      "pdf_page": 13,
+      "feature_number": 10,
+      "title_en": "RUNOFF ROUTING",
+      "sha256": "0eaef13c8c5cba5e5eb98d93c76a73b27db5d0d27e04290b06992fc51f8a0ae6"
+    },
+    {
+      "file": "11_subbasin_calibration.jpg",
+      "pdf_page": 14,
+      "feature_number": 11,
+      "title_en": "SUB-BASIN ANALYSIS & CALIBRATION",
+      "sha256": "d686749192e76623705d78ed2319991788f005c369359e1c72bf2da26c69879e"
+    },
+    {
+      "file": "12_solver_hierarchy.jpg",
+      "pdf_page": 15,
+      "feature_number": 12,
+      "title_en": "HYDRAULIC SOLVER HIERARCHY",
+      "sha256": "5156646c9873f7dcf9e9c7c626642a2b16ab7954ec5e6246c04e19855b3a1eba"
+    },
+    {
+      "file": "13_river_structures_operations.jpg",
+      "pdf_page": 16,
+      "feature_number": 13,
+      "title_en": "RIVER NETWORK, STRUCTURES & RESERVOIR OPERATION",
+      "sha256": "c337cbd23bac09bab7dc6f838a10ec75c26a5545543568cc9cdd9cc49988e253"
+    },
+    {
+      "file": "14_flood_1d_2d.jpg",
+      "pdf_page": 17,
+      "feature_number": 14,
+      "title_en": "1D–2D COUPLING & MULTI-RESOLUTION FLOODING",
+      "sha256": "2b55ae23e454e67a57c7345c7935e0dff4d58935c1e4198fa49596f4744aee40"
+    },
+    {
+      "file": "15_sediment_tracer_particles.jpg",
+      "pdf_page": 18,
+      "feature_number": 15,
+      "title_en": "SEDIMENT, TRACER & PARTICLE TRACKING",
+      "sha256": "70f7afb84731bd747a9826240ec7721a07691f68c078c061d330d33d0c202a5d"
+    },
+    {
+      "file": "16_parallel_computing.jpg",
+      "pdf_page": 19,
+      "feature_number": 16,
+      "title_en": "LARGE-SCALE & PARALLEL COMPUTING",
+      "sha256": "4ad555a29ace7b4d66d05c5c312ea4229f603b1a67afa568973973ec5feea6bc"
+    },
+    {
+      "file": "17_outputs_verification.jpg",
+      "pdf_page": 20,
+      "feature_number": 17,
+      "title_en": "OUTPUT, VERIFICATION & MODEL PERFORMANCE",
+      "sha256": "05ac43cec47c893b1ade2d8489afbcbe40671c391ba69461456ae537bc11e45c"
+    },
+    {
+      "file": "18_core_value_integration.jpg",
+      "pdf_page": 21,
+      "feature_number": 18,
+      "title_en": "K-DRUM CORE VALUE",
+      "sha256": "0f7e8153868aa429b2de79bb3194d4a480270c3377680fb8ea92c1c48f8500e8"
+    }
+  ]
 }

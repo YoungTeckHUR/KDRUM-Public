@@ -25,6 +25,7 @@ jobs:
           node --check docs/assets/site.js
           node --check .github/scripts/homepage-v4-audit.cjs
           node --check .github/scripts/media-p18-audit.cjs
+          node --check .github/scripts/layout-density-audit.cjs
           node --check .github/scripts/pages-preview.cjs
 
       - name: Install Chromium test runtime
@@ -56,6 +57,12 @@ jobs:
           BASE_URL: http://127.0.0.1:8000/KDRUM-Public
           AUDIT_DIR: browser-artifacts/p18
         run: node .github/scripts/media-p18-audit.cjs
+
+      - name: Compare laptop typography at six viewport widths
+        env:
+          BASE_URL: http://127.0.0.1:8000/KDRUM-Public
+          LAYOUT_AUDIT_DIR: browser-artifacts/layout-density
+        run: node .github/scripts/layout-density-audit.cjs
 
       - name: Upload browser metrics
         if: always()
