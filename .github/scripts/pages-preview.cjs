@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const root = path.resolve(__dirname, '../../docs');
 const prefix = '/KDRUM-Public';
-const types = {'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml','.pdf':'application/pdf','.mp4':'video/mp4','.json':'application/json'};
+const types = {'.xml':'application/xml','.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml','.pdf':'application/pdf','.mp4':'video/mp4','.json':'application/json'};
 http.createServer((req,res) => {
   const url = new URL(req.url, 'http://localhost');
   if (url.pathname === prefix) { res.writeHead(301,{Location:prefix+'/'}); return res.end(); }

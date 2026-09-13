@@ -22,8 +22,7 @@ jobs:
 
       - name: Check dialog and audit JavaScript syntax
         run: |
-          node --check docs/assets/capability-atlas.js
-          node --check docs/assets/experience-v4.js
+          node --check docs/assets/site.js
           node --check .github/scripts/homepage-v4-audit.cjs
 
       - name: Install Chromium test runtime
@@ -41,7 +40,7 @@ jobs:
           cat /tmp/kdrum-http.log
           exit 1
 
-      - name: Check representative dialogs, contrast and touch targets
+      - name: Check dialogs, contrast, keyboard controls and reflow
         env:
           BASE_URL: http://127.0.0.1:8000
           AUDIT_DIR: dialog-contrast-artifacts
