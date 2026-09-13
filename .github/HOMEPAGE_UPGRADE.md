@@ -10,9 +10,11 @@ program roles, published research and official distribution in that order.
 
 ## Content and assets
 
-- The 45 existing capability summaries, current-status descriptions and raw
-  maturity values are retained in `docs/assets/site-content.json`. The separate
-  unpublished 1D viewer remains a distinct 46th entry.
+- The 45 existing capabilities retain their identities, technical labels and
+  raw maturity values in `docs/assets/site-content.json`. Korean and English
+  descriptions use an institutional technical voice, with their meaning and
+  scope reviewed in `HOMEPAGE_TONE_REVIEW.md`. The separate unpublished 1D viewer
+  remains a distinct 46th entry.
 - Six technical diagram families are supplied as twelve Korean/English SVGs.
   They have transparent outer backgrounds, conceptual labels, readable text
   and explicit development boundaries. No plotted numeric validation results

@@ -4,15 +4,15 @@
       "id": "radar-rainfall",
       "year": 2012,
       "ko": {
-        "title": "공간적으로 다른 비를 홍수유출로 연결하기",
-        "question": "비가 내리는 위치와 시간이 달라질 때 유역의 유출을 어떻게 계산할까요?",
+        "title": "레이더 강우를 이용한 홍수유출 모의",
+        "question": "강우의 시공간 분포를 반영한 유역 홍수유출 모의",
         "context": "남강 유역을 대상으로 태풍과 대류성 호우 조건에서 레이더 강우를 이용한 홍수유출 모의의 적용성을 살폈습니다.",
         "method": "레이더 강우를 계산격자에 배분하고, DEM·토지피복·토양도에서 추출한 GIS 수문자료를 입력했습니다. 침투와 지표·지표하 유출을 계산하고 운동파 기반으로 하천망을 따라 유량을 추적했습니다.",
         "scope": "2012년 논문의 과거 호우사상 모의 연구입니다. 이 적용 사례가 현재 개발 중인 동역학파 하천망이나 2D 범람 기능의 검증을 뜻하지는 않습니다."
       },
       "en": {
-        "title": "Turning spatial rainfall into flood runoff",
-        "question": "How can a watershed model represent rain that changes across space and time?",
+        "title": "Flood-runoff simulation using radar rainfall",
+        "question": "Watershed flood-runoff simulation with rainfall varying across space and time",
         "context": "The study examined radar-driven flood-runoff simulation for typhoon and convective storms in Korea's Namgang watershed.",
         "method": "Radar rainfall was mapped to computational grids, with hydrologic inputs derived from DEM, land-cover and soil data. Infiltration and surface/subsurface runoff were represented, and flow was routed through the channel network using kinematic waves.",
         "scope": "This is an offline storm-event application published in 2012. It does not establish validation of the dynamic-wave river-network or 2D floodplain extensions now under development."
@@ -24,15 +24,15 @@
       "id": "long-term-snowmelt",
       "year": 2013,
       "ko": {
-        "title": "산지의 눈과 계절 유출을 함께 계산하기",
-        "question": "유역에 쌓인 눈이 녹는 과정을 장기유출 모의에 어떻게 반영할까요?",
+        "title": "적설·융설을 고려한 산지 유역의 장기유출 모의",
+        "question": "유역의 적설과 융설을 반영한 장기유출 모의",
         "context": "파키스탄 Kunhar강 유역을 대상으로 고도에 따른 기상 차이와 적설·융설을 고려한 장기유출 모의를 수행했습니다.",
         "method": "GIS 공간자료를 바탕으로 고도에 따른 기온·강우 입력을 구성하고, 눈의 축적과 융설을 포함해 장기 유량을 계산했습니다.",
-        "scope": "2013년 특정 산지 유역의 적용 연구입니다. 적설·융설은 공개 연구로 확인되는 기반 기능이며, 다른 유역에 적용할 때는 해당 유역의 기상자료와 검증조건을 확인해야 합니다."
+        "scope": "2013년 특정 산지 유역의 적용 연구입니다. 적설·융설은 공개 연구로 확인되는 기반 기능이며, 다른 유역에서의 적용에는 해당 유역의 기상자료와 검증조건이 필요합니다."
       },
       "en": {
-        "title": "Following mountain snow into seasonal runoff",
-        "question": "How can long-term runoff simulation account for snow stored in a watershed and released by melting?",
+        "title": "Long-term runoff simulation with mountain snow accumulation and melt",
+        "question": "Long-term runoff simulation with watershed snow accumulation and melt",
         "context": "The application to Pakistan's Kunhar River Basin considered elevation-dependent weather, snow accumulation and melt in long-term runoff simulation.",
         "method": "GIS spatial inputs and elevation-dependent temperature and rainfall inputs were used to calculate long-term discharge with snow accumulation and melt.",
         "scope": "This 2013 study concerns one mountain basin. Snow processes are supported by the public research record; application elsewhere still requires suitable weather inputs and basin-specific validation."
@@ -44,15 +44,15 @@
       "id": "surface-groundwater",
       "year": 2017,
       "ko": {
-        "title": "강우유출과 지하수 흐름을 연결하는 연구",
-        "question": "비가 그친 뒤에도 이어지는 하천 유출을 어떻게 함께 해석할까요?",
+        "title": "강우유출과 지하수 흐름의 연계 연구",
+        "question": "강우 종료 후에도 지속되는 하천 유출의 연계 해석",
         "context": "2017년 학술발표는 장기 물순환과 갈수기 유출 해석을 위해 K-DRUM과 지하수유동모형 MODFLOW를 연계하는 방법을 제시했습니다.",
         "method": "K-DRUM에서 계산한 심부 침루량을 MODFLOW의 지하수 함양 입력으로 사용하고, MODFLOW의 기저유량을 K-DRUM 하천유출에 반영하는 연계 방안을 설명했습니다.",
         "scope": "연계 방법과 향후 활용 방향을 제시한 발표자료입니다. 이 기록만으로 정확도 향상이나 현재 배포본의 연계 기능을 확정할 수 없습니다. 현재 D층·지연 기저유출 및 하천 침투 연계의 공개 상태는 ACTIVE DEVELOPMENT입니다."
       },
       "en": {
-        "title": "Connecting rainfall runoff with groundwater flow",
-        "question": "How can runoff analysis account for river flow that continues after rainfall ends?",
+        "title": "Coupling rainfall runoff and groundwater flow",
+        "question": "Coupled analysis of river flow continuing after rainfall ends",
         "context": "A 2017 conference presentation proposed coupling K-DRUM with MODFLOW for long-term water-cycle and low-flow analysis.",
         "method": "The proposed exchange passes K-DRUM deep percolation to MODFLOW as groundwater recharge, then returns MODFLOW baseflow to K-DRUM river runoff.",
         "scope": "The record presents a coupling method and intended future use. It does not establish a measured accuracy improvement or coupling availability in the downloadable version. Current D-layer/baseflow-return and river-infiltration extensions remain ACTIVE DEVELOPMENT."
@@ -80,12 +80,12 @@
     {
       "id": "inputs-outputs",
       "ko": {
-        "question": "어떤 자료를 입력하고 어떤 결과를 확인하나요?",
-        "answer": "기본 입력은 강우 시계열과 지형·토지피복·토양 등 격자 수문자료입니다. 장기·융설 모의에는 기상자료와 초기상태가 필요하며, 수리 확장에는 하천 단면·구조물·경계조건 등이 추가됩니다. 유출량과 수문상태를 확인하고 물수지·소유역 리포트로 검토할 수 있습니다. 수위·침수심·유속 등 수리 결과와 NetCDF 통합출력은 해당 개발 기능의 상태와 사용 버전을 함께 확인해야 합니다."
+        "question": "K-DRUM의 주요 입력자료와 산출물은 무엇인가요?",
+        "answer": "기본 입력은 강우 시계열과 지형·토지피복·토양 등 격자 수문자료입니다. 장기·융설 모의에는 기상자료와 초기상태가 필요하며, 수리 확장에는 하천 단면·구조물·경계조건 등이 추가됩니다. K-DRUM은 유출량과 수문상태, 물수지·소유역 리포트를 제공합니다. 수위·침수심·유속 등 수리 결과와 NetCDF 통합출력의 제공 범위는 해당 기능의 개발 상태와 사용 버전에 따라 달라집니다."
       },
       "en": {
-        "question": "What data goes in, and what results come out?",
-        "answer": "Core inputs include rainfall time series and grid-based terrain, land-cover and soil data. Long-term and snow simulations also use weather data and initial states; hydraulic extensions require river sections, structures and boundary conditions. Results include runoff and hydrologic states, with water-balance and subbasin reporting for review. Hydraulic outputs such as water level, flood depth and velocity, and integrated NetCDF output, depend on the version and development status of the relevant feature."
+        "question": "What are K-DRUM's main inputs and outputs?",
+        "answer": "Core inputs include rainfall time series and grid-based terrain, land-cover and soil data. Long-term and snow simulations also use weather data and initial states; hydraulic extensions require river sections, structures and boundary conditions. K-DRUM provides runoff and hydrologic states, with water-balance and subbasin reports. Hydraulic outputs such as water level, flood depth and velocity, and integrated NetCDF output, depend on the version and development status of the relevant feature."
       },
       "sources": [
         "capabilities",
@@ -110,12 +110,12 @@
     {
       "id": "download",
       "ko": {
-        "question": "K-DRUM은 어디서 내려받고 버전은 어떻게 확인하나요?",
-        "answer": "K-water 기술 SW 대국민 개방정책에 따라 MyWater 물정보포털의 K-Series에서 무료로 내려받아 사용할 수 있습니다. 실제 배포 버전과 사용조건은 MyWater의 최신 안내와 이용약관을 확인하세요. 이 사이트가 소개하는 현재 Core 개발 계열은 v3.x이며, MyWater 배포본이 같은 기능을 모두 포함한다고 단정할 수 없습니다. 이 공개 저장소에는 생산용 소스코드를 배포하지 않습니다."
+        "question": "K-DRUM의 배포 경로와 버전 범위는 무엇인가요?",
+        "answer": "K-DRUM은 K-water 기술 SW 대국민 개방정책에 따라 MyWater 물정보포털의 K-Series에서 무료로 제공됩니다. 실제 배포 버전과 사용조건은 MyWater의 최신 안내와 이용약관을 기준으로 합니다. 현재 Core 개발 계열은 v3.x이며, MyWater 배포본의 기능 범위와는 차이가 있을 수 있습니다. K-DRUM 공개 저장소는 생산용 소스코드를 배포하지 않습니다."
       },
       "en": {
-        "question": "Where can I download K-DRUM, and how do I check the version?",
-        "answer": "K-DRUM is available through MyWater K-Series under K-water's public software access policy, free of charge subject to the published terms. Check MyWater for the actual download version and current conditions of use. This site describes the Core v3.x development line; the downloadable package should not be assumed to include every development feature. This public-information repository does not publish production source code."
+        "question": "Where is K-DRUM distributed, and which version does it cover?",
+        "answer": "K-DRUM is available through MyWater K-Series under K-water's public software access policy, free of charge subject to the published terms. The actual download version and conditions of use are defined by MyWater's current information and terms. The current Core development line is v3.x; its feature scope may differ from the MyWater download. The K-DRUM public-information repository does not publish production source code."
       },
       "sources": [
         "mywater-k-series",
@@ -128,11 +128,11 @@
       "id": "concept-media",
       "ko": {
         "question": "소개 영상과 개념도는 실제 K-DRUM 계산 결과인가요?",
-        "answer": "소개 영상은 물순환과 디지털 해석을 설명하는 AI 개념영상이며 실제 K-DRUM 수치모의 결과가 아닙니다. 개념도는 계산 구조와 결과를 읽는 방법을 돕는 설명자료입니다. 영상이나 그림에 표현된 과정만으로 기능의 출시 여부나 검증 수준을 판단하지 말고, 자료의 표시와 개발 현황을 함께 확인하세요."
+        "answer": "소개 영상은 물순환과 디지털 해석을 설명하는 AI 개념영상이며 실제 K-DRUM 수치모의 결과가 아닙니다. 개념도는 계산 구조와 결과의 의미를 설명하는 자료입니다. 영상과 개념도에 표현된 과정 자체는 기능의 출시 여부나 검증 수준을 나타내지 않습니다. 각 자료의 표시와 개발 현황에 기능 상태가 명시되어 있습니다."
       },
       "en": {
         "question": "Are the introductory video and concept diagrams actual K-DRUM results?",
-        "answer": "The introductory video is an AI-generated concept visualization of the water cycle and digital modeling, not a K-DRUM numerical simulation result. Concept diagrams explain model structure and ways to read results. Check each asset's label and the development status before interpreting an illustrated process as a released or validated capability."
+        "answer": "The introductory video is an AI-generated concept visualization of the water cycle and digital modeling, not a K-DRUM numerical simulation result. Concept diagrams describe model structure and the meaning of results. Illustrated processes do not establish release availability or validation. Each asset's label and the development status specify the relevant capability status."
       },
       "sources": [
         "visual-guide",
