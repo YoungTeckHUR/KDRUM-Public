@@ -9,7 +9,6 @@ on:
 
 permissions:
   contents: read
-  pages: read
   statuses: write
 
 jobs:
@@ -33,94 +32,68 @@ jobs:
           npm install --no-save playwright@1.55.0
           npx playwright install --with-deps chromium
 
-      - name: Wait for GitHub Pages build for this exact commit
-        id: pages_build
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ github.token }}
-          SHA: ${{ github.sha }}
-          REPOSITORY: ${{ github.repository }}
-        run: |
-          python3 - <<'PY'
-          import json
-          import os
-          import time
-          import urllib.request
-
-          token=os.environ['GH_TOKEN']
-          sha=os.environ['SHA']
-          repo=os.environ['REPOSITORY']
-          url=f'https://api.github.com/repos/{repo}/pages/builds?per_page=100'
-          headers={
-              'Accept':'application/vnd.github+json',
-              'Authorization':f'Bearer {token}',
-              'X-GitHub-Api-Version':'2022-11-28',
-              'User-Agent':'KDRUM-Pages-QA',
-          }
-          deadline=time.monotonic()+600.0
-          last=None
-          attempt=0
-          while time.monotonic()<deadline:
-              attempt+=1
-              req=urllib.request.Request(url,headers=headers)
-              try:
-                  with urllib.request.urlopen(req,timeout=20) as response:
-                      builds=json.load(response)
-                  build=next((item for item in builds if item.get('commit')==sha),None)
-                  if build:
-                      last={'commit':build.get('commit'),'status':build.get('status'),'error':build.get('error')}
-                      print(f'exact Pages build attempt {attempt}: {last}')
-                      if build.get('status')=='built':
-                          raise SystemExit(0)
-                      if build.get('status')=='errored':
-                          raise SystemExit(f'Pages build failed: {build.get("error")}')
-                  else:
-                      last={'commit':sha,'status':'not-listed-yet'}
-                      print(f'exact Pages build attempt {attempt}: not listed yet')
-              except SystemExit:
-                  raise
-              except Exception as exc:
-                  last={'request_error':str(exc)}
-                  print(f'Pages build attempt {attempt} request error: {exc}')
-              time.sleep(10)
-          raise SystemExit(f'Exact Pages build did not become ready: {last}')
-          PY
-
-      - name: Verify deployed homepage after CDN propagation
-        id: live_verify
-        if: steps.pages_build.outcome == 'success'
+      - name: Wait for deployed files from this commit
+        id: deploy_ready
         continue-on-error: true
         env:
           SHA: ${{ github.sha }}
         run: |
           set +e
           BASE='https://youngteckhur.github.io/KDRUM-Public'
+          files=(
+            'index.html'
+            'ko/index.html'
+            'media.html'
+            'assets/site.css'
+            'assets/site.js'
+          )
           for attempt in $(seq 1 40); do
-            echo "live verification attempt $attempt"
-            rm -rf live-artifacts
-            mkdir -p live-artifacts
-            marker_url="$BASE/?deploy=$SHA-$attempt"
-            if curl -fsS -H 'Cache-Control: no-cache' "$marker_url" | grep -q 'site.js'; then
-              BASE_URL="$BASE" AUDIT_DIR=live-artifacts AUDIT_LABEL='Live GitHub Pages homepage audit' \
-                node .github/scripts/homepage-v4-audit.cjs
-              rc=$?
-              if [ "$rc" -eq 0 ]; then
-                exit 0
+            echo "deployment readiness attempt $attempt"
+            all_match=1
+            for file in "${files[@]}"; do
+              expected=$(sha256sum "docs/$file" | awk '{print $1}')
+              tmp=$(mktemp)
+              if curl -fsS -H 'Cache-Control: no-cache' "$BASE/$file?deploy=$SHA-$attempt" -o "$tmp"; then
+                actual=$(sha256sum "$tmp" | awk '{print $1}')
+                if [ "$actual" = "$expected" ]; then
+                  echo "  match: $file"
+                else
+                  echo "  pending: $file expected=$expected actual=$actual"
+                  all_match=0
+                fi
+              else
+                echo "  unavailable: $file"
+                all_match=0
               fi
-              echo "Rendered audit has not converged yet (exit $rc)."
-            else
-              echo "Updated homepage has not propagated to the CDN yet."
+              rm -f "$tmp"
+            done
+            if [ "$all_match" -eq 1 ]; then
+              echo 'All representative live files match this commit.'
+              exit 0
             fi
             sleep 15
           done
-          echo 'Live GitHub Pages did not pass within the 10-minute propagation window.'
+          echo 'Representative live files did not match this commit within the 10-minute propagation window.'
           exit 1
+
+      - name: Verify deployed homepage after CDN propagation
+        id: live_verify
+        if: steps.deploy_ready.outcome == 'success'
+        continue-on-error: true
+        env:
+          SHA: ${{ github.sha }}
+        run: |
+          BASE='https://youngteckhur.github.io/KDRUM-Public'
+          rm -rf live-artifacts
+          mkdir -p live-artifacts
+          BASE_URL="$BASE" AUDIT_DIR=live-artifacts AUDIT_LABEL='Live GitHub Pages homepage audit' \
+            node .github/scripts/homepage-v4-audit.cjs
 
       - name: Publish live verification commit status
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-          PAGES_OUTCOME: ${{ steps.pages_build.outcome }}
+          DEPLOY_OUTCOME: ${{ steps.deploy_ready.outcome }}
           LIVE_OUTCOME: ${{ steps.live_verify.outcome }}
           SHA: ${{ github.sha }}
           REPOSITORY: ${{ github.repository }}
@@ -128,11 +101,11 @@ jobs:
         run: |
           payload=$(python3 - <<'PY'
           import json, os
-          ok=os.environ['PAGES_OUTCOME']=='success' and os.environ['LIVE_OUTCOME']=='success'
+          ok=os.environ['DEPLOY_OUTCOME']=='success' and os.environ['LIVE_OUTCOME']=='success'
           print(json.dumps({
             'state':'success' if ok else 'failure',
             'context':'homepage-live-pages',
-            'description':'Exact Pages build + EN/KO homepage verified' if ok else 'Pages build/live homepage verification failed',
+            'description':'Live files + EN/KO homepage verified' if ok else 'Live deployment/browser verification failed',
             'target_url':os.environ['RUN_URL'],
           }))
           PY
@@ -153,5 +126,5 @@ jobs:
           if-no-files-found: warn
 
       - name: Fail job when verification failed
-        if: steps.pages_build.outcome != 'success' || steps.live_verify.outcome != 'success'
+        if: steps.deploy_ready.outcome != 'success' || steps.live_verify.outcome != 'success'
         run: exit 1
