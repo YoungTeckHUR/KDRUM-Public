@@ -22,11 +22,9 @@ jobs:
 
       - name: Check public-copy JavaScript and observer policy
         run: |
-          node --check docs/assets/public-copy-runtime-v2.js
-          node --check docs/assets/branding/brand-runtime.js
-          node --check docs/assets/experience-v4.js
+          node --check docs/assets/site.js
           node --check .github/scripts/homepage-v4-audit.cjs
-          if grep -R "MutationObserver" docs/assets/public-copy-runtime-v2.js docs/assets/branding/brand-runtime.js docs/assets/experience-v4.js; then
+          if grep -R "MutationObserver" docs/assets/site.js; then
             echo "Unexpected MutationObserver in public-copy path"
             exit 1
           fi

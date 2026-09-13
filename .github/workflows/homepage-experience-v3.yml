@@ -22,9 +22,7 @@ jobs:
 
       - name: Check homepage JavaScript syntax
         run: |
-          node --check docs/assets/experience-v3.js
-          node --check docs/assets/experience-v3-final.js
-          node --check docs/assets/experience-v4.js
+          node --check docs/assets/site.js
           node --check .github/scripts/homepage-v4-audit.cjs
 
       - name: Install Chromium test runtime
