@@ -27,6 +27,7 @@ jobs:
           node --check .github/scripts/media-p18-audit.cjs
           node --check .github/scripts/layout-density-audit.cjs
           node --check .github/scripts/pages-preview.cjs
+          node .github/scripts/capability-contract.cjs
 
       - name: Install Chromium test runtime
         run: |
@@ -57,6 +58,12 @@ jobs:
           BASE_URL: http://127.0.0.1:8000/KDRUM-Public
           AUDIT_DIR: browser-artifacts/p18
         run: node .github/scripts/media-p18-audit.cjs
+
+      - name: Open every bilingual capability and capture its complete detail
+        env:
+          BASE_URL: http://127.0.0.1:8000/KDRUM-Public
+          CAPABILITY_AUDIT_DIR: browser-artifacts/capability-details
+        run: node .github/scripts/capability-detail-audit.cjs
 
       - name: Compare laptop typography at six viewport widths
         env:
