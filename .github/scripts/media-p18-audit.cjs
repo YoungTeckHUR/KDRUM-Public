@@ -20,7 +20,7 @@ fs.mkdirSync(output, {recursive:true});
     assert.equal((await range.body()).length,100);
     await request.close();
     for (const lang of ['en','ko']) {
-      for (const width of [1440,390]) {
+      for (const width of [1440,768,390]) {
         const name = `${lang}-${width}`;
         const context = await browser.newContext({viewport:{width,height:900}});
         const page = await context.newPage();
@@ -49,6 +49,16 @@ fs.mkdirSync(output, {recursive:true});
             return img.complete && img.naturalWidth > 0;
           },i);
           assert.ok((await button.locator('img').getAttribute('src')).endsWith(manifest.feature_images[i]));
+          // The HTML source height must shrink with the card width. Otherwise
+          // object-fit centers a small slide inside a 900px-tall empty box.
+          const slide = await button.locator('img').evaluate(img => {
+            const box = img.getBoundingClientRect();
+            const link = img.parentElement.getBoundingClientRect();
+            return {width:box.width,height:box.height,ratio:img.naturalWidth/img.naturalHeight,
+              topGap:box.top-link.top,linkHeight:link.height};
+          });
+          assert.ok(Math.abs(slide.height-slide.width/slide.ratio)<1,`${name} slide ${i+1}: oversized image box`);
+          assert.ok(Math.abs(slide.topGap)<1 && Math.abs(slide.linkHeight-slide.height)<1,`${name} slide ${i+1}: empty space around slide`);
           await button.click();
           await page.waitForFunction(() => {
             const img = document.querySelector('#image-viewer img');
@@ -113,7 +123,7 @@ fs.mkdirSync(output, {recursive:true});
         await page.waitForFunction(() => document.documentElement.dataset.siteReady === 'true');
         assert.equal(await page.locator('html').getAttribute('lang'),other);
         assert.deepEqual(errors,[]);
-        results.push({name,result:'PASS',images:18,enlarged:18,pdf:'HTTP 200, PDF bytes match, link opened',playback,languageSwitch:'PASS',homeNavigation:'PASS'});
+        results.push({name,result:'PASS',images:18,enlarged:18,slideLayout:'18 natural aspect ratios and image frames checked',pdf:'HTTP 200, PDF bytes match, link opened',playback,languageSwitch:'PASS',homeNavigation:'PASS'});
         console.log(`PASS ${name}: 18 images, 18 enlargements, PDF, decoded video playback/seek/end, languages and home links`);
         await context.close();
       }

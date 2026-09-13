@@ -10,9 +10,11 @@ program roles, published research and official distribution in that order.
 
 ## Content and assets
 
-- The 45 existing capability summaries, current-status descriptions and raw
-  maturity values are retained in `docs/assets/site-content.json`. The separate
-  unpublished 1D viewer remains a distinct 46th entry.
+- The 45 existing capabilities retain their identities, technical labels and
+  raw maturity values in `docs/assets/site-content.json`. Korean and English
+  descriptions use an institutional technical voice, with their meaning and
+  scope reviewed in `HOMEPAGE_TONE_REVIEW.md`. The separate unpublished 1D viewer
+  remains a distinct 46th entry.
 - Six technical diagram families are supplied as twelve Korean/English SVGs.
   They have transparent outer backgrounds, conceptual labels, readable text
   and explicit development boundaries. No plotted numeric validation results
@@ -20,8 +22,10 @@ program roles, published research and official distribution in that order.
 - Three research explanations and six bilingual FAQs are grounded in the
   public sources listed in `docs/assets/site-editorial.json`. Historical
   publication results do not certify current development features.
-- The 18 p18 images, PDF, MP4 and reference image retain their original paths
-  and bytes. The video remains explicitly labeled as an AI concept visualization.
+- The p18 PDF, MP4 and reference image retain their original paths and bytes.
+  The 18 gallery JPEGs are corrected derivatives of physical PDF pages 4-21;
+  their source-page map and rendering settings are in the media manifest.
+  The video remains explicitly labeled as an AI concept visualization.
 - The four existing canonical URLs and reciprocal English/Korean homepage
   hreflang cluster are retained. Sitemap dates reflect this content update.
 - Old public assets remain available for existing asset links, but the four
@@ -58,8 +62,14 @@ that regeneration produces no HTML diff.
   PDF HTTP response/byte equality/link opening, actual MP4 decoding, playback,
   seeking and ending, byte-range responses and bilingual navigation.
 - Existing SEO and public-content workflows validate metadata and original
-  p18 checksums. No source-model repository, technical maturity document,
+  p18 source checksums and corrected derivative checksums. Source-page CI
+  independently rerenders all 18 PDF pages, checks pixel correspondence and
+  rejects adjacent-page substitutions. No source-model repository, technical maturity document,
   private model input, or numerical implementation is changed.
+- Typography comparisons cover Korean/English at 390, 768, 1366, 1440, 1536
+  and 1920 px. A checksum-protected CSS fixture retains the pre-density design
+  after squash merges; it is only used by the browser audit, not by the website.
+  Details and measurements are recorded in `PR50_FINAL_REVIEW.md`.
 
 Run browser checks with Playwright and Chromium installed; the media check
 uses full Chrome for MP4 support. Set `BASE_URL` to the preview above and run
