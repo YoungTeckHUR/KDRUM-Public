@@ -227,7 +227,7 @@
       "diagramCaptionEn": null,
       "moreKo": "이 과정에서 강우강도와 토양의 침투가능 조건에 따라 토양으로 들어가는 물과 지표에 남는 초과강우가 달라집니다. 습윤전선, 초기 토양수분 상태와 포화투수 특성은 침투량을 이해하는 핵심 요소이며, 침투 후의 토양수분과 초과강우는 각각 연속 수문상태와 지표유출 계산으로 이어집니다.",
       "moreEn": "The partition between soil entry and rainfall excess depends on rainfall intensity and the soil’s infiltration condition. Wetting-front progression, initial soil-water state and saturated hydraulic properties are key controls; infiltrated water updates the continuous hydrologic state while rainfall excess feeds surface-runoff calculations.",
-      "conceptAnchor": "master-a"
+      "conceptAnchor": "concept-ga"
     },
     {
       "id": "runoff",
@@ -258,7 +258,7 @@
       "diagramCaptionEn": null,
       "moreKo": "격자에 저장된 물은 지표면을 따라 빠르게 이동하는 성분과 토양층을 통해 상대적으로 느리게 이동하는 성분으로 나뉘어 하류 격자와 하천에 전달됩니다. 사면경사와 토양저류 상태 등 격자조건이 각 경로의 응답에 영향을 주며, 이러한 유출생성과 이후의 하도 수리계산은 서로 구분하여 해석합니다.",
       "moreEn": "Water stored in a cell can leave through a fast surface pathway and a comparatively slower soil-layer pathway before being transferred to downstream cells and the channel. Cell properties such as hillslope gradient and soil-storage state influence those responses; runoff generation is interpreted separately from the subsequent river-hydraulic calculation.",
-      "conceptAnchor": "master-a"
+      "conceptAnchor": "concept-runoff"
     },
     {
       "id": "continuous",
@@ -317,7 +317,7 @@
       "diagramCaptionEn": null,
       "moreKo": "증발산은 토양에 저장된 물을 대기로 되돌리는 과정으로 연속모의에서 저장량과 다음 시점의 유출가능량에 영향을 줍니다. 토지피복과 식생 상태, 계절에 따른 엽면적지수(LAI) 변화 및 토양의 수분상태가 격자별로 다르게 반영될 수 있으므로, 같은 강우라도 격자별 물수지와 계절응답이 달라질 수 있습니다.",
       "moreEn": "Evapotranspiration returns stored soil water to the atmosphere and therefore affects storage and the water available for later runoff in continuous simulation. Land cover, vegetation condition, seasonal leaf-area-index (LAI) changes and soil-water state can vary among cells, producing different cell-scale water balances and seasonal responses under the same rainfall.",
-      "conceptAnchor": "master-a"
+      "conceptAnchor": "concept-et"
     },
     {
       "id": "snow",
@@ -432,7 +432,7 @@
       "diagramCaptionEn": null,
       "moreKo": "D층은 상부 토양층보다 느린 시간규모의 심부 저장과 지연 복류를 표현하려는 개발 확장입니다. 상부에서 전달된 물을 저장한 뒤 천천히 하천·기저유출에 기여하도록 연결하여 장기 감수부와 저유량 응답을 표현합니다. 이는 전체 지하수 유동장을 해석하는 별도 지하수모형과 동일한 개념이 아니라 K-DRUM 장기수문 상태를 확장하는 저장·유출 경로로 해석해야 합니다.",
       "moreEn": "The D-layer is a development extension intended to represent deeper storage and delayed return flow on a slower time scale than the upper soil layers. Water transferred downward can be stored and released gradually toward channel/baseflow response, supporting representation of long recession and low-flow behavior. It should be interpreted as an extended K-DRUM storage-and-release pathway, not as a substitute for a full groundwater-flow model.",
-      "conceptAnchor": "master-a"
+      "conceptAnchor": "concept-dlayer"
     },
     {
       "id": "slope-separate",
