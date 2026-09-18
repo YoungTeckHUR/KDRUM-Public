@@ -83,6 +83,26 @@ jobs:
                   'max_bytes': 200_000,
                   'magic': b'\xff\xd8\xff',
               },
+              'docs/assets/diagrams/grid-hydrology/grid-cell-water-cycle-ko.webp': {
+                  'max_bytes': 100_000,
+                  'magic': b'RIFF',
+              },
+              'docs/assets/diagrams/grid-hydrology/green-ampt-infiltration-ko.webp': {
+                  'max_bytes': 100_000,
+                  'magic': b'RIFF',
+              },
+              'docs/assets/diagrams/grid-hydrology/evapotranspiration-soil-water-ko.webp': {
+                  'max_bytes': 100_000,
+                  'magic': b'RIFF',
+              },
+              'docs/assets/diagrams/grid-hydrology/surface-subsurface-runoff-ko.webp': {
+                  'max_bytes': 100_000,
+                  'magic': b'RIFF',
+              },
+              'docs/assets/diagrams/grid-hydrology/dlayer-delayed-baseflow-ko.webp': {
+                  'max_bytes': 100_000,
+                  'magic': b'RIFF',
+              },
           }
 
 
