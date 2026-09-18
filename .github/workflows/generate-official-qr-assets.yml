@@ -42,6 +42,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/assets/qr/official
+          # The public repo normally ignores ZIP files; force-add only this approved QR package.
+          git add -f docs/assets/qr/official/KDRUM_Official_QR_Set.zip
           if git diff --cached --quiet; then
             echo "No generated asset changes."
             exit 0
