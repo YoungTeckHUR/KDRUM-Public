@@ -18,5 +18,14 @@
   patchCard('07_continuous_hydrology.jpg','Core 확립 · D-layer 개발 중','Established Core · D-layer in development');
   document.querySelectorAll('a[href$="/04_end_to_end_workflow.jpg"]').forEach(a=>{const card=a.closest('.media-card');if(!card||card.querySelector('[data-water-quality-note]'))return;const cardLang=card.closest('[data-language]')?.dataset.language||lang;const note=document.createElement('p');note.dataset.waterQualityNote='true';note.className='media-status-note';note.textContent=cardLang==='ko'?'수질 출력은 그림에 포함된 확장 개념이며, 현재 공개 버전에서는 비활성·재개발 후보입니다.':'Water-quality output is an illustrated extension concept; it is disabled in the current public version and remains a redevelopment candidate.';card.querySelector('.media-body')?.append(note);});
   document.title=lang==='ko'?'K-DRUM 시각자료 | p18 공개 갤러리':'K-DRUM Visual Guide | p18 publication gallery';}
+ // Optional analytics bootstrap. Existing site behavior is unchanged when analytics is disabled.
+ const self=document.currentScript;
+ if(self?.src){
+  const base=new URL('.',self.src);
+  const config=document.createElement('script');
+  config.src=new URL('analytics-config.js',base).href;
+  config.addEventListener('load',()=>{const analytics=document.createElement('script');analytics.src=new URL('analytics.js',base).href;analytics.defer=true;document.head.append(analytics);});
+  document.head.append(config);
+ }
  document.documentElement.dataset.siteReady='true';
 })();
