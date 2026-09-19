@@ -29,8 +29,9 @@ const results=[];
     const shared=card.locator('.figure[data-shared-diagram]');
     assert.equal(await shared.getAttribute('data-shared-diagram'),item.diagram);
     assert.equal(await shared.locator('img').count(),0,'Shared diagram is not duplicated inline');
-    const img=page.locator(`img[src$="/diagrams/${item.diagram}-${lang}.svg"]`);
-    assert.equal(await img.count(),1,'Exactly one representative diagram remains');
+    // The dialog retains its last image source after closing; it is not an inline duplicate.
+    const img=page.locator(`main img[src$="/diagrams/${item.diagram}-${lang}.svg"]`);
+    assert.equal(await img.count(),1,'Exactly one representative diagram remains in main');
     await img.scrollIntoViewIfNeeded();await img.evaluate(el=>el.decode());
     assert.ok((await shared.locator('a[data-enlarge]').getAttribute('href')).endsWith(`/diagrams/${item.diagram}-${lang}.svg`));
     assert.equal(await card.locator('figcaption span').innerText(),item['diagramCaption'+suffix]);
