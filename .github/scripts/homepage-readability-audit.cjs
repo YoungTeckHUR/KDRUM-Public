@@ -91,4 +91,4 @@ const widths=[1440,1366,1280,1024,768,390],results=[];
   await nojs.close();
  }finally{fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks:results},null,2));await browser.close();}
  assert.equal(results.length,12);console.log('READABILITY PASS: 12 bilingual/viewport checks, 20 image interactions, preserved capabilities, direct links, no-JS fallback.');
-})().catch(e=>{console.error(e);process.exitCode=1;});
+})().then(()=>require('./capability-navigation-audit.cjs').run()).catch(e=>{console.error(e);process.exitCode=1;});
