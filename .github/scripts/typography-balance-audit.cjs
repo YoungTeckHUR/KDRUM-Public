@@ -51,7 +51,7 @@ async function run(){
      await page.evaluate(()=>document.documentElement.style.zoom='2');await reflow(page,lang+' CSS zoom 200%');
      for(const id of ['rain-spatial','rain-methods','wb','coupling']){
       const card=page.locator('#cap-'+id);await card.locator('summary').click();
-      assert.ok(await card.locator('figcaption').evaluate(el=>el.checkVisibility()),id+' caption is rendered');
+      assert.ok(await card.locator('figcaption').evaluateAll(els=>els.length>0&&els.every(el=>el.checkVisibility())),id+' all captions are rendered');
       await reflow(page,lang+' '+id+' open at CSS zoom 200%');
       supplement.push({lang,id,test:'expanded-caption-200-percent',result:'PASS'});await card.locator('summary').click();
      }
