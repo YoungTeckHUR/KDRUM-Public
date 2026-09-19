@@ -55,7 +55,7 @@ function diagram(name,lang){
   box(60,400,300,149,L('매개변수 범위','Parameter ranges'),[L('검토할 계산 케이스','Candidate cases')])+
   route('M374 287H403V333H430')+route('M374 472H403V377H430')+
   box(440,268,300,210,L('반복 계산 · 비교','Run and compare'),[L('동일한 목표지점','Same target location'),L('케이스별 결과','Results for each case')])+
-  line(754,356,805,356,undefined,true)+box(820,268,320,210,L('성능지표 평가','Evaluate performance'),['NSE · KGE','PBIAS · RMSE'],'#ecf6f3')+
+  line(754,356,805,356,undefined,true)+box(820,268,320,210,L('성능지표 평가','Evaluate metrics'),['NSE · KGE','PBIAS · RMSE'],'#ecf6f3')+
   text(600,610,L('선정 결과의 적용 범위는 자료와 평가 조건에 따릅니다.','Applicability depends on the data and evaluation conditions.'),25,400,'middle'));
  if(name==='result-lifecycle')return frame(name,lang,L('실행 기록과 출력 무결성','Run records and output integrity'),L('결과의 생성 조건과 후처리 가능 상태를 함께 확인합니다.','Review how results were produced and whether outputs are usable.'),
   box(60,218,310,220,L('실행 조건 기록','Record run context'),[L('입력 · 실행 모드','Inputs · run mode'),L('초기상태','Initial states'),L('진단 · 경고','Diagnostics · warnings'),L('계산시간','Computation time')])+
