@@ -68,3 +68,5 @@
 .feature-reference figcaption small{font-size:.8125rem}
 .feature-reference figcaption a{justify-self:start;display:inline-flex;align-items:center;min-height:44px;font-weight:600}
 @media(max-width:700px){.cap-detail .feature-reference{padding:10px}.feature-reference figcaption{font-size:.875rem}}
+.related-reference-links{margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
+.related-reference-links .resource-links{margin-top:0;gap:8px 24px}

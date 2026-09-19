@@ -35,6 +35,36 @@ jobs:
           }
 
           approved_binary_assets = {
+              'docs/assets/diagrams/feature-reference-wave2-2026-09-19/connected-river-network-en.webp': {
+                  'max_bytes': 450_000,
+                  'magic': b'RIFF',
+                  'sha256': '5776066aa76efc09fcb6338a55d418d8709f6fe88f46aad7218595cfecb42d07',
+              },
+              'docs/assets/diagrams/feature-reference-wave2-2026-09-19/continuous-water-storage-en.webp': {
+                  'max_bytes': 450_000,
+                  'magic': b'RIFF',
+                  'sha256': 'b42bae75f7bd34d6a10d377ee1a475e31da4cfacbd88dd83684409e517158af5',
+              },
+              'docs/assets/diagrams/feature-reference-wave2-2026-09-19/floodplain-grid-concept-en.webp': {
+                  'max_bytes': 450_000,
+                  'magic': b'RIFF',
+                  'sha256': 'c7c9dc37c06f7f5a937689ce4d0e44d35f0a58a2d7bea9d56c819896669edd0e',
+              },
+              'docs/assets/diagrams/feature-reference-wave2-2026-09-19/hydraulic-structure-flows-en.webp': {
+                  'max_bytes': 450_000,
+                  'magic': b'RIFF',
+                  'sha256': 'dd6ed8d577c957525cfe976cc59a1d1a4ee324613932aa9d9990aeb493e52741',
+              },
+              'docs/assets/diagrams/feature-reference-wave2-2026-09-19/reservoir-scenario-assessment-en.webp': {
+                  'max_bytes': 450_000,
+                  'magic': b'RIFF',
+                  'sha256': 'f362921f3cd4e5b53873313d752d1f93396664467673339500b333d8806fe2ba',
+              },
+              'docs/assets/diagrams/feature-reference-wave2-2026-09-19/riverbed-deep-storage-en.webp': {
+                  'max_bytes': 450_000,
+                  'magic': b'RIFF',
+                  'sha256': '9819fa424bb6351524880ef1ea133603e8f3c63baa536a755e1a0511e90dba71',
+              },
               'docs/assets/diagrams/feature-reference-2026-09-19/channel-geometry-en.webp': {
                   'max_bytes': 150_000,
                   'magic': b'RIFF',
