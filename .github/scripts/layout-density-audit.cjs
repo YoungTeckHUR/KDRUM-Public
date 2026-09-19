@@ -25,7 +25,8 @@ async function metrics(page,selectors){return page.evaluate(selectors=>Object.fr
    assert.ok(home.heroTitle.fontSize>=38&&home.heroTitle.fontSize<=46.1,name+' hero target');
    assert.ok(home.sectionTitle.fontSize>=28&&home.sectionTitle.fontSize<=32.1,name+' section title target');
    assert.ok(home.body.fontSize>=15&&home.body.fontSize<=16,name+' body target');
-   const [min,max]=width<=700?[15.5,16.1]:[14,15.3];assert.ok(home.cardText.fontSize>=min&&home.cardText.fontSize<=max,name+' card text target');
+   // Current readability target: 16px card body at desktop and mobile widths.
+   const [min,max]=[15.5,16.1];assert.ok(home.cardText.fontSize>=min&&home.cardText.fontSize<=max,name+' card text target');
    await noOverflow(page,name+' home');
   }
   await page.goto(base+'/media.html?lang='+lang);await page.waitForFunction(()=>document.documentElement.dataset.siteReady==='true');

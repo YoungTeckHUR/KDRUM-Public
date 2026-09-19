@@ -40,21 +40,3 @@
 .feature-link-button{font:inherit;font-size:.875rem;color:var(--blue);background:none;border:0;padding:6px 0;min-height:44px;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
 .feature-share-status{align-self:center;font-size:.875rem;color:var(--muted)}
 .feature-share-status:empty{display:none}
-
-
-/* Typography refinements: retain the approved layout, content and image sizing. */
-.capability summary p,.cap-detail p,.cap-detail li,.program p,.story p:not(.citation){font-size:1rem;line-height:1.7}
-.capability summary h3{font-size:1.125rem;line-height:1.45}
-.cap-detail h4{font-size:1rem;line-height:1.5}
-.badge{font-size:.8125rem}
-.hero-image figcaption,.story .citation,.site-footer p{font-size:.875rem;line-height:1.6}
-.concept-card .media-body p{font-size:.9375rem;line-height:1.6}
-.concept-links a{font-size:.875rem}
-.capability-grid{align-items:stretch}
-.capability:not([open])>summary{height:100%}
-.concept-card{display:flex;flex-direction:column}
-.concept-card .media-body{display:flex;flex-direction:column;flex:1;min-width:0}
-.concept-card .concept-links{margin-top:auto;padding-top:8px}
-.cap-detail>.resource-links{margin-top:24px}
-.cap-detail .note .resource-links{margin-top:12px}
-:lang(ko) :is(.section-heading h2,.section-heading p,.intro-block h3,.intro-block p,.capability h3,.cap-detail p,.cap-detail li,.program h3,.program p,.story h3,.story p,.concept-card h3,.concept-card p){word-break:keep-all;overflow-wrap:anywhere}
