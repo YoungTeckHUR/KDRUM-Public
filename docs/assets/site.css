@@ -58,3 +58,4 @@
 .cap-detail>.resource-links{margin-top:24px}
 .cap-detail .note .resource-links{margin-top:12px}
 :lang(ko) :is(.section-heading h2,.section-heading p,.intro-block h3,.intro-block p,.capability h3,.cap-detail p,.cap-detail li,.program h3,.program p,.story h3,.story p,.concept-card h3,.concept-card p){word-break:keep-all;overflow-wrap:anywhere}
+:lang(en) .capability summary h3{overflow-wrap:anywhere;hyphens:auto}
