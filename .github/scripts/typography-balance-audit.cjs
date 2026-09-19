@@ -6,7 +6,9 @@ const base=(process.env.BASE_URL||'http://127.0.0.1:8000/KDRUM-Public').replace(
 const out=path.join(process.env.READABILITY_AUDIT_DIR||'browser-artifacts/readability','typography');
 const sizes=[320,390,768,1366,1440,1536,1920];
 async function reflow(page,label){
- const m=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth+1,clipped:[...document.querySelectorAll('main h2,main h3,main h4,main p,main li,main figcaption')].filter(el=>el.getBoundingClientRect().height>0&&el.getBoundingClientRect().width>0&&(el.scrollWidth>el.clientWidth+2||el.scrollHeight>el.clientHeight+2)).map(el=>el.tagName+': '+el.textContent.slice(0,60))}));
+ // Closed native details can retain layout boxes while their contents are not painted.
+ // Measure rendered text; the zoom checks below separately open every shared-caption card.
+ const m=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth+1,clipped:[...document.querySelectorAll('main h2,main h3,main h4,main p,main li,main figcaption')].filter(el=>el.checkVisibility()&&el.getBoundingClientRect().height>0&&el.getBoundingClientRect().width>0&&(el.scrollWidth>el.clientWidth+2||el.scrollHeight>el.clientHeight+2)).map(el=>el.tagName+': '+el.textContent.slice(0,60))}));
  assert.equal(m.overflow,false,label+' page overflow');assert.deepEqual(m.clipped,[],label+' clipped text');
 }
 async function metrics(page){return page.evaluate(()=>{
@@ -45,7 +47,15 @@ async function run(){
     await page.setViewportSize({width,height:Math.max(1000,Math.ceil(await page.locator('#cap-ga').evaluate(el=>el.getBoundingClientRect().height))+240)});
     if(phase==='after')await reflow(page,lang+' '+width+' open detail');
     await page.locator('#cap-ga').screenshot({path:path.join(out,phase+'-'+lang+'-'+width+'-detail.png')});
-    if(phase==='after'&&width===1440){await page.evaluate(()=>document.documentElement.style.zoom='2');await reflow(page,lang+' CSS zoom 200%');}
+    if(phase==='after'&&width===1440){
+     await page.evaluate(()=>document.documentElement.style.zoom='2');await reflow(page,lang+' CSS zoom 200%');
+     for(const id of ['rain-spatial','rain-methods','wb','coupling']){
+      const card=page.locator('#cap-'+id);await card.locator('summary').click();
+      assert.ok(await card.locator('figcaption').evaluate(el=>el.checkVisibility()),id+' caption is rendered');
+      await reflow(page,lang+' '+id+' open at CSS zoom 200%');
+      supplement.push({lang,id,test:'expanded-caption-200-percent',result:'PASS'});await card.locator('summary').click();
+     }
+    }
    }
    assert.deepEqual(errors,[]);results.push({lang,width,phase,result:'PASS',...m});await context.close();
   }
@@ -56,8 +66,8 @@ async function run(){
  for(const width of [390,1440])for(const suffix of ['/media.html?lang=ko','/media.html?lang=en','/seo-kdrum.html']){
   const page=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});await page.goto(base+suffix);await page.waitForFunction(()=>document.documentElement.dataset.siteReady==='true');await reflow(page,suffix+' '+width);supplement.push({page:suffix,width,result:'PASS'});await page.close();
  }
- console.log('TYPOGRAPHY PASS: 28 baseline/candidate cases, 14 responsive comparisons, 2 no-JS and 6 media/FAQ cases; unchanged text/headings and balanced cards.');
+ console.log('TYPOGRAPHY PASS: 28 baseline/candidate cases, 14 responsive comparisons, 8 expanded-caption zoom, 2 no-JS and 6 media/FAQ cases; unchanged text/headings and balanced cards.');
  }finally{fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({baseline:'40ded09',checks:results,supplement},null,2));await browser.close();}
- assert.equal(results.length,28);assert.equal(supplement.length,8);
+ assert.equal(results.length,28);assert.equal(supplement.length,16);
 }
 module.exports={run};if(require.main===module)run().catch(e=>{console.error(e);process.exitCode=1;});
