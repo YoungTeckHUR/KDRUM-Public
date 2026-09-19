@@ -7,3 +7,28 @@
 @media(max-width:700px){html{scroll-padding-top:138px}.wrap{width:calc(100% - 36px)}.header-row{min-height:70px;gap:10px}.brand{font-size:1rem;gap:7px}.brand img{width:28px;height:28px}.header-links{gap:8px}.header-links a{font-size:.78rem}.language{padding-left:4px;gap:0}.language a{padding:7px 5px}.site-nav .wrap{gap:22px;padding-block:3px}.hero{padding:36px 0}.hero-grid{grid-template-columns:1fr;gap:30px}.hero-image img{aspect-ratio:1.9;object-position:center 48%;border-radius:4px 36px 4px 4px}.hero h1{font-size:clamp(2.4rem,10.25vw,2.875rem)}.full-name{margin-bottom:20px}.section{padding:44px 0}.section-heading{display:block;margin-bottom:24px}.intro-grid,.feature-reading,.stories,.download-layout,.results-notes{grid-template-columns:1fr;gap:26px}.intro-block{padding-top:18px}.diagram-panel{padding:14px}.figure figcaption{display:block}.figure figcaption a{display:inline-flex;align-items:center;min-height:44px}.filters{grid-template-columns:1fr;gap:12px}.capability-grid{grid-template-columns:1fr}.capability summary{min-height:0;padding:20px}.cap-detail{padding:20px}.cap-detail .detail-grid{grid-template-columns:1fr;gap:22px}.program-grid{grid-template-columns:1fr}.program{padding-top:18px}.footer-grid{display:block}.footer-links{margin-top:22px}.page-title{padding-top:36px}.gallery-grid{grid-template-columns:1fr}.video-layout{gap:24px}.hero .lead{font-size:1.125rem}.capability summary p,.cap-detail p,.cap-detail li,.program p,.story p,.media-body p{font-size:1rem}.story .citation{margin-top:0}.gallery-group{padding:32px 0}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
 @media(max-width:700px){.site-nav{top:70px}.dialog-head{gap:8px;padding:10px 12px}.dialog-head>strong{font-size:.8rem}.zoom-control{gap:4px;flex-direction:column;line-height:1.2}.zoom-control input{width:100px;min-height:28px}.dialog-body{padding:12px}}
+
+/* Scoped reading-layout refinements; existing sections and media styles are unchanged. */
+.quick-entry{margin-top:28px;padding:18px 0 0;border-top:1px solid var(--line);display:flex;align-items:center;gap:16px 24px;flex-wrap:wrap}
+.quick-entry h3{font-size:1rem;line-height:1.5;letter-spacing:0}
+.quick-entry-links{display:flex;gap:8px;flex-wrap:wrap;min-width:0}
+.quick-entry-links a{display:inline-flex;align-items:center;gap:12px;min-height:44px;padding:8px 14px;border:1px solid var(--line);border-radius:6px;text-decoration:none;font-size:.875rem;font-weight:650;background:var(--soft)}
+#grid-hydrology-concepts .section-heading p{max-width:760px}
+.concept-overview-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;align-items:start}
+.concept-overview-grid>*{min-width:0}
+.concept-master.figure{margin:0}
+.concept-master> a{display:block}
+.concept-master img{width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#fff}
+.concept-master figcaption{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:10px}
+.concept-master figcaption a{min-height:44px;display:inline-flex;align-items:center}
+.concept-thumbnail-grid.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.concept-card .media-body{padding:12px}
+.concept-card .media-body h3{font-size:1rem;line-height:1.45;letter-spacing:-.025em;overflow-wrap:break-word;hyphens:auto}
+.concept-card .media-body p{font-size:.875rem;line-height:1.55;margin-top:6px}
+.concept-links{display:flex;flex-wrap:wrap;gap:0 12px;margin-top:6px}
+.concept-links a{display:inline-flex;align-items:center;min-height:44px;font-size:.8rem;font-weight:650}
+.cap-detail .figure-reference{margin-top:14px}
+.figure-reference figcaption{margin-top:0;align-items:center}
+.figure-reference figcaption a{min-height:44px;display:inline-flex;align-items:center}
+@media(max-width:1000px){.concept-overview-grid{grid-template-columns:1fr}.concept-master{width:100%;max-width:620px;margin-inline:auto!important}}
+@media(max-width:700px){.quick-entry{display:block}.quick-entry-links{margin-top:10px}.concept-thumbnail-grid.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.concept-card .media-body{padding:10px}.concept-card .media-body p{font-size:.9rem}.concept-links a{font-size:.875rem}.figure-reference figcaption{display:block}}

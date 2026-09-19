@@ -45,6 +45,12 @@ jobs:
           cat /tmp/kdrum-http.log
           exit 1
 
+      - name: Verify compact layout, content preservation and image links
+        env:
+          BASE_URL: http://127.0.0.1:8000/KDRUM-Public
+          READABILITY_AUDIT_DIR: browser-artifacts/readability
+        run: node .github/scripts/homepage-readability-audit.cjs
+
       - name: Run rendered browser checks
         env:
           BASE_URL: http://127.0.0.1:8000/KDRUM-Public

@@ -88,6 +88,8 @@ jobs:
           mkdir -p live-artifacts
           BASE_URL="$BASE" AUDIT_DIR=live-artifacts AUDIT_LABEL='Live GitHub Pages homepage audit' \
             node .github/scripts/homepage-v4-audit.cjs
+          BASE_URL="$BASE" READABILITY_AUDIT_DIR=live-artifacts/readability \
+            node .github/scripts/homepage-readability-audit.cjs
 
       - name: Publish live verification commit status
         if: always()
