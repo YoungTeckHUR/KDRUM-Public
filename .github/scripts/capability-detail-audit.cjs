@@ -8,7 +8,8 @@ const out=process.env.CAPABILITY_AUDIT_DIR||'browser-artifacts/capability-detail
 const results=[];
 (async()=>{
  const browser=await chromium.launch({headless:true,...(process.env.BROWSER_CHANNEL?{channel:process.env.BROWSER_CHANNEL}:{})});
- try{for(const lang of ['ko','en'])for(const width of [1440,390]){
+ try{await require('./feature-schematic-audit.cjs').run(browser,base,out);
+ for(const lang of ['ko','en'])for(const width of [1440,390]){
   const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'}),page=await context.newPage(),errors=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)errors.push(r.status()+' '+r.url());});
   await page.goto(base+(lang==='ko'?'/ko/':'/'));
@@ -33,16 +34,30 @@ const results=[];
     assert.equal(await reference.getAttribute('data-reference-feature'),item.id);
     assert.equal(await image.getAttribute('alt'),caption);
     assert.equal(await reference.locator('figcaption span').innerText(),caption);
-    const expected=references.directory+concept[0]+'-en.webp';
+    const asset=references.getReference(item.id,lang),expected=asset.src;
     assert.ok((await image.getAttribute('src')).endsWith(expected));
     await image.scrollIntoViewIfNeeded();await image.evaluate(el=>el.decode());
-    assert.deepEqual(await image.evaluate(el=>[el.naturalWidth,el.naturalHeight]),[1672,941]);
+    assert.deepEqual(await image.evaluate(el=>[el.naturalWidth,el.naturalHeight]),[asset.width,asset.height]);
     assert.ok(await image.evaluate(el=>el.getBoundingClientRect().width<=640),'Reference stays compact');
     await link.click();await page.locator('#image-viewer img').evaluate(el=>el.decode());
     assert.ok((await page.locator('#image-viewer img').getAttribute('src')).endsWith(expected));
     assert.equal(await page.locator('#image-caption').innerText(),await link.getAttribute('data-caption'));
     await page.keyboard.press('Escape');assert.equal(await link.evaluate(el=>el===document.activeElement),true,'Viewer restores focus');
    }
+   const linked=references.linkedConcepts[item.id]||[],linkElements=card.locator('[data-reference-target]');
+   assert.equal(await linkElements.count(),linked.length,item.id+' related reference count');
+   for(let index=0;index<linked.length;index++){
+    const [target,ko,en]=linked[index],link=linkElements.nth(index),asset=references.getReference(target,lang);
+    assert.equal(await link.getAttribute('data-reference-target'),target);
+    assert.equal(await link.innerText(),(lang==='ko'?ko:en)+' ↗');
+    assert.ok((await link.getAttribute('href')).endsWith(asset.src));
+    await link.click();await page.locator('#image-viewer img').evaluate(el=>el.decode());
+    assert.ok((await page.locator('#image-viewer img').getAttribute('src')).endsWith(asset.src));
+    assert.equal(await page.locator('#image-caption').innerText(),asset.caption);
+    await page.keyboard.press('Escape');assert.ok(await link.evaluate(el=>el===document.activeElement));
+   }
+   if(references.galleryConcepts[item.id])assert.equal(await card.locator('a[href="#'+references.galleryConcepts[item.id]+'"]').count(),1);
+   if(item.id==='wq'){assert.equal(await reference.count(),0);assert.equal(await linkElements.count(),0);assert.equal(item.s,'DISABLED / REDEVELOPMENT');}
    if(item.diagram){
     const shared=card.locator('.figure[data-shared-diagram]');
     assert.equal(await shared.getAttribute('data-shared-diagram'),item.diagram);
