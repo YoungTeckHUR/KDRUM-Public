@@ -1,0 +1,46 @@
+name: Prepare bounded capability navigation
+on:
+  push:
+    branches: [polish/capability-navigation-20260919]
+    paths: [.github/scripts/prepare-navigation.cjs, .github/workflows/prepare-navigation.yml]
+permissions:
+  contents: write
+jobs:
+  prepare:
+    if: github.repository == 'YoungTeckHUR/KDRUM-Public' && github.ref == 'refs/heads/polish/capability-navigation-20260919'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply scoped edits and verify preservation
+        run: |
+          set -euo pipefail
+          node --check .github/scripts/prepare-navigation.cjs
+          node --check .github/scripts/capability-navigation-audit.cjs
+          node .github/scripts/prepare-navigation.cjs
+          node --check docs/assets/site.js
+          node --check .github/scripts/build-site.cjs
+          node .github/scripts/capability-contract.cjs
+          git diff --check
+      - name: Commit content only to the review branch
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          test "$(git ls-remote origin refs/heads/polish/capability-navigation-20260919 | cut -f1)" = "$EXPECTED_SHA"
+          git add .github/scripts/build-site.cjs .github/scripts/homepage-readability-audit.cjs docs/assets/site.js docs/assets/site.css docs/index.html docs/ko/index.html
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Improve bilingual capability discovery and stable feature sharing without changing content'
+          git push origin HEAD:refs/heads/polish/capability-navigation-20260919
+          git rev-parse HEAD > navigation-evidence/prepared-sha.txt
+          git diff --stat 6531b06180fc39fed6a55a22a9ee139de1463bbf HEAD > navigation-evidence/change-summary.txt
+          tar -czf navigation-evidence/prepared-source.tar.gz .github docs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: capability-navigation-preparation
+          path: navigation-evidence/
+          if-no-files-found: warn
