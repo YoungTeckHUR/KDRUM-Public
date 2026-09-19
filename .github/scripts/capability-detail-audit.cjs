@@ -1,6 +1,7 @@
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const data=require('../../docs/assets/site-content.json');
+const references=require('./feature-reference-images.cjs');references.validate(data);
 const {validate,duplicateSentences}=require('./capability-contract.cjs');validate(data);
 const base=(process.env.BASE_URL||'http://127.0.0.1:8000/KDRUM-Public').replace(/\/$/,'');
 const out=process.env.CAPABILITY_AUDIT_DIR||'browser-artifacts/capability-details';fs.mkdirSync(out,{recursive:true});
@@ -24,7 +25,24 @@ const results=[];
    assert.equal(await card.getAttribute('data-status'),item.s);
    const steps=await card.locator('ol li').allTextContents();assert.equal(steps.length,3);
    steps.forEach((s,i)=>assert.equal(s.split(' — ')[1],item['steps'+suffix][i],item.id+' step '+i));
-   assert.equal(await card.locator('.figure').count(),item.diagram?1:0,item.id+' figure mapping');
+   assert.equal(await card.locator('.figure[data-shared-diagram]').count(),item.diagram?1:0,item.id+' shared figure mapping');
+   const concept=references.concepts[item.id],reference=card.locator('.feature-reference');
+   assert.equal(await reference.count(),concept?1:0,item.id+' reference image mapping');
+   if(concept){
+    const caption=concept[lang==='ko'?1:2],image=reference.locator('img'),link=reference.locator('.feature-reference-image');
+    assert.equal(await reference.getAttribute('data-reference-feature'),item.id);
+    assert.equal(await image.getAttribute('alt'),caption);
+    assert.equal(await reference.locator('figcaption span').innerText(),caption);
+    const expected=references.directory+concept[0]+'-en.webp';
+    assert.ok((await image.getAttribute('src')).endsWith(expected));
+    await image.scrollIntoViewIfNeeded();await image.evaluate(el=>el.decode());
+    assert.deepEqual(await image.evaluate(el=>[el.naturalWidth,el.naturalHeight]),[1672,941]);
+    assert.ok(await image.evaluate(el=>el.getBoundingClientRect().width<=640),'Reference stays compact');
+    await link.click();await page.locator('#image-viewer img').evaluate(el=>el.decode());
+    assert.ok((await page.locator('#image-viewer img').getAttribute('src')).endsWith(expected));
+    assert.equal(await page.locator('#image-caption').innerText(),await link.getAttribute('data-caption'));
+    await page.keyboard.press('Escape');assert.equal(await link.evaluate(el=>el===document.activeElement),true,'Viewer restores focus');
+   }
    if(item.diagram){
     const shared=card.locator('.figure[data-shared-diagram]');
     assert.equal(await shared.getAttribute('data-shared-diagram'),item.diagram);
@@ -34,8 +52,8 @@ const results=[];
     assert.equal(await img.count(),1,'Exactly one representative diagram remains in main');
     await img.scrollIntoViewIfNeeded();await img.evaluate(el=>el.decode());
     assert.ok((await shared.locator('a[data-enlarge]').getAttribute('href')).endsWith(`/diagrams/${item.diagram}-${lang}.svg`));
-    assert.equal(await card.locator('figcaption span').innerText(),item['diagramCaption'+suffix]);
-    await card.locator('[data-enlarge]').click();await page.locator('#image-viewer img').evaluate(el=>el.decode());
+    assert.equal(await shared.locator('figcaption span').innerText(),item['diagramCaption'+suffix]);
+    await shared.locator('[data-enlarge]').click();await page.locator('#image-viewer img').evaluate(el=>el.decode());
     assert.equal(await page.locator('#image-caption').innerText(),item['diagramCaption'+suffix]);await page.keyboard.press('Escape');
    }
    const layout=await card.evaluate(el=>({pageOverflow:document.documentElement.scrollWidth>innerWidth+1,clipped:[...el.querySelectorAll('h3,p,li,figcaption')].filter(n=>n.scrollWidth>n.clientWidth+1||n.scrollHeight>n.clientHeight+1).map(n=>n.tagName),height:el.getBoundingClientRect().height}));

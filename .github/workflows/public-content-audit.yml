@@ -35,6 +35,66 @@ jobs:
           }
 
           approved_binary_assets = {
+              'docs/assets/diagrams/feature-reference-2026-09-19/channel-geometry-en.webp': {
+                  'max_bytes': 150_000,
+                  'magic': b'RIFF',
+                  'sha256': 'a91fa008da0b73f7793437ace8aac007a72e2664de0b54d1dfd4706fd12ea89b',
+              },
+              'docs/assets/diagrams/feature-reference-2026-09-19/conservative-tracer-en.webp': {
+                  'max_bytes': 150_000,
+                  'magic': b'RIFF',
+                  'sha256': '3c61eaaecb4c29e1f9c82e5fad949c0f470d687c870adeca92c75672efaec83d',
+              },
+              'docs/assets/diagrams/feature-reference-2026-09-19/estuary-vertical-section-en.webp': {
+                  'max_bytes': 150_000,
+                  'magic': b'RIFF',
+                  'sha256': 'f02274dac8576b75d117ca5b0e4063ea27a3caca9f8bca56e29525d801baee79',
+              },
+              'docs/assets/diagrams/feature-reference-2026-09-19/hillslope-channel-en.webp': {
+                  'max_bytes': 150_000,
+                  'magic': b'RIFF',
+                  'sha256': '26c8a335739f70ee71b6f4d35008c698a18e3deff511e9eff66eb84ddeac2378',
+              },
+              'docs/assets/diagrams/feature-reference-2026-09-19/parallel-computation-en.webp': {
+                  'max_bytes': 150_000,
+                  'magic': b'RIFF',
+                  'sha256': 'ba30b753b3b7f145082670312df318afac468f66c5ad8e407cd9152ae1dd4c80',
+              },
+              'docs/assets/diagrams/feature-reference-2026-09-19/rainfall-input-en.webp': {
+                  'max_bytes': 150_000,
+                  'magic': b'RIFF',
+                  'sha256': '88df5f649e3b39f7ac2717a7aa1d8c6cb2b15a2a1010021f24fba8af7faab6df',
+              },
+              'docs/assets/diagrams/feature-reference-2026-09-19/river-floodplain-en.webp': {
+                  'max_bytes': 150_000,
+                  'magic': b'RIFF',
+                  'sha256': 'd1431c1b309801719cb1905736ad217bb4c9f2a4d710a4895fd92e3d8c5f236c',
+              },
+              'docs/assets/diagrams/feature-reference-2026-09-19/river-reservoir-en.webp': {
+                  'max_bytes': 150_000,
+                  'magic': b'RIFF',
+                  'sha256': '53b0508360181ad9c4756a9e008acac235f33a571212518126a4dcd103e959c3',
+              },
+              'docs/assets/diagrams/feature-reference-2026-09-19/sediment-transport-en.webp': {
+                  'max_bytes': 150_000,
+                  'magic': b'RIFF',
+                  'sha256': '27a8e4afe5affa4c6461582d9bb2506a208501eb1748d4de7457d3d74479f592',
+              },
+              'docs/assets/diagrams/feature-reference-2026-09-19/snow-storage-melt-en.webp': {
+                  'max_bytes': 150_000,
+                  'magic': b'RIFF',
+                  'sha256': 'f7ecca3caf738ba348ab4179e608d09ef1dcfaee4eb9e46e8d9a463a9e28dee2',
+              },
+              'docs/assets/diagrams/feature-reference-2026-09-19/state-continuity-en.webp': {
+                  'max_bytes': 150_000,
+                  'magic': b'RIFF',
+                  'sha256': '6c03102902c60984dbc3e92e2dbee1d923955f30dc577bcb4367515600032ba1',
+              },
+              'docs/assets/diagrams/feature-reference-2026-09-19/subbasin-assessment-en.webp': {
+                  'max_bytes': 150_000,
+                  'magic': b'RIFF',
+                  'sha256': '64cca421a22d57ba4e7d1515aad333309823e51346c3606992bfd909772059b1',
+              },
               'docs/assets/kdrum-hero-overview.jpg': {
                   'max_bytes': 500_000,
                   'magic': b'\xff\xd8\xff',
@@ -167,6 +227,8 @@ jobs:
                       magic = fh.read(len(rule['magic']))
                   if magic != rule['magic']:
                       findings.append(f'{path}: approved image has invalid file signature')
+                  if 'sha256' in rule and hashlib.sha256(path.read_bytes()).hexdigest() != rule['sha256']:
+                      findings.append(f'{path}: reviewed reference image checksum mismatch')
                   continue
 
               if path.suffix.lower() in blocked_suffixes:
@@ -186,6 +248,10 @@ jobs:
               for label, regex in patterns:
                   if regex.search(text):
                       findings.append(f'{path}: possible {label}')
+
+          for rel, rule in approved_binary_assets.items():
+              if 'sha256' in rule and not Path(rel).is_file():
+                  findings.append(f'{rel}: missing reviewed reference image')
 
           for rel in approved_p18_assets:
               if not Path(rel).is_file():
