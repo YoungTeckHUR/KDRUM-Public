@@ -1,0 +1,49 @@
+name: Prepare reviewed homepage readability changes
+on:
+  push:
+    branches: [polish/homepage-readability-20260919]
+    paths: [.github/scripts/prepare-reading-polish.cjs]
+permissions:
+  contents: write
+jobs:
+  prepare:
+    if: github.repository == 'YoungTeckHUR/KDRUM-Public' && github.ref == 'refs/heads/polish/homepage-readability-20260919'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply bounded source changes and regenerate static pages
+        run: |
+          set -euo pipefail
+          node --check .github/scripts/reading-experience.cjs
+          node --check .github/scripts/prepare-reading-polish.cjs
+          node --check .github/scripts/homepage-readability-audit.cjs
+          node .github/scripts/prepare-reading-polish.cjs
+          node --check .github/scripts/build-site.cjs
+          node --check .github/scripts/capability-detail-audit.cjs
+          node .github/scripts/capability-contract.cjs
+          git diff --check
+      - name: Commit prepared files to the review branch only
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          test "$(git ls-remote origin refs/heads/polish/homepage-readability-20260919 | cut -f1)" = "$EXPECTED_SHA"
+          rm .github/workflows/prepare-reading-polish.yml .github/scripts/prepare-reading-polish.cjs
+          git add .github/scripts/build-site.cjs .github/scripts/capability-detail-audit.cjs .github/workflows/homepage-browser-smoke.yml .github/workflows/homepage-live-pages.yml docs/assets/site-content.json docs/assets/site.css docs/index.html docs/ko/index.html READABILITY_REVIEW_20260919.md
+          git add -u .github/workflows/prepare-reading-polish.yml .github/scripts/prepare-reading-polish.cjs
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Generate compact bilingual homepage while preserving approved content'
+          git push origin HEAD:refs/heads/polish/homepage-readability-20260919
+          git rev-parse HEAD > preparation-evidence/prepared-sha.txt
+          git diff --stat 2d0d2dcdfa3f3dfdddc8ed7eb60104b1e83df8dd HEAD > preparation-evidence/change-summary.txt
+          tar -czf preparation-evidence/prepared-source.tar.gz .github docs READABILITY_REVIEW_20260919.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: homepage-reading-preparation
+          path: preparation-evidence/
+          if-no-files-found: warn
