@@ -44,21 +44,21 @@ const widths=[1440,1366,1280,1024,768,390],results=[];
     await gallery.scrollIntoViewIfNeeded();
     await gallery.screenshot({path:path.join(out,`${lang}-${width}-concepts.png`)});
     await page.setViewportSize({width,height:1000});
-    // Test every preserved image at both desktop and phone widths.
     const links=gallery.locator('.concept-master > a[data-enlarge], .concept-card > a[data-enlarge]');
     assert.equal(await links.count(),5);
     for(let i=0;i<5;i++){
      const link=links.nth(i);await link.click();
      const dialog=page.locator('#image-viewer');await dialog.locator('img').evaluate(img=>img.decode());
      assert.equal(await dialog.evaluate(d=>d.open),true);
-     assert.equal(await dialog.locator('img').getAttribute('src'),await link.getAttribute('href')===null?'':await link.evaluate(a=>a.href));
+     assert.equal(await dialog.locator('img').getAttribute('src'),await link.evaluate(a=>a.href));
      await dialog.locator('input').evaluate(el=>{el.value='3';el.dispatchEvent(new Event('input',{bubbles:true}));});
      assert.equal(await dialog.locator('img').evaluate(el=>el.style.width),'300%');
      await page.keyboard.press('Escape');assert(await link.evaluate(el=>document.activeElement===el),'Keyboard focus returns');
     }
-    // Topic links reveal the correct filtered capability; no destination was dropped.
+    // Hash navigation updates the native details asynchronously; await the visible destination.
     for(const id of ['ga','continuous','coupling']){
      await page.locator(`.quick-entry a[href="#cap-${id}"]`).click();
+     await page.waitForFunction(id=>{const el=document.getElementById('cap-'+id);return el?.open&&!el.hidden;},id);
      assert(await page.locator('#cap-'+id).evaluate(el=>el.open&&!el.hidden));
      await page.locator('#cap-'+id+' summary').click();
     }
@@ -79,7 +79,6 @@ const widths=[1440,1366,1280,1024,768,390],results=[];
    results.push({lang,width,status:'PASS',...metric,thumbnailBoxes:boxes,inlineSvgDiagrams:svgSrcs.length});
    await context.close();
   }
-  // Static content and links remain usable without JavaScript.
   const nojs=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
   for(const lang of ['ko','en']){
    const page=await nojs.newPage();await page.goto(base+(lang==='ko'?'/ko/':'/'));

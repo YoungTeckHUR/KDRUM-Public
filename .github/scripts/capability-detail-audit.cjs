@@ -31,18 +31,14 @@ const results=[];
     assert.equal(await shared.locator('img').count(),0,'Shared diagram is not duplicated inline');
     const img=page.locator(`img[src$="/diagrams/${item.diagram}-${lang}.svg"]`);
     assert.equal(await img.count(),1,'Exactly one representative diagram remains');
-    await img.evaluate(el=>el.decode());
+    await img.scrollIntoViewIfNeeded();await img.evaluate(el=>el.decode());
     assert.ok((await shared.locator('a[data-enlarge]').getAttribute('href')).endsWith(`/diagrams/${item.diagram}-${lang}.svg`));
     assert.equal(await card.locator('figcaption span').innerText(),item['diagramCaption'+suffix]);
     await card.locator('[data-enlarge]').click();await page.locator('#image-viewer img').evaluate(el=>el.decode());
     assert.equal(await page.locator('#image-caption').innerText(),item['diagramCaption'+suffix]);await page.keyboard.press('Escape');
    }
-   // Detect clipped text inside the actual open card, not only page overflow.
    const layout=await card.evaluate(el=>({pageOverflow:document.documentElement.scrollWidth>innerWidth+1,clipped:[...el.querySelectorAll('h3,p,li,figcaption')].filter(n=>n.scrollWidth>n.clientWidth+1||n.scrollHeight>n.clientHeight+1).map(n=>n.tagName),height:el.getBoundingClientRect().height}));
    assert.equal(layout.pageOverflow,false,item.id+' page overflow');assert.deepEqual(layout.clipped,[],item.id+' clipped content');
-   // Fit the complete open card below sticky navigation before capturing it.
-   // Element screenshots of cards taller than the viewport otherwise include
-   // the sticky header over the title after the image-viewer focus return.
    await page.setViewportSize({width,height:Math.max(1000,Math.ceil(layout.height)+240)});
    await card.scrollIntoViewIfNeeded();
    assert.ok(await card.locator('h3').evaluate(el=>{const r=el.getBoundingClientRect();return el.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));}),item.id+' title not occluded');
