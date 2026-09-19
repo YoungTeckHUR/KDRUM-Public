@@ -59,3 +59,12 @@
 .cap-detail .note .resource-links{margin-top:12px}
 :lang(ko) :is(.section-heading h2,.section-heading p,.intro-block h3,.intro-block p,.capability h3,.cap-detail p,.cap-detail li,.program h3,.program p,.story h3,.story p,.concept-card h3,.concept-card p){word-break:keep-all;overflow-wrap:anywhere}
 :lang(en) .capability summary h3{overflow-wrap:anywhere;hyphens:auto}
+/* Compact reference illustrations within individual capability details. */
+.cap-detail .feature-reference{width:min(100%,640px);margin:24px 0;padding:16px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.feature-reference-image{display:block;border-radius:4px;overflow:hidden}
+.feature-reference-image:hover{outline:2px solid var(--blue);outline-offset:3px}
+.feature-reference figcaption{display:grid;gap:8px;margin-top:14px;line-height:1.6}
+.feature-reference figcaption strong{color:var(--ink);font-size:.875rem}
+.feature-reference figcaption small{font-size:.8125rem}
+.feature-reference figcaption a{justify-self:start;display:inline-flex;align-items:center;min-height:44px;font-weight:600}
+@media(max-width:700px){.cap-detail .feature-reference{padding:10px}.feature-reference figcaption{font-size:.875rem}}
