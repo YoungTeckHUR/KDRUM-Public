@@ -32,3 +32,11 @@
 .figure-reference figcaption a{min-height:44px;display:inline-flex;align-items:center}
 @media(max-width:1000px){.concept-overview-grid{grid-template-columns:1fr}.concept-master{width:100%;max-width:620px;margin-inline:auto!important}}
 @media(max-width:700px){.quick-entry{display:block}.quick-entry-links{margin-top:10px}.concept-thumbnail-grid.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.concept-card .media-body{padding:10px}.concept-card .media-body p{font-size:.9rem}.concept-links a{font-size:.875rem}.figure-reference figcaption{display:block}}
+
+/* Capability navigation, scoped to existing search and detail controls. */
+.feature-search-help{font-size:.875rem;color:var(--muted);margin:0 0 10px;line-height:1.55}
+.feature-search-status{display:flex;align-items:center;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;margin-bottom:24px}
+.feature-search-status .result-count{margin:0}
+.feature-link-button{font:inherit;font-size:.875rem;color:var(--blue);background:none;border:0;padding:6px 0;min-height:44px;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.feature-share-status{align-self:center;font-size:.875rem;color:var(--muted)}
+.feature-share-status:empty{display:none}
