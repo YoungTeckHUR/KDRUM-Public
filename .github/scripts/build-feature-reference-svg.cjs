@@ -7,14 +7,15 @@ const rect=(x,y,w,h,fill='#f1f7fb',stroke='#aac7d7',radius=16)=>`<rect x="${x}" 
 const line=(x1,y1,x2,y2,color='#247eaa',arrow=false,dash='')=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="3"${arrow?' marker-end="url(#arrow)"':''}${dash?` stroke-dasharray="${dash}"`:''}/>`;
 const route=(d,arrow=true)=>`<path d="${d}" fill="none" stroke="#247eaa" stroke-width="3"${arrow?' marker-end="url(#arrow)"':''}/>`;
 function box(x,y,w,h,title,lines=[],fill='#f1f7fb'){
- return rect(x,y,w,h,fill)+text(x+24,y+46,title,28,700)+lines.map((s,i)=>text(x+24,y+91+i*38,s,24)).join('');
+ const english=!/[가-힣]/.test(title);
+ return rect(x,y,w,h,fill)+text(x+24,y+46,title,english?24:28,700)+lines.map((s,i)=>text(x+24,y+91+i*38,s,english?22:24)).join('');
 }
 function frame(name,lang,title,subtitle,body){
  const note=lang==='ko'?'개념도 · 실제 계산값 또는 프로그램 화면이 아닙니다.':'Concept schematic · not calculated values or a software screenshot.';
  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
 <title id="title">${esc(title)}</title><desc id="desc">${esc(subtitle+' '+note)}</desc>
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#247eaa"/></marker><pattern id="missing" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M-3 3 3-3 M0 12 12 0 M9 15 15 9" stroke="#b2bdc5" stroke-width="2"/></pattern></defs>
-<rect width="1200" height="720" fill="#fff"/><g font-family="Noto Sans CJK KR,Malgun Gothic,Arial,sans-serif">
+<rect width="1200" height="720" fill="#fff"/><g font-family="Noto Sans CJK KR,Noto Sans KR,Malgun Gothic,Arial,sans-serif">
 ${text(60,43,'VISUAL CONCEPT',18,600,'start','#607f94')}${text(60,97,title,40,700)}${text(60,142,subtitle,23,400,'start','#526d7e')}
 ${body}
 ${line(60,663,1140,663,'#d7e4ec')}${text(60,697,note,19,400,'start','#607789')}
