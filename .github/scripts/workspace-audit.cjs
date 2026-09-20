@@ -37,7 +37,13 @@ async function inspectFeature(page,item,lang,width){
  await bounds(page,lang+' '+width+' '+item.id);await technical.locator(':scope>summary').click();
 }
 async function navigation(page,lang,width){
- await page.locator('.workspace-nav [data-page-link="capabilities"]').click();await page.locator('.capability:visible').waitFor();assert.equal(await page.locator('.capability:visible').count(),1);
+ await page.locator('.hero .button.primary').click();await page.locator('#overview').waitFor({state:'visible'});assert.equal(await page.locator('.start-guide a').count(),4);assert.equal(await page.locator('[data-feature-link][aria-current]').count(),0);
+ assert.ok(await page.locator('.workspace-menu').evaluate(e=>e.getBoundingClientRect().top>=document.querySelector('.site-header').getBoundingClientRect().bottom),'Contents clear the sticky header');
+ await page.locator('.overview-depth>summary').click();assert.ok(await page.locator('.overview-depth .feature-reading').isVisible());await page.locator('.overview-depth>summary').click();
+ await page.locator('.start-guide a[href="#cap-rain-spatial"]').click();await page.locator('#cap-rain-spatial').waitFor({state:'visible'});assert.ok((await page.locator('.model-location').innerText()).includes(lang==='ko'?'강우':'Rainfall'));
+ await page.locator('.model-next a[href="#results"]').click();await page.locator('#results').waitFor({state:'visible'});assert.equal(await page.locator('[data-feature-link][aria-current]').count(),0);
+ await page.locator('.model-next a[href="#download"]').click();await page.locator('#download').waitFor({state:'visible'});
+ await page.locator('.workspace-nav [data-page-link="capabilities"]').click();await page.locator('#overview').waitFor({state:'visible'});await choose(page,data.items.find(i=>i.id==='ga'));assert.equal(await page.locator('.capability:visible').count(),1);
  await menuOpen(page);const search=page.locator('#feature-search');await search.fill('zz-no-matching-feature');assert.ok(await page.locator('#no-results').isVisible());assert.equal(await page.locator('[data-feature-link]:visible').count(),0);assert.equal(await page.locator('.capability:visible').count(),1);
  await search.fill('NetCDF');assert.ok(await page.locator('[data-feature-link="netcdf"]').isVisible());await page.locator('[data-feature-link="netcdf"]').click();await page.locator('#cap-netcdf').waitFor({state:'visible'});assert.ok(page.url().endsWith('#cap-netcdf'));assert.equal(await search.inputValue(),'');
  if(width<=800)assert.equal(await page.locator('.workspace-menu').evaluate(e=>e.open),false);
