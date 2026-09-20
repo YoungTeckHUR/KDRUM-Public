@@ -107,4 +107,4 @@ function diagram(name,lang){
 const names=['input-readiness','rainfall-coverage','initial-state-warmup','watershed-water-balance','calibration-evaluation','result-lifecycle','nested-grid-patch','river-result-views','snow-process','deep-storage-path'];
 function build(){const out=path.resolve(__dirname,'../../docs',directory);fs.mkdirSync(out,{recursive:true});for(const name of names)for(const lang of ['ko','en'])fs.writeFileSync(path.join(out,name+'-'+lang+'.svg'),diagram(name,lang));}
 if(require.main===module)build();
-module.exports={names,directory,build,diagram};
+module.exports={names,directory,build,diagram,frame,text,rect,line,route,box};

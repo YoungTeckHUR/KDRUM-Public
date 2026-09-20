@@ -1,7 +1,14 @@
 /* Inspect actual SVG text geometry, including bilingual panel padding. */
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {names,directory}=require('./build-feature-reference-svg.cjs');
+const focused=require('./feature-specific-figures.cjs');
+const entries=[...names.map(name=>({name,directory})),...Object.keys(focused.captions).map(name=>({name,directory:focused.directory}))];
 const requiredLabels={
+ 'rain-methods':{ko:['Thiessen','IDW'],en:['Thiessen','IDW']},
+ 'wb-1d2d':{ko:['1D 하천','2D 범람원'],en:['1D river','2D floodplain']},
+ netcdf:{ko:['유역 격자 결과','범람 결과'],en:['Watershed-grid output','Flood output']},
+ viewer:{ko:['평면 공간분포','선택 위치의 시간 변화'],en:['Plan-view distribution','Time variation at a location']},
+ inputstudio:{ko:['공간 자료','프로젝트','엔진 입력'],en:['Spatial data','Project','Engine inputs']},
  'input-readiness':{ko:['원자료','정합성 검사','점검 결과'],en:['Source data','Consistency checks','Check results']},
  'rainfall-coverage':{ko:['관측','예측','결측'],en:['Observed','Forecast','Missing']},
  'initial-state-warmup':{ko:['초기상태','목표지점 유량','진단과 평가'],en:['Initial states','Target discharge','Diagnostic review']},
@@ -16,7 +23,7 @@ const requiredLabels={
 async function run(browser,base,out){
  const destination=path.join(out,'schematics');fs.mkdirSync(destination,{recursive:true});
  const page=await browser.newPage({viewport:{width:1200,height:720}}),results=[];
- try{for(const lang of ['ko','en'])for(const name of names){
+ try{for(const lang of ['ko','en'])for(const {name,directory} of entries){
   const file=directory+name+'-'+lang+'.svg';
   const response=await page.goto(base+'/'+file);assert.equal(response.status(),200,file);
   await page.evaluate(()=>document.fonts.ready);
@@ -36,6 +43,6 @@ async function run(browser,base,out){
   await page.screenshot({path:path.join(destination,name+'-'+lang+'.png')});
   results.push({file,status:'PASS',...layout});
  }}finally{await page.close();fs.writeFileSync(path.join(destination,'results.json'),JSON.stringify(results,null,2));}
- assert.equal(results.length,names.length*2);console.log(`PASS ${results.length} bilingual SVG layouts: rendered text bounds and panel padding`);
+ assert.equal(results.length,entries.length*2);console.log(`PASS ${results.length} bilingual SVG layouts: rendered text bounds and panel padding`);
 }
 module.exports={run};

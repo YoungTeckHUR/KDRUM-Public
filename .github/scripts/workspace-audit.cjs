@@ -27,8 +27,8 @@ async function inspectFeature(page,item,lang,width){
  assert.equal(await card.getAttribute('data-status'),item.s);assert.equal(await card.locator('h3').innerText(),item[lang]);
  assert.equal(await card.locator(':scope>summary p').innerText(),item['sum'+suffix]);assert.equal(await card.locator('.feature-answer p').innerText(),guide.goal);
  assert.equal(await card.locator('.feature-reference').count(),pic?1:0);
- if(pic){const img=card.locator('.feature-reference img');await img.evaluate(i=>i.decode());assert.deepEqual(await img.evaluate(i=>[i.naturalWidth,i.naturalHeight]),[pic.width,pic.height]);assert.ok((await img.getAttribute('src')).endsWith(pic.src));assert.ok((await img.getAttribute('alt')).startsWith(guide.figure));await zoom(page,card.locator('.feature-reference-image'));}
- else assert.equal(item.id,'wq');
+ if(pic){const img=card.locator('.feature-reference img');await img.evaluate(i=>i.decode());assert.deepEqual(await img.evaluate(i=>[i.naturalWidth,i.naturalHeight]),[pic.width,pic.height]);assert.ok((await img.getAttribute('src')).endsWith(pic.src));assert.ok((await img.getAttribute('alt')).startsWith(require('./feature-specific-figures.cjs').get(item.id,lang)?.caption||guide.figure));await zoom(page,card.locator('.feature-reference-image'));}
+ else { assert.ok(item.id==='wq'||require('./feature-reference-images.cjs').linkedConcepts[item.id],item.id+' has explicit reference links'); }
  const technical=card.locator('.technical-details');assert.equal(await technical.evaluate(e=>e.open),false);await technical.locator(':scope>summary').click();
  assert.equal(await card.locator('.detail-overview').innerText(),item['detail'+suffix]);assert.equal(await card.locator('.detail-status p').innerText(),item['now'+suffix]);assert.equal(await card.locator('.interpretation-check p').innerText(),guide.check);
  assert.deepEqual(await card.locator('ol li').allTextContents(),item['steps'+suffix].map((s,i)=>(lang==='ko'?['입력·상태','처리·계산','결과·활용']:['Input / state','Processing','Output / use'])[i]+' — '+s));
