@@ -29,6 +29,7 @@
   else if(['programs','research','download'].includes(id))page=id;
   else{id='home';target=document.getElementById('home');}
   document.querySelectorAll('[data-workspace-page]').forEach(el=>el.hidden=el.dataset.workspacePage!==page);
+  if(page!=='home')document.querySelectorAll('.home-introduction video').forEach(video=>video.pause());
   document.querySelectorAll('[data-model-view]').forEach(el=>el.hidden=el!==view);
   cards.forEach(card=>{card.hidden=card!==feature;card.open=card===feature;});
   if(feature){query.value='';filter();links.forEach(a=>{if(a.dataset.featureLink===activeFeature)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});}
