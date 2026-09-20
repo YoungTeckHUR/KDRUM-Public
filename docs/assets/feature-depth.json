@@ -108,8 +108,8 @@
     "exampleEn": "For anomalous initial flooding near a channel, check bed/DEM references and joins. Compare cross sections and effective conveyance area before and after supplementation."
   },
   "wb": {
-    "principleKo": "물수지는 모델이 받은 물이 유출·증발산·손실·저장 변화로 설명되는지 확인하는 보존 검사입니다. 상류에서 하류로의 내부 이동이나 토양층 간 교환은 전체 영역에서 서로 상쇄되어야 합니다.",
-    "principleEn": "Water balance tests whether inflow is accounted for by outflow, evapotranspiration, losses and storage change. Internal transfers cancel when aggregated over the full domain.",
+    "principleKo": "K-DRUM의 물수지 평가는 강우·증발산·유출과 저장량 변화를 연결하고, 내부 전달량을 구분해 전체 수지가 닫히는지 확인합니다. 총량뿐 아니라 물의 이동 경로를 함께 읽을 수 있어 계산 결과를 설명하고 차이의 원인을 좁히는 데 도움이 됩니다.",
+    "principleEn": "K-DRUM links rainfall, evapotranspiration, outflow and storage change, distinguishing internal transfers when assessing closure. Reading transfer pathways alongside totals helps explain results and narrow down the causes of differences.",
     "exampleKo": "폐합오차가 작아도 유량 첨두가 틀릴 수 있습니다. 보존이 맞는지 먼저 확인한 뒤 관측과의 크기·시점 차이를 평가하면 수치 회계 문제와 모형 재현성 문제를 구분할 수 있습니다.",
     "exampleEn": "A small residual can coexist with an incorrect peak. Check conservation first, then observed magnitude and timing, separating accounting errors from model-performance errors."
   },
