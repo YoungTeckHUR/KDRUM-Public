@@ -20,7 +20,7 @@ const requiredLabels={
  'nested-grid-patch':{ko:['원지형 격자','배경 병합 · Patch 유지'],en:['Source terrain grid','Grouped background · retained patch']},
  'snow-process':{ko:['강우 / 강설 분리','융설계수 보정','적설저장 · 융설'],en:['Rain / snow partition','Melt adjustment','Snow storage / melt']},
  'deep-storage-path':{ko:['D층 저장','상부 토양층 경로','선택적 심부 손실'],en:['D-layer storage','Upper soil-layer path','Optional deep loss']},
- 'river-result-views':{ko:['종단면','횡단면','시계열'],en:['Longitudinal profile','Cross section','Time series']}
+ 'river-result-views':{ko:['종단면','횡단면','시계열','η₀','t₀'],en:['Longitudinal profile','Cross section','Time series','η₀','t₀']}
 };
 async function run(browser,base,out){
  const destination=path.join(out,'schematics');fs.mkdirSync(destination,{recursive:true});
@@ -42,6 +42,7 @@ async function run(browser,base,out){
   });
   assert.deepEqual(layout.errors,[],file+' text remains within canvas and panels');
   for(const label of requiredLabels[name][lang])assert.ok(layout.labels.includes(label),file+' contains required label: '+label);
+  await page.setViewportSize({width:layout.width,height:layout.height});
   await page.screenshot({path:path.join(destination,name+'-'+lang+'.png')});
   results.push({file,status:'PASS',...layout});
  }}finally{await page.close();fs.writeFileSync(path.join(destination,'results.json'),JSON.stringify(results,null,2));}

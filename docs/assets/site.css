@@ -198,3 +198,6 @@
 
 /* Water-balance detail stays inside the existing expandable feature. */
 .balance-reading{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}.balance-reading h4:not(:first-child){margin-top:24px}.balance-reading table{width:100%;border-collapse:collapse;table-layout:fixed;margin:18px 0}.balance-reading caption{text-align:left;font-weight:700;margin-bottom:10px}.balance-reading th,.balance-reading td{text-align:left;vertical-align:top;padding:12px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}.balance-reading thead{background:#eef6fa}.balance-reading th:first-child{width:22%}.balance-equation{padding:16px;background:#f1f7fa;border-left:3px solid #7da7b5;font-weight:600}.balance-reading li{margin:12px 0;line-height:1.8}@media(max-width:600px){.balance-reading th,.balance-reading td{padding:10px 6px;font-size:14px}.balance-reading th:first-child{width:23%}}
+
+/* The linked river views need their full aspect ratio for legible axis labels. */
+.model-content #cap-river-viewer .feature-reference img{max-height:none}

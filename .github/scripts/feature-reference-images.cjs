@@ -59,7 +59,7 @@ function getReference(id,lang,prefix=''){
  if(id==='@program-workflow')return {src:prefix+'assets/diagrams/program-workflow-'+lang+'.svg',width:960,height:600,caption:lang==='ko'?'입력 작성, 계산, 결과 저장과 분석 도구의 역할 및 개발 상태입니다.':'Roles and development states of input preparation, computation, output storage and analysis tools.'};
  const concept=concepts[id];if(!concept)return null;
  const schematic=schematicIds.has(id),dir=wave2Concepts[id]?wave2Directory:directory;
- return {src:prefix+dir+concept[0]+(schematic?'-'+lang+'.svg':'-en.webp'),width:schematic?1200:1672,height:schematic?720:941,caption:concept[lang==='ko'?1:2]};
+ return {src:prefix+dir+concept[0]+(schematic?'-'+lang+'.svg':'-en.webp'),width:schematic?1200:1672,height:schematic?(id==='river-viewer'?930:720):941,caption:concept[lang==='ko'?1:2]};
 }
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function referenceFigure(item, lang, prefix) {

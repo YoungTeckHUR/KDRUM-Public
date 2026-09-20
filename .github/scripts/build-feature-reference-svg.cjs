@@ -93,15 +93,31 @@ function diagram(name,lang){
   return frame(name,lang,L('다중해상도와 고해상도 Patch','Multiple resolutions and local patches'),L('격자 배치는 설명용이며 실제 적용 해상도를 나타내지 않습니다.','Illustrative grid layout; no specific model resolution is prescribed.'),body);
  }
  if(name==='river-result-views'){
-  let body=box(60,218,330,338,L('종단면','Longitudinal profile'))+box(435,218,330,338,L('횡단면','Cross section'))+box(810,218,330,338,L('시계열','Time series'));
-  body+='<path d="M86 431L134 406 200 440 276 457 363 486" fill="none" stroke="#917b60" stroke-width="6"/><path d="M86 387L134 374 200 403 276 421 363 444" fill="none" stroke="#2593c8" stroke-width="5"/>';
-  body+=text(87,517,L('하천을 따른 수면 · 하상','Water surface · riverbed'),22);
-  body+='<path d="M462 371L504 385 540 461 651 461 699 390 739 371" fill="#f2ece1" stroke="#917b60" stroke-width="5"/><path d="M516 409H687" fill="none" stroke="#2593c8" stroke-width="5"/>';
-  body+=text(462,517,L('단면 형상 · 수위','Section geometry · level'),22);
-  body+=text(839,355,L('시간','Time'),24,700)+text(839,415,L('수위','Water level'),24,700)+text(839,475,L('유량','Discharge'),24,700)+line(1008,335,1098,335,'#9cbdcf')+line(1008,395,1098,395,'#9cbdcf')+line(1008,455,1098,455,'#9cbdcf');
-  body+=text(600,615,L('1D 계산 결과를 조회·분석하는 별도 개발 프로그램','A separately developed viewer for existing 1D calculation results'),26,500,'middle');
-  return frame(name,lang,L('1차원 하천수리 결과 읽기','Reading one-dimensional river results'),L('분석 대상의 개념이며 실제 Viewer 화면이 아닙니다.','Conceptual analysis views, not an actual viewer interface.'),body);
+  const blue='#0077ad',bed='#866d51',orange='#b56114',axis='#9aafbd';
+  const curve=(d,c=blue)=>`<path d="${d}" fill="none" stroke="${c}" stroke-width="5" stroke-linejoin="round"/>`;
+  const point=(x,y)=>`<circle cx="${x}" cy="${y}" r="7" fill="${orange}" stroke="#fff" stroke-width="3"/>`;
+  let body=text(50,55,L('같은 지점과 시점으로 결과 연결하기','Connect results at one location and time'),36,700)+text(50,99,L('종단에서 지점을 고르고, 횡단과 시계열에서 같은 수위를 확인합니다.','Choose a location in the profile; match its level in the other views.'),26);
+  body+=text(50,163,L('종단면','Longitudinal profile'),30,700)+text(1140,163,L('시점 t₀ 고정','Fixed time t₀'),25,500,'end',orange);
+  body+=line(95,200,95,410,axis)+line(95,410,1135,410,axis)+text(60,215,'z',27,500,'end');
+  body+=`<path d="M140 238L310 244L420 252L560 260L720 275L920 286L1100 302L1100 374L920 350L720 352L560 330L420 334L310 303L140 315Z" fill="#e4f2f8"/>`;
+  body+=curve('M140 315L310 303L420 334L560 330L720 352L920 350L1100 374',bed)+curve('M140 238L310 244L420 252L560 260L720 275L920 286L1100 302');
+  body+=line(560,193,560,410,orange,false,'8 7')+point(560,260)+text(581,241,'η₀',29,600,'start',blue)+text(560,447,L('선택 단면 x₀','Selected section x₀'),26,600,'middle',orange)+text(1135,447,L('하류 방향 x →','Downstream x →'),24,400,'end');
+  body+=line(145,475,190,475,blue)+text(204,484,L('수면','Water surface'),24)+line(395,475,440,475,bed)+text(454,484,L('하상','Riverbed'),24);
+  body+=line(50,512,1150,512,'#d7e4ec');
+  body+=text(50,559,L('횡단면','Cross section'),30,700)+text(50,595,L('지점 x₀ · 시점 t₀','Location x₀ · time t₀'),25,500,'start',orange);
+  body+=line(90,629,90,800,axis)+line(90,800,540,800,axis)+text(66,642,'z',27,500,'end');
+  body+=`<path d="M167 681L472 681L437 735L395 773L270 773L214 735Z" fill="#cce8f4"/>`;
+  body+=curve('M115 636L167 681L214 735L270 773L395 773L437 735L472 681L522 640',bed)+line(167,681,472,681,blue)+text(481,673,'η₀',29,600,'end',blue)+text(540,836,L('횡단 방향 y →','Across channel y →'),24,400,'end');
+  body+=text(660,559,L('시계열','Time series'),30,700)+text(660,595,L('지점 x₀ 고정 · 시간 변화','Fixed location x₀ · varying time'),25,500,'start',orange);
+  body+=line(722,627,722,691,axis)+line(722,691,1140,691,axis)+text(696,648,'η',28,500,'end',blue);
+  body+=curve('M730 679C790 679 815 667 852 640S907 633 930 648S1020 680 1130 683');
+  body+=line(722,722,722,792,axis)+line(722,792,1140,792,axis)+text(696,748,'Q',28,500,'end','#12877b');
+  body+=curve('M730 783C790 785 837 771 870 741S916 734 930 746S1020 782 1130 785','#12877b');
+  body+=line(930,614,930,792,orange,false,'8 7')+point(930,648)+point(930,746)+text(952,641,'η₀',26,600,'start',blue)+text(930,829,'t₀',28,600,'middle',orange)+text(1140,836,L('시간 t →','Time t →'),24,400,'end');
+  body+=text(50,885,L('η: 수위 · Q: 유량   |   지점 x₀와 시점 t₀를 맞춰 세 결과를 비교합니다.','η: water level · Q: discharge   |   Match x₀ and t₀ across all three views.'),26,500);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="930" viewBox="0 0 1200 930" role="img" aria-labelledby="title desc"><title id="title">${esc(L('종단·횡단·시계열 결과의 연결','Connecting profile, section and time series'))}</title><desc id="desc">${esc(L('설명용 모식 곡선. 동일 지점 x₀와 시점 t₀의 수위 η₀를 세 관점으로 비교합니다. 실제 계산 결과나 뷰어 화면이 아닙니다.','Illustrative curves linking the same location x₀, time t₀ and level η₀. Not simulation results or a viewer screenshot.'))}</desc><rect width="1200" height="930" fill="#fff"/><g font-family="Noto Sans CJK KR,Noto Sans KR,Malgun Gothic,Arial,sans-serif">${body}</g></svg>\n`;
  }
+
  throw new Error('Unknown reference schematic: '+name);
 }
 const names=['input-readiness','rainfall-coverage','initial-state-warmup','watershed-water-balance','calibration-evaluation','result-lifecycle','nested-grid-patch','river-result-views','snow-process','deep-storage-path'];

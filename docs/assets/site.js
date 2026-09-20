@@ -56,6 +56,9 @@
   matchMedia('(max-width:800px)').addEventListener('change',event=>menu.open=!event.matches);
   cards.forEach(card=>card.querySelector(':scope>summary').addEventListener('click',event=>event.preventDefault()));
   addEventListener('hashchange',()=>route(true));filter();route(Boolean(location.hash));
+  // Initial native fragment scrolling can run after the selected-view route.
+  // Restore the route's intended top position once page loading has settled.
+  if(location.hash)addEventListener('load',()=>requestAnimationFrame(()=>route(true)),{once:true});
  }
  async function shareFeature(a){
   const card=a.closest('.capability'),status=card.querySelector('.feature-share-status');
