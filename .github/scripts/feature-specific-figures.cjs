@@ -3,6 +3,7 @@ const fs=require('node:fs'),path=require('node:path');
 const {frame,text,rect,line,route,box}=require('./build-feature-reference-svg.cjs');
 const directory='assets/diagrams/feature-specific/';
 const captions={
+ 'flood-extras':['왼쪽은 계산 셀의 포함 여부, 오른쪽은 포함된 셀 사이의 연결 조건입니다. 같은 활성 셀도 경계 조건에 따라 연결이 달라집니다. 벽·개방만 표시한 개념 예시이며 지원 조건은 해석 경로마다 확인합니다.','The left panel selects computational cells; the right sets connections between active cells. The same cells can have different edge conditions. Wall/open examples are conceptual; check support for the selected solver.'],
  'rain-methods':['Thiessen의 구역 선택과 IDW의 거리 가중을 비교합니다. 관측값·배분 결과는 표시하지 않은 개념도입니다.','Compare Thiessen area selection with IDW distance weighting; no observations or mapped results are shown.'],
  'wb-1d2d':['같은 교환량이 두 영역에 반대 부호로 기록되는 관계입니다. 월류와 복귀를 나누어 읽으세요.','Read opposite signed entries for the same exchange volume, separating overflow and return flow.'],
  netcdf:['파일별 좌표·시간·변수·단위를 확인한 뒤 비교합니다. 공통 파일 형식이 같은 격자나 시각을 뜻하지는 않습니다.','Inspect coordinates, times, variables and units per file. A shared format does not imply a shared grid or timestamps.'],
@@ -10,6 +11,27 @@ const captions={
  inputstudio:['원자료를 프로젝트로 구성하고 검사한 뒤 엔진 입력으로 전달하는 역할입니다. 실제 편집 화면은 아닙니다.','Organize source data into a project, check it and prepare engine inputs. This is not an editor screenshot.']
 };
 function diagram(id,lang){const L=(k,e)=>lang==='ko'?k:e;let body,title,subtitle;
+ if(id==='flood-extras'){
+  title=L('계산 영역과 셀 경계는 다른 입력','Domain and cell edges are different inputs');
+  subtitle=L('Domain Mask: 셀 선택 / Face Mask: 셀 사이 연결 조건','Domain mask: select cells / Face mask: set connections between cells');
+  body=rect(60,190,510,405)+rect(630,190,510,405);
+  body+=text(88,238,'Domain Mask',29,700)+text(658,238,'Face Mask',29,700);
+  const active=(x,y)=>!(x===0&&y<2)&&!(x===5&&y>1);
+  for(const ox of [112,682])for(let y=0;y<4;y++)for(let x=0;x<6;x++){
+   const a=active(x,y);
+   body+=rect(ox+x*66,270+y*52,64,50,a?'#cce6ed':'url(#missing)',a?'#fff':'#d5dfe6',0);
+  }
+  // The two panels use exactly the same active cells. Only edge conditions differ.
+  body+=`<path d="M880 272V319 M880 375V424" fill="none" stroke="#b25b42" stroke-width="8" stroke-linecap="round"/>`;
+  body+=line(842,347,925,347,undefined,true);
+  body+=`<path d="M660 516H688" fill="none" stroke="#b25b42" stroke-width="8" stroke-linecap="round"/>`+text(705,524,L('차단','Wall'),23,600);
+  body+=line(898,516,934,516,undefined,true)+text(955,524,L('개방','Open'),23,600);
+  body+=rect(90,505,22,22,'#cce6ed','#aac7d7',0)+text(126,524,L('계산에 포함','Active cells'),23);
+  body+=rect(320,505,22,22,'url(#missing)','#d5dfe6',0)+text(356,524,L('영역 제외','Excluded cells'),23);
+  body+=text(88,571,L('셀 단위로 계산 영역 선택','Select the domain cell by cell'),23);
+  body+=text(658,571,L('인접한 두 셀은 모두 계산에 포함','Both adjacent cells remain active'),23);
+  body+=text(600,634,L('활성 셀 ≠ 현재 침수 셀 · 해석 경로별 지원 조건 확인','Active cell ≠ wet cell · check solver-specific support'),24,600,'middle');
+ }
  if(id==='rain-methods'){
   title=L('같은 관측소, 다른 공간 배분','Same stations, different spatial mapping');subtitle=L('Thiessen: 구역 선택 / IDW: 거리 가중 · 방법의 차이를 설명합니다.','Thiessen: area selection / IDW: distance weighting.');
   body=rect(60,195,510,395)+rect(630,195,510,395);
