@@ -174,3 +174,10 @@
  [data-navigation-layout] .program-grid{grid-template-columns:1fr}[data-navigation-layout] .site-footer{padding:22px 0}
 }
 @media print{[data-navigation-layout] [hidden]{display:block!important}.workspace-nav,.workspace-menu,.feature-tools{display:none!important}.model-workspace{display:block}.site-header{position:static}}
+
+/* Keep the initial feature view focused; interpretation follows on request. */
+.model-content .feature-reference figcaption{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 16px;margin-top:8px}
+.model-content .feature-reference figcaption small{flex:1 1 220px;font-size:.78rem;line-height:1.5}
+.model-content .feature-reference figcaption a{flex:0 0 auto;min-height:44px}
+.technical-details .figure-reading{padding:18px 0 0}
+.technical-details .figure-reading p{margin-bottom:0}
