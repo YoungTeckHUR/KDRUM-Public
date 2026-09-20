@@ -9,6 +9,7 @@ require('./capability-contract.cjs').validate(data);
 const reading=require('./reading-experience.cjs');
 const navigation=require('./navigation-layout.cjs');
 require('./build-feature-reference-svg.cjs').build();
+require('./feature-specific-figures.cjs').build();
 const references=require('./feature-reference-images.cjs');
 references.validate(data);
 const origin='https://youngteckhur.github.io/KDRUM-Public/';
