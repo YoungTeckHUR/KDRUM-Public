@@ -61,7 +61,7 @@ async function navigation(page,lang,width){
  for(const topic of await page.locator('.numerical-topic').all()){await topic.locator(':scope>summary').click();await bounds(page,'numerical topic '+lang+' '+width);await topic.locator(':scope>summary').click();}
  await ready(page,home(lang)+'#numerical-time');assert.ok(await page.locator('#numerical-time').evaluate(e=>e.open),'Deep link opens its topic');
  const numericalLanguage=page.locator('.language a[lang="'+(lang==='ko'?'en':'ko')+'"]');await numericalLanguage.click();assert.ok(await page.locator('#numerical-time').evaluate(e=>e.open),'Language switch preserves numerical topic');
- await ready(page,home(lang)+'#cap-fullswe');await page.locator('#cap-fullswe .technical-details>summary').click();await page.locator('#cap-fullswe .numerical-link').click();assert.ok(await page.locator('#numerical-methods').isVisible(),'Feature links reach numerical guide');
+ await ready(page,home(lang)+'#cap-fullswe');await page.locator('#cap-fullswe .technical-details>summary').click();await page.locator('#cap-fullswe .numerical-link').click();await page.locator('#numerical-methods').waitFor({state:'visible'});assert.ok(await page.locator('#numerical-methods').isVisible(),'Feature links reach numerical guide');
  await ready(page,home(lang));if(width===1440){await page.evaluate(()=>document.documentElement.style.zoom='2');await bounds(page,'200% zoom');await page.evaluate(()=>document.documentElement.style.zoom='');}
 }
 async function run(mode='navigation'){
