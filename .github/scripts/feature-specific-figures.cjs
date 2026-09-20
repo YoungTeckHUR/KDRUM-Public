@@ -3,6 +3,7 @@ const fs=require('node:fs'),path=require('node:path');
 const {frame,text,rect,line,route,box}=require('./build-feature-reference-svg.cjs');
 const directory='assets/diagrams/feature-specific/';
 const captions={
+ 'finite-volume':['셀의 저장 변화는 경계 유량과 소스의 합으로 결정됩니다. 내부 경계의 같은 유량이 이웃 셀에 반대 부호로 작용합니다.','Cell storage changes with face discharges and sources. A shared internal discharge has opposite signs in neighboring cells.'],
  'flood-extras':['왼쪽은 계산 셀의 포함 여부, 오른쪽은 포함된 셀 사이의 연결 조건입니다. 같은 활성 셀도 경계 조건에 따라 연결이 달라집니다. 벽·개방만 표시한 개념 예시이며 지원 조건은 해석 경로마다 확인합니다.','The left panel selects computational cells; the right sets connections between active cells. The same cells can have different edge conditions. Wall/open examples are conceptual; check support for the selected solver.'],
  'rain-methods':['Thiessen의 구역 선택과 IDW의 거리 가중을 비교합니다. 관측값·배분 결과는 표시하지 않은 개념도입니다.','Compare Thiessen area selection with IDW distance weighting; no observations or mapped results are shown.'],
  'wb-1d2d':['같은 교환량이 두 영역에 반대 부호로 기록되는 관계입니다. 월류와 복귀를 나누어 읽으세요.','Read opposite signed entries for the same exchange volume, separating overflow and return flow.'],
@@ -11,6 +12,24 @@ const captions={
  inputstudio:['원자료를 프로젝트로 구성하고 검사한 뒤 엔진 입력으로 전달하는 역할입니다. 실제 편집 화면은 아닙니다.','Organize source data into a project, check it and prepare engine inputs. This is not an editor screenshot.']
 };
 function diagram(id,lang){const L=(k,e)=>lang==='ko'?k:e;let body,title,subtitle;
+ if(id==='finite-volume'){
+  title=L('경계 유량을 공유하면 내부 교환은 상쇄','Shared face discharge cancels internally');
+  subtitle=L('유한체적의 보존 원리 · 그림의 수심과 화살표 크기는 설명용입니다.','Finite-volume conservation · depths and arrow sizes are illustrative.');
+  body=rect(60,190,1080,340);
+  for(const [j,level] of [[0,295],[1,320],[2,342]]){
+   const x=190+j*280;
+   body+=rect(x,level,280,460-level,'#bee0ee','#bee0ee',0)+line(x,level,x+280,level,'#247eaa');
+   body+=text(x+140,236,['i − 1','i','i + 1'][j],26,700,'middle');
+   body+=text(x+140,410,['Vᵢ₋₁','Vᵢ','Vᵢ₊₁'][j],32,700,'middle');
+  }
+  body+=`<path d="M190 460H1030V477H190Z" fill="#ddcbb4"/>`;
+  for(const x of [190,470,750,1030])body+=line(x,253,x,477,'#607f94',false,'7 6');
+  body+=line(420,280,520,280,undefined,true)+text(470,263,'Qᵢ₋½',24,600,'middle');
+  body+=line(700,303,800,303,undefined,true)+text(750,283,'Qᵢ₊½',24,600,'middle');
+  body+=text(330,508,'−Qᵢ₋½',25,600,'middle')+text(610,508,'+Qᵢ₋½ − Qᵢ₊½',25,600,'middle')+text(890,508,'+Qᵢ₊½',25,600,'middle');
+  body+=text(600,576,L('각 셀: 저장 변화 = 시간간격 × 순유입량','Each cell: storage change = time step × net inflow'),28,600,'middle');
+  body+=text(600,625,L('전체 합계에는 외부 경계·소스·손실만 남습니다.','Only external boundaries, sources and losses remain in the sum.'),24,500,'middle');
+ }
  if(id==='flood-extras'){
   title=L('계산 영역과 셀 경계는 다른 입력','Domain and cell edges are different inputs');
   subtitle=L('Domain Mask: 셀 선택 / Face Mask: 셀 사이 연결 조건','Domain mask: select cells / Face mask: set connections between cells');

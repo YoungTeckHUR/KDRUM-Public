@@ -35,14 +35,15 @@
   if(feature){query.value='';filter();}
   links.forEach(a=>{if(feature&&a.dataset.featureLink===activeFeature)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});
   const groupTitle=feature?groups.find(g=>g.dataset.group===feature.dataset.group)?.querySelector('summary').textContent:'';
-  const viewLabels=ko?{overview:'모형 개요',results:'결과 해석 안내','grid-hydrology-concepts':'수문 개념도'}:{overview:'Model overview',results:'Reading model results','grid-hydrology-concepts':'Hydrology illustrations'};
+  const viewLabels=ko?{overview:'모형 개요','numerical-methods':'방정식·수치기법',results:'결과 해석 안내','grid-hydrology-concepts':'수문 개념도'}:{overview:'Model overview','numerical-methods':'Equations & numerics',results:'Reading model results','grid-hydrology-concepts':'Hydrology illustrations'};
   document.querySelector('.model-location').textContent=groupTitle?(ko?'모형·기능 / ':'Model & capabilities / ')+groupTitle:(viewLabels[view?.id]||'');
   document.querySelectorAll('.model-overview-link,.workspace-reading a,.model-next a').forEach(a=>{if(a.getAttribute('href')==='#'+id)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
   document.querySelectorAll('[data-page-link]').forEach(a=>{if(a.dataset.pageLink===(page==='model'?'capabilities':page))a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
   document.querySelector('.model-overview-link').toggleAttribute('data-current',id==='overview');
   if(matchMedia('(max-width:800px)').matches)menu.open=false;
   updateLanguageLinks(id);
-  if(focus){const heading=feature?.querySelector('h3')||target?.querySelector('h1,h2,h3')||target;heading?.setAttribute('tabindex','-1');heading?.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});if(id.startsWith('concept-'))target.scrollIntoView({block:'start',behavior:'instant'});}
+  if(target?.matches('.numerical-topic'))target.open=true;
+  if(focus){const heading=feature?.querySelector('h3')||target?.querySelector('h1,h2,h3')||target;heading?.setAttribute('tabindex','-1');heading?.focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'});if(id.startsWith('concept-')||target?.matches('.numerical-topic'))target.scrollIntoView({block:'start',behavior:'instant'});}
  }
  if(workspace){
   document.documentElement.classList.add('workspace-ready');document.querySelector('.workspace-search').hidden=false;
