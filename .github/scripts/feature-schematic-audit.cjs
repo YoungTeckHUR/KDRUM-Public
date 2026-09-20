@@ -8,7 +8,9 @@ const requiredLabels={
  'watershed-water-balance':{ko:['저장량 변화','증발산','유출'],en:['Change in storage','Evapotranspiration','Outflow']},
  'calibration-evaluation':{ko:['관측유량','매개변수 범위','성능지표 평가'],en:['Observed discharge','Parameter ranges','Evaluate metrics']},
  'result-lifecycle':{ko:['실행 조건 기록','결과 파일 생성','출력 요건 점검'],en:['Record run context','Write result files','Output integrity']},
- 'nested-grid-patch':{ko:['기본 계산격자','확대한 관심구간'],en:['Base computational grid','Enlarged region of interest']},
+ 'nested-grid-patch':{ko:['원지형 격자','배경 병합 · Patch 유지'],en:['Source terrain grid','Grouped background · retained patch']},
+ 'snow-process':{ko:['강우 / 강설 분리','융설계수 보정','적설저장 · 융설'],en:['Rain / snow partition','Melt adjustment','Snow storage / melt']},
+ 'deep-storage-path':{ko:['D층 저장','상부 토양층 경로','선택적 심부 손실'],en:['D-layer storage','Upper soil-layer path','Optional deep loss']},
  'river-result-views':{ko:['종단면','횡단면','시계열'],en:['Longitudinal profile','Cross section','Time series']}
 };
 async function run(browser,base,out){
@@ -34,6 +36,6 @@ async function run(browser,base,out){
   await page.screenshot({path:path.join(destination,name+'-'+lang+'.png')});
   results.push({file,status:'PASS',...layout});
  }}finally{await page.close();fs.writeFileSync(path.join(destination,'results.json'),JSON.stringify(results,null,2));}
- assert.equal(results.length,16);console.log('PASS 16 bilingual SVG layouts: rendered text bounds and panel padding');
+ assert.equal(results.length,names.length*2);console.log(`PASS ${results.length} bilingual SVG layouts: rendered text bounds and panel padding`);
 }
 module.exports={run};

@@ -23,6 +23,21 @@ ${line(60,663,1140,663,'#d7e4ec')}${text(60,697,note,19,400,'start','#607789')}
 }
 function diagram(name,lang){
  const L=(ko,en)=>lang==='ko'?ko:en;
+ if(name==='snow-process')return frame(name,lang,L('적설저장과 융설계수 보정','Snow storage and melt-factor adjustment'),L('강수 분리와 경험적 보정을 거쳐 융설수를 수문 계산에 전달합니다.','Partition precipitation and adjust melt empirically before hydrologic routing.'),
+  box(60,192,330,153,L('기상 입력','Meteorological inputs'),[L('강수 · 기온 · 풍속','Precipitation · temp · wind'),L('표고에 따른 기온보정','Elevation-adjusted temp')])+
+  box(435,192,330,153,L('강우 / 강설 분리','Rain / snow partition'),[L('기온 기준으로 분리','Temperature-based split'),L('강설은 적설에 누적','Snowfall adds to storage')])+
+  box(810,192,330,153,L('융설계수 보정','Melt adjustment'),[L('계절 · 경사 · D8 방향','Season · slope · D8'),L('시간대의 경험적 보정','Empirical time adjustment')])+
+  line(395,262,427,262,undefined,true)+route('M600 353V399')+route('M460 353V382H225V401')+text(274,373,L('강우','Rain'),20)+route('M975 353V435H776')+
+  box(435,412,330,155,L('적설저장 · 융설','Snow storage / melt'),[L('남은 적설량 갱신','Update remaining snow'),L('융설수 산정','Calculate meltwater')],'#ecf6f3')+
+  box(60,412,330,155,L('수문 입력','Hydrologic input'),[L('강우 + 융설수','Rain + meltwater'),L('침투 · 유출 계산으로','To infiltration and runoff')])+
+  route('M435 492H401')+text(810,515,L('직접 일사·적설 이동','Radiation / snow transport'),22,600)+text(810,547,L('해석과 구분','are not directly solved'),22)+
+  text(600,623,L('경사·방향은 융설계수에 반영되며, 그림은 계산 결과가 아닙니다.','Slope and direction modify melt factors; no simulation result is shown.'),24,400,'middle'));
+ if(name==='deep-storage-path')return frame(name,lang,L('D층 저장·복류·손실의 구분','D-layer storage, return and loss'),L('개발 경로 · 지연복류와 별도 선택 조건의 심부 손실을 구분합니다.','Development path · delayed return and deep loss have separate controls.'),
+  box(60,225,330,190,L('D층 저장','D-layer storage'),[L('유입과 저장량 갱신','Inflow and storage update'),L('저장량 내에서 방출','Release within storage')])+
+  line(405,317,427,317,undefined,true)+box(435,225,330,190,L('상부 토양층 경로','Upper soil-layer path'),[L('지연복류 수용','Receives delayed return'),L('토양층 유출과 연결','Connects to soil runoff')],'#ecf6f3')+
+  line(779,317,804,317,undefined,true)+box(810,225,330,190,L('유출 전달','Runoff routing'),[L('다른 유출 기여와 결합','Joins other contributions'),L('하류 유량에 기여','Contributes downstream')])+
+  route('M225 430V466')+box(60,480,330,120,L('선택적 심부 손실','Optional deep loss'),[L('활성 옵션 확인','Check enabled option')])+
+  text(435,522,L('저장·복류·손실을 따로 집계','Account for each term separately'),26,600)+text(435,569,L('완전한 지하수유동 해석과 구분','Distinct from full groundwater flow'),24));
  if(name==='input-readiness')return frame(name,lang,L('입력자료와 실행 준비 점검','Input data and execution readiness'),L('입력 조건을 확인하고 문제 항목을 실행 전에 정리합니다.','Review input conditions and identify issues before a model run.'),
   box(60,218,310,236,L('원자료','Source data'),[L('지형 · 강우 · 하천','Terrain · rain · rivers'),L('좌표 · 시간 · 단위','Coordinates · units')])+line(380,330,425,330,undefined,true)+
   box(440,218,310,236,L('정합성 검사','Consistency checks'),[L('공간 · 시간 범위','Space · time extent'),L('연결성 · 값의 범위','Connectivity · ranges')])+line(760,330,805,330,undefined,true)+
@@ -65,15 +80,16 @@ function diagram(name,lang){
   route('M980 452V496H600V529')+text(600,574,L('후처리 · 결과 분석 도구','Postprocessing and result analysis'),30,700,'middle')+
   text(600,618,L('출력 점검과 수문·수리 결과 타당성 평가는 별도 항목입니다.','Output integrity and physical validity are separate assessments.'),22,400,'middle'));
  if(name==='nested-grid-patch'){
-  let body=text(60,205,L('기본 계산격자','Base computational grid'),28,700)+text(760,205,L('확대한 관심구간','Enlarged region of interest'),28,700);
+  let body=text(60,205,L('원지형 격자','Source terrain grid'),28,700)+text(660,205,L('배경 병합 · Patch 유지','Grouped background · retained patch'),25,700);
   body+=rect(60,238,500,300,'#eff6fa','#9cbdcf',0);
   for(let i=0;i<=10;i++)body+=line(60+i*50,238,60+i*50,538,'#a4bdcc');
   for(let i=0;i<=6;i++)body+=line(60,238+i*50,560,238+i*50,'#a4bdcc');
-  body+=rect(260,338,100,100,'#d8eee8','#008c8c',0)+line(360,338,752,238,'#65a79f')+line(360,438,752,538,'#65a79f');
-  body+=rect(760,238,300,300,'#e5f3ed','#008c8c',0);
-  for(let i=0;i<=12;i++)body+=line(760+i*25,238,760+i*25,538,'#75b3a9');
-  for(let i=0;i<=12;i++)body+=line(760,238+i*25,1060,238+i*25,'#75b3a9');
-  body+=text(60,588,L('관심구간을 선택하여 더 세밀하게 표현','Represent selected areas with finer cells'),27,600)+text(60,630,L('국부 표현과 계산비용을 함께 검토합니다.','Review local detail together with computational cost.'),23);
+  body+=rect(260,338,100,100,'#d8eee8','#008c8c',0)+line(310,338,310,438,'#75b3a9')+line(260,388,360,388,'#75b3a9')+line(580,388,640,388,undefined,true);
+  body+=rect(660,238,500,300,'#eff6fa','#9cbdcf',0);
+  for(let i=0;i<=5;i++)body+=line(660+i*100,238,660+i*100,538,'#a4bdcc');
+  for(let i=0;i<=3;i++)body+=line(660,238+i*100,1160,238+i*100,'#a4bdcc');
+  body+=rect(860,338,100,100,'#d8eee8','#008c8c',0)+line(910,338,910,438,'#75b3a9')+line(860,388,960,388,'#75b3a9');
+  body+=text(60,588,L('초록 영역은 원해상도 유지 · 배경은 격자 병합','Green patch retains source cells; background cells are grouped'),27,600)+text(60,630,L('입력 지형보다 더 세밀한 지형정보를 생성하지 않습니다.','No terrain detail beyond the input resolution is created.'),23);
   return frame(name,lang,L('다중해상도와 고해상도 Patch','Multiple resolutions and local patches'),L('격자 배치는 설명용이며 실제 적용 해상도를 나타내지 않습니다.','Illustrative grid layout; no specific model resolution is prescribed.'),body);
  }
  if(name==='river-result-views'){
@@ -88,7 +104,7 @@ function diagram(name,lang){
  }
  throw new Error('Unknown reference schematic: '+name);
 }
-const names=['input-readiness','rainfall-coverage','initial-state-warmup','watershed-water-balance','calibration-evaluation','result-lifecycle','nested-grid-patch','river-result-views'];
+const names=['input-readiness','rainfall-coverage','initial-state-warmup','watershed-water-balance','calibration-evaluation','result-lifecycle','nested-grid-patch','river-result-views','snow-process','deep-storage-path'];
 function build(){const out=path.resolve(__dirname,'../../docs',directory);fs.mkdirSync(out,{recursive:true});for(const name of names)for(const lang of ['ko','en'])fs.writeFileSync(path.join(out,name+'-'+lang+'.svg'),diagram(name,lang));}
 if(require.main===module)build();
 module.exports={names,directory,build,diagram};
