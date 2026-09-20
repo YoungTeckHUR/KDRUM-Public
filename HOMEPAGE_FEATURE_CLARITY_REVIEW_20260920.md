@@ -43,3 +43,26 @@ These are website and explanatory-content checks. They do not constitute new hyd
 ## Continuation
 
 Keep shared overview illustrations as references, not automatic primary-image fallbacks. Review whether each paragraph adds a new decision, mechanism or interpretation check. Exact sentence checks alone cannot detect semantic repetition. Review new images at their actual display sizes and retain existing media access.
+
+## Follow-up: reduce the initial reading load
+
+The selected feature view now starts with a short visitor situation, followed by the
+existing concrete benefit and the primary illustration. All 46 situations are
+maintained in Korean and English in `feature-use-cases.cjs` with build-time coverage
+validation. Technical definitions remain available in the detailed scope explanation;
+the original summary data is retained for other site consumers.
+
+Long figure-reading guidance moved into the technical disclosure and remains in image
+alt text and the enlargement dialog. Shared reference links also moved into that
+disclosure. Inline captions retain the conceptual-image label and enlargement action.
+Availability badges stay visible before any disclosure. Disabled water quality has a
+direct availability statement instead of explaining why no image was made.
+
+The home introduction video, PDF, gallery, topic entry points, search, related-feature
+navigation and current feature availability classifications are preserved. No model
+engine or presentation-media files changed.
+
+Validation: all 46 Korean desktop and 46 English mobile initial feature views were
+visually inspected; 184 bilingual feature checks, 30 SVG geometry checks and eight
+navigation viewport/language combinations passed. These checks establish rendering and
+navigation integrity, not numerical model validity or measured user comprehension.
