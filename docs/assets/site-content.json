@@ -310,8 +310,8 @@
       ],
       "nowKo": "증발산·토양수분은 확립된 연속 수문 기능이며 계산 QA의 현대화가 진행 중입니다.",
       "nowEn": "Evapotranspiration and soil-water accounting are established continuous-hydrology functions with ongoing QA modernization.",
-      "detailKo": "증발산 계산은 기상·토양 조건에 따른 증발산 수요를 토양층 저장과 뿌리분포에 연결합니다. 증발산에 따른 저장량 변화는 이후 시점의 토양수분 상태와 연속 물수지에 반영됩니다.",
-      "detailEn": "Evapotranspiration calculations connect demand under weather and soil conditions with soil-layer storage and root distribution. Storage changes associated with evapotranspiration enter subsequent soil-water states and the continuous water balance.",
+      "detailKo": "기상자료로 계산한 기준 증발산 수요를 식생·토양 조건에 연결하고, 뿌리 깊이와 각 토양층에 걸친 뿌리 영역에 따라 배분합니다. 실제 저장량에서 공급할 수 있는 물의 범위 안에서 증발산과 토양수분을 갱신하므로, 기준 증발산 수요와 실제 저장 감소량을 구분해 해석합니다.",
+      "detailEn": "Reference evapotranspiration demand derived from meteorology is connected to vegetation and soil conditions and allocated by root depth and its overlap with soil layers. Evapotranspiration and soil water are updated within available storage, so reference demand must be distinguished from actual storage depletion.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null,
@@ -330,19 +330,19 @@
       "sumKo": "K-DRUM의 적설·융설 과정은 적설저장과 융설을 장기 수문상태에 연결합니다.",
       "sumEn": "K-DRUM snow processes connect snow storage and melt with continuous watershed states.",
       "stepsKo": [
-        "강설·기온",
-        "적설저장/융설",
-        "유출기여"
+        "강수·기온",
+        "강우/강설 분리·융설",
+        "저장 갱신·수문 입력"
       ],
       "stepsEn": [
-        "snow + temp",
-        "snow storage/melt",
-        "runoff contribution"
+        "precipitation + temperature",
+        "rain/snow partition + melt",
+        "storage update + hydrologic input"
       ],
       "nowKo": "적설·융설은 공개 장기 융설 적용 연구로 뒷받침되는 확립된 기능입니다.",
       "nowEn": "Snow accumulation and melt are established through public long-term snowmelt applications.",
-      "detailKo": "적설·융설 과정은 강설과 기온을 적설저장의 축적 및 융설에 연결합니다. 융설수의 유출 기여와 남은 적설저장이 장기 유역수문 상태에 반영되므로, 강설 시점과 유출 기여 시점을 구분하여 표현합니다.",
-      "detailEn": "Snow processes connect snowfall and temperature with snow accumulation and melt. Meltwater contribution to runoff and remaining snow storage enter long-term watershed states, distinguishing the time of snowfall from its contribution to runoff.",
+      "detailKo": "적설·융설은 기온에 따라 강수를 강우와 강설로 나누고, 적설저장과 융설수를 갱신합니다. 표고에 따른 기온보정과 계절 변화에 더해, 경사·D8 흐름방향·시간대를 이용한 경험적 융설계수 보정이 연결됩니다. 이는 일사 에너지수지나 경사면의 눈 이동을 직접 계산하는 방식과 구분됩니다.",
+      "detailEn": "Snow processes partition precipitation into rain and snow using temperature, then update snow storage and meltwater. Elevation-adjusted temperature and seasonal variation are complemented by an empirical melt-factor adjustment using slope, D8 flow direction and time of day. This is distinct from directly solving a radiation energy balance or snow movement on slopes.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -397,8 +397,8 @@
       ],
       "nowKo": "HotStart는 현재 Core의 체크포인트·상태 재시작 구현·QA 기능입니다.",
       "nowEn": "HotStart is an implemented checkpoint and state-restart capability under QA in the current Core.",
-      "detailKo": "HotStart는 체크포인트에 저장된 모형 상태를 읽어 계산을 재개하는 상태관리 기능입니다. 저장 상태와 재시작 조건의 일치성을 관리하여 중단 전 계산 상태를 이후 모의에 연결합니다. 적용 범위는 상태 저장·복원과 계산 재시작이며, 초기상태를 반복 안정화하는 워밍업과 구분됩니다.",
-      "detailEn": "HotStart is a state-management function that reads model states saved at a checkpoint and resumes computation. Consistency controls connect the saved state and restart conditions so that subsequent simulation continues from the earlier calculation state. Its scope is state storage, restoration and restart, distinct from iterative initial-state stabilization through warm-up.",
+      "detailKo": "HotStart는 저장된 격자 수문상태와 저수지 상태 등을 읽어 계산을 재개합니다. 선택한 계산 경로에 따라 추가 상태의 저장·복원 여부가 달라지므로 격자·시간·파일 호환성과 필요한 상태가 포함됐는지 확인해야 합니다. 모든 1D·2D 확장 상태를 하나의 체크포인트에서 복원한다고 해석하지 않습니다.",
+      "detailEn": "HotStart resumes computation from saved grid hydrologic states, reservoir states and supported additional state blocks. Their availability depends on the selected calculation path, so check grid, time, file compatibility and required state coverage. A checkpoint should not be assumed to restore every 1D or 2D extension state.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -425,8 +425,8 @@
       ],
       "nowKo": "D층·지연 기저유출은 현재 장기 저장과 기저유출 표현을 확장하는 개발기능입니다.",
       "nowEn": "D-layer and delayed baseflow return remain under development as extensions to long-term storage and baseflow representation.",
-      "detailKo": "D층 확장은 심부 저장층의 수위와 저장량을 지연복류 및 손실에 연결합니다. 느리게 방출되는 물의 기저유출 기여를 통해 장기 감수부와 저유량 응답을 표현하는 개발 경로입니다.",
-      "detailEn": "The D-layer extension connects deeper-storage water level and volume with delayed return and loss processes. It is a development path for representing long recession and low-flow response through the baseflow contribution of slowly released water.",
+      "detailKo": "D층은 심부 저장량과 지연 방출을 이용해 장기 감수부·저유량 응답을 표현하는 개발 경로입니다. 지연복류는 상부 토양층 경로로 되돌아가며, 심부 손실은 별도 물리수문 옵션이 활성화된 경우에 적용됩니다. 저장·복류·손실을 구분하여 물수지를 확인하며, 완전한 지하수유동 해석으로 보지 않습니다.",
+      "detailEn": "The D-layer is a development path representing recession and low-flow responses through deep storage and delayed release. Delayed return feeds an upper soil-layer pathway; deep loss applies only when the separate physical-hydrology option is enabled. Distinguish storage, return and loss in the water balance rather than treating this as a complete groundwater-flow model.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null,
@@ -624,8 +624,8 @@
       ],
       "nowKo": "1D-2D 교환량 일관성은 통제된 개발 조건에서 검증되었으며 모든 유역의 물수지 인증을 뜻하지 않습니다.",
       "nowEn": "1D-2D exchange consistency has controlled development validation; it does not certify water balance for every basin.",
-      "detailKo": "1D-2D 교환 물수지는 동일한 교환유량을 하천과 범람원에 반대 부호로 반영하는 영역 간 회계를 평가합니다. 한 영역의 유출이 다른 영역의 유입으로 대응하는지가 평가 대상이며, 교환량 일관성은 전체 유역 물수지 검증과 구분됩니다.",
-      "detailEn": "The 1D-2D exchange water balance assesses domain accounting in which the same exchange flux enters river and floodplain with opposite signs. It evaluates whether one domain’s outflow corresponds to the other’s inflow; exchange consistency is distinct from whole-basin water-balance validation.",
+      "detailKo": "1D-2D 교환 물수지는 하천에서 빠져나간 양과 범람원에 들어간 양, 복귀량의 대응을 확인합니다. 실행 경로에 따라 단방향 월류 집계 또는 양방향 교환 진단의 범위가 다르므로, 같은 시간 구간의 양 영역 회계를 비교해야 합니다. 교환량 진단만으로 전체 유역 물수지나 실제 유역 적용성이 검증되지는 않습니다.",
+      "detailEn": "The 1D–2D exchange balance compares river losses, floodplain gains and return flows. Reporting covers different scopes for one-way overflow and two-way exchange paths, so compare both domains over matching time intervals. Exchange diagnostics alone do not validate the full watershed balance or real-basin applicability.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -932,8 +932,8 @@
       ],
       "nowKo": "다중댐 운영·재운영은 댐망 시나리오 비교를 위한 연구·평가용 개발기능입니다.",
       "nowEn": "Multi-dam operation and reoperation remain development capabilities for research and dam-network scenario assessment.",
-      "detailKo": "다중댐 시나리오 평가는 댐망 유입과 운영 대안을 목적지표에 따라 비교합니다. 재운영 연구를 위한 대안별 평가가 결과이며, 개별 댐의 방류 구성 계산과 구분하여 댐군 시나리오의 차이를 다룹니다.",
-      "detailEn": "Multi-dam scenario assessment compares network inflow and operation alternatives through objective measures. It produces comparative assessments for reoperation studies, addressing differences among dam-network scenarios separately from release-component calculation for an individual reservoir.",
+      "detailKo": "다중댐 시나리오 평가는 같은 유입·평가기간에서 댐군 운영 대안을 목적지표별로 비교합니다. 재운영·재추적 연구의 대안 결과는 원래 모의 결과와 구분하여 해석하며, 공식 수문·NetCDF 결과가 대안으로 자동 대체되는 기능으로 설명하지 않습니다.",
+      "detailEn": "Multi-reservoir scenario evaluation compares operating alternatives under common inflows and evaluation periods using objective metrics. Interpret reoperation and retracing alternatives separately from the original simulation; this is not a function that automatically replaces official hydrologic or NetCDF results with an alternative.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -960,8 +960,8 @@
       ],
       "nowKo": "양방향 1D-2D 교환은 통제된 개발검증에서 확인되었으며 모든 유역의 적용성이나 생산인증을 뜻하지 않습니다.",
       "nowEn": "Bidirectional 1D-2D exchange has been demonstrated in controlled development validation, without universal basin applicability or production certification.",
-      "detailKo": "양방향 1D-2D 연계는 동일한 하천–범람원 경계에서 월류와 복귀유량을 계산합니다. 교환경계를 통한 물의 이동이 두 계산 영역을 연결하며, 양방향 교환의 작동 여부와 교환량 물수지의 일관성은 구분된 평가 항목입니다.",
-      "detailEn": "Bidirectional 1D-2D coupling calculates overflow and return flow across a common river–floodplain interface. Water movement through that interface connects the two calculation domains; active two-way exchange and consistency of exchange accounting are distinct assessment topics.",
+      "detailKo": "양방향 1D-2D 연계는 하천–범람원 경계의 월류와 복귀유량을 통해 두 영역의 계산을 연결하는 개발기능입니다. 단방향 전달·진단 경로도 별도로 있으므로, 실제 실행에서 양방향 피드백이 활성화됐는지 확인해야 합니다. 교환량의 부호·시간 간격·누적량과 양 영역의 저장 변화를 함께 평가합니다.",
+      "detailEn": "Bidirectional 1D–2D coupling is a development feature linking river and floodplain calculations through overflow and return discharge. Separate one-way transfer and diagnostic paths also exist, so confirm that two-way feedback is active in the actual run. Review flux signs, intervals, cumulative exchange and storage changes in both domains.",
       "diagram": "river-floodplain",
       "diagramCaptionKo": "기능군 개념도: 하천–범람원 경계의 화살표는 월류와 복귀유량의 두 방향을 나타냅니다. 통제된 개발검증 범위의 교환 개념이며 실제 유역 결과가 아닙니다.",
       "diagramCaptionEn": "Process-family schematic: arrows at the river–floodplain interface show overflow and return flow. This illustrates exchange with controlled development validation, not real-basin results."
@@ -1030,22 +1030,22 @@
       "v": "nestedgrid",
       "ko": "다중해상도·Patch 2D",
       "en": "Multi-resolution / patch 2D",
-      "sumKo": "다해상도 2D 계산은 관심구간에 더 촘촘한 격자·Patch를 적용하여 정확도와 계산비용을 조정합니다.",
-      "sumEn": "Multi-resolution 2D calculations use focused higher-resolution patches to balance local detail and computation cost.",
+      "sumKo": "원지형 격자를 묶은 배경영역과 원해상도를 유지한 관심 Patch로 계산량과 국부 표현을 조정합니다.",
+      "sumEn": "Grouped terrain cells form a coarser background while selected patches retain the source resolution.",
       "stepsKo": [
-        "기본격자",
-        "고해상도 Patch",
-        "결과 통합"
+        "원지형 격자",
+        "배경 병합·Patch 유지",
+        "다중해상도 계산"
       ],
       "stepsEn": [
-        "base grid",
-        "fine patch",
-        "merged result"
+        "source terrain grid",
+        "group background / retain patches",
+        "multi-resolution calculation"
       ],
       "nowKo": "다중해상도·Patch 2D는 국부 고해상도 수리영역을 구성하는 개발 단계입니다.",
       "nowEn": "Multi-resolution and patch 2D remain in development for focused high-resolution hydraulic domains.",
-      "detailKo": "다중해상도 2D 해석은 기본격자와 관심구간의 고해상도 Patch를 함께 구성합니다. 국부 지형·흐름의 세부 표현과 계산비용 사이의 조정을 위한 개발기능이며, 격자 세분화 자체가 결과 정확도를 보증하지는 않습니다.",
-      "detailEn": "Multi-resolution 2D analysis combines a base grid with higher-resolution patches in areas of interest. It is under development to balance local terrain and flow detail with computation cost; grid refinement alone does not guarantee result accuracy.",
+      "detailKo": "다중해상도·Patch 경로는 원지형 격자를 묶어 배경 계산격자를 구성하고, 관심구간은 원해상도로 유지합니다. 따라서 Patch는 배경영역보다 세밀하지만 입력 지형보다 더 세밀한 지형정보를 새로 만들지는 않습니다. 경계 연결과 지형 해상도에 따른 결과 차이 및 계산비용을 함께 검토하는 개발기능입니다.",
+      "detailEn": "The multi-resolution and patch path groups source-terrain cells into coarser background cells while retaining source resolution in selected regions. Patches are finer than the background but do not create terrain detail beyond the input resolution. This development feature requires review of interfaces, terrain-resolution effects and computational cost.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -1240,8 +1240,8 @@
       ],
       "nowKo": "NetCDF 통합출력은 결과 저장 구조의 표준화와 Viewer 연계가 진행 중인 개발기능입니다.",
       "nowEn": "NetCDF integrated output remains in development for standardized result storage and viewer integration.",
-      "detailKo": "NetCDF 통합출력은 수문·수리 계산상태를 공통 시간·좌표·변수 구조의 결과자료로 구성합니다. 저장된 자료는 Viewer와 후처리 도구의 입력이며, 출력 형식의 표준화와 해당 결과를 생성한 계산 기능의 개발 상태는 별도로 구분됩니다.",
-      "detailEn": "NetCDF integrated output organizes hydrologic and hydraulic calculation states into result data with common time, coordinate and variable structures. Stored data feeds viewers and postprocessing tools; output standardization is separate from the maturity of the calculation producing each result.",
+      "detailKo": "NetCDF 출력은 계산 경로별 결과의 시간·좌표·변수·단위를 기록하여 Viewer와 후처리에 전달합니다. 유역 격자와 범람 결과는 별도 파일·격자·출력 간격을 가질 수 있으므로 시간축이 같다고 가정하지 않습니다. 비교 시 실제 출력 시각과 공간정보를 맞추고 필요한 변수의 존재를 확인합니다.",
+      "detailEn": "NetCDF outputs record times, coordinates, variables and units for each calculation path for viewers and postprocessing. Watershed-grid and flood outputs may use separate files, meshes and output intervals; their time axes need not coincide. Compare actual output timestamps and spatial metadata and confirm required variables are present.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -1268,8 +1268,8 @@
       ],
       "nowKo": "FloodViewer의 공개 성숙도는 Release Candidate이며 최종 공개 릴리스로 제시되지 않습니다.",
       "nowEn": "FloodViewer has Release Candidate maturity and is not presented as a final public release.",
-      "detailKo": "FloodViewer는 NetCDF 결과를 지도와 시계열로 구성하여 공간분포·침수심·유속 등을 분석하는 프로그램입니다. 입력은 K-DRUM 계산 결과이며, 화면의 비교·분석 기능과 결과를 생성하는 수문·수리 계산 기능은 역할이 다릅니다.",
-      "detailEn": "FloodViewer organizes NetCDF results into maps and time series for analysis of spatial distributions, inundation depth and velocity. Its inputs are K-DRUM calculation results; display, comparison and analysis have a different role from the hydrologic and hydraulic computations that produce those results.",
+      "detailKo": "FloodViewer는 K-DRUM 결과를 평면 지도와 시계열로 표시하여 공간분포·침수심·유속 등을 분석합니다. 유역 격자와 범람 결과의 실제 좌표·시간축을 각각 확인하고, 표시 가능한 변수는 입력 파일에 따릅니다. 종·연직 x-z 하구 단면 분석은 별도 뷰어 영역이며, 화면 표시만으로 계산 결과의 타당성이 입증되지는 않습니다.",
+      "detailEn": "FloodViewer presents K-DRUM outputs as plan-view maps and time series for spatial distributions, inundation depth and velocity. Check the actual coordinates and time axes of watershed-grid and flood results separately; available variables depend on the input files. Longitudinal–vertical x-z estuary sections belong to a separate viewer scope, and visualization alone does not establish validity.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -1324,8 +1324,8 @@
       ],
       "nowKo": "Estuary2DV는 Core 생산기능과 분리된 실험적 하구 수동역학·염분 연구 프로토타입입니다.",
       "nowEn": "Estuary2DV is an experimental estuary hydrodynamics and salinity prototype separate from Core production capabilities.",
-      "detailKo": "Estuary2DV는 상류와 조위 조건을 이용해 하구의 종·연직 방향 수동역학과 염분거동을 연구하는 별도 모형입니다. 염분·성층 등 x-z 단면의 연구 결과가 대상이며, K-DRUM Core의 확립된 유역 수문 기능과 구분됩니다.",
-      "detailEn": "Estuary2DV is a separate model for longitudinal–vertical estuary hydrodynamics and salinity research using river and tidal conditions. Its scope is x-z section research results such as salinity and stratification, distinct from established watershed hydrology in K-DRUM Core.",
+      "detailKo": "Estuary2DV는 상류 유입·조위·염분 조건으로 하구의 종·연직(x-z) 수동역학과 염분거동을 연구하는 별도 실험 모형입니다. 폭평균·정수압 가정을 사용하며 평면 2D 범람해석과 계산 영역이 다릅니다. Core와의 연계·출력·뷰어 지원 범위는 사용하는 개발본과 결과자료 계약에 따라 확인해야 합니다.",
+      "detailEn": "Estuary2DV is a separate experimental model for longitudinal–vertical (x-z) estuary hydrodynamics and salinity under upstream flow, tide and salinity conditions. It uses width-averaged, hydrostatic assumptions and differs from plan-view 2D flood analysis. Verify Core integration, output and viewer support against the development build and its result-data contract.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null

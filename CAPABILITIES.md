@@ -32,6 +32,8 @@ Current state-management and long-term extensions include:
 - HotStart / state restart and checkpoint continuity
 - deeper-storage-layer (D-layer) / delayed baseflow-return development
 
+Snowmelt includes empirical slope, D8-direction and time-of-day adjustment of the melt factor; it does not directly solve radiation energy balance or slope snow transport. HotStart state coverage depends on the selected calculation path. D-layer delayed return feeds an upper soil-layer pathway, while deep loss requires its separate option.
+
 ## 3. Hillslope, channel and terrain representation
 
 Publicly describable capabilities include:
@@ -82,6 +84,8 @@ Current development includes:
 
 The one-dimensional/two-dimensional exchange path has a **validated-development** boundary from controlled testing; this is not universal basin certification.
 
+One-way transfer, diagnostic and two-way feedback paths must be distinguished for each run. Multi-resolution patches retain source-terrain resolution against a grouped, coarser background; they do not create finer terrain information than the input.
+
 ## 7. Sediment, material tracking and water-quality research functions
 
 The current code base retains research calculation paths for:
@@ -106,6 +110,8 @@ The wider K-DRUM environment includes:
 - Estuary2DV as a separate experimental longitudinal-vertical estuary hydrodynamics / salinity research model
 
 MPI has a public K-DRUM research lineage, while current serial/OpenMP/MPI consistency and runtime modernization remain active verification topics.
+
+Watershed-grid and flood output files may have different meshes and timestamps. FloodViewer reads plan-view results; the experimental width-averaged, hydrostatic Estuary2DV x-z model has a separate result and viewer contract.
 
 ## MyWater K-Series public access
 

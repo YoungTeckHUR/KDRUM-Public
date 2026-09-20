@@ -16,6 +16,8 @@ const concepts = {
 const directory = 'assets/diagrams/feature-reference-2026-09-19/';
 const wave2Directory = 'assets/diagrams/feature-reference-wave2-2026-09-19/';
 const wave2Concepts = {
+ snow: ['snow-process', '강수 분리, 적설저장, 경험적 융설계수 보정과 수문 입력의 관계입니다.', 'Precipitation partition, snow storage, empirical melt-factor adjustment and hydrologic input.'],
+ dlayer: ['deep-storage-path', 'D층의 지연복류는 상부 토양층 경로로 연결되며, 심부 손실은 별도 활성 조건을 갖습니다.', 'Delayed D-layer return feeds an upper soil-layer pathway; deep loss has separate activation conditions.'],
  continuous: ['continuous-water-storage', '강우가 없는 기간에도 저장상태를 이어가며 다음 강우에 대한 유역의 반응을 계산합니다.', 'Storage states carry through drier periods and influence the response to subsequent rainfall.'],
  'river-infil': ['riverbed-deep-storage', '하천에서 심부 저장층으로 이동하는 물을 보여줍니다. 실제 이동량에는 침투가능량과 저장여유의 제한이 적용됩니다.', 'The illustration shows transfer from a river into deeper storage. Transfer is constrained by infiltration capacity and available storage.'],
  dwnet: ['connected-river-network', '분기·합류와 횡단면으로 연결된 하천망의 개념입니다. 각 구간의 수위·유량을 연결하여 해석합니다.', 'The illustration shows river reaches connected through confluences, branches and cross sections for linked water-level and discharge analysis.'],
@@ -28,10 +30,10 @@ const wave2Concepts = {
  wb: ['watershed-water-balance', '같은 집계 범위에서 외부 유입, 유출과 저장량 변화를 비교하여 폐합오차를 평가합니다.', 'Boundary inputs, outputs and storage changes are compared over the same accounting domain to evaluate the closure residual.'],
  optimization: ['calibration-evaluation', '관측유량과 여러 매개변수 케이스의 결과를 같은 조건에서 비교하고 성능지표로 평가합니다.', 'Observed discharge and parameter-case results are compared under consistent conditions using performance metrics.'],
  'output-integrity': ['result-lifecycle', '실행 조건과 진단을 기록하고 출력 파일의 생성·종료 및 정의된 요건을 점검하여 후처리 가능 상태를 확인합니다.', 'Run conditions and diagnostics are recorded, and output creation, closure and requirements are checked for postprocessing readiness.'],
- multires: ['nested-grid-patch', '기본격자의 관심구간을 더 세밀한 Patch로 표현하는 개념입니다. 그림의 격자 간격은 설명용입니다.', 'Selected areas of a base grid are represented by finer patches. The depicted spacing is illustrative.'],
+ multires: ['nested-grid-patch', '원지형 격자를 묶은 배경과 원해상도를 유지한 Patch의 관계입니다. 입력보다 세밀한 지형정보를 생성하지 않습니다.', 'Background cells group source-terrain cells while patches retain source resolution; no finer terrain data is created.'],
  'river-viewer': ['river-result-views', '1D 결과를 종단면·횡단면과 수위·유량 시계열로 읽는 개념입니다. 뷰어는 별도 개발 중입니다.', 'The schematic shows longitudinal, cross-sectional and time-series views of 1D outputs. The viewer is under separate development.']
 };
-const schematicIds=new Set(['input-precheck','rain-summary','warmup','wb','optimization','output-integrity','multires','river-viewer']);
+const schematicIds=new Set(['input-precheck','rain-summary','warmup','wb','optimization','output-integrity','multires','river-viewer','snow','dlayer']);
 Object.assign(concepts,wave2Concepts);
 // Shared references stay links, preserving one representative inline illustration.
 const linkedConcepts={
@@ -51,7 +53,7 @@ const linkedConcepts={
  viewer: [['@program-workflow','프로그램별 역할과 결과 분석','Program roles and result interpretation']],
  inputstudio: [['@program-workflow','입력 작성에서 계산까지','From input preparation to model execution']]
 };
-const galleryConcepts={ga:'concept-ga',runoff:'concept-runoff',et:'concept-et',dlayer:'concept-dlayer'};
+const galleryConcepts={ga:'concept-ga',runoff:'concept-runoff',et:'concept-et'};
 const omittedConcepts={wq:'The water-quality module is disabled; retain the availability explanation without depicting an active result.'};
 function getReference(id,lang,prefix=''){
  if(id==='@program-workflow')return {src:prefix+'assets/diagrams/program-workflow-'+lang+'.svg',width:960,height:600,caption:lang==='ko'?'입력 작성, 계산, 결과 저장과 분석 도구의 역할 및 개발 상태입니다.':'Roles and development states of input preparation, computation, output storage and analysis tools.'};

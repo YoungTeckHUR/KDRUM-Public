@@ -35,10 +35,10 @@ The public website currently presents **45 repository-tracked capabilities** in 
 | 지표·지표하 유출 | **ESTABLISHED** | 토양층 저장과 지표 및 지표하 유출 계산 |
 | 연속유출·장기모의 | **ESTABLISHED** | 사상 사이의 상태를 연속하여 계절·장기 유출과 물수지를 계산 |
 | 증발산·토양수분 | **ESTABLISHED** | 증발산과 토양수분 저장을 연속 물수지에 반영 |
-| 적설·융설 | **ESTABLISHED** | 적설저장과 융설을 장기 유역수문 상태에 반영 |
+| 적설·융설 | **ESTABLISHED** | 강우·강설 분리와 적설저장·융설, 경사·D8 방향·시간대의 경험적 융설계수 보정 |
 | 워밍업·초기상태 안정화 | **IMPLEMENTED / QA** | 초기 토양·유출 상태와 목표지점 유량의 수렴상태를 진단 |
-| HotStart(상태 재시작) | **IMPLEMENTED / QA** | 저장된 상태를 이용한 계산 재시작 및 연속모의 지원 |
-| 심부저류층(D층)·지연 기저유출 | **ACTIVE DEVELOPMENT** | 심부저류, 지연복류 및 손실을 이용한 장기 저유량·기저유출 표현 |
+| HotStart(상태 재시작) | **IMPLEMENTED / QA** | 저장된 상태로 계산 재시작 지원. 실행 경로별 저장·복원 상태와 호환성 확인 필요 |
+| 심부저류층(D층)·지연 기저유출 | **ACTIVE DEVELOPMENT** | 심부저류와 상부 토양층 경로로의 지연복류. 심부 손실은 별도 활성 옵션에 따름 |
 
 ## 3. 사면·하도·지형
 
@@ -79,10 +79,10 @@ The public website currently presents **45 repository-tracked capabilities** in 
 
 | 기능 | 공개 상태 | 설명 |
 |---|---|---|
-| 1차원–2차원 양방향 연계 | **VALIDATED DEVELOPMENT** | 하천과 홍수터 사이의 월류 및 복귀유량을 양방향으로 계산 |
+| 1차원–2차원 양방향 연계 | **VALIDATED DEVELOPMENT** | 양방향 경로에서 월류·복귀유량을 연결. 별도 단방향·진단 실행과 구분 필요 |
 | Local Inertia 근사 2차원 홍수범람해석 | **ACTIVE DEVELOPMENT** | 효율적인 2차원 홍수범람 계산을 위한 주 개발경로 |
 | 완전 천수방정식(Full SWE) 해석 | **ACTIVE DEVELOPMENT** | 급변류 등 운동량항을 보다 완전하게 고려해야 하는 구간의 특수 해석경로 |
-| 다중해상도·국부 고해상도 2차원 해석 | **ACTIVE DEVELOPMENT** | 관심구간을 더 세밀한 계산격자로 구성하여 국부 해상도를 향상 |
+| 다중해상도·국부 고해상도 2차원 해석 | **ACTIVE DEVELOPMENT** | 원지형 격자를 묶은 배경과 원해상도를 유지한 관심 Patch를 구성 |
 | 2차원 직접강우·배수·수리구조물·물질추적 | **ACTIVE DEVELOPMENT** | 직접강우, 배수, 구조물 및 물질추적 기능을 홍수범람해석과 연계 |
 
 ## 7. 유사·물질추적·수질
@@ -99,7 +99,7 @@ The public website currently presents **45 repository-tracked capabilities** in 
 | 기능 | 공개 상태 | 설명 |
 |---|---|---|
 | 단일 실행·OpenMP·MPI 병렬계산 | **ESTABLISHED / MODERNIZING** | 단일 실행, 공유메모리 및 분산메모리 실행경로의 결과정합성과 병렬효율을 검증 |
-| NetCDF 통합 결과출력 | **ACTIVE DEVELOPMENT** | 수문·수리 결과를 공통 시간·좌표·변수 구조로 저장하여 결과분석 프로그램에 전달 |
+| NetCDF 통합 결과출력 | **ACTIVE DEVELOPMENT** | 계산 경로별 시간·좌표·변수 정보를 저장. 파일별 격자·출력 시각의 일치 여부 확인 필요 |
 | FloodViewer | **RELEASE CANDIDATE** | 공간분포·시계열·침수심·유속 등 수문·수리 계산결과를 통합 분석 |
 | InputStudio | **ACTIVE DEVELOPMENT** | 지형, 강우, 하천, 횡단면, 수리구조물과 모의조건을 프로젝트 단위로 작성·점검 |
 | Estuary2DV | **EXPERIMENTAL** | 하구 종·연직 2차원 수동역학과 염분거동 해석을 위한 별도 연구용 모형 |
