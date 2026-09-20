@@ -2,10 +2,11 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
 const root=path.resolve(__dirname,'../..'),docs=path.join(root,'docs');
 const data=require('../../docs/assets/site-content.json');assert.equal(data.items.length,46);assert.equal(new Set(data.items.map(i=>i.id)).size,46);
 require('./capability-contract.cjs').validate(data);
-const generator=fs.readFileSync(path.join(root,'.github/scripts/build-site.cjs'),'utf8');
-const detailTemplate=generator.slice(generator.indexOf('function capability('),generator.indexOf('function sectionTitle('));
+const generator=fs.readFileSync(path.join(root,'.github/scripts/navigation-layout.cjs'),'utf8');
+const detailTemplate=generator.slice(generator.indexOf('function capability('),generator.indexOf('function sections('));
 assert.ok(!/domain\[|d\[lang\]|d\.diagram/.test(detailTemplate),'No group fallback in capability rendering');
-assert.ok(detailTemplate.includes("get(it,'detail',lang)"),'Individual detail field rendered');
+assert.ok(detailTemplate.includes("item['detail'+suffix]"),'Individual detail field rendered');
+require('./capability-guidance.cjs').validate(data);
 const baseline=fs.readFileSync(path.join(docs,'assets/capability-atlas.js'),'utf8');
 const vm=require('node:vm');const old=vm.runInNewContext(baseline.slice(baseline.indexOf('  const groups='),baseline.indexOf('  const css='))+';items');
 // The editorial voice may change; capability identity, technical labels and
