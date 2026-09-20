@@ -181,3 +181,6 @@
 .model-content .feature-reference figcaption a{flex:0 0 auto;min-height:44px}
 .technical-details .figure-reading{padding:18px 0 0}
 .technical-details .figure-reading p{margin-bottom:0}
+
+/* Keep hydrology-gallery labels readable on narrow screens. */
+@media(max-width:600px){.concept-thumbnail-grid.gallery-grid{grid-template-columns:minmax(0,1fr)}}
