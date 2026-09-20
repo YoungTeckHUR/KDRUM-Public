@@ -56,6 +56,12 @@ async function navigation(page,lang,width){
  await zoom(page,page.locator('#cap-ga .feature-reference-image'));
  for(const id of ['programs','research','download','home']){await page.locator('.workspace-nav [data-page-link="'+id+'"]').click();await page.locator('[data-workspace-page="'+id+'"]').waitFor({state:'visible'});assert.equal(await page.locator('[data-workspace-page]:visible').count(),1);assert.ok(await page.locator('[data-workspace-page="'+id+'"]').isVisible());await bounds(page,lang+' '+width+' '+id);}
  for(const [hash,selector] of [['architecture','#overview'],['features','#cap-ga'],['platform','#programs'],['references','#research'],['concept-ga','#concept-ga'],['results','#results'],['cap-not-real','#home']]){await ready(page,home(lang)+'#'+hash);assert.ok(await page.locator(selector).isVisible(),hash+' resolves');await bounds(page,hash);}
+ await ready(page,home(lang)+'#overview');await page.locator('.numerical-entry').click();await page.locator('#numerical-methods').waitFor({state:'visible'});
+ assert.equal(await page.locator('[data-model-view]:visible').count(),1,'Numerical guide is a selected view');
+ for(const topic of await page.locator('.numerical-topic').all()){await topic.locator(':scope>summary').click();await bounds(page,'numerical topic '+lang+' '+width);await topic.locator(':scope>summary').click();}
+ await ready(page,home(lang)+'#numerical-time');assert.ok(await page.locator('#numerical-time').evaluate(e=>e.open),'Deep link opens its topic');
+ const numericalLanguage=page.locator('.language a[lang="'+(lang==='ko'?'en':'ko')+'"]');await numericalLanguage.click();assert.ok(await page.locator('#numerical-time').evaluate(e=>e.open),'Language switch preserves numerical topic');
+ await ready(page,home(lang)+'#cap-fullswe');await page.locator('#cap-fullswe .technical-details>summary').click();await page.locator('#cap-fullswe .numerical-link').click();assert.ok(await page.locator('#numerical-methods').isVisible(),'Feature links reach numerical guide');
  await ready(page,home(lang));if(width===1440){await page.evaluate(()=>document.documentElement.style.zoom='2');await bounds(page,'200% zoom');await page.evaluate(()=>document.documentElement.style.zoom='');}
 }
 async function run(mode='navigation'){

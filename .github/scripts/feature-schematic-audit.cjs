@@ -4,6 +4,7 @@ const {names,directory}=require('./build-feature-reference-svg.cjs');
 const focused=require('./feature-specific-figures.cjs');
 const entries=[...names.map(name=>({name,directory})),...Object.keys(focused.captions).map(name=>({name,directory:focused.directory}))];
 const requiredLabels={
+ 'finite-volume':{ko:['i − 1','i','i + 1'],en:['i − 1','i','i + 1']},
  'flood-extras':{ko:['Domain Mask','Face Mask','차단','개방'],en:['Domain Mask','Face Mask','Wall','Open']},
  'rain-methods':{ko:['Thiessen','IDW'],en:['Thiessen','IDW']},
  'wb-1d2d':{ko:['1D 하천','2D 범람원'],en:['1D river','2D floodplain']},
