@@ -10,6 +10,11 @@ async function bounds(page,label){
  assert.equal(errors.overflow,false,label+' page overflow');assert.deepEqual(errors.clipped,[],label+' clipped text');
 }
 async function ready(page,url){await page.goto(url);await page.waitForFunction(()=>document.documentElement.dataset.siteReady==='true');await page.evaluate(()=>document.fonts.ready);}
+async function diagramScale(page){
+ const image=page.locator('#programs .figure img');await image.evaluate(img=>img.decode());
+ const sizes=await image.evaluate(img=>({diagramLabel:23*img.getBoundingClientRect().width/img.naturalWidth,cardLabel:parseFloat(getComputedStyle(document.querySelector('#programs .program h3')).fontSize)}));
+ assert.ok(sizes.diagramLabel<=sizes.cardLabel*1.1,'Program diagram labels must stay proportional to program card titles');
+}
 async function menuOpen(page){const menu=page.locator('.workspace-menu');if(!await menu.evaluate(el=>el.open))await menu.locator(':scope>summary').click();}
 async function choose(page,item){await menuOpen(page);const group=page.locator('.feature-group[data-group="'+item.g+'"]');if(!await group.evaluate(el=>el.open))await group.locator(':scope>summary').click();await group.locator('[data-feature-link="'+item.id+'"]').click();await page.waitForFunction(id=>!document.getElementById('cap-'+id).hidden,item.id);}
 async function zoom(page,link){await link.click();assert.ok(await page.locator('#image-viewer').evaluate(d=>d.open));await page.locator('#image-viewer img').evaluate(img=>img.decode());const slider=page.locator('#image-viewer input');await slider.fill('2');await slider.dispatchEvent('input');assert.equal(await page.locator('#image-viewer img').evaluate(el=>el.style.width),'200%');await page.keyboard.press('Escape');assert.ok(await link.evaluate(el=>el===document.activeElement),'image focus restoration');}
@@ -55,7 +60,7 @@ async function navigation(page,lang,width){
  await page.locator('#cap-ga .technical-details>summary').focus();await page.keyboard.press('Enter');assert.ok(await page.locator('#cap-ga .technical-details').evaluate(e=>e.open));await page.keyboard.press('Enter');
  await zoom(page,page.locator('#cap-ga .feature-reference-image'));
  for(const id of ['programs','research','download','home']){await page.locator('.workspace-nav [data-page-link="'+id+'"]').click();await page.locator('[data-workspace-page="'+id+'"]').waitFor({state:'visible'});assert.equal(await page.locator('[data-workspace-page]:visible').count(),1);assert.ok(await page.locator('[data-workspace-page="'+id+'"]').isVisible());await bounds(page,lang+' '+width+' '+id);}
- for(const [hash,selector] of [['architecture','#overview'],['features','#cap-ga'],['platform','#programs'],['references','#research'],['concept-ga','#concept-ga'],['results','#results'],['cap-not-real','#home']]){await ready(page,home(lang)+'#'+hash);assert.ok(await page.locator(selector).isVisible(),hash+' resolves');await bounds(page,hash);}
+ for(const [hash,selector] of [['architecture','#overview'],['features','#cap-ga'],['platform','#programs'],['references','#research'],['concept-ga','#concept-ga'],['results','#results'],['cap-not-real','#home']]){await ready(page,home(lang)+'#'+hash);assert.ok(await page.locator(selector).isVisible(),hash+' resolves');await bounds(page,hash);if(hash==='platform')await diagramScale(page);}
  await ready(page,home(lang)+'#overview');await page.locator('.numerical-entry').click();await page.locator('#numerical-methods').waitFor({state:'visible'});
  assert.equal(await page.locator('[data-model-view]:visible').count(),1,'Numerical guide is a selected view');
  for(const topic of await page.locator('.numerical-topic').all()){await topic.locator(':scope>summary').click();await bounds(page,'numerical topic '+lang+' '+width);await topic.locator(':scope>summary').click();}
