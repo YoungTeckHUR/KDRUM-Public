@@ -72,7 +72,7 @@
     "exampleEn": "Compare uninterrupted and restarted runs at matching times. Also check that no boundary-input interval was repeated or skipped at the restart."
   },
   "dlayer": {
-    "principleKo": "빠르게 빠져나가지 않는 심부 저장은 강우가 끝난 뒤에도 하천 유량을 지탱할 수 있습니다. D층은 이런 지연 기여를 저장과 복류로 표현하며, 대수층의 공간적인 수두장을 직접 푸는 지하수 모형과는 다릅니다.",
+    "principleKo": "빠르게 빠져나가지 않는 심부 저장은 강우가 끝난 뒤에도 하천 유량을 지탱할 수 있습니다. D층은 이런 지연 기여를 심부 저장과 상부 토양층으로의 지연 복귀로 표현하며, 대수층의 공간적인 수두장을 직접 푸는 지하수 모형과는 다릅니다.",
     "principleEn": "Slow deep storage can sustain streamflow after rainfall ends. The D-layer represents this delayed contribution through storage and return flow, rather than directly solving a spatial aquifer-head field.",
     "exampleKo": "홍수 첨두가 비슷해도 수 주 뒤 유량이 다르면 장기 감수부가 중요한 비교 대상입니다. 심부 손실을 늘려 유량을 줄인 경우에는 유역 전체 물수지의 손실 항도 함께 읽습니다.",
     "exampleEn": "Similar flood peaks can coexist with different flows weeks later. When deep losses are used to reduce flow, review the corresponding loss term in the basin balance."
