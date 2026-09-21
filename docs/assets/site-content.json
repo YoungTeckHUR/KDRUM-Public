@@ -1357,12 +1357,12 @@
       ],
       "nowKo": "1차원 하천수리 결과 뷰어는 별도 개발 중이며 공개 GitHub 저장소에는 아직 게시되지 않았습니다.",
       "nowEn": "The 1D River Hydraulics Results Viewer is under separate development and has not yet been published to the public GitHub repositories.",
-      "detailKo": "종단면은 하천을 따른 변화, 횡단면은 단면 형상과 수위, 시계열은 시간 변화를 보여줍니다. 같은 계산 케이스와 시점을 맞춰 각 보기를 해석합니다.",
+      "detailKo": "종단면은 하천을 따른 변화, 횡단면은 단면 형상과 수위, 시계열은 시간 변화를 보여줍니다. 같은 모의와 시점을 맞춰 각 보기를 해석합니다.",
       "detailEn": "Longitudinal profiles show along-river change, cross sections show geometry and level, and time series show temporal evolution. Interpret the views using matching cases and times.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null,
-      "moreKo": "표와 하천망 탐색을 함께 사용해 확인할 구간과 결과를 찾습니다. 별도 수직 2DV 보기의 사용 가능 여부와 입력 요건은 해당 개발 후보의 범위에서 확인합니다.",
+      "moreKo": "표와 하천망 탐색을 함께 사용해 확인할 구간과 결과를 찾습니다. 별도 수직 2DV 보기의 사용 가능 여부와 입력 요건은 해당 기능의 개발 상태에 따라 확인합니다.",
       "moreEn": "Tables and network navigation help locate reaches and results. Availability and input requirements for the separate vertical 2DV view depend on the development candidate.",
       "searchTerms": "표 table network vertical 2DV"
     }
