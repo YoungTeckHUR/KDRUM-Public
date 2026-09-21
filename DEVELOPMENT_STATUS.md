@@ -1,10 +1,10 @@
 # K-DRUM Public Development Status
 
-**Status reviewed: 2026-08-21**
+**Status reviewed: 2026-09-21**
 
 This file describes public-facing maturity only. It intentionally does not expose source code, internal solver settings, validation datasets, development branches, failure diagnostics, operational reservoir rules, or unpublished numerical implementation details.
 
-The August 21, 2026 review confirms the public maturity boundary below. Ongoing internal development has **not** been used to promote a capability merely because code exists.
+The September 21, 2026 review reconfirms the public maturity boundary below while updating public organization and wording. No capability has been promoted solely because code exists; status upgrades require appropriate validation evidence.
 
 ## Rainfall-runoff hydrology, forcing and model state
 
@@ -69,7 +69,7 @@ The August 21, 2026 review confirms the public maturity boundary below. Ongoing 
 | Two-dimensional rainfall / drainage / hydraulic-structure interaction | **ACTIVE DEVELOPMENT** | Integrated floodplain extensions with component-specific validation boundaries |
 | Two-dimensional particle / material-tracking support | **ACTIVE DEVELOPMENT** | Flow-field interpretation and transport-oriented development |
 
-## Sediment, material tracking and water-quality research
+## Research and extension functions
 
 | Capability / component | Public status | Public interpretation |
 |---|---|---|
@@ -77,6 +77,7 @@ The August 21, 2026 review confirms the public maturity boundary below. Ongoing 
 | River sediment transport / deposition | **RESEARCH FUNCTION** | Calculation path exists; application boundary must be reviewed explicitly |
 | River dye / conservative material tracking | **RESEARCH FUNCTION** | Research transport path exists outside warm-up |
 | Historical water-quality process code | **DISABLED / REDEVELOPMENT CANDIDATE** | Retained research/legacy code is excluded from the current active build and is not a current production capability |
+| K-DRUM Estuary2DV | **EXPERIMENTAL** | Independent longitudinal-vertical estuary hydrodynamics/salinity research model, separate from Core production capabilities |
 
 ## Parallel computation, result output and support programs
 
@@ -88,7 +89,6 @@ The August 21, 2026 review confirms the public maturity boundary below. Ongoing 
 | K-DRUM InputStudio | **ACTIVE DEVELOPMENT** | Canonical project authoring and input-data verification environment |
 | K-DRUM FloodViewer | **RELEASE CANDIDATE** | Viewer is in release-candidate development rather than a final 1.0 public release |
 | 1D River Hydraulics Results Viewer | **SEPARATE DEVELOPMENT / NOT YET PUBLIC ON GITHUB** | Separate viewer for longitudinal/cross-section results and water-level/discharge time series; development exists outside the current public GitHub repositories |
-| K-DRUM Estuary2DV | **EXPERIMENTAL** | Independent longitudinal-vertical estuary hydrodynamics/salinity research model |
 
 ## Current Core baseline
 
