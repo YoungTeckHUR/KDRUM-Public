@@ -49,8 +49,8 @@ function diagram(name,lang){
   const items=[[L('관측','Observed'),L('관측자료가 있는 기간','Observed intervals'),'#e2f1fa'],[L('예측','Forecast'),L('예측자료가 있는 기간','Forecast intervals'),'#e7f3ed'],[L('결측','Missing'),L('입력자료가 없는 기간','Intervals without inputs'),'url(#missing)']];
   items.forEach(([title,desc,color],i)=>{const x=60+i*375;body+=box(x,370,330,134,title,[desc],color);});
   body+=route('M225 506V537H600',false)+route('M600 506V565')+route('M975 506V537H600',false);
-  body+=text(600,609,L('유형별 시간수 집계 → 실행 리포트','Hours by category → execution report'),29,700,'middle');
-  return frame(name,lang,L('강우자료 완전성 평가','Rainfall input completeness'),L('관측·예측·결측의 구성과 누락 상태를 요약합니다.','Summarize observed, forecast and missing periods.'),body);
+  body+=text(600,609,L('유형별 시간수 집계 → 실행 결과요약','Hours by category → execution report'),29,700,'middle');
+  return frame(name,lang,L('강우자료 완전성 점검','Rainfall input completeness'),L('관측·예측·결측의 구성과 누락 상태를 요약합니다.','Summarize observed, forecast and missing periods.'),body);
  }
  if(name==='initial-state-warmup')return frame(name,lang,L('워밍업과 초기상태 조정','Warm-up and initial-state adjustment'),L('초기상태 반복 조정과 목표지점 오차 진단의 관계입니다.','Initial-state adjustment is evaluated against the target discharge.'),
   box(60,220,295,162,L('초기상태','Initial states'),[L('토양 · 유출 상태','Soil and runoff states')])+
@@ -75,9 +75,9 @@ function diagram(name,lang){
   text(600,610,L('선정 결과의 적용 범위는 자료와 평가 조건에 따릅니다.','Applicability depends on the data and evaluation conditions.'),25,400,'middle'));
  if(name==='result-lifecycle')return frame(name,lang,L('실행 기록과 출력 무결성','Run records and output integrity'),L('결과의 생성 조건과 결과 분석 준비 상태를 함께 확인합니다.','Review how results were produced and whether outputs are usable.'),
   box(60,218,310,220,L('실행 조건 기록','Record run context'),[L('입력 · 실행방식','Inputs · run mode'),L('초기상태','Initial states'),L('진단 · 경고','Diagnostics · warnings'),L('계산시간','Computation time')])+
-  line(384,325,425,325,undefined,true)+box(440,218,310,220,L('결과 파일 생성','Write result files'),['NetCDF · '+L('리포트','reports'),L('생성과 정상 종료','Creation and closure')])+
+  line(384,325,425,325,undefined,true)+box(440,218,310,220,L('결과 파일 생성','Write result files'),['NetCDF · '+L('결과요약','reports'),L('생성과 정상 종료','Creation and closure')])+
   line(764,325,805,325,undefined,true)+box(820,218,320,220,L('출력 요건 점검','Output integrity'),[L('정의된 출력 요건','Output requirements'),L('실행 오류상태','Execution error state')],'#ecf6f3')+
-  route('M980 452V496H600V529')+text(600,574,L('후처리 · 결과 분석 도구','Postprocessing and result analysis'),30,700,'middle')+
+  route('M980 452V496H600V529')+text(600,574,L('결과 분석 도구','Postprocessing and result analysis'),30,700,'middle')+
   text(600,618,L('출력 점검과 수문·수리 결과 타당성 평가는 별도 항목입니다.','Output integrity and physical validity are separate assessments.'),22,400,'middle'));
  if(name==='nested-grid-patch'){
   let body=text(60,205,L('원지형 격자','Source terrain grid'),28,700)+text(660,205,L('배경 병합 · 관심영역 유지','Grouped background · retained patch'),25,700);
