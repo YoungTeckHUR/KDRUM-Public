@@ -3,9 +3,9 @@
     {
       "id": "forcing",
       "ko": "강우 입력·품질관리",
-      "en": "Rainfall input & QA",
+      "en": "Rainfall input & quality checks",
       "descKo": "관측소·격자 강우의 공간배분, 고도보정, 결측과 입력자료 정합성을 계산 전에 점검합니다.",
-      "descEn": "Prepare spatial rainfall and check elevation adjustment, missing periods and input consistency before simulation."
+      "descEn": "Prepare station or gridded rainfall, map it to model cells, and check elevation adjustment, missing periods and input consistency before simulation."
     },
     {
       "id": "hydrology",
@@ -24,9 +24,9 @@
     {
       "id": "audit",
       "ko": "물수지·보정·결과검증",
-      "en": "Water balance, calibration & result QA",
+      "en": "Water balance, calibration & result checks",
       "descKo": "강우부터 유출·증발산·저장량 변화까지 물의 이동을 물수지로 추적하고 관측 비교와 결과 일관성을 함께 점검합니다.",
-      "descEn": "Account for rainfall, runoff, evapotranspiration and storage change, then combine water-balance closure with observation comparison and output QA."
+      "descEn": "Track rainfall, runoff, evapotranspiration and storage change, then review water-balance closure, observation comparisons and output consistency."
     },
     {
       "id": "river",
@@ -52,9 +52,9 @@
     {
       "id": "platform",
       "ko": "입력·실행·결과도구",
-      "en": "Input, runtime & result tools",
+      "en": "Input, execution & result tools",
       "descKo": "InputStudio의 입력자료 작성·점검, 병렬실행, NetCDF 출력과 결과 Viewer를 하나의 사용자 작업흐름으로 연결합니다.",
-      "descEn": "Connect InputStudio authoring and checks, runtime modes, NetCDF output and result viewers as one user workflow."
+      "descEn": "Connect InputStudio authoring and checks, execution modes, NetCDF output and result viewers as one user workflow."
     }
   ],
   "items": [
@@ -84,7 +84,7 @@
       "detailEn": "The connection to model cells depends on whether the source is station time series or a radar/gridded field. See Thiessen and IDW for station-based mapping.",
       "diagram": "rainfall-grid",
       "diagramCaptionKo": "개념도: 관측자료에서 계산격자별 강우 입력까지의 연결을 설명합니다. Thiessen·IDW는 관측소 강우를 격자에 배분하는 방법입니다.",
-      "diagramCaptionEn": "Process-family schematic: observations connect to grid rainfall forcing. The Thiessen/IDW implementation and QA label applies to those mapping paths."
+      "diagramCaptionEn": "Process-family schematic: observations connect to grid rainfall forcing. Thiessen and IDW are station-to-grid mapping methods."
     },
     {
       "id": "rain-methods",
@@ -107,7 +107,7 @@
         "cell values"
       ],
       "nowKo": "Thiessen·IDW 강우 공간배분은 현재 구현되어 있으며 입력자료 점검과 함께 검증을 계속하고 있습니다.",
-      "nowEn": "Thiessen and IDW station-to-grid paths are implemented in the current Core and subject to regression QA.",
+      "nowEn": "Thiessen and IDW station-to-grid mapping are implemented and continue to be verified for consistency.",
       "detailKo": "Thiessen은 관측소의 영향 구역을 구분하고, IDW는 관측소와의 거리에 따른 가중치를 이용합니다. 방법의 차이와 관측소 배치의 영향을 함께 검토합니다.",
       "detailEn": "Thiessen delineates station influence areas; IDW uses distance-based weights. Review the mapping method together with the spatial distribution of stations.",
       "diagram": "rainfall-grid",
@@ -121,23 +121,23 @@
       "kind": "qa",
       "v": "rainqc",
       "ko": "강우 고도보정·품질점검 (QC)",
-      "en": "Elevation correction & rainfall QA",
+      "en": "Elevation correction & rainfall quality checks",
       "sumKo": "고도보정 IDW는 강우 공간배분과 입력자료 품질점검을 함께 수행합니다.",
-      "sumEn": "The elevation-corrected IDW input path combines rainfall mapping with quality checks.",
+      "sumEn": "Elevation-corrected IDW combines rainfall mapping with input-quality checks.",
       "stepsKo": [
         "원자료 강우",
         "고도보정·품질점검",
         "점검 후 강우자료"
       ],
       "stepsEn": [
-        "raw rain",
-        "elevation + QC",
-        "checked rain"
+        "source rainfall",
+        "elevation adjustment + checks",
+        "reviewed rainfall"
       ],
       "nowKo": "고도보정 IDW와 강우 품질점검은 현재 구현되어 있으며 입력자료의 상태를 확인하는 기능입니다.",
-      "nowEn": "Elevation-corrected IDW and rainfall QC are implemented quality-assessment functions in the current forcing path.",
+      "nowEn": "Elevation-corrected IDW and rainfall quality checks are implemented functions used during rainfall-input preparation.",
       "detailKo": "고도보정은 강우의 공간분포를 산정할 때 적용되고, 품질점검은 원자료의 결측·이상 여부를 확인합니다. 두 결과를 구분해 보면 강우 분포 변화의 원인을 더 명확히 파악할 수 있습니다.",
-      "detailEn": "Elevation adjustment changes the rainfall mapping, whereas QC inspects source-data quality. Read the two results separately to trace the cause of a change.",
+      "detailEn": "Elevation adjustment changes the spatial rainfall estimate, whereas quality checks identify missing or questionable source data. Review them separately when tracing why mapped rainfall changed.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -149,9 +149,9 @@
       "kind": "report",
       "v": "rainbars",
       "ko": "강우자료 완전성 점검",
-      "en": "Rainfall completeness assessment",
+      "en": "Rainfall-data completeness check",
       "sumKo": "관측·예측·결측 기간을 요약하여 계산에 사용한 강우자료의 완전성을 확인합니다.",
-      "sumEn": "Run QA reports summarize observed, predicted and missing forcing periods.",
+      "sumEn": "Run summaries classify observed, forecast and missing rainfall periods so input completeness can be reviewed.",
       "stepsKo": [
         "관측·예측·결측 기간",
         "유형별 시간수 집계",
@@ -163,7 +163,7 @@
         "forcing composition and gap summary"
       ],
       "nowKo": "강우자료 완전성 요약은 현재 실행 결과 요약에 포함된 구현·검증 중 기능입니다.",
-      "nowEn": "Rainfall completeness summaries are implemented QA outputs connected to current run reporting.",
+      "nowEn": "Rainfall-data completeness summaries are included in current run summaries and remain under continued verification.",
       "detailKo": "시간수는 관측·예측·결측 범주별로 집계됩니다. 총기간의 구성과 관심 기간의 누락 위치를 함께 확인해야 특정 사상의 결과를 해석할 수 있습니다.",
       "detailEn": "Durations are counted by observed, forecast and missing categories. Review both the overall composition and gaps within the period of interest when interpreting an event.",
       "diagram": null,
@@ -177,7 +177,7 @@
       "kind": "qa",
       "v": "checklist",
       "ko": "입력자료 사전점검·정합성",
-      "en": "Input precheck & consistency",
+      "en": "Input-data precheck & consistency",
       "sumKo": "입력 사전점검은 공간·시간·연결성·범위 오류를 실행 전에 줄이기 위해 확장 중인 점검 체계입니다.",
       "sumEn": "Input prechecks are under development to reduce spatial, temporal, connectivity and range errors before simulation.",
       "stepsKo": [
@@ -193,7 +193,7 @@
       "nowKo": "입력 사전점검은 K-DRUM과 InputStudio에서 입력자료의 일관성을 확인하는 기능으로 개발 중입니다.",
       "nowEn": "Input prechecks remain in development as consistency checking is integrated across Core and InputStudio.",
       "detailKo": "공간·시간 범위뿐 아니라 하천·격자의 연결성과 값의 범위를 검사합니다. InputStudio에서 프로젝트를 작성한 뒤에도 실제 모의에 사용할 입력자료의 공간·시간·연결성·값 범위를 다시 확인합니다.",
-      "detailEn": "Checks cover connectivity and value ranges as well as spatial and temporal extent. A project prepared in InputStudio still needs checks for the selected execution path.",
+      "detailEn": "Checks cover connectivity and value ranges as well as spatial and temporal extent. A project prepared in InputStudio still needs a final consistency check for the model setup that will be run.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -311,7 +311,7 @@
         "storage change"
       ],
       "nowKo": "증발산·토양수분은 확립된 연속 수문 기능이며 계산 과정의 검증과 개선을 계속하고 있습니다.",
-      "nowEn": "Evapotranspiration and soil-water accounting are established continuous-hydrology functions with ongoing QA modernization.",
+      "nowEn": "Evapotranspiration and soil-water accounting are established continuous-hydrology functions; calculation checks and improvements continue.",
       "detailKo": "기준 증발산 수요를 뿌리 깊이와 층별 뿌리 영역에 따라 배분하고, 실제 저장에서 공급 가능한 물로 제한합니다. 토지피복·계절별 LAI 등 식생 조건도 함께 작용합니다.",
       "detailEn": "Reference demand is allocated using root depth and layer overlap, then limited by water available in storage. Vegetation conditions, including land cover and seasonal LAI, also contribute.",
       "diagram": null,
@@ -371,7 +371,7 @@
         "state stabilization and target-error diagnostics"
       ],
       "nowKo": "워밍업은 현재 구현된 초기상태 조정 기능이며, 초기상태가 충분히 안정되는지는 유역과 시작조건에 따라 확인합니다.",
-      "nowEn": "Warm-up is integrated in the current Core as an implemented QA function; initial-state convergence remains basin-specific.",
+      "nowEn": "Warm-up is implemented for initial-state preparation; whether states are sufficiently stabilized depends on the basin and starting conditions.",
       "detailKo": "반복 계산 중 조정하는 대상은 초기 토양·유출 상태입니다. 목표유량 오차와 상태 변화의 추이를 함께 읽으며, 안정화에 필요한 반복 특성은 유역과 시작 조건에 따라 달라집니다.",
       "detailEn": "The iteration adjusts initial soil and runoff states. Read target-flow discrepancies alongside state changes; stabilization behavior depends on the basin and starting conditions.",
       "diagram": null,
@@ -399,7 +399,7 @@
         "continued simulation"
       ],
       "nowKo": "HotStart는 저장된 상태를 불러와 계산을 이어가는 구현 기능이며 재시작 일관성을 검증하고 있습니다.",
-      "nowEn": "HotStart is an implemented checkpoint and state-restart capability under QA in the current Core.",
+      "nowEn": "HotStart is implemented for saving and restoring model states, with restart consistency under continued verification.",
       "detailKo": "저장된 격자 수문상태와 저수지 상태 등을 읽어 재개합니다. 워밍업이 상태를 반복 조정하는 초기화라면 HotStart는 파일에 저장된 상태를 복원하는 초기화입니다.",
       "detailEn": "Restart reads saved grid hydrologic and reservoir states. Unlike iterative warm-up adjustment, HotStart initializes by restoring a stored checkpoint.",
       "diagram": null,
@@ -456,7 +456,7 @@
         "hillslope and channel routing"
       ],
       "nowKo": "사면·하도 경사의 별도 적용은 현재 구현되어 있으며 계산 일관성을 점검하고 있습니다.",
-      "nowEn": "Separate hillslope and channel slopes are implemented in current routing paths and subject to QA.",
+      "nowEn": "Separate hillslope and channel slopes are implemented, with continued checks for consistency in routing calculations.",
       "detailKo": "두 경사는 입력에서 출력으로 이어지는 단계가 아니라 서로 다른 계산 영역의 지형 조건입니다. 각 경사값은 해당 사면 또는 하도 흐름 계산에 적용됩니다.",
       "detailEn": "The slopes represent terrain conditions in separate domains, not successive processing stages. Each value is applied to its corresponding hillslope or channel calculation.",
       "diagram": null,
@@ -514,7 +514,7 @@
       "nowKo": "하도 운동파 추적은 기존 K-DRUM 하도 유량추적의 확립된 기반 기능입니다.",
       "nowEn": "Channel kinematic routing is an established foundation of historical K-DRUM discharge routing.",
       "detailKo": "상류에서 전달된 흐름에 측방유입이 더해지며 하도 길이·폭·경사·조도가 추적 조건으로 사용됩니다. 횡단면 기반 수위까지 검토할 때에는 별도의 동역학파 하천수리 기능과 구분합니다.",
-      "detailEn": "Lateral inflow joins routed upstream flow; channel length, width, slope and roughness define routing conditions. Cross-section-based water-level analysis belongs to the separate dynamic-wave development path.",
+      "detailEn": "Routed upstream flow combines with lateral inflow; channel length, width, slope and roughness define the routing conditions. Cross-section-based water-level analysis belongs to the separate dynamic-wave river-hydraulics capability.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -596,9 +596,9 @@
         "closure error and internal-flux assessment"
       ],
       "nowKo": "유역 물수지 평가는 현재 실행 결과 요약과 결과 검증에 포함된 구현·검증 중 기능입니다.",
-      "nowEn": "Basin water-balance assessment is implemented QA integrated with current Core reporting and validation.",
+      "nowEn": "Basin water-balance assessment is implemented in current run summaries and result checks.",
       "detailKo": "단순히 총유출량을 확인하는 기능이 아니라, 들어온 물이 토양·적설·심부저류 등에 얼마나 저장되고 증발산·하천유출 등으로 얼마나 빠져나갔는지를 연결해 봅니다. 각 저장량 변화와 내부 이동량을 함께 읽어 계산 누락·중복 또는 비정상적인 손실을 찾습니다.",
-      "detailEn": "This is more than a runoff total: it connects incoming water with changes in soil, snow and deep storage and with losses such as evapotranspiration and river outflow. Reading storage changes together with internal fluxes helps reveal omissions, double counting or abnormal losses.",
+      "detailEn": "This is more than a total-runoff check. It connects incoming water with soil, snow and deep storage, then with evapotranspiration and river outflow. Storage changes and internal transfers help identify omissions, double counting or abnormal losses.",
       "diagram": "read-results",
       "diagramCaptionKo": "개념도: 오른쪽은 유역 물수지의 주요 구성항목과 폐합오차 평가를 설명합니다. 왼쪽 수문곡선은 관측·계산 비교를 설명하기 위한 예시이며 실제 결과가 아닙니다.",
       "diagramCaptionEn": "Process-family schematic: the water-balance terms on the right explain basin closure assessment. The hydrographs on the left are a separate comparison illustration, not actual results."
@@ -624,9 +624,9 @@
         "exchange consistency assessment"
       ],
       "nowKo": "1D-2D 교환량의 질량보존은 통제된 시험조건에서 확인되었습니다. 적용 유역과 조건이 달라질 때에는 별도의 검증이 필요합니다.",
-      "nowEn": "1D-2D exchange consistency has controlled development validation; it does not certify water balance for every basin.",
+      "nowEn": "1D–2D exchange mass consistency has been confirmed under controlled test conditions; different basins and conditions still require separate verification.",
       "detailKo": "각 교환 시점의 유량을 두 영역에 반대 부호로 기록해 대응시킵니다. 단방향 월류와 양방향 교환은 선택한 연계 방식에 따라 집계 범위가 다릅니다.",
-      "detailEn": "Match one exchange volume to opposite signed entries in the two domains. One-way overflow accounting and two-way exchange diagnostics have different coverage depending on the execution path.",
+      "detailEn": "Record the same exchange at opposite signs in the two domains. One-way overflow accounting and two-way exchange diagnostics differ according to the selected coupling mode.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -638,9 +638,9 @@
       "kind": "report",
       "v": "report",
       "ko": "통합 실행 결과요약",
-      "en": "Unified run reporting",
+      "en": "Unified run summary",
       "sumKo": "통합 실행 결과요약은 입력조건·실행방식·초기상태·물수지·경고·성능 정보를 제공합니다.",
-      "sumEn": "Unified run reports consolidate inputs, runtime mode, initial state, water balance, warnings and timing.",
+      "sumEn": "The unified run summary brings together inputs, execution mode, initial state, water balance, warnings and performance information.",
       "stepsKo": [
         "실행정보",
         "진단·물수지",
@@ -652,9 +652,9 @@
         "summary"
       ],
       "nowKo": "통합 실행 결과요약은 현재 실행조건과 진단결과를 제공하는 구현·검증 중 기능입니다.",
-      "nowEn": "Unified run reporting is an implemented QA summary of current run information and diagnostics.",
+      "nowEn": "Unified run summaries are implemented and provide current run conditions and diagnostic information.",
       "detailKo": "결과요약은 결과가 생성된 실행방식과 초기상태를 진단값 옆에 기록합니다. 여러 모의안을 비교할 때에는 실행 조건의 변경과 물수지·계산시간의 변화를 연결해 읽습니다.",
-      "detailEn": "The report places execution mode and initial state alongside diagnostics. Relate changes in these conditions to changes in water balance and runtime when comparing cases.",
+      "detailEn": "The summary records execution mode and initial state alongside diagnostic values. When comparing simulations, relate changes in run conditions to changes in water balance and computation time.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -666,9 +666,9 @@
       "kind": "report",
       "v": "subbasin",
       "ko": "소유역 결과요약",
-      "en": "Subbasin reporting",
+      "en": "Subbasin result summary",
       "sumKo": "전체 유역 결과를 소유역 단위로 나눠 강우·유출·상태를 비교할 수 있도록 정리합니다.",
-      "sumEn": "Subbasin reporting provides basin results as subbasin-scale summaries for comparison.",
+      "sumEn": "Watershed results can be summarized by subbasin to compare rainfall, runoff and hydrologic states across regions.",
       "stepsKo": [
         "전체 유역",
         "소유역 분해",
@@ -680,7 +680,7 @@
         "local comparison"
       ],
       "nowKo": "소유역 결과요약은 정상 완료된 모의의 정의된 출력항목을 소유역별로 정리하는 구현·검증 중 기능입니다.",
-      "nowEn": "Subbasin reporting is an implemented QA capability included in the defined outputs of successful runs.",
+      "nowEn": "Subbasin result summaries are implemented for defined outputs from successfully completed simulations.",
       "detailKo": "소유역 경계를 기준으로 결과를 집계하고 평가 지점과 대응시킵니다. 상·하류 기여가 섞이는 관측지점과 개별 소유역의 집계값은 같은 공간 범위를 뜻하지 않을 수 있습니다.",
       "detailEn": "Results are grouped by subbasin boundaries and related to evaluation sites. A gauge integrating upstream contributions may not represent the same spatial extent as one subbasin aggregate.",
       "diagram": null,
@@ -722,9 +722,9 @@
       "kind": "calibration",
       "v": "subcal",
       "ko": "소유역·목표지점 평가 및 보정",
-      "en": "Subbasin / target-point calibration workflow",
+      "en": "Subbasin & target-site evaluation and calibration",
       "sumKo": "소유역 보정은 소유역 결과요약과 목표지점 최적화를 결합하여 유역별 보정 의사결정을 지원합니다.",
-      "sumEn": "Subbasin calibration combines subbasin reporting with target-point optimization to support basin-by-basin calibration decisions.",
+      "sumEn": "Subbasin evaluation combines regional result summaries with target-site calibration to support basin-by-basin calibration decisions.",
       "stepsKo": [
         "소유역 진단",
         "목표지점 보정",
@@ -750,23 +750,23 @@
       "kind": "report",
       "v": "integrity",
       "ko": "출력 파일 무결성·생성상태 점검",
-      "en": "Output integrity & lifecycle",
+      "en": "Output-file integrity & completion checks",
       "sumKo": "출력 파일의 생성·종료상태와 필요한 결과항목을 확인하여 결과 분석 준비 여부를 점검합니다.",
-      "sumEn": "Output integrity checks assess file creation and closure, defined result requirements and failure states throughout a run.",
+      "sumEn": "Check file creation, completion status and required outputs before using results in analysis tools.",
       "stepsKo": [
         "계산결과",
         "파일·종료상태 점검",
         "결과 분석 준비"
       ],
       "stepsEn": [
-        "results",
-        "integrity checks",
-        "postprocess-ready"
+        "model results",
+        "file/completion checks",
+        "ready for analysis"
       ],
       "nowKo": "NetCDF·결과요약·Viewer 연계를 위해 출력 파일의 생성·완결성을 확인하는 구현·검증 중 기능입니다.",
-      "nowEn": "Output integrity and lifecycle checks are implemented QA supporting NetCDF, report and viewer integration.",
+      "nowEn": "Output-file integrity checks are implemented to support NetCDF, run-summary and viewer workflows.",
       "detailKo": "파일 생성부터 정상 종료까지의 상태를 추적하고 필요한 출력항목이 갖춰졌는지 확인합니다. 결과의 생성 조건을 설명하는 통합 실행 결과요약과는 역할이 다릅니다.",
-      "detailEn": "The lifecycle tracks file creation through closure. It checks required content and completion status, whereas the run report explains the conditions under which results were produced.",
+      "detailEn": "Track output creation through normal completion and confirm that required variables are present. This role is distinct from the run summary, which records the conditions under which results were produced.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -792,7 +792,7 @@
         "Q + WL"
       ],
       "nowKo": "1D 동역학파 하천망은 신뢰성과 네트워크 연계성을 검증하며 개발 중입니다.",
-      "nowEn": "The 1D dynamic-wave river network remains in development with ongoing reliability, integration and regression validation.",
+      "nowEn": "The 1D dynamic-wave river network remains in development, with reliability and network-integration verification continuing.",
       "detailKo": "하천 구간의 횡단면과 연결 관계를 계산망으로 구성합니다. 구간의 수리 계산과 연결점 처리가 함께 작동하며, 접합부의 역할은 분기·합류 수리 항목에서 따로 설명합니다.",
       "detailEn": "Cross sections and reach connections define the computational network. Reach hydraulics work with junction treatment; see the junction entry for that local coupling role.",
       "diagram": null,
@@ -976,7 +976,7 @@
       "ko": "2D 국부관성(Local Inertia) 범람",
       "en": "2D Local-Inertia floodplain analysis",
       "sumKo": "효율적인 범람 해석을 위해 수심과 단위폭 유량을 격자에서 계산하는 2D 해석 기능입니다.",
-      "sumEn": "Local inertia is the main 2D development path for efficient calculation of floodplain depth and unit-width discharge.",
+      "sumEn": "2D Local Inertia computes floodplain depth and unit-width discharge efficiently on a grid.",
       "stepsKo": [
         "DEM·경계",
         "2D 계산",
@@ -988,9 +988,9 @@
         "depth + velocity"
       ],
       "nowKo": "2D Local Inertia는 범람원 해석의 주요 개발 방식으로 통합·검증을 진행하고 있습니다.",
-      "nowEn": "2D Local Inertia is the main floodplain development path and remains under integration and verification.",
+      "nowEn": "2D Local Inertia is a primary floodplain-analysis option under integration and verification.",
       "detailKo": "지형과 경계조건을 받아 격자 수심과 단위폭 유량을 계산합니다. 더 완전한 운동량 표현이 필요한 관심구간은 Full SWE와 적용 목적을 비교합니다.",
-      "detailEn": "This main 2D development path uses terrain and boundary conditions to compute cell depth and unit-width discharge. Compare its purpose with Full SWE where fuller momentum representation is needed.",
+      "detailEn": "Terrain and boundary conditions are used to compute grid-cell depth and unit-width discharge. Compare its intended use with Full SWE where a fuller momentum representation is needed.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -1016,7 +1016,7 @@
         "velocity + level"
       ],
       "nowKo": "Full SWE는 보다 상세한 운동량 해석이 필요한 구간을 위한 특수 개발 옵션이며, 기본 2D 해석 방식으로 제공되는 기능은 아닙니다.",
-      "nowEn": "Full SWE remains a specialized development option and is not presented as the default production path.",
+      "nowEn": "Full SWE is a specialized development option for cases needing fuller momentum representation; it is not the default 2D analysis option.",
       "detailKo": "격자 경계의 플럭스를 이용해 수심과 두 수평방향의 운동량을 갱신합니다. 수심·유속에 따른 시간간격 제한과 젖음·마름 처리가 연결되므로, 지형 해상도와 경계조건을 포함한 설정을 함께 검토합니다.",
       "detailEn": "Cell-face fluxes update depth and momentum in both horizontal directions. Time-step constraints based on depth and velocity work with wetting/drying treatment, so review settings together with terrain resolution and boundary conditions.",
       "diagram": null,
@@ -1091,7 +1091,7 @@
       "ko": "사면 유사·침식·퇴적",
       "en": "Hillslope sediment / erosion-deposition",
       "sumKo": "사면 경사·유속·토양조건을 이용해 침식·운반·퇴적을 계산하는 연구기능입니다.",
-      "sumEn": "The hillslope sediment research function calculates erosion, transport and deposition using slope, flow and soil conditions.",
+      "sumEn": "The hillslope sediment research capability estimates erosion, transport and deposition using slope, flow and soil conditions.",
       "stepsKo": [
         "침식원",
         "운반능",
@@ -1103,7 +1103,7 @@
         "sediment export"
       ],
       "nowKo": "사면 유사·침식·퇴적은 연구 단계이며 적용성에 대한 추가 검증자료가 필요합니다.",
-      "nowEn": "The hillslope sediment and erosion-deposition path is a research function still requiring dedicated public validation documentation.",
+      "nowEn": "Hillslope sediment, erosion and deposition remain research capabilities that need additional application-specific validation.",
       "detailKo": "침식원과 운반능의 관계가 유사 발생·이동·퇴적에 연결됩니다. 지표 유출량만으로 유사량을 대신하지 않고 토양조건과 경사·유속을 함께 해석합니다.",
       "detailEn": "The relation between sediment supply and transport capacity governs erosion, movement and deposition. Interpret soil conditions, slope and velocity rather than using runoff volume as a proxy for sediment load.",
       "diagram": null,
@@ -1119,7 +1119,7 @@
       "ko": "하천 유사이송",
       "en": "River sediment transport",
       "sumKo": "하천 유사이송 연구기능은 하도 경사·유량·단면과 운반능을 이용하여 유사의 이송·퇴적을 계산합니다.",
-      "sumEn": "The river sediment research function calculates transport and deposition using channel slope, flow, geometry and capacity.",
+      "sumEn": "The river-sediment research capability estimates transport and deposition using channel slope, flow, geometry and transport capacity.",
       "stepsKo": [
         "상류 유사",
         "하도 운반능",
@@ -1131,7 +1131,7 @@
         "transport/deposition"
       ],
       "nowKo": "하천 유사이송·퇴적은 적용 조건과 범위에 대한 명시적 평가를 전제로 하는 연구기능입니다.",
-      "nowEn": "River sediment transport and deposition remain research functions subject to explicit assessment of application conditions and scope.",
+      "nowEn": "River sediment transport and deposition remain research capabilities whose application conditions and scope must be evaluated explicitly.",
       "detailKo": "상류 유사 입력과 해당 하도의 운반능을 함께 사용합니다. 사면의 침식원 계산 이후 하천 구간에서 일어나는 이송·퇴적이 이 항목의 해석 범위입니다.",
       "detailEn": "Incoming sediment is evaluated together with channel transport capacity. The scope is reach transport and deposition, downstream of hillslope sediment generation.",
       "diagram": null,
@@ -1147,7 +1147,7 @@
       "ko": "보존성 물질·염료 추적",
       "en": "Conservative material & dye tracking",
       "sumKo": "염료·보존성 추적자 연구기능은 하천 구간의 저장량·상하류 유량·주입질량을 이용하여 농도와 질량이동을 계산합니다.",
-      "sumEn": "The dye and conservative-tracer research function tracks concentration and mass through river segments using storage, flow and source mass.",
+      "sumEn": "The conservative-material and dye-tracking research capability follows mass and concentration through river segments using storage, flow and source mass.",
       "stepsKo": [
         "추적자 주입",
         "질량이송",
@@ -1159,7 +1159,7 @@
         "concentration curve"
       ],
       "nowKo": "보존성 물질·염료 추적은 하천 수송을 연구하기 위한 기능으로 현재 연구 단계입니다.",
-      "nowEn": "Dye and conservative tracing are research transport functions present in the river calculation path outside warm-up.",
+      "nowEn": "Conservative-material and dye tracking remain research capabilities for river transport studies.",
       "detailKo": "주입질량은 하천 저장량과 상·하류 유량을 통해 이동합니다. 농도는 저장된 물의 양에도 영향을 받으므로 질량 이동과 농도 변화를 함께 읽습니다.",
       "detailEn": "Injected mass moves with river storage and upstream/downstream flow. Because concentration also depends on the amount of stored water, read mass movement and concentration changes together.",
       "diagram": null,
@@ -1201,9 +1201,9 @@
       "kind": "platform",
       "v": "parallel",
       "ko": "단일·병렬계산(OpenMP·MPI)",
-      "en": "Serial, OpenMP & MPI execution",
+      "en": "Serial & parallel execution (OpenMP/MPI)",
       "sumKo": "K-DRUM은 단일 실행, OpenMP, MPI 방식을 지원하며 결과 일관성과 병렬 효율을 비교·검증합니다.",
-      "sumEn": "K-DRUM maintains serial, shared-memory and distributed-memory execution paths with ongoing consistency and scaling checks.",
+      "sumEn": "K-DRUM supports serial, OpenMP and MPI execution, with result consistency and parallel efficiency compared across modes.",
       "stepsKo": [
         "동일 입력",
         "단일/OpenMP/MPI",
@@ -1211,13 +1211,13 @@
       ],
       "stepsEn": [
         "same inputs",
-        "ST/OMP/MPI",
-        "consistent results"
+        "serial / OpenMP / MPI",
+        "result consistency"
       ],
       "nowKo": "MPI 병렬계산은 공개 연구성과가 있으며, 현재 단일·OpenMP·MPI 실행 결과의 일관성과 성능을 점검·개선하고 있습니다.",
-      "nowEn": "MPI has an established public research lineage; current serial, OpenMP and MPI consistency remains under modernization and QA.",
+      "nowEn": "MPI has an established public research basis; consistency and performance across serial, OpenMP and MPI execution continue to be checked and improved.",
       "detailKo": "OpenMP는 공유메모리, MPI는 분산메모리 방식으로 작업을 나눕니다. 기존 MPI 연구 결과와 현재 개선 중인 실행 방식의 성능은 구분해 평가합니다.",
-      "detailEn": "OpenMP partitions work in shared memory and MPI across distributed memory. Assess historical MPI research and the currently modernized execution paths using their respective evidence.",
+      "detailEn": "OpenMP divides work in shared memory, while MPI distributes work across processes. Historical MPI research results and the performance of the current implementation should be evaluated using their respective evidence.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -1271,7 +1271,7 @@
         "comparison"
       ],
       "nowKo": "FloodViewer는 공개 준비 중인 결과 분석 도구이며, 최종 배포본으로 확정된 상태는 아닙니다.",
-      "nowEn": "FloodViewer has Release Candidate maturity and is not presented as a final public release.",
+      "nowEn": "FloodViewer is preparing for public release as a result-analysis tool and is not yet presented as a final release.",
       "detailKo": "FloodViewer는 계산을 수행하는 엔진이 아니라 K-DRUM 결과를 읽고 해석하는 도구입니다. 공간분포와 시계열을 연결해 침수 전개, 최대값, 관심지점 변화와 수문·수리 결과를 비교하며, 파일별 격자와 시간축의 차이는 결과 해석 전에 확인합니다.",
       "detailEn": "FloodViewer is a result-interpretation tool rather than a solver. It links spatial maps and time series to examine inundation development, maxima, selected-location changes and hydrologic/hydraulic results, while checking file-specific grids and time axes before comparison.",
       "diagram": null,
@@ -1330,7 +1330,7 @@
         "salinity/stratification"
       ],
       "nowKo": "Estuary2DV는 K-DRUM의 일반 배포 기능과 분리된 실험적 하구 수동역학·염분 연구모형입니다.",
-      "nowEn": "Estuary2DV is an experimental estuary hydrodynamics and salinity prototype separate from Core production capabilities.",
+      "nowEn": "Estuary2DV is a separate experimental research model for estuary hydrodynamics and salinity, not a standard K-DRUM distribution feature.",
       "detailKo": "폭평균·정수압 가정의 종·연직 x-z 영역을 다룹니다. 평면 범람해석과 좌표·계산 대상이 다르며, K-DRUM과의 연계 및 출력 지원 범위는 버전별로 확인해야 합니다.",
       "detailEn": "The longitudinal–vertical x-z domain uses width-averaged, hydrostatic assumptions. Its coordinates and modeled processes differ from plan-view flooding; integration and outputs are build-dependent.",
       "diagram": null,
@@ -1342,7 +1342,7 @@
       "g": "platform",
       "s": "SEPARATE DEVELOPMENT",
       "ko": "1D 하천수리 결과 분석 Viewer",
-      "en": "1D river-hydraulics result viewer",
+      "en": "1D river-hydraulics result analysis viewer",
       "sumKo": "1차원 하천수리 결과 뷰어는 종단면·횡단면과 수위·유량 시계열을 분석하는 별도 개발 프로그램입니다.",
       "sumEn": "A separate application in development for longitudinal sections, cross sections and stage/discharge time series.",
       "stepsKo": [
@@ -1570,7 +1570,7 @@
         "rVideoText": "22-second AI-generated concept visualization; not a numerical simulation result.",
         "rImage": "Digital interpretation reference",
         "rImageText": "Concept image connecting natural watershed processes to grid-based digital interpretation.",
-        "note": "K-DRUM capability status distinguishes established Core, linked, development and research functions. This visual guide is based on the p18 presentation; current technical status and application scope are documented in DEVELOPMENT_STATUS and CAPABILITIES. Illustrated extensions are not all released Core capabilities.",
+        "note": "K-DRUM capabilities are presented as established, in development, or research functions. This visual guide is based on the p18 presentation; current capability status and application scope are described on the website. Not every illustrated extension is part of the standard distributed package.",
         "foot": "Public visual reference · 2026-09-12 p18. Editable PPT source is not included in the public website package."
       }
     },
@@ -1596,75 +1596,75 @@
     ],
     "featureStatus": [
       [
-        "Core / linked and development functions",
+        "Established, linked & development functions",
         "확립 기능·개발 기능 구분"
       ],
       [
-        "Established Core hydrology",
+        "Established hydrology",
         "확립된 수문 기능"
       ],
       [
-        "Established Core hydrology",
+        "Established hydrology",
         "확립된 수문 기능"
       ],
       [
-        "Implemented / QA; output development",
+        "Implemented · verification ongoing; output development",
         "구현·검증 중 · 출력 기능 개발 중"
       ],
       [
-        "Established rainfall input; quality checks in QA",
+        "Established rainfall input · quality checks ongoing",
         "강우 입력 확립 · 품질점검 개선 중"
       ],
       [
-        "Established Core snow processes",
+        "Established snow processes",
         "확립된 적설·융설 기능"
       ],
       [
-        "Established Core hydrology",
+        "Established continuous hydrology",
         "확립된 연속 수문 기능"
       ],
       [
-        "Implemented / QA",
+        "Implemented · verification ongoing",
         "구현·검증 중"
       ],
       [
-        "Implemented / QA",
+        "Implemented · verification ongoing",
         "구현·검증 중"
       ],
       [
-        "Established kinematic-wave routing; hydraulic extensions in development",
+        "Established kinematic routing · hydraulic extensions in development",
         "운동파 흐름추적 확립 · 수리 확장 개발 중"
       ],
       [
-        "Calibration in active development; reporting in QA",
+        "Calibration in development · result summaries under verification",
         "보정 개발 중 · 결과요약 검증 중"
       ],
       [
-        "Established routing / hydraulics in active development",
+        "Established routing · hydraulics in development",
         "흐름추적 확립 · 수리해석 개발 중"
       ],
       [
-        "Active development",
+        "In development",
         "개발 중"
       ],
       [
-        "Validated development / active development",
+        "Development · controlled verification",
         "개발·검증 중"
       ],
       [
-        "Research functions / active development",
+        "Research / development functions",
         "연구·개발 기능"
       ],
       [
-        "Established MPI lineage; current consistency in QA",
+        "Established MPI research basis · consistency checks ongoing",
         "MPI 기반 확립 · 실행방식 일관성 점검 중"
       ],
       [
-        "Implemented / QA; output integration in development",
+        "Implemented · verification ongoing; output integration in development",
         "구현·검증 중 · 통합 출력 개발 중"
       ],
       [
-        "Established Core / linked, development and research functions",
+        "Established, linked, development & research functions",
         "확립·연계·개발·연구 기능 구분"
       ]
     ]
