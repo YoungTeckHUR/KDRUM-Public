@@ -765,7 +765,7 @@
       ],
       "nowKo": "NetCDF·결과요약·Viewer 연계를 위해 출력 파일의 생성·완결성을 확인하는 구현·검증 중 기능입니다.",
       "nowEn": "Output integrity and lifecycle checks are implemented QA supporting NetCDF, report and viewer integration.",
-      "detailKo": "파일 생성부터 정상 종료까지의 상태를 추적하고 필요한 출력항목이 갖춰졌는지 확인합니다. 결과의 생성 조건을 설명하는 실행 리포트와는 역할이 다릅니다.",
+      "detailKo": "파일 생성부터 정상 종료까지의 상태를 추적하고 필요한 출력항목이 갖춰졌는지 확인합니다. 결과의 생성 조건을 설명하는 통합 실행 결과요약과는 역할이 다릅니다.",
       "detailEn": "The lifecycle tracks file creation through closure. It checks required content and completion status, whereas the run report explains the conditions under which results were produced.",
       "diagram": null,
       "diagramCaptionKo": null,
@@ -1031,11 +1031,11 @@
       "v": "nestedgrid",
       "ko": "다중해상도·관심영역(Patch) 2D",
       "en": "Multi-resolution & local-patch 2D",
-      "sumKo": "원지형 격자를 묶은 배경영역과 원해상도를 유지한 관심 Patch로 계산량과 국부 표현을 조정합니다.",
+      "sumKo": "원지형 격자를 묶은 배경영역과 원해상도를 유지한 관심영역(Patch)으로 계산량과 국부 표현을 조정합니다.",
       "sumEn": "Grouped terrain cells form a coarser background while selected patches retain the source resolution.",
       "stepsKo": [
         "원지형 격자",
-        "배경 병합·Patch 유지",
+        "배경 병합·관심영역 유지",
         "다중해상도 계산"
       ],
       "stepsEn": [
@@ -1043,9 +1043,9 @@
         "group background / retain patches",
         "multi-resolution calculation"
       ],
-      "nowKo": "다중해상도·Patch 2D는 국부 고해상도 수리영역을 구성하는 개발 단계입니다.",
+      "nowKo": "다중해상도·관심영역(Patch) 2D는 국부적으로 원해상도를 유지하는 수리영역을 구성하는 개발 기능입니다.",
       "nowEn": "Multi-resolution and patch 2D remain in development for focused high-resolution hydraulic domains.",
-      "detailKo": "배경영역은 원지형 격자를 묶고 Patch는 원해상도를 유지합니다. Patch 경계의 연결과 배경 격자 병합에 따른 지형 표현 차이를 함께 평가합니다.",
+      "detailKo": "배경영역은 원지형 격자를 묶고 관심영역(Patch)은 원해상도를 유지합니다. 관심영역 경계의 연결과 배경 격자 병합에 따른 지형 표현 차이를 함께 평가합니다.",
       "detailEn": "Background cells group source-terrain cells while patches retain source resolution. Evaluate patch-interface connections together with terrain changes introduced by background aggregation.",
       "diagram": null,
       "diagramCaptionKo": null,
@@ -1270,7 +1270,7 @@
         "map + time series",
         "comparison"
       ],
-      "nowKo": "FloodViewer의 공개 성숙도는 Release Candidate이며 최종 공개 릴리스로 제시되지 않습니다.",
+      "nowKo": "FloodViewer는 공개 준비 중인 결과 분석 도구이며, 최종 배포본으로 확정된 상태는 아닙니다.",
       "nowEn": "FloodViewer has Release Candidate maturity and is not presented as a final public release.",
       "detailKo": "FloodViewer는 계산을 수행하는 엔진이 아니라 K-DRUM 결과를 읽고 해석하는 도구입니다. 공간분포와 시계열을 연결해 침수 전개, 최대값, 관심지점 변화와 수문·수리 결과를 비교하며, 파일별 격자와 시간축의 차이는 결과 해석 전에 확인합니다.",
       "detailEn": "FloodViewer is a result-interpretation tool rather than a solver. It links spatial maps and time series to examine inundation development, maxima, selected-location changes and hydrologic/hydraulic results, while checking file-specific grids and time axes before comparison.",
@@ -1300,12 +1300,12 @@
       ],
       "nowKo": "InputStudio는 프로젝트 입력 작성과 사전검사를 통합하는 개발 단계입니다.",
       "nowEn": "InputStudio remains in development to integrate project-input authoring and prechecks.",
-      "detailKo": "InputStudio는 원자료를 K-DRUM 계산 프로젝트로 바꾸는 작업환경입니다. 계산영역과 공간자료를 준비하고, 강우·시계열과 하천망·횡단면·구조물·경계조건·시나리오를 연결한 뒤 좌표·시간·연결성·범위 오류를 점검하고 엔진 입력자료를 생성합니다. 계산 후 결과 분석은 Viewer와 구분합니다.",
+      "detailKo": "InputStudio는 원자료를 K-DRUM 계산 프로젝트로 바꾸는 작업환경입니다. 계산영역과 공간자료를 준비하고, 강우·시계열과 하천망·횡단면·구조물·경계조건·시나리오를 연결한 뒤 좌표·시간·연결성·범위 오류를 점검하고 K-DRUM 입력자료를 생성합니다. 계산 후 결과 분석은 FloodViewer 등 결과 분석 도구와 구분합니다.",
       "detailEn": "InputStudio is the project-authoring environment that turns source data into K-DRUM run inputs. It prepares the computational domain and spatial data, connects rainfall/time series with river networks, cross sections, structures, boundaries and scenarios, checks spatial/time/connectivity/range consistency, and generates engine inputs. Post-run interpretation remains a viewer task.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null,
-      "moreKo": "입력 프로젝트에서 계산 영역과 셀 경계 조건을 편집하고, 지원 항목의 시나리오를 별도 입력으로 준비합니다. 영역·경계의 정합성을 검사하고 Base 자료와 시나리오 산출물을 구분합니다.",
+      "moreKo": "입력 프로젝트에서 계산 영역과 셀 경계조건을 편집하고, 지원 항목의 시나리오를 별도 입력으로 준비합니다. 영역·경계의 정합성을 검사하고 기준안(Base) 자료와 시나리오 산출물을 구분합니다.",
       "moreEn": "Within an input project, edit computational domains and cell-edge conditions, and prepare separate scenario inputs for supported items. Check domain/edge consistency and distinguish Base data from scenario outputs.",
       "searchTerms": "시나리오 scenario base domain face mask"
     },
