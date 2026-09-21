@@ -1295,18 +1295,18 @@
       ],
       "stepsEn": [
         "source data",
-        "project authoring + QA",
-        "engine inputs"
+        "project authoring + checks",
+        "K-DRUM inputs"
       ],
       "nowKo": "InputStudio는 프로젝트 입력 작성과 사전검사를 통합하는 개발 단계입니다.",
       "nowEn": "InputStudio remains in development to integrate project-input authoring and prechecks.",
       "detailKo": "InputStudio는 원자료를 K-DRUM 계산 프로젝트로 바꾸는 작업환경입니다. 계산영역과 공간자료를 준비하고, 강우·시계열과 하천망·횡단면·구조물·경계조건·시나리오를 연결한 뒤 좌표·시간·연결성·범위 오류를 점검하고 K-DRUM 입력자료를 생성합니다. 계산 후 결과 분석은 FloodViewer 등 결과 분석 도구와 구분합니다.",
-      "detailEn": "InputStudio is the project-authoring environment that turns source data into K-DRUM run inputs. It prepares the computational domain and spatial data, connects rainfall/time series with river networks, cross sections, structures, boundaries and scenarios, checks spatial/time/connectivity/range consistency, and generates engine inputs. Post-run interpretation remains a viewer task.",
+      "detailEn": "InputStudio is the project-authoring environment that turns source data into K-DRUM simulation inputs. It prepares the computational domain and spatial data, connects rainfall and time series with river networks, cross sections, structures, boundaries and scenarios, checks spatial, temporal, connectivity and value-range consistency, and generates K-DRUM input files. Result interpretation after a simulation remains a separate viewer task.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null,
       "moreKo": "입력 프로젝트에서 계산 영역과 셀 경계조건을 편집하고, 지원 항목의 시나리오를 별도 입력으로 준비합니다. 영역·경계의 정합성을 검사하고 기준안(Base) 자료와 시나리오 산출물을 구분합니다.",
-      "moreEn": "Within an input project, edit computational domains and cell-edge conditions, and prepare separate scenario inputs for supported items. Check domain/edge consistency and distinguish Base data from scenario outputs.",
+      "moreEn": "Within an input project, edit computational domains and cell-edge conditions, and prepare separate scenario inputs for supported items. Check domain and edge consistency, and distinguish reference (Base) data from scenario outputs.",
       "searchTerms": "시나리오 scenario base domain face mask"
     },
     {
@@ -1318,7 +1318,7 @@
       "ko": "Estuary2DV 하구 연구모형",
       "en": "Estuary2DV estuary research model",
       "sumKo": "K-DRUM 기본 계산엔진과 분리된 종·연직(x-z) 하구 수동역학·염분 실험 연구모형입니다.",
-      "sumEn": "A separate experimental longitudinal–vertical (x-z) estuary hydrodynamics and salinity research model, distinct from K-DRUM Core.",
+      "sumEn": "A separate experimental longitudinal–vertical (x-z) estuary hydrodynamics and salinity research model, distinct from the standard K-DRUM simulation engine.",
       "stepsKo": [
         "상류·조위",
         "x-z 수동역학",
