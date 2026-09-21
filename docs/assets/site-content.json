@@ -191,7 +191,7 @@
         "run readiness"
       ],
       "nowKo": "입력 사전점검은 K-DRUM과 InputStudio에서 입력자료의 일관성을 확인하는 기능으로 개발 중입니다.",
-      "nowEn": "Input prechecks remain in development as consistency checking is integrated across Core and InputStudio.",
+      "nowEn": "Input prechecks remain in development as consistency checking is integrated across the K-DRUM simulation engine and InputStudio.",
       "detailKo": "공간·시간 범위뿐 아니라 하천·격자의 연결성과 값의 범위를 검사합니다. InputStudio에서 프로젝트를 작성한 뒤에도 실제 모의에 사용할 입력자료의 공간·시간·연결성·값 범위를 다시 확인합니다.",
       "detailEn": "Checks cover connectivity and value ranges as well as spatial and temporal extent. A project prepared in InputStudio still needs a final consistency check for the model setup that will be run.",
       "diagram": null,
@@ -1530,7 +1530,7 @@
           ],
           [
             17,
-            "Core value & integration",
+            "K-DRUM value & integration",
             "K-DRUM 핵심가치와 확장",
             "Digital interpretation of connected watershed and river processes",
             "유역-하천 연계 물순환의 디지털 해석과 확장"
