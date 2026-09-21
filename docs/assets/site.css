@@ -95,8 +95,8 @@
 .home-topics article{padding:18px 18px 18px 0;display:flex;flex-direction:column}
 .home-topics article+article{border-left:1px solid var(--line);padding-left:18px}
 .home-topics .eyebrow{font-size:.75rem;margin-bottom:10px}
-.home-topics h2{font-size:1.1rem;line-height:1.5;margin-bottom:12px}
-.home-topics p{font-size:.92rem;color:var(--muted);margin-bottom:10px}
+.home-topics h2{font-size:1.1rem;line-height:1.5;margin-bottom:12px;min-width:0;overflow-wrap:anywhere}
+.home-topics p{font-size:.92rem;color:var(--muted);margin-bottom:10px;min-width:0;overflow-wrap:anywhere;hyphens:auto}
 .home-topics a{display:inline-flex;align-items:center;min-height:44px;font-size:.9rem;margin-top:auto;text-decoration:none}
 @media(max-width:960px) and (min-width:801px){
  .home-topics{grid-template-columns:repeat(2,minmax(0,1fr))}
