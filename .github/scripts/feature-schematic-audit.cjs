@@ -10,15 +10,15 @@ const requiredLabels={
  'wb-1d2d':{ko:['1D 하천','2D 범람원'],en:['1D river','2D floodplain']},
  netcdf:{ko:['유역 격자 결과','범람 결과'],en:['Watershed-grid output','Flood output']},
  viewer:{ko:['평면 공간분포','선택 위치의 시간 변화'],en:['Plan-view distribution','Time variation at a location']},
- inputstudio:{ko:['공간 자료','프로젝트','엔진 입력'],en:['Spatial data','Project','Engine inputs']},
+ inputstudio:{ko:['공간 자료','프로젝트','K-DRUM 입력'],en:['Spatial data','Project','K-DRUM inputs']},
  'input-readiness':{ko:['원자료','정합성 검사','점검 결과'],en:['Source data','Consistency checks','Check results']},
  'rainfall-coverage':{ko:['관측','예측','결측'],en:['Observed','Forecast','Missing']},
  'initial-state-warmup':{ko:['초기상태','목표지점 유량','진단과 평가'],en:['Initial states','Target discharge','Diagnostic review']},
  'watershed-water-balance':{ko:['저장량 변화','증발산','유출'],en:['Change in storage','Evapotranspiration','Outflow']},
  'calibration-evaluation':{ko:['관측유량','매개변수 범위','성능지표 평가'],en:['Observed discharge','Parameter ranges','Evaluate metrics']},
  'result-lifecycle':{ko:['실행 조건 기록','결과 파일 생성','출력 요건 점검'],en:['Record run context','Write result files','Output integrity']},
- 'nested-grid-patch':{ko:['원지형 격자','배경 병합 · Patch 유지'],en:['Source terrain grid','Grouped background · retained patch']},
- 'snow-process':{ko:['강우 / 강설 분리','융설계수 보정','적설저장 · 융설'],en:['Rain / snow partition','Melt adjustment','Snow storage / melt']},
+ 'nested-grid-patch':{ko:['원지형 격자','배경 병합 · 관심영역 유지'],en:['Source terrain grid','Grouped background · retained patch']},
+ 'snow-process':{ko:['강우·강설 구분','융설계수 보정','적설 저장량 · 융설'],en:['Rain / snow partition','Melt adjustment','Snow storage / melt']},
  'deep-storage-path':{ko:['D층 저장','상부 토양층 경로','선택적 심부 손실'],en:['D-layer storage','Upper soil-layer path','Optional deep loss']},
  'river-result-views':{ko:['종단면','횡단면','시계열','η₀','t₀'],en:['Longitudinal profile','Cross section','Time series','η₀','t₀']}
 };
