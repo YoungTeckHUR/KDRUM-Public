@@ -111,7 +111,7 @@
       "detailKo": "Thiessen은 관측소의 영향 구역을 구분하고, IDW는 관측소와의 거리에 따른 가중치를 이용합니다. 방법의 차이와 관측소 배치의 영향을 함께 검토합니다.",
       "detailEn": "Thiessen delineates station influence areas; IDW uses distance-based weights. Review the mapping method together with the spatial distribution of stations.",
       "diagram": "rainfall-grid",
-      "diagramCaptionKo": "기능군 개념도: 가운데 Thiessen·IDW 단계가 관측소-격자 배분에 해당하며, 좌우 영역은 입력과 산출 격자 강우입니다.",
+      "diagramCaptionKo": "개념도: 가운데 Thiessen·IDW 단계가 관측소 강우를 계산격자에 배분하는 과정이며, 좌우는 입력자료와 생성된 격자 강우를 나타냅니다.",
       "diagramCaptionEn": "Process-family schematic: the central Thiessen/IDW stage identifies station-to-grid mapping, between the input observations and resulting grid rainfall."
     },
     {
@@ -600,7 +600,7 @@
       "detailKo": "단순히 총유출량을 확인하는 기능이 아니라, 들어온 물이 토양·적설·심부저류 등에 얼마나 저장되고 증발산·하천유출 등으로 얼마나 빠져나갔는지를 연결해 봅니다. 각 저장량 변화와 내부 이동량을 함께 읽어 계산 누락·중복 또는 비정상적인 손실을 찾습니다.",
       "detailEn": "This is more than a runoff total: it connects incoming water with changes in soil, snow and deep storage and with losses such as evapotranspiration and river outflow. Reading storage changes together with internal fluxes helps reveal omissions, double counting or abnormal losses.",
       "diagram": "read-results",
-      "diagramCaptionKo": "기능군 개념도: 오른쪽 물수지 구성 항목이 유역 폐합오차 평가를 설명합니다. 왼쪽 수문곡선은 별도의 관측 비교 예시이며 실제 결과가 아닙니다.",
+      "diagramCaptionKo": "개념도: 오른쪽은 유역 물수지의 주요 구성항목과 폐합오차 평가를 설명합니다. 왼쪽 수문곡선은 관측·계산 비교를 설명하기 위한 예시이며 실제 결과가 아닙니다.",
       "diagramCaptionEn": "Process-family schematic: the water-balance terms on the right explain basin closure assessment. The hydrographs on the left are a separate comparison illustration, not actual results."
     },
     {
