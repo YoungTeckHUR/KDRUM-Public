@@ -55,7 +55,7 @@
         "question": "Coupled analysis of river flow continuing after rainfall ends",
         "context": "A 2017 conference presentation proposed coupling K-DRUM with MODFLOW for long-term water-cycle and low-flow analysis.",
         "method": "The proposed exchange passes K-DRUM deep percolation to MODFLOW as groundwater recharge, then returns MODFLOW baseflow to K-DRUM river runoff.",
-        "scope": "The record presents a coupling method and intended future use. It does not establish a measured accuracy improvement or coupling availability in the downloadable version. Current D-layer/baseflow-return and river-infiltration extensions remain ACTIVE DEVELOPMENT."
+        "scope": "The record presents a coupling method and intended future use. It does not establish a measured accuracy improvement or coupling availability in the downloadable version. Current D-layer/baseflow-return and river-infiltration extensions remain in development."
       },
       "paperTitle": "강우유출모형(K-DRUM)과 지하수유동모형(MODFLOW)연계에 대한 연구",
       "link": "https://www.kwater.or.kr/kiwe/resu/thesView.do?mngtno=A2017255&pageNo=252&s_mid=454"
@@ -85,7 +85,7 @@
       },
       "en": {
         "question": "What are K-DRUM's main inputs and outputs?",
-        "answer": "Core inputs include rainfall time series and grid-based terrain, land-cover and soil data. Long-term and snow simulations also use weather data and initial states; hydraulic extensions require river sections, structures and boundary conditions. K-DRUM provides runoff and hydrologic states, with water-balance and subbasin reports. Hydraulic outputs such as water level, flood depth and velocity, and integrated NetCDF output, depend on the version and development status of the relevant feature."
+        "answer": "Basic inputs include rainfall time series and grid-based terrain, land-cover and soil data. Long-term and snow simulations also use weather data and initial states; hydraulic extensions require river cross sections, structures and boundary conditions. K-DRUM provides runoff and hydrologic states, together with water-balance and subbasin result summaries. Hydraulic outputs such as water level, flood depth and velocity, and integrated NetCDF output depend on the version and development status of the relevant capability."
       },
       "sources": [
         "capabilities",
@@ -101,7 +101,7 @@
       },
       "en": {
         "question": "Which capabilities are established, and which are still in development?",
-        "answer": "As reviewed on 2026-09-21, grid-based rainfall runoff, Green-Ampt infiltration, kinematic routing, long-term runoff, snow processes and the published MPI lineage are ESTABLISHED. Dynamic-wave river networks, 2D flooding, structures and dam operation are ACTIVE DEVELOPMENT. Two-way 1D-2D exchange is VALIDATED DEVELOPMENT within controlled testing, without certification for every basin. Sediment and tracers are RESEARCH FUNCTION; water-quality code is DISABLED / REDEVELOPMENT CANDIDATE."
+        "answer": "As of 2026-09-21, grid-based rainfall runoff, Green-Ampt infiltration, kinematic routing, long-term runoff and snow processes are presented as established capabilities. Dynamic-wave river networks, 2D flooding, hydraulic structures and dam operation remain in development. Two-way 1D–2D exchange has been verified under controlled test conditions but still requires separate validation for other basins and conditions. Sediment and tracer functions remain research capabilities, while the water-quality module is currently disabled and a redevelopment candidate."
       },
       "sources": [
         "development-status"
@@ -115,7 +115,7 @@
       },
       "en": {
         "question": "Where is K-DRUM distributed, and which version does it cover?",
-        "answer": "K-DRUM is available through MyWater K-Series under K-water's public software access policy, free of charge subject to the published terms. The actual download version and conditions of use are defined by MyWater's current information and terms. The current Core development line is v3.x; its feature scope may differ from the MyWater download. The K-DRUM public-information repository does not publish production source code."
+        "answer": "K-DRUM is available through MyWater K-Series under K-water's public software access policy, free of charge subject to the published terms. The actual download version and conditions of use are defined by MyWater's current information and terms. The current development line is v3.x, and its feature scope may differ from the MyWater download. The K-DRUM public-information repository provides technical information rather than the complete simulation-engine source code."
       },
       "sources": [
         "mywater-k-series",
@@ -146,8 +146,8 @@
         "answer": "K-DRUM 계산엔진은 수문·수리 계산을 담당합니다. InputStudio는 입력 프로젝트 작성·점검 도구로 개발 중이며, FloodViewer는 지도·시계열 기반 결과분석 도구로 공개 준비 중입니다. NetCDF 통합출력은 개발 중입니다. Estuary2DV는 하구 흐름·염분을 다루는 별도 연구모형이고, 1D 하천수리 결과분석 Viewer도 별도 개발 중입니다."
       },
       "en": {
-        "question": "How do Core, InputStudio, FloodViewer and Estuary2DV relate?",
-        "answer": "Core is the simulation engine. InputStudio supports project authoring and input checks (ACTIVE DEVELOPMENT); FloodViewer analyzes results through maps and time series (RELEASE CANDIDATE). Integrated NetCDF output remains ACTIVE DEVELOPMENT. Estuary2DV is a separate EXPERIMENTAL estuary hydrodynamics/salinity model. The 1D River Hydraulics Results Viewer is also developed separately and is not yet public on GitHub."
+        "question": "How do the K-DRUM simulation engine, InputStudio, FloodViewer and Estuary2DV relate?",
+        "answer": "The K-DRUM simulation engine performs the hydrologic and hydraulic calculations. InputStudio supports project authoring and input checks and remains in development. FloodViewer provides map- and time-series-based result analysis and is preparing for public release. Integrated NetCDF output remains in development. Estuary2DV is a separate research model for estuary hydrodynamics and salinity, and the 1D river-hydraulics result viewer is also under separate development."
       },
       "sources": [
         "development-status",
