@@ -66,7 +66,7 @@
     "exampleEn": "Compare runs started from different initial storage to see whether they approach similar states after preparation. Keep the preparation period distinct from the evaluation period."
   },
   "hotstart": {
-    "principleKo": "이어 계산하려면 저장량뿐 아니라 그 상태가 속한 격자·시점·기능 구성이 맞아야 합니다. 격자나 활성 과정이 바뀐 체크포인트는 같은 이름의 파일이어도 호환되는 재시작 상태라고 볼 수 없습니다.",
+    "principleKo": "이어 계산하려면 저장량뿐 아니라 그 상태가 속한 격자·시점·기능 구성이 맞아야 합니다. 격자나 활성 과정이 바뀐 저장 상태 파일은 이름이 같아도 재시작에 그대로 사용할 수 없습니다.",
     "principleEn": "Continuation requires compatible grids, timestamps and active processes as well as storage values. A checkpoint from a changed grid or process configuration is not necessarily compatible despite its filename.",
     "exampleKo": "연속 실행과 중간 저장 후 재시작 실행을 같은 시점에서 비교하면 재시작 정합성을 판단할 수 있습니다. 경계 입력을 한 시간 구간 중복 적용하거나 건너뛰지 않았는지도 확인합니다.",
     "exampleEn": "Compare uninterrupted and restarted runs at matching times. Also check that no boundary-input interval was repeated or skipped at the restart."
@@ -122,7 +122,7 @@
   "run-report": {
     "principleKo": "같은 입력 파일 이름으로 실행했더라도 초기상태·모드·출력 설정이 다르면 결과의 의미가 달라집니다. 실행 리포트는 결과를 재현하고 비교할 때 필요한 조건과 진단을 함께 남기는 역할입니다.",
     "principleEn": "Identical input filenames do not establish identical runs when initial states, modes or output settings differ. The report ties diagnostics to the conditions needed for reproduction and comparison.",
-    "exampleKo": "계산시간이 짧아졌다면 성능 개선인지 계산 영역·저장 간격이 달라진 것인지 먼저 구분합니다. 경고가 있었던 실행을 정상 종료 메시지만 보고 기준 케이스로 채택하지 않습니다.",
+    "exampleKo": "계산시간이 짧아졌다면 성능 개선인지 계산 영역·저장 간격이 달라진 것인지 먼저 구분합니다. 경고가 있었던 실행을 정상 종료 메시지만 보고 기준 모의로 채택하지 않습니다.",
     "exampleEn": "For a faster run, first distinguish performance improvement from changed domain or output frequency. A completion message should not hide warnings when selecting a reference case."
   },
   "subbasin-report": {
@@ -254,11 +254,11 @@
   "viewer": {
     "principleKo": "지도는 어디에서 현상이 발생하는지, 시계열은 언제 어떻게 변했는지 보여줍니다. 둘을 연결하면 최대값 한 장에서 놓치기 쉬운 유입·확산·배수 과정을 구분할 수 있습니다.",
     "principleEn": "Maps locate a process; time series describe its evolution. Linking them distinguishes arrival, spreading and drainage that a single maximum-value map can hide.",
-    "exampleKo": "두 케이스의 색이 다르다면 먼저 범례 범위와 표시 시각이 같은지 확인합니다. 최대값의 발생 시각이 위치마다 다르면 최대값 지도는 어느 한 순간의 침수 상태가 아닙니다.",
+    "exampleKo": "두 모의 결과의 색이 다르다면 먼저 범례 범위와 표시 시각이 같은지 확인합니다. 최대값의 발생 시각이 위치마다 다르면 최대값 지도는 어느 한 순간의 침수 상태가 아닙니다.",
     "exampleEn": "Before attributing different colors to different physics, match legend ranges and times. A map of maxima occurring at different times is not a single flood snapshot."
   },
   "inputstudio": {
-    "principleKo": "프로젝트 작성은 원자료를 실행 가능한 입력 관계로 묶는 작업입니다. Base와 시나리오를 구분하면 강우·구조물·설정 변경이 어떤 케이스에 적용됐는지 추적하며 대안을 비교할 수 있습니다.",
+    "principleKo": "프로젝트 작성은 원자료를 실행 가능한 입력 관계로 묶는 작업입니다. 기준안(Base)과 대안 시나리오를 구분하면 강우·구조물·설정 변경이 어느 모의안에 적용됐는지 추적하며 비교할 수 있습니다.",
     "principleEn": "Project authoring organizes source data into executable input relationships. Separating Base from scenarios tracks which rainfall, structure or setting changes belong to each alternative.",
     "exampleKo": "대안 입력을 만든 뒤 실제 엔진 입력에 원하는 변경이 반영됐는지 비교합니다. 화면에서 값을 수정했다는 사실과 해당 시나리오로 모의를 실행했다는 사실을 구분해 관리합니다.",
     "exampleEn": "After preparing an alternative, compare generated engine inputs to confirm the intended changes. Editing a value in the interface and running the matching scenario are separate actions."
