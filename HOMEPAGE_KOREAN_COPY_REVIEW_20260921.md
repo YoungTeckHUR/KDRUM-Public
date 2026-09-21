@@ -95,3 +95,16 @@
 **결과: 방문자에게 보이는 한국어 화면 기준 0건.**
 
 기계 판독용 `data-status` 속성에는 기존 영문 상태코드를 유지한다. 이는 화면에 표시되는 공개 문구가 아니라 자동검증·기능상태 추적용 메타데이터이다.
+
+## 2026-09-22 English public-copy follow-up
+
+The same visitor-facing review principle was applied to the English public copy.
+
+- visible `QA`, `current Core`, `development path`, `production path`, raw maturity-code wording and `Release Candidate` language were replaced where they were not required technical identifiers;
+- machine-readable status codes remain unchanged in metadata;
+- public status labels now use phrases such as **Implemented · verification ongoing**, **Preparing for release**, and **Development · controlled verification**;
+- InputStudio, FloodViewer, NetCDF, parallel execution, Local Inertia, Full SWE and the FAQ were reworded for external readers;
+- technical names that are genuine terms or product names, such as **K-DRUM Core**, **InputStudio**, **FloodViewer**, **NetCDF**, **OpenMP**, **MPI**, **Local Inertia** and **Full SWE**, are retained where appropriate.
+
+This follow-up changes wording only; it does not change capability maturity or claim new validation.
+
