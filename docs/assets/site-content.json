@@ -639,7 +639,7 @@
       "v": "report",
       "ko": "통합 실행 결과요약",
       "en": "Unified run reporting",
-      "sumKo": "통합 실행 리포트는 입력조건·실행방식·초기상태·물수지·경고·성능 정보를 제공합니다.",
+      "sumKo": "통합 실행 결과요약은 입력조건·실행방식·초기상태·물수지·경고·성능 정보를 제공합니다.",
       "sumEn": "Unified run reports consolidate inputs, runtime mode, initial state, water balance, warnings and timing.",
       "stepsKo": [
         "실행정보",
@@ -651,9 +651,9 @@
         "diagnostics + balance",
         "summary"
       ],
-      "nowKo": "통합 실행 리포트는 현재 실행조건과 진단결과를 제공하는 구현·검증 중 기능입니다.",
+      "nowKo": "통합 실행 결과요약은 현재 실행조건과 진단결과를 제공하는 구현·검증 중 기능입니다.",
       "nowEn": "Unified run reporting is an implemented QA summary of current run information and diagnostics.",
-      "detailKo": "리포트는 결과가 생성된 실행방식과 초기상태를 진단값 옆에 기록합니다. 여러 모의안을 비교할 때에는 실행 조건의 변경과 물수지·계산시간의 변화를 연결해 읽습니다.",
+      "detailKo": "결과요약은 결과가 생성된 실행방식과 초기상태를 진단값 옆에 기록합니다. 여러 모의안을 비교할 때에는 실행 조건의 변경과 물수지·계산시간의 변화를 연결해 읽습니다.",
       "detailEn": "The report places execution mode and initial state alongside diagnostics. Relate changes in these conditions to changes in water balance and runtime when comparing cases.",
       "diagram": null,
       "diagramCaptionKo": null,
@@ -723,7 +723,7 @@
       "v": "subcal",
       "ko": "소유역·목표지점 평가 및 보정",
       "en": "Subbasin / target-point calibration workflow",
-      "sumKo": "소유역 보정은 소유역 리포트와 목표지점 최적화를 결합하여 유역별 보정 의사결정을 지원합니다.",
+      "sumKo": "소유역 보정은 소유역 결과요약과 목표지점 최적화를 결합하여 유역별 보정 의사결정을 지원합니다.",
       "sumEn": "Subbasin calibration combines subbasin reporting with target-point optimization to support basin-by-basin calibration decisions.",
       "stepsKo": [
         "소유역 진단",
