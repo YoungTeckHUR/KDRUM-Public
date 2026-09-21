@@ -149,7 +149,7 @@
       "kind": "report",
       "v": "rainbars",
       "ko": "강우자료 완전성 점검",
-      "en": "Rainfall-data completeness check",
+      "en": "Rainfall data completeness check",
       "sumKo": "관측·예측·결측 기간을 요약하여 계산에 사용한 강우자료의 완전성을 확인합니다.",
       "sumEn": "Run summaries classify observed, forecast and missing rainfall periods so input completeness can be reviewed.",
       "stepsKo": [
@@ -177,7 +177,7 @@
       "kind": "qa",
       "v": "checklist",
       "ko": "입력자료 사전점검·정합성",
-      "en": "Input-data precheck & consistency",
+      "en": "Input precheck & consistency",
       "sumKo": "입력 사전점검은 공간·시간·연결성·범위 오류를 실행 전에 줄이기 위해 확장 중인 점검 체계입니다.",
       "sumEn": "Input prechecks are under development to reduce spatial, temporal, connectivity and range errors before simulation.",
       "stepsKo": [
@@ -554,7 +554,7 @@
       "kind": "terrain",
       "v": "channelbed",
       "ko": "수리해석 지형·하상 보완(ChannelBed)",
-      "en": "Hydraulic terrain & ChannelBed",
+      "en": "Hydraulic terrain & channel-bed representation (ChannelBed)",
       "sumKo": "ChannelBed는 DEM만으로 부족한 저수로·하상 형상을 보완하는 1D/2D 수리 지형 개발기능입니다.",
       "sumEn": "ChannelBed is under development to supplement channel-bed and low-flow geometry where surface DEMs are insufficient.",
       "stepsKo": [
@@ -862,7 +862,7 @@
       "kind": "operation",
       "v": "dam",
       "ko": "댐·저수지 운영",
-      "en": "Dam / reservoir operation",
+      "en": "Dam & reservoir operation",
       "sumKo": "댐 운영 계산은 수위·방류제약·환경유량·방류변화율 등을 이용한 운영규칙과 방류구성을 다룹니다.",
       "sumEn": "Reservoir operation calculations represent water-level and release constraints together with release components.",
       "stepsKo": [
@@ -1030,7 +1030,7 @@
       "kind": "hydraulic",
       "v": "nestedgrid",
       "ko": "다중해상도·관심영역(Patch) 2D",
-      "en": "Multi-resolution & local-patch 2D",
+      "en": "Multi-resolution & local-area (Patch) 2D",
       "sumKo": "원지형 격자를 묶은 배경영역과 원해상도를 유지한 관심영역(Patch)으로 계산량과 국부 표현을 조정합니다.",
       "sumEn": "Grouped terrain cells form a coarser background while selected patches retain the source resolution.",
       "stepsKo": [
@@ -1089,7 +1089,7 @@
       "kind": "transport",
       "v": "sedhill",
       "ko": "사면 유사·침식·퇴적",
-      "en": "Hillslope sediment / erosion-deposition",
+      "en": "Hillslope sediment, erosion & deposition",
       "sumKo": "사면 경사·유속·토양조건을 이용해 침식·운반·퇴적을 계산하는 연구기능입니다.",
       "sumEn": "The hillslope sediment research capability estimates erosion, transport and deposition using slope, flow and soil conditions.",
       "stepsKo": [
@@ -1229,7 +1229,7 @@
       "kind": "platform",
       "v": "netcdf",
       "ko": "NetCDF 통합 결과 출력",
-      "en": "Integrated NetCDF result output",
+      "en": "Integrated NetCDF output",
       "sumKo": "수문·수리 결과의 변수·단위·좌표·시간 정보를 NetCDF 형식으로 기록합니다.",
       "sumEn": "Records hydrologic and hydraulic variables, units, coordinates and time information in NetCDF format.",
       "stepsKo": [
@@ -1342,7 +1342,7 @@
       "g": "platform",
       "s": "SEPARATE DEVELOPMENT",
       "ko": "1D 하천수리 결과 분석 Viewer",
-      "en": "1D river-hydraulics result analysis viewer",
+      "en": "1D river-hydraulics results viewer",
       "sumKo": "1차원 하천수리 결과 뷰어는 종단면·횡단면과 수위·유량 시계열을 분석하는 별도 개발 프로그램입니다.",
       "sumEn": "A separate application in development for longitudinal sections, cross sections and stage/discharge time series.",
       "stepsKo": [
