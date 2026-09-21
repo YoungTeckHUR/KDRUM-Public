@@ -639,7 +639,7 @@
       "v": "report",
       "ko": "통합 실행 리포트",
       "en": "Unified run reporting",
-      "sumKo": "통합 실행 리포트는 입력조건·실행모드·초기상태·물수지·경고·성능 정보를 제공합니다.",
+      "sumKo": "통합 실행 리포트는 입력조건·실행방식·초기상태·물수지·경고·성능 정보를 제공합니다.",
       "sumEn": "Unified run reports consolidate inputs, runtime mode, initial state, water balance, warnings and timing.",
       "stepsKo": [
         "실행정보",
@@ -653,7 +653,7 @@
       ],
       "nowKo": "통합 실행 리포트는 현재 실행조건과 진단결과를 제공하는 구현·검증 중 기능입니다.",
       "nowEn": "Unified run reporting is an implemented QA summary of current run information and diagnostics.",
-      "detailKo": "리포트는 결과가 생성된 실행모드와 초기상태를 진단값 옆에 기록합니다. 케이스 비교에서는 실행 조건의 변경과 물수지·계산시간의 변화를 연결해 읽습니다.",
+      "detailKo": "리포트는 결과가 생성된 실행방식과 초기상태를 진단값 옆에 기록합니다. 여러 모의안을 비교할 때에는 실행 조건의 변경과 물수지·계산시간의 변화를 연결해 읽습니다.",
       "detailEn": "The report places execution mode and initial state alongside diagnostics. Relate changes in these conditions to changes in water balance and runtime when comparing cases.",
       "diagram": null,
       "diagramCaptionKo": null,
@@ -695,11 +695,11 @@
       "v": "metrics",
       "ko": "목표지점 매개변수 보정·최적화",
       "en": "Target-point parameter calibration & optimization",
-      "sumKo": "목표지점 보정·최적화는 목표 격자의 관측유량과 여러 매개변수 조합을 비교하여 성능지표와 최적 케이스를 평가합니다.",
+      "sumKo": "목표지점 보정·최적화는 목표 격자의 관측유량과 여러 매개변수 조합을 비교하여 성능지표와 적합한 조합을 평가합니다.",
       "sumEn": "Target-point calibration and optimization compare parameter cases against observed discharge at a target grid using performance metrics.",
       "stepsKo": [
         "관측유량·범위",
-        "케이스 반복",
+        "매개변수 조합 반복",
         "NSE·KGE·PBIAS 등"
       ],
       "stepsEn": [
@@ -737,7 +737,7 @@
       ],
       "nowKo": "소유역 보정 지원은 개발 단계이며, 모든 소유역의 매개변수를 자동으로 동시에 보정하는 기능은 아닙니다.",
       "nowEn": "Subbasin calibration support remains in development; automatic subbasin parameter targeting is not generally applicable.",
-      "detailKo": "소유역 진단으로 검토 대상을 정하고, 목표지점 케이스 비교 이후 지역별 결과를 다시 살펴보는 절차입니다. 보고서 집계 기능과 매개변수 케이스 평가를 연결하는 의사결정 지원 범위입니다.",
+      "detailKo": "소유역 진단으로 검토 대상을 정하고, 목표지점의 매개변수 조합을 비교한 뒤 지역별 결과를 다시 살펴보는 절차입니다. 소유역 결과요약과 매개변수 조합 평가를 연결하는 의사결정 지원 범위입니다.",
       "detailEn": "Use subbasin diagnostics to choose a focus, compare target-site cases, then revisit regional results. This decision-support process connects reporting with parameter-case evaluation.",
       "diagram": null,
       "diagramCaptionKo": null,
