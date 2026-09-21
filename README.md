@@ -28,7 +28,7 @@ Public K-DRUM research supports the following high-level capabilities:
 - snow accumulation and snowmelt applications
 - MPI-based parallel-computation lineage
 
-## Current v3.x analysis and support programs
+## Current v3.x analysis workflow and support programs
 
 The current generation builds on the established rainfall-runoff core and organizes K-DRUM as a connected analysis environment:
 
@@ -37,9 +37,12 @@ The current generation builds on the established rainfall-runoff core and organi
 - **K-DRUM FloodViewer** — integrated map and time-series analysis of hydrologic and hydraulic simulation results
 - **1D River Hydraulics Results Viewer** — separate viewer for longitudinal/cross-section results and water-level/discharge time series; under development and **not yet published to the public GitHub repositories**
 - **K-DRUM ChannelBed** — reusable high-resolution terrain, river-geometry, and virtual channel-bed processing
-- **K-DRUM Estuary2DV** — independent longitudinal-vertical estuary hydrodynamics and salinity research model
 
-Current hydraulic extensions include cross-section-based one-dimensional dynamic-wave river-network analysis, branch/confluence hydraulics, bidirectional one-dimensional/two-dimensional river-floodplain exchange, two-dimensional flood-inundation analysis, hydraulic structures, and reservoir-operation scenarios. These components have different validation levels; see [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) for the public maturity boundary.
+Current hydraulic extensions include cross-section-based one-dimensional dynamic-wave river-network analysis, branch/confluence hydraulics, bidirectional one-dimensional/two-dimensional river-floodplain exchange, two-dimensional flood-inundation analysis, hydraulic structures, and reservoir-operation scenarios. Water-balance accounting, InputStudio authoring/checks and result viewers are presented as connected parts of the analysis workflow. These components have different validation levels; see [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) for the public maturity boundary.
+
+## Research extensions
+
+- **K-DRUM Estuary2DV** — separate experimental longitudinal-vertical estuary hydrodynamics and salinity research model; not a standard Core production function
 
 ## Publicly documented application themes
 
@@ -89,4 +92,4 @@ The current canonical expansion used by this public site is **K-water Grid-based
 ---
 
 **Canonical model name:** K-DRUM  
-**Current public baseline:** v3.x / August 2026
+**Current public baseline:** v3.x / September 2026
