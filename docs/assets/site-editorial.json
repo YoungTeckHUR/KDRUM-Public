@@ -27,7 +27,7 @@
         "title": "적설·융설을 고려한 산지 유역의 장기유출 모의",
         "question": "유역의 적설과 융설을 반영한 장기유출 모의",
         "context": "파키스탄 Kunhar강 유역을 대상으로 고도에 따른 기상 차이와 적설·융설을 고려한 장기유출 모의를 수행했습니다.",
-        "method": "GIS 공간자료를 바탕으로 고도에 따른 기온·강우 입력을 구성하고, 눈의 축적과 융설을 포함해 장기 유량을 계산했습니다.",
+        "method": "GIS 공간자료를 바탕으로 고도에 따른 기온·강우 입력을 구성하고, 적설과 융설 과정을 포함해 장기 유량을 계산했습니다.",
         "scope": "2013년 특정 산지 유역의 적용 연구입니다. 적설·융설은 공개 연구로 확인되는 기반 기능이며, 다른 유역에서의 적용에는 해당 유역의 기상자료와 검증조건이 필요합니다."
       },
       "en": {
@@ -48,7 +48,7 @@
         "question": "강우 종료 후에도 지속되는 하천 유출의 연계 해석",
         "context": "2017년 학술발표는 장기 물순환과 갈수기 유출 해석을 위해 K-DRUM과 지하수유동모형 MODFLOW를 연계하는 방법을 제시했습니다.",
         "method": "K-DRUM에서 계산한 심부 침루량을 MODFLOW의 지하수 함양 입력으로 사용하고, MODFLOW의 기저유량을 K-DRUM 하천유출에 반영하는 연계 방안을 설명했습니다.",
-        "scope": "연계 방법과 향후 활용 방향을 제시한 발표자료입니다. 이 기록만으로 정확도 향상이나 현재 배포본의 연계 기능을 확정할 수 없습니다. 현재 D층·지연 기저유출 및 하천 침투 연계의 공개 상태는 ACTIVE DEVELOPMENT입니다."
+        "scope": "연계 방법과 향후 활용 방향을 제시한 발표자료입니다. 이 기록만으로 정확도 향상이나 현재 배포본의 연계 기능을 확정할 수 없습니다. 현재 D층·지연 기저유출 및 하천 침투 연계는 개발 중입니다."
       },
       "en": {
         "title": "Coupling rainfall runoff and groundwater flow",
@@ -97,7 +97,7 @@
       "id": "maturity",
       "ko": {
         "question": "확립된 기능과 개발 중인 기능은 어떻게 구분하나요?",
-        "answer": "2026-09-21 공개 설명·상태 경계 재검토 기준으로 격자 강우유출, Green-Ampt 침투, 운동파 추적, 장기유출·적설·융설과 MPI 연구 기반은 ESTABLISHED입니다. 1D 동역학파 하천망, 2D 범람, 구조물·댐 운영은 ACTIVE DEVELOPMENT입니다. 양방향 1D-2D 교환은 통제된 시험에서 확인된 VALIDATED DEVELOPMENT이며 모든 유역의 적용 인증을 뜻하지 않습니다. 유사·추적자는 RESEARCH FUNCTION, 수질 코드는 DISABLED / REDEVELOPMENT CANDIDATE입니다."
+        "answer": "2026-09-21 기준으로 격자 강우유출, Green-Ampt 침투, 운동파 흐름추적, 장기유출과 적설·융설은 확립된 기능으로 안내합니다. 1D 동역학파 하천망, 2D 범람, 구조물·댐 운영은 개발 중이며, 양방향 1D-2D 교환은 통제된 시험조건에서 개발·검증 중입니다. 유사·추적 기능은 연구 단계이고 수질 기능은 현재 비활성·재개발 단계입니다."
       },
       "en": {
         "question": "Which capabilities are established, and which are still in development?",
@@ -111,7 +111,7 @@
       "id": "download",
       "ko": {
         "question": "K-DRUM의 배포 경로와 버전 범위는 무엇인가요?",
-        "answer": "K-DRUM은 K-water 기술 SW 대국민 개방정책에 따라 MyWater 물정보포털의 K-Series에서 무료로 제공됩니다. 실제 배포 버전과 사용조건은 MyWater의 최신 안내와 이용약관을 기준으로 합니다. 현재 Core 개발 계열은 v3.x이며, MyWater 배포본의 기능 범위와는 차이가 있을 수 있습니다. K-DRUM 공개 저장소는 생산용 소스코드를 배포하지 않습니다."
+        "answer": "K-DRUM은 K-water 기술 SW 대국민 개방정책에 따라 MyWater 물정보포털의 K-Series에서 무료로 제공됩니다. 실제 배포 버전과 사용조건은 MyWater의 최신 안내와 이용약관을 기준으로 합니다. 현재 개발 계열은 v3.x이며, MyWater 배포본의 기능 범위와는 차이가 있을 수 있습니다. K-DRUM 공개 저장소는 일반 이용자를 위한 기술정보를 제공하며 계산엔진의 전체 소스코드는 공개하지 않습니다."
       },
       "en": {
         "question": "Where is K-DRUM distributed, and which version does it cover?",
@@ -142,8 +142,8 @@
     {
       "id": "related-tools",
       "ko": {
-        "question": "Core, InputStudio, FloodViewer와 Estuary2DV는 어떤 관계인가요?",
-        "answer": "Core는 계산 엔진, InputStudio는 프로젝트 입력 작성·점검 도구(ACTIVE DEVELOPMENT), FloodViewer는 지도·시계열 결과 분석 도구(RELEASE CANDIDATE)입니다. NetCDF 통합출력은 ACTIVE DEVELOPMENT입니다. Estuary2DV는 하구 흐름·염분을 다루는 별도 EXPERIMENTAL 연구모형입니다. 1D River Hydraulics Results Viewer도 별도 개발 중이며 아직 공개 GitHub 저장소에 게시되지 않았습니다."
+        "question": "K-DRUM 계산엔진, InputStudio, FloodViewer와 Estuary2DV는 어떤 관계인가요?",
+        "answer": "K-DRUM 계산엔진은 수문·수리 계산을 담당합니다. InputStudio는 입력 프로젝트 작성·점검 도구로 개발 중이며, FloodViewer는 지도·시계열 기반 결과분석 도구로 공개 준비 중입니다. NetCDF 통합출력은 개발 중입니다. Estuary2DV는 하구 흐름·염분을 다루는 별도 연구모형이고, 1D 하천수리 결과분석 Viewer도 별도 개발 중입니다."
       },
       "en": {
         "question": "How do Core, InputStudio, FloodViewer and Estuary2DV relate?",
