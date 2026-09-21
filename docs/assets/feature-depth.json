@@ -56,7 +56,7 @@
   "snow": {
     "principleKo": "적설은 강수와 유출 사이에 계절적 저장을 추가합니다. 비·눈 분리와 융설률을 함께 다뤄야 봄철 유량 증가 시점과 겨울철 저장을 설명할 수 있으며, 경험적 융설계수 보정과 열수지 계산은 구분해야 합니다.",
     "principleEn": "Snow introduces seasonal storage between precipitation and runoff. Rain/snow partition and melt rate together explain winter storage and spring flow timing; empirical melt adjustment differs from a heat-budget calculation.",
-    "exampleKo": "봄 유량이 너무 일찍 증가하면 유출 전달만 바꾸기 전에 고도별 기온과 비·눈 분리, 융설 시기를 비교합니다. 유량만 맞추면 잘못된 적설저장이 가려질 수 있습니다.",
+    "exampleKo": "봄 유량이 너무 일찍 증가하면 유출 전달만 바꾸기 전에 고도별 기온과 비·눈 구분, 융설 시기를 비교합니다. 유량만 맞추면 잘못된 적설 저장량이 가려질 수 있습니다.",
     "exampleEn": "For an early spring rise, compare elevation-adjusted temperature, phase partition and melt timing before changing routing alone. Matching discharge can conceal incorrect snow storage."
   },
   "warmup": {
