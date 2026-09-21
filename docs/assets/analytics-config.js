@@ -1,12 +1,12 @@
 /* K-DRUM visitor analytics configuration.
- * Safe default: analytics is disabled until an approved provider is configured.
- * This file contains no secrets.
+ * GoatCounter is enabled for the public K-DRUM website.
+ * This file contains no secrets or visitor-identifying credentials.
  */
 window.KDRUM_ANALYTICS = Object.freeze({
-  enabled: false,
-  provider: 'none', // 'ga4' or 'goatcounter'
+  enabled: true,
+  provider: 'goatcounter', // 'ga4' or 'goatcounter'
   ga4MeasurementId: '',
-  goatCounterEndpoint: '',
+  goatCounterEndpoint: 'https://kdrum-public.goatcounter.com/count',
   respectDoNotTrack: true,
   trackCapabilityOpen: true,
   trackMyWaterClick: true,
