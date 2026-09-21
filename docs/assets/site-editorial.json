@@ -97,11 +97,11 @@
       "id": "maturity",
       "ko": {
         "question": "확립된 기능과 개발 중인 기능은 어떻게 구분하나요?",
-        "answer": "2026-08-21 공개 검토 기준으로 격자 강우유출, Green-Ampt 침투, 운동파 추적, 장기유출·적설·융설과 MPI 연구 기반은 ESTABLISHED입니다. 1D 동역학파 하천망, 2D 범람, 구조물·댐 운영은 ACTIVE DEVELOPMENT입니다. 양방향 1D-2D 교환은 통제된 시험에서 확인된 VALIDATED DEVELOPMENT이며 모든 유역의 적용 인증을 뜻하지 않습니다. 유사·추적자는 RESEARCH FUNCTION, 수질 코드는 DISABLED / REDEVELOPMENT CANDIDATE입니다."
+        "answer": "2026-09-21 공개 설명·상태 경계 재검토 기준으로 격자 강우유출, Green-Ampt 침투, 운동파 추적, 장기유출·적설·융설과 MPI 연구 기반은 ESTABLISHED입니다. 1D 동역학파 하천망, 2D 범람, 구조물·댐 운영은 ACTIVE DEVELOPMENT입니다. 양방향 1D-2D 교환은 통제된 시험에서 확인된 VALIDATED DEVELOPMENT이며 모든 유역의 적용 인증을 뜻하지 않습니다. 유사·추적자는 RESEARCH FUNCTION, 수질 코드는 DISABLED / REDEVELOPMENT CANDIDATE입니다."
       },
       "en": {
         "question": "Which capabilities are established, and which are still in development?",
-        "answer": "As reviewed on 2026-08-21, grid-based rainfall runoff, Green-Ampt infiltration, kinematic routing, long-term runoff, snow processes and the published MPI lineage are ESTABLISHED. Dynamic-wave river networks, 2D flooding, structures and dam operation are ACTIVE DEVELOPMENT. Two-way 1D-2D exchange is VALIDATED DEVELOPMENT within controlled testing, without certification for every basin. Sediment and tracers are RESEARCH FUNCTION; water-quality code is DISABLED / REDEVELOPMENT CANDIDATE."
+        "answer": "As reviewed on 2026-09-21, grid-based rainfall runoff, Green-Ampt infiltration, kinematic routing, long-term runoff, snow processes and the published MPI lineage are ESTABLISHED. Dynamic-wave river networks, 2D flooding, structures and dam operation are ACTIVE DEVELOPMENT. Two-way 1D-2D exchange is VALIDATED DEVELOPMENT within controlled testing, without certification for every basin. Sediment and tracers are RESEARCH FUNCTION; water-quality code is DISABLED / REDEVELOPMENT CANDIDATE."
       },
       "sources": [
         "development-status"
@@ -180,8 +180,8 @@
     },
     "development-status": {
       "title": {
-        "ko": "개발 현황 · 2026-08-21 검토",
-        "en": "Development Status · reviewed 2026-08-21"
+        "ko": "개발 현황 · 2026-09-21 검토",
+        "en": "Development Status · reviewed 2026-09-21"
       },
       "url": "https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md"
     },

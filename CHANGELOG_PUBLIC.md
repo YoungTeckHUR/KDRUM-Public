@@ -1,5 +1,21 @@
 # K-DRUM Public Information Changelog
 
+## 2026-09-21 — Capability information architecture and explanation review
+
+Reorganized the bilingual public homepage so visitors can understand K-DRUM through four primary workflows before entering detailed capabilities: watershed hydrology, continuous hydrology and water balance, river hydraulics and flooding, and input/result analysis.
+
+Updated:
+
+- reorganized the eight detailed capability groups around user tasks while preserving the existing capability inventory and maturity boundaries
+- strengthened basin water-balance wording as system-level accounting across rainfall, evapotranspiration, runoff, storage change and internal transfers
+- expanded InputStudio as the project-authoring and input-consistency workflow and FloodViewer as the map/time-series result-analysis workflow
+- moved Estuary2DV into the research/extension context so it is not presented as a standard Core support tool
+- revised public-facing Korean and English feature names and simplified visible maturity labels without promoting technical maturity
+- synchronized Korean/English generated pages, public capability documents, FAQ/SEO status references and sitemap dates
+- retained the numerical-method guide linking kinematic, diffusion/local-inertia and full dynamic/SWE concepts with discretization, time stepping, boundaries and wet/dry interpretation
+
+This update is an information-architecture and explanatory-content revision. It does not constitute new numerical validation, production certification or expansion of the public-source boundary.
+
 ## 2026-08-22 — Light, image-led homepage experience
 
 Rebuilt the English and Korean public homepage after reviewing the deployed page from a first-time user perspective. The redesign focuses on immediate comprehension, clear click affordances, visible download actions and concept imagery rather than a dark text-heavy catalogue.

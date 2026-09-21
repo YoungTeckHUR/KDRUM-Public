@@ -84,7 +84,7 @@ async function run(mode='navigation'){
    page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)errors.push(r.status()+' '+r.url());});
    await ready(page,home(lang));
    assert.equal(await page.locator('h1').count(),1);assert.equal(await page.locator('.capability').count(),46);assert.equal(await page.locator('.capability:visible').count(),0);assert.equal(await page.locator('[data-workspace-page]:visible').count(),1);assert.ok(await page.locator('#home').isVisible());
-   assert.equal(await page.locator('#home .hero-image img').count(),1);assert.equal(await page.locator('.home-topics article').count(),3);
+   assert.equal(await page.locator('#home .hero-image img').count(),1);assert.equal(await page.locator('.home-topics article').count(),4);
    assert.equal(await page.locator('link[rel=canonical]').getAttribute('href'),'https://youngteckhur.github.io/KDRUM-Public/'+(lang==='ko'?'ko/':''));
    assert.deepEqual(await page.evaluate(()=>{const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);return ids.filter((id,i)=>ids.indexOf(id)!==i);}),[]);
    assert.deepEqual(await page.evaluate(()=>[...document.querySelectorAll('a[href^="#"]')].map(a=>a.getAttribute('href').slice(1)).filter(id=>!document.getElementById(id))),[]);

@@ -6,7 +6,7 @@ K-DRUM은 K-water가 개발한 **물리적 기반의 격자단위 분포형 강�
 
 The public description deliberately separates established, implemented/verified, active-development, validated-development, research, and disabled/redevelopment functions. The existence of a calculation path does not by itself mean universal production readiness.
 
-## 1. Rainfall data and input-data quality control
+## 1. Rainfall input and quality control
 
 - spatially distributed rainfall input
 - Thiessen-polygon and inverse-distance-weighted (IDW) rainfall distribution
@@ -15,7 +15,7 @@ The public description deliberately separates established, implemented/verified,
 - rainfall completeness / missing-data assessment
 - input-data precheck and project-level consistency assessment
 
-## 2. Watershed hydrology and continuous simulation
+## 2. Watershed hydrology and continuous state
 
 Established distributed rainfall-runoff foundations include:
 
@@ -34,7 +34,7 @@ Current state-management and long-term extensions include:
 
 Snowmelt includes empirical slope, D8-direction and time-of-day adjustment of the melt factor; it does not directly solve radiation energy balance or slope snow transport. HotStart state coverage depends on the selected calculation path. D-layer delayed return feeds an upper soil-layer pathway, while deep loss requires its separate option.
 
-## 3. Hillslope, channel and terrain representation
+## 3. Routing and river terrain
 
 Publicly describable capabilities include:
 
@@ -44,7 +44,7 @@ Publicly describable capabilities include:
 - cross-section and river-geometry preparation
 - high-resolution terrain processing and ChannelBed development
 
-## 4. Water balance, parameter calibration and result reporting
+## 4. Water balance, calibration and result QA
 
 Current Core verification and analysis development includes:
 
@@ -56,9 +56,11 @@ Current Core verification and analysis development includes:
 - target-point parameter calibration / optimization metrics
 - combined subbasin diagnosis and target-point calibration support
 
+Basin water balance is treated as a system-level accounting function, not only as a single closure number: rainfall, evapotranspiration, runoff, storage changes and internal transfers must be interpreted over consistent periods and units.
+
 The optimization path supports observation-based case comparison and multiple performance measures. Public wording does **not** describe this as universal automatic parameter calibration of every subbasin.
 
-## 5. River hydraulics, hydraulic structures and dam operation
+## 5. One-dimensional river hydraulics, structures and dam operation
 
 Current hydraulic development includes:
 
@@ -71,7 +73,7 @@ Current hydraulic development includes:
 
 Operational reservoir rules, restricted data and actual operating decisions are not published by this repository.
 
-## 6. One-dimensional/two-dimensional coupling and flood-inundation analysis
+## 6. One-dimensional/two-dimensional coupling and floodplain analysis
 
 Current development includes:
 
@@ -86,7 +88,7 @@ The one-dimensional/two-dimensional exchange path has a **validated-development*
 
 One-way transfer, diagnostic and two-way feedback paths must be distinguished for each run. Multi-resolution patches retain source-terrain resolution against a grouped, coarser background; they do not create finer terrain information than the input.
 
-## 7. Sediment, material tracking and water-quality research functions
+## 7. Research and extension functions
 
 The current code base retains research calculation paths for:
 
@@ -98,7 +100,9 @@ These are presented as research functions pending dedicated public validation do
 
 Historical/research water-quality process code also exists, but it is explicitly disabled/excluded from the current active build. It is therefore shown only as a redevelopment candidate, not as a current production capability.
 
-## 8. Parallel computation, result output and support programs
+Estuary2DV is also placed in this research/extension context: it is a separate experimental longitudinal–vertical estuary hydrodynamics/salinity model, not a standard K-DRUM Core production function.
+
+## 8. Input, runtime and result tools
 
 The wider K-DRUM environment includes:
 
@@ -107,7 +111,6 @@ The wider K-DRUM environment includes:
 - InputStudio project authoring and input-data checks
 - FloodViewer map/time-series result analysis
 - **1D River Hydraulics Results Viewer** — a separate program for longitudinal/cross-section results and water-level/discharge time series; under development and **not yet published to the public GitHub repositories**
-- Estuary2DV as a separate experimental longitudinal-vertical estuary hydrodynamics / salinity research model
 
 MPI has a public K-DRUM research lineage, while current serial/OpenMP/MPI consistency and runtime modernization remain active verification topics.
 
