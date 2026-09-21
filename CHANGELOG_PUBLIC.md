@@ -1,5 +1,23 @@
 # K-DRUM Public Information Changelog
 
+## 2026-09-21 — Korean public-copy and terminology review
+
+Reviewed the Korean public website capability-by-capability, including all 46 capability labels and explanations, homepage guidance, FAQ copy, visual-guide annotations and reusable SVG diagrams.
+
+Updated:
+
+- replaced internal development wording with visitor-facing Korean where it was not a required technical term or product name
+- corrected snow terminology to distinguish rainfall/snowfall partition, snow storage and snowmelt; removed awkward expressions such as `융적설` and `적설 축적`
+- aligned the public snow explanation with the current calculation concept, including empirical slope/D8-direction/time-of-day melt-factor adjustment and the distinction from direct radiation-energy-balance or snow-transport modeling
+- replaced ambiguous D-layer `복류` wording with delayed return to the upper soil-layer pathway
+- standardized public wording for run summaries, result-analysis readiness, multi-resolution local patches, InputStudio and viewer roles
+- removed raw maturity codes and internal audit language from visible Korean copy while preserving machine-readable status metadata
+- synchronized affected Korean SVG labels and added a 46-item review record in `HOMEPAGE_KOREAN_COPY_REVIEW_20260921.md`
+
+Original p18 PDF, video and JPEG assets remain preserved as their historical source versions; current website labels and explanatory notes use the reviewed terminology.
+
+This is a public-copy and terminology review. It does not promote capability maturity or constitute new numerical validation.
+
 ## 2026-09-21 — Capability information architecture and explanation review
 
 Reorganized the bilingual public homepage so visitors can understand K-DRUM through four primary workflows before entering detailed capabilities: watershed hydrology, continuous hydrology and water balance, river hydraulics and flooding, and input/result analysis.
