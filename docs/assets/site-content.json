@@ -344,8 +344,8 @@
       ],
       "nowKo": "적설·융설은 공개 장기 융설 적용 연구로 뒷받침되는 확립된 기능입니다.",
       "nowEn": "Snow accumulation and melt are established through public long-term snowmelt applications.",
-      "detailKo": "기온에 따라 강우·강설을 구분하며, 표고에 따른 기온 보정과 경사·D8 흐름방향·시간대에 따른 경험적 융설계수 보정을 적용합니다. 풍속도 융설량 계산에 사용됩니다. 융설수는 적설 저장량에서 차감되어 수문 입력으로 전달됩니다.",
-      "detailEn": "Temperature partitions rain and snow. Elevation-based temperature adjustment and empirical season, slope, D8-direction and time factors modify melt; meltwater leaves snow storage and enters hydrologic inputs.",
+      "detailKo": "기온에 따라 강우·강설을 구분하며, 표고에 따른 기온 보정과 경사·D8 흐름방향·시간대에 따른 경험적 융설계수 보정을 적용합니다. 풍속과 강우가 있는 경우의 강우량도 융설량 계산에 반영됩니다. 융설수는 적설 저장량에서 차감되어 수문 입력으로 전달됩니다.",
+      "detailEn": "Rain and snowfall are partitioned using temperature. Elevation-adjusted temperature and empirical melt-factor adjustments for slope, D8 flow direction and time of day are applied. Wind and liquid rainfall during melt conditions also contribute to the melt calculation. Meltwater is removed from snow storage and passed into the hydrologic input.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
