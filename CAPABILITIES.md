@@ -9,7 +9,7 @@ The public description deliberately separates established, implemented/verified,
 ## 1. Rainfall input and quality control
 
 - spatially distributed rainfall input
-- Thiessen-polygon and inverse-distance-weighted (IDW) rainfall distribution
+- inverse-distance-weighted (IDW) rainfall distribution
 - elevation-corrected IDW rainfall distribution
 - rainfall-data quality checks
 - rainfall completeness / missing-data assessment
