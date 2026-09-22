@@ -12,7 +12,7 @@ The September 21, 2026 review reconfirms the public maturity boundary below whil
 |---|---|---|
 | Grid-unit distributed rainfall-runoff simulation | **ESTABLISHED** | Core historical K-DRUM capability supported by publications |
 | Spatially distributed rainfall forcing | **ESTABLISHED** | Used in published radar/grid-rainfall applications |
-| Thiessen / IDW rainfall distribution | **IMPLEMENTED / QA** | Current station-to-grid rainfall-distribution paths |
+| IDW rainfall distribution | **IMPLEMENTED / QA** | Current public station-to-grid rainfall-distribution path; Thiessen mapping is not provided as a public capability |
 | Elevation-corrected IDW and rainfall-data quality checks | **IMPLEMENTED / QA** | Current rainfall-input quality path; regression and input verification remain important |
 | Rainfall completeness / missing-data assessment | **IMPLEMENTED / QA** | Run-level rainfall-input assessment connected to reporting |
 | Green-Ampt infiltration | **ESTABLISHED** | Published K-DRUM infiltration formulation |
