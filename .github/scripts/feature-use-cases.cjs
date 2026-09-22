@@ -1,7 +1,7 @@
 /* Entry copy describes a visitor's question; availability remains in the status badge. */
 const cases={
 'rain-spatial':['지역마다 비가 다르게 내리는 유역을 해석할 때','When rainfall varies across the watershed'],
-'rain-methods':['관측소 강우를 유역에 배분할 방법을 정할 때','When choosing how to distribute station rainfall'],
+'rain-methods':['관측소 강우를 IDW로 공간배분할 때','When mapping station rainfall with IDW'],
 'rain-qc':['강우의 공간 분포와 입력 품질을 함께 검토할 때','When reviewing rainfall distribution and input quality'],
 'rain-summary':['계산에 사용한 강우자료의 빈 구간을 확인할 때','When checking gaps in the rainfall used for a run'],
 'input-precheck':['계산을 시작하기 전에 입력자료를 점검할 때','When checking inputs before starting a run'],
