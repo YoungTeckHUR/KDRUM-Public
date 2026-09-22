@@ -106,8 +106,8 @@
         "IDW",
         "cell values"
       ],
-      "nowKo": "현재 공개 제공되는 관측소 강우 공간배분 방식은 IDW입니다. Thiessen 방식은 현재 공개 기능으로 제공하지 않습니다.",
-      "nowEn": "The current public station-to-grid rainfall mapping method is IDW. Thiessen mapping is not provided as a public capability.",
+      "nowKo": "현재 제공되는 관측소 강우 공간배분 방식은 IDW(역거리가중기법)입니다.",
+      "nowEn": "The current station-to-grid rainfall mapping method is inverse-distance weighting (IDW).",
       "detailKo": "IDW는 여러 관측소의 강우를 계산격자와의 거리에 따라 가중하여 공간배분합니다. 관측소 배치와 거리 가중의 영향을 함께 확인합니다.",
       "detailEn": "IDW maps station rainfall using distance-based weights. Review the spatial distribution of stations together with the distance-weighting result.",
       "diagram": "rainfall-grid",
