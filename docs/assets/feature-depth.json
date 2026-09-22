@@ -6,10 +6,10 @@
     "exampleEn": "When comparing rainfall maps, also match basin rainfall totals and time intervals. If totals differ, the runoff difference cannot be attributed to spatial pattern alone."
   },
   "rain-methods": {
-    "principleKo": "Thiessen은 셀이 속한 관측소 구역의 값을 사용해 구역 경계에서 값이 달라질 수 있습니다. IDW는 여러 관측소 값을 거리로 가중하지만, 매끄러운 분포가 관측되지 않은 강우를 더 정확하게 복원했다는 뜻은 아닙니다.",
-    "principleEn": "Thiessen assigns station areas and can create steps at their boundaries. IDW blends stations by distance, but a smoother map does not establish greater accuracy between observations.",
-    "exampleKo": "산지의 관측소가 적으면 두 방법 모두 지형성 강우를 놓칠 수 있습니다. 동일 자료에서 유역 평균값과 관심 소유역 강우를 함께 비교해 배분법 선택의 영향을 판단합니다.",
-    "exampleEn": "Sparse mountain observations can limit both methods. Compare basin-average and target-subbasin rainfall for the same input record to assess the effect of the mapping choice."
+    "principleKo": "IDW는 여러 관측소 값을 계산격자와의 거리에 따라 가중하여 격자 강우를 구성합니다. 매끄러운 공간분포가 만들어지더라도 관측되지 않은 강우를 더 정확하게 복원했다는 뜻은 아닙니다.",
+    "principleEn": "IDW weights multiple station values by distance to construct grid rainfall, but a smoother field does not establish greater accuracy between observations.",
+    "exampleKo": "산지의 관측소가 적으면 IDW도 지형성 강우를 충분히 표현하지 못할 수 있습니다. 동일 자료에서 유역 평균값과 관심 소유역 강우를 함께 비교해 공간배분의 영향을 판단합니다.",
+    "exampleEn": "Sparse mountain observations can still limit IDW. Compare basin-average and target-subbasin rainfall for the same input record to assess spatial-mapping effects."
   },
   "rain-qc": {
     "principleKo": "고도와 강우의 관계를 반영하는 것과 잘못된 관측값을 가려내는 것은 별개입니다. 결측을 0으로 처리하면 무강우로 오인할 수 있고, 의심값을 그대로 보정하면 공간 오차가 더 넓게 퍼질 수 있습니다.",
