@@ -16,8 +16,8 @@ const concepts = {
 const directory = 'assets/diagrams/feature-reference-2026-09-19/';
 const wave2Directory = 'assets/diagrams/feature-reference-wave2-2026-09-19/';
 const wave2Concepts = {
- snow: ['snow-process', '강수 분리, 적설저장, 경험적 융설계수 보정과 수문 입력의 관계입니다.', 'Precipitation partition, snow storage, empirical melt-factor adjustment and hydrologic input.'],
- dlayer: ['deep-storage-path', 'D층의 지연복류는 상부 토양층 경로로 연결되며, 심부 손실은 별도 활성 조건을 갖습니다.', 'Delayed D-layer return feeds an upper soil-layer pathway; deep loss has separate activation conditions.'],
+ snow: ['snow-process', '강우·강설 구분, 적설 저장량, 경험적 융설계수 보정과 수문 입력의 관계입니다.', 'Precipitation partition, snow storage, empirical melt-factor adjustment and hydrologic input.'],
+ dlayer: ['deep-storage-path', 'D층의 지연 복귀는 상부 토양층 경로로 연결되며, 심부 손실은 별도 활성 조건을 갖습니다.', 'Delayed D-layer return feeds an upper soil-layer pathway; deep loss has separate activation conditions.'],
  continuous: ['continuous-water-storage', '강우가 없는 기간에도 저장상태를 이어가며 다음 강우에 대한 유역의 반응을 계산합니다.', 'Storage states carry through drier periods and influence the response to subsequent rainfall.'],
  'river-infil': ['riverbed-deep-storage', '하천에서 심부 저장층으로 이동하는 물을 보여줍니다. 실제 이동량에는 침투가능량과 저장여유의 제한이 적용됩니다.', 'The illustration shows transfer from a river into deeper storage. Transfer is constrained by infiltration capacity and available storage.'],
  dwnet: ['connected-river-network', '분기·합류와 횡단면으로 연결된 하천망의 개념입니다. 각 구간의 수위·유량을 연결하여 해석합니다.', 'The illustration shows river reaches connected through confluences, branches and cross sections for linked water-level and discharge analysis.'],
@@ -28,9 +28,9 @@ const wave2Concepts = {
  'rain-summary': ['rainfall-coverage', '관측·예측·결측 구간의 시간수를 구분해 강우자료의 구성과 누락 상태를 요약합니다.', 'Observed, forecast and missing intervals are counted by category to summarize rainfall input coverage.'],
  warmup: ['initial-state-warmup', '초기 토양·유출 상태를 반복 조정하고 목표지점 유량과의 오차 및 수렴품질을 평가합니다.', 'Initial soil and runoff states are adjusted iteratively while target-discharge discrepancy and convergence quality are evaluated.'],
  wb: ['watershed-water-balance', '같은 집계 범위에서 외부 유입, 유출과 저장량 변화를 비교하여 폐합오차를 평가합니다.', 'Boundary inputs, outputs and storage changes are compared over the same accounting domain to evaluate the closure residual.'],
- optimization: ['calibration-evaluation', '관측유량과 여러 매개변수 케이스의 결과를 같은 조건에서 비교하고 성능지표로 평가합니다.', 'Observed discharge and parameter-case results are compared under consistent conditions using performance metrics.'],
- 'output-integrity': ['result-lifecycle', '실행 조건과 진단을 기록하고 출력 파일의 생성·종료 및 정의된 요건을 점검하여 후처리 가능 상태를 확인합니다.', 'Run conditions and diagnostics are recorded, and output creation, closure and requirements are checked for postprocessing readiness.'],
- multires: ['nested-grid-patch', '원지형 격자를 묶은 배경과 원해상도를 유지한 Patch의 관계입니다. 입력보다 세밀한 지형정보를 생성하지 않습니다.', 'Background cells group source-terrain cells while patches retain source resolution; no finer terrain data is created.'],
+ optimization: ['calibration-evaluation', '관측유량과 여러 매개변수 조합의 결과를 같은 조건에서 비교하고 성능지표로 평가합니다.', 'Observed discharge and parameter-case results are compared under consistent conditions using performance metrics.'],
+ 'output-integrity': ['result-lifecycle', '실행 조건과 진단을 기록하고 출력 파일의 생성·종료 및 필요한 항목을 점검하여 결과 분석 준비 상태를 확인합니다.', 'Run conditions and diagnostics are recorded, and output creation, closure and requirements are checked for postprocessing readiness.'],
+ multires: ['nested-grid-patch', '원지형 격자를 묶은 배경과 원해상도를 유지한 관심영역(Patch)의 관계입니다. 입력보다 세밀한 지형정보를 생성하지 않습니다.', 'Background cells group source-terrain cells while patches retain source resolution; no finer terrain data is created.'],
  'river-viewer': ['river-result-views', '1D 결과를 종단면·횡단면과 수위·유량 시계열로 읽는 개념입니다. 뷰어는 별도 개발 중입니다.', 'The schematic shows longitudinal, cross-sectional and time-series views of 1D outputs. The viewer is under separate development.']
 };
 const schematicIds=new Set(['input-precheck','rain-summary','warmup','wb','optimization','output-integrity','multires','river-viewer','snow','dlayer']);

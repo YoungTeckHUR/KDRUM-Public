@@ -23,7 +23,7 @@ function validate(data){
    assert.equal(item['steps'+lang]?.length,3,`${item.id}: input/process/output`);
    assert.ok(item['steps'+lang].every(s=>typeof s==='string'&&s.trim()),item.id+' empty step');
    if(item.diagram===null)assert.equal(item['diagramCaption'+lang],null,item.id+' no orphan caption');
-   else assert.ok(typeof item['diagramCaption'+lang]==='string'&&item['diagramCaption'+lang].includes(lang==='Ko'?'기능군 개념도':'Process-family schematic'),item.id+' diagram scope caption');
+   else {const caption=item['diagramCaption'+lang];assert.ok(typeof caption==='string'&&caption.trim(),item.id+' diagram scope caption');assert.ok(lang==='Ko'?caption.startsWith('개념도:'):caption.startsWith('Process-family schematic:'),item.id+' diagram scope caption');}
   }
   assert.ok(Object.hasOwn(item,'diagram'),item.id+' explicit diagram or null required');
   assert.equal(item.diagram,diagramScope[item.id]||null,item.id+' individually reviewed diagram mapping');

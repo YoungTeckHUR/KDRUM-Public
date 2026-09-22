@@ -83,7 +83,7 @@ function diagram(id,lang){const L=(k,e)=>lang==='ko'?k:e;let body,title,subtitle
  }
  if(id==='inputstudio'){
   title=L('원자료를 실행 입력으로 준비하기','Prepare source data as run inputs');subtitle=L('입력 프로젝트의 구성·검사 역할 · 결과 분석은 Viewer에서 수행합니다.','Project preparation and checking; result analysis is performed in a viewer.');
-  body=box(60,200,350,115,L('공간 자료','Spatial data'),[L('지형 · 하천 · 단면','Terrain · rivers · sections')])+box(60,350,350,115,L('시간 자료·조건','Time data / settings'),[L('강우 · 모의조건','Rainfall · run settings')])+route('M423 260H462V315H495')+route('M423 409H462V365H495')+box(510,245,290,205,L('프로젝트','Project'),[L('자료 연결·편집','Link and edit inputs'),L('정합성 QA','Consistency QA')],'#ecf6f3')+line(815,343,864,343,undefined,true)+box(880,245,260,205,L('엔진 입력','Engine inputs'),[L('모의 준비','Ready for run'),L('조건 재확인','Recheck settings')])+text(600,590,L('원자료 변경 시 연결 자료와 좌표·시간 기준을 다시 점검','After source changes, recheck linked data and coordinate/time references'),23,500,'middle');
+  body=box(60,200,350,115,L('공간 자료','Spatial data'),[L('지형 · 하천 · 단면','Terrain · rivers · sections')])+box(60,350,350,115,L('시간 자료·조건','Time data / settings'),[L('강우 · 모의조건','Rainfall · run settings')])+route('M423 260H462V315H495')+route('M423 409H462V365H495')+box(510,245,290,205,L('프로젝트','Project'),[L('자료 연결·편집','Link and edit inputs'),L('정합성 점검','Consistency checks')],'#ecf6f3')+line(815,343,864,343,undefined,true)+box(880,245,260,205,L('K-DRUM 입력','K-DRUM inputs'),[L('모의 준비','Ready for run'),L('조건 재확인','Recheck settings')])+text(600,590,L('원자료 변경 시 연결 자료와 좌표·시간 기준을 다시 점검','After source changes, recheck linked data and coordinate/time references'),23,500,'middle');
  }
  if(!body)throw Error(id);return frame(id,lang,title,subtitle,body);
 }
