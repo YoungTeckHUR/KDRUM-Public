@@ -80,11 +80,11 @@
       ],
       "nowKo": "공간 강우 입력은 공개 레이더·격자 강우 적용 연구로 뒷받침되는 확립된 기능입니다.",
       "nowEn": "Spatial rainfall forcing is established through public radar and gridded-rainfall applications.",
-      "detailKo": "입력원이 관측소 시계열인지 레이더·격자 강우장인지에 따라 계산격자와 연결하는 방식이 달라집니다. 관측소 자료의 배분 방식은 Thiessen·IDW 항목에서 비교합니다.",
-      "detailEn": "The connection to model cells depends on whether the source is station time series or a radar/gridded field. See Thiessen and IDW for station-based mapping.",
+      "detailKo": "입력원이 관측소 시계열인지 레이더·격자 강우장인지에 따라 계산격자와 연결하는 방식이 달라집니다. 현재 공개 제공되는 관측소 자료의 공간배분 방식은 IDW입니다.",
+      "detailEn": "The connection to model cells depends on whether the source is station time series or a radar/gridded field. The current public station-based mapping method is IDW.",
       "diagram": "rainfall-grid",
-      "diagramCaptionKo": "개념도: 관측자료에서 계산격자별 강우 입력까지의 연결을 설명합니다. Thiessen·IDW는 관측소 강우를 격자에 배분하는 방법입니다.",
-      "diagramCaptionEn": "Process-family schematic: observations connect to grid rainfall forcing. Thiessen and IDW are station-to-grid mapping methods."
+      "diagramCaptionKo": "개념도: 관측자료에서 계산격자별 강우 입력까지의 연결을 설명합니다. 현재 공개 제공되는 관측소-격자 강우 공간배분 방식은 IDW입니다.",
+      "diagramCaptionEn": "Process-family schematic: observations connect to grid rainfall forcing. The current public station-to-grid rainfall mapping method is IDW."
     },
     {
       "id": "rain-methods",
@@ -92,27 +92,27 @@
       "s": "IMPLEMENTED / QA",
       "kind": "qa",
       "v": "stations",
-      "ko": "강우 공간배분 (Thiessen·IDW)",
-      "en": "Rainfall mapping (Thiessen & IDW)",
-      "sumKo": "관측소 강우를 Thiessen 구역 또는 IDW 거리 가중 방식으로 계산격자에 배분합니다.",
-      "sumEn": "Maps station rainfall to model cells using Thiessen areas or IDW distance weights.",
+      "ko": "강우 공간배분 (IDW)",
+      "en": "Rainfall mapping (IDW)",
+      "sumKo": "관측소 강우를 IDW(역거리가중) 방식으로 계산격자에 배분합니다.",
+      "sumEn": "Maps station rainfall to model cells using inverse-distance weighting (IDW).",
       "stepsKo": [
         "관측소",
-        "Thiessen / IDW",
+        "IDW",
         "격자별 값"
       ],
       "stepsEn": [
         "stations",
-        "Thiessen / IDW",
+        "IDW",
         "cell values"
       ],
-      "nowKo": "Thiessen·IDW 강우 공간배분은 현재 구현되어 있으며 입력자료 점검과 함께 검증을 계속하고 있습니다.",
-      "nowEn": "Thiessen and IDW station-to-grid mapping are implemented and continue to be verified for consistency.",
-      "detailKo": "Thiessen은 관측소의 영향 구역을 구분하고, IDW는 관측소와의 거리에 따른 가중치를 이용합니다. 방법의 차이와 관측소 배치의 영향을 함께 검토합니다.",
-      "detailEn": "Thiessen delineates station influence areas; IDW uses distance-based weights. Review the mapping method together with the spatial distribution of stations.",
+      "nowKo": "현재 제공되는 관측소 강우 공간배분 방식은 IDW(역거리가중기법)입니다.",
+      "nowEn": "The current station-to-grid rainfall mapping method is inverse-distance weighting (IDW).",
+      "detailKo": "IDW는 여러 관측소의 강우를 계산격자와의 거리에 따라 가중하여 공간배분합니다. 관측소 배치와 거리 가중의 영향을 함께 확인합니다.",
+      "detailEn": "IDW maps station rainfall using distance-based weights. Review the spatial distribution of stations together with the distance-weighting result.",
       "diagram": "rainfall-grid",
-      "diagramCaptionKo": "개념도: 가운데 Thiessen·IDW 단계가 관측소 강우를 계산격자에 배분하는 과정이며, 좌우는 입력자료와 생성된 격자 강우를 나타냅니다.",
-      "diagramCaptionEn": "Process-family schematic: the central Thiessen/IDW stage identifies station-to-grid mapping, between the input observations and resulting grid rainfall."
+      "diagramCaptionKo": "개념도: 관측소 강우를 IDW 거리 가중으로 계산격자에 배분하는 과정을 설명합니다.",
+      "diagramCaptionEn": "Process-family schematic: station rainfall is mapped to model cells using IDW distance weighting."
     },
     {
       "id": "rain-qc",

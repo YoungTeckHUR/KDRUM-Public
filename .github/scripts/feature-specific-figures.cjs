@@ -5,7 +5,7 @@ const directory='assets/diagrams/feature-specific/';
 const captions={
  'finite-volume':['셀의 저장 변화는 경계 유량과 소스의 합으로 결정됩니다. 내부 경계의 같은 유량이 이웃 셀에 반대 부호로 작용합니다.','Cell storage changes with face discharges and sources. A shared internal discharge has opposite signs in neighboring cells.'],
  'flood-extras':['왼쪽은 계산 셀의 포함 여부, 오른쪽은 포함된 셀 사이의 연결 조건입니다. 같은 활성 셀도 경계 조건에 따라 연결이 달라집니다. 벽·개방만 표시한 개념 예시이며 지원 조건은 해석 경로마다 확인합니다.','The left panel selects computational cells; the right sets connections between active cells. The same cells can have different edge conditions. Wall/open examples are conceptual; check support for the selected solver.'],
- 'rain-methods':['Thiessen의 구역 선택과 IDW의 거리 가중을 비교합니다. 관측값·배분 결과는 표시하지 않은 개념도입니다.','Compare Thiessen area selection with IDW distance weighting; no observations or mapped results are shown.'],
+ 'rain-methods':['관측소 강우를 IDW 거리 가중으로 계산격자에 배분하는 과정을 설명합니다. 실제 관측값·계산값은 표시하지 않습니다.','Illustrates station rainfall mapped to model cells with IDW distance weighting; no observed or calculated values are shown.'],
  'wb-1d2d':['같은 교환량이 두 영역에 반대 부호로 기록되는 관계입니다. 월류와 복귀를 나누어 읽으세요.','Read opposite signed entries for the same exchange volume, separating overflow and return flow.'],
  netcdf:['파일별 좌표·시간·변수·단위를 확인한 뒤 비교합니다. 공통 파일 형식이 같은 격자나 시각을 뜻하지는 않습니다.','Inspect coordinates, times, variables and units per file. A shared format does not imply a shared grid or timestamps.'],
  viewer:['평면 지도에서 고른 위치와 시간 변화를 연결해 읽는 개념입니다. 실제 화면이나 계산 결과는 아닙니다.','Connect a location on a plan-view map with its time variation. This is not a software screenshot or a simulation result.'],
@@ -52,12 +52,16 @@ function diagram(id,lang){const L=(k,e)=>lang==='ko'?k:e;let body,title,subtitle
   body+=text(600,634,L('활성 셀 ≠ 현재 침수 셀 · 해석 경로별 지원 조건 확인','Active cell ≠ wet cell · check solver-specific support'),24,600,'middle');
  }
  if(id==='rain-methods'){
-  title=L('같은 관측소, 다른 공간 배분','Same stations, different spatial mapping');subtitle=L('Thiessen: 구역 선택 / IDW: 거리 가중 · 방법의 차이를 설명합니다.','Thiessen: area selection / IDW: distance weighting.');
+  title=L('관측소 강우의 IDW 공간배분','IDW mapping of station rainfall');subtitle=L('현재 공개 제공 방식: IDW(역거리가중) · 거리 가중으로 격자 강우를 구성합니다.','Current public method: inverse-distance weighting (IDW).');
   body=rect(60,195,510,395)+rect(630,195,510,395);
-  for(const [x,label] of [[60,'Thiessen'],[630,'IDW']]){body+=text(x+30,245,label,32,700);for(const [dx,dy,s] of [[85,110,'A'],[410,140,'B'],[360,245,'C']])body+=`<circle cx="${x+dx}" cy="${195+dy}" r="10" fill="#247eaa"/>`+text(x+dx+17,195+dy-8,s,23,700);body+=rect(x+135,355,72,58,'#ecf6f3','#328c79',4)+text(x+171,391,L('격자','Cell'),22,700,'middle');}
-  body+=line(155,311,204,350,undefined,true)+line(725,311,774,350,undefined,true)+line(1028,337,846,374,undefined,true)+line(984,428,838,407,undefined,true);
-  body+=text(90,513,L('격자가 속한 관측소 구역 적용','Use the station area containing the cell'),22)+text(90,551,L('관측소별 영향 구역을 구분','Distinct station influence areas'),22);
-  body+=text(660,513,L('여러 관측소의 거리 가중 결합','Combine distance-weighted stations'),22)+text(660,551,L('가중치 설정에 따라 결과 변화','Results depend on weighting settings'),22);
+  body+=text(90,245,L('관측소 강우','Station rainfall'),32,700);
+  for(const [dx,dy,s] of [[85,110,'A'],[410,140,'B'],[360,245,'C']])body+=`<circle cx="${60+dx}" cy="${195+dy}" r="10" fill="#247eaa"/>`+text(60+dx+17,195+dy-8,s,23,700);
+  body+=text(90,513,L('여러 관측소의 강우 시계열','Rainfall time series from stations'),22)+text(90,551,L('시간 간격·단위·결측 확인','Check interval, units and missing data'),22);
+  body+=text(660,245,'IDW',32,700);
+  for(const [dx,dy,s] of [[85,110,'A'],[410,140,'B'],[360,245,'C']])body+=`<circle cx="${630+dx}" cy="${195+dy}" r="10" fill="#247eaa"/>`+text(630+dx+17,195+dy-8,s,23,700);
+  body+=rect(765,355,72,58,'#ecf6f3','#328c79',4)+text(801,391,L('격자','Cell'),22,700,'middle');
+  body+=line(725,311,774,350,undefined,true)+line(1028,337,846,374,undefined,true)+line(984,428,838,407,undefined,true);
+  body+=text(660,513,L('여러 관측소를 거리 가중으로 결합','Combine stations by distance weights'),22)+text(660,551,L('가중치 설정과 관측소 배치 확인','Check weighting settings and station layout'),22);
  }
  if(id==='wb-1d2d'){
   title=L('교환량은 하나, 회계는 두 영역','One exchange, two domain accounts');subtitle=L('ΔV는 같은 시간 구간의 교환 체적입니다. 부호는 각 영역의 증감입니다.','ΔV is exchanged volume over one interval; signs denote domain gain or loss.');

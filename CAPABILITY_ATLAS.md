@@ -22,7 +22,7 @@ The public website organizes K-DRUM capabilities into eight user-oriented techni
 | 기능 | 공개 상태 | 설명 |
 |---|---|---|
 | 공간분포 강우 입력자료 | **ESTABLISHED** | 관측소·레이더·격자 강우를 계산 격자에 공간적으로 적용 |
-| 강우 공간배분 (Thiessen·IDW) | **IMPLEMENTED / QA** | 강우관측소 자료의 격자단위 공간분포 산정 |
+| 강우 공간배분 (IDW) | **IMPLEMENTED / QA** | 강우관측소 자료를 IDW(역거리가중기법)로 격자단위 공간분포 산정 |
 | 강우 고도보정·품질검사 (QC) | **IMPLEMENTED / QA** | 고도보정과 강우자료 품질검사를 결합한 입력자료 처리 |
 | 강우자료 완전성·결측 평가 | **IMPLEMENTED / QA** | 관측·예측·결측 자료의 구성과 누락 상태를 결과보고에서 확인 |
 | 입력자료 사전검사·정합성 점검 | **ACTIVE DEVELOPMENT** | 공간·시간·연결성·입력범위 오류를 모의 전에 점검 |
