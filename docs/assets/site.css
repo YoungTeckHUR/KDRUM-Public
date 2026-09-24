@@ -208,3 +208,5 @@
 
 /* The linked river views need their full aspect ratio for legible axis labels. */
 .model-content #cap-river-viewer .feature-reference img{max-height:none}
+
+.analytics-notice{margin:1rem 0;max-width:76ch}.analytics-notice p{font-size:.875rem}.analytics-notice button{margin:.75rem;padding:.5rem .75rem}
