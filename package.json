@@ -1,0 +1,8 @@
+{
+  "name": "kdrum-public-site-audit",
+  "private": true,
+  "version": "1.0.0",
+  "devDependencies": {
+    "playwright": "1.55.1"
+  }
+}

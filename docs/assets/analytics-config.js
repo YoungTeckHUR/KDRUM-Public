@@ -4,8 +4,7 @@
  */
 window.KDRUM_ANALYTICS = Object.freeze({
   enabled: true,
-  provider: 'goatcounter', // 'ga4' or 'goatcounter'
-  ga4MeasurementId: '',
+  provider: 'goatcounter', // This site permits GoatCounter only.
   goatCounterEndpoint: 'https://kdrum-public.goatcounter.com/count',
   respectDoNotTrack: true,
   trackCapabilityOpen: true,
