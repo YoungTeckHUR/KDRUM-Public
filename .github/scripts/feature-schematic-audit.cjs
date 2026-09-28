@@ -6,7 +6,7 @@ const entries=[...names.map(name=>({name,directory})),...Object.keys(focused.cap
 const requiredLabels={
  'finite-volume':{ko:['i − 1','i','i + 1'],en:['i − 1','i','i + 1']},
  'flood-extras':{ko:['Domain Mask','Face Mask','차단','개방'],en:['Domain Mask','Face Mask','Wall','Open']},
- 'rain-methods':{ko:['Thiessen','IDW'],en:['Thiessen','IDW']},
+ 'rain-methods':{ko:['관측소 강우','IDW'],en:['Station rainfall','IDW']},
  'wb-1d2d':{ko:['1D 하천','2D 범람원'],en:['1D river','2D floodplain']},
  netcdf:{ko:['유역 격자 결과','범람 결과'],en:['Watershed-grid output','Flood output']},
  viewer:{ko:['평면 공간분포','선택 위치의 시간 변화'],en:['Plan-view distribution','Time variation at a location']},
@@ -42,6 +42,7 @@ async function run(browser,base,out){
   });
   assert.deepEqual(layout.errors,[],file+' text remains within canvas and panels');
   for(const label of requiredLabels[name][lang])assert.ok(layout.labels.includes(label),file+' contains required label: '+label);
+  if(name==='rain-methods')assert.ok(!layout.labels.some(label=>/Thiessen|티센/i.test(label)),file+' uses IDW-only public terminology');
   await page.setViewportSize({width:layout.width,height:layout.height});
   await page.screenshot({path:path.join(destination,name+'-'+lang+'.png')});
   results.push({file,status:'PASS',...layout});

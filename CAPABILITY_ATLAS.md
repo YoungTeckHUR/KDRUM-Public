@@ -93,7 +93,7 @@ The public website organizes K-DRUM capabilities into eight user-oriented techni
 | 하천 유사이송·퇴적 | **RESEARCH FUNCTION** | 하도 경사·유량·횡단면과 유사 운반능을 고려한 이송·퇴적 계산 |
 | 보존성 물질·염료 추적 | **RESEARCH FUNCTION** | 하천구간 저장량, 유량 및 주입질량을 이용한 농도·질량 이동 추적 |
 | 수질해석 모듈 | **DISABLED / REDEVELOPMENT CANDIDATE** | 질소·인·BOD 등 기존 수질계산 코드는 남아 있으나 현재 활성 빌드에서는 비활성 |
-| Estuary2DV 하구 연구모형 | **EXPERIMENTAL** | K-DRUM Core와 분리된 종·연직(x-z) 하구 수동역학·염분 실험 연구모형 |
+| Estuary2DV 하구 연구모형 | **EXPERIMENTAL** | K-DRUM Core와 분리된 종·연직(x-z) 하구 수리동역학·염분 실험 연구모형 |
 
 ## 8. 입력·실행·결과도구
 

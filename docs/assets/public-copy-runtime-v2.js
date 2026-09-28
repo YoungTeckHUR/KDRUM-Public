@@ -62,7 +62,7 @@
         if(heading==='FloodViewer')setText(card.querySelector('p'),'수문·수리 계산결과를 지도, 시계열과 그래프로 조회·비교하는 통합 결과분석 프로그램입니다.');
         if(heading==='ChannelBed')setText(card.querySelector('p'),'고해상도 지형자료와 하천선형을 이용해 하상 및 하천지형 자료를 보완·작성하는 지원도구입니다.');
         if(heading==='통합 출력'){setText(card.querySelector('h3'),'통합 결과출력');setText(card.querySelector('p'),'계산결과와 결과분석 프로그램 사이의 자료교환을 위해 NetCDF 중심의 통합 출력체계를 사용합니다.');}
-        if(heading==='Estuary2DV')setText(card.querySelector('p'),'하구의 종·연직 2차원 수동역학과 염분거동 해석을 위한 별도 연구용 모형입니다.');
+        if(heading==='Estuary2DV')setText(card.querySelector('p'),'하구의 종·연직 2차원 수리동역학과 염분거동 해석을 위한 별도 연구용 모형입니다.');
       }
     }
     const grid=platform.querySelector('.tool-grid');
