@@ -33,7 +33,7 @@ function diagram(name,lang){
   route('M435 492H401')+text(810,515,L('직접 일사·적설 이동','Radiation / snow transport'),22,600)+text(810,547,L('해석과 구분','are not directly solved'),22)+
   text(600,623,L('경사·방향은 융설계수에 반영되며, 그림은 계산 결과가 아닙니다.','Slope and direction modify melt factors; no simulation result is shown.'),24,400,'middle'));
  if(name==='deep-storage-path')return frame(name,lang,L('기존 D층 저장·복귀·손실의 구분','Existing D-layer storage, return and loss'),L('기존 D층 저장에서 지연 복귀와 별도 선택 조건의 심부 손실을 구분합니다.','Existing D-layer storage · delayed return and deep loss have separate controls.'),
-  box(60,225,330,190,L('D층 저장 · 기존 지하수층','D-layer storage · existing groundwater layer'),[L('유입과 저장량 갱신','Inflow and storage update'),L('저장량 내에서 방출','Release within storage')])+
+  box(60,225,330,190,L('D층 저장','D-layer storage'),[L('기존 지하수층','Existing groundwater layer'),L('유입·방출과 저장량 갱신','Inflow, release and storage update')])+
   line(405,317,427,317,undefined,true)+box(435,225,330,190,L('상부 토양층 경로','Upper soil-layer path'),[L('지연 복귀 수용','Receives delayed return'),L('토양층 유출과 연결','Connects to soil runoff')],'#ecf6f3')+
   line(779,317,804,317,undefined,true)+box(810,225,330,190,L('유출 전달','Runoff routing'),[L('다른 유출 기여와 결합','Joins other contributions'),L('하류 유량에 기여','Contributes downstream')])+
   route('M225 430V466')+box(60,480,330,120,L('선택적 심부 손실','Optional deep loss'),[L('활성 옵션 확인','Check enabled option')])+
