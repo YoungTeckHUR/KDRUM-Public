@@ -1,5 +1,19 @@
 # K-DRUM Public Information Changelog
 
+## 2026-09-28 — Hydrology terminology and unit-cell mechanism clarification
+
+Reviewed the current public copy against the latest K-DRUM Core development notes and updated wording without changing capability IDs or maturity labels.
+
+Updated:
+
+- replaced user-facing `건습` with `마름·젖음` and retained *wetting and drying* in English
+- replaced accounting metaphors with `물수지` / *water balance* where the text describes hydrologic closure or exchange
+- changed forecast comparison wording from `잔여 저수량` to `모의 종료 시 저수량` / *ending reservoir storage*
+- clarified that the D layer is an existing groundwater layer in the multilayer runoff structure; delayed baseflow, deep-loss and downstream-stage responses are the long-term runoff extensions under development
+- added bilingual unit-cell mechanism diagrams showing hillslope, channel and A/B/C/D layers with rainfall, infiltration, vertical transfer, subsurface flow, delayed baseflow and channel routing
+
+This is a terminology, explanation and visual-reference update. It does not promote capability maturity or constitute new numerical validation.
+
 ## 2026-09-21 — Korean public-copy and terminology review
 
 Reviewed the Korean public website capability-by-capability, including all 46 capability labels and explanations, homepage guidance, FAQ copy, visual-guide annotations and reusable SVG diagrams.

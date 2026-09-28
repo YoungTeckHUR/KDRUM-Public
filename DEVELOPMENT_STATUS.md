@@ -23,7 +23,7 @@ The September 21, 2026 review reconfirms the public maturity boundary below whil
 | Snow accumulation and snowmelt | **ESTABLISHED** | Published long-term snow application |
 | Warm-up / initial-state stabilization | **IMPLEMENTED / QA** | Integrated state-initialization workflow; basin-specific convergence quality must be reviewed |
 | HotStart / state restart | **IMPLEMENTED / QA** | Restart/checkpoint functionality with consistency controls |
-| Deeper-storage layer (D-layer) / delayed baseflow-return development | **ACTIVE DEVELOPMENT** | Current long-term storage/baseflow extension |
+| D-layer groundwater storage / long-term runoff extension | **ACTIVE DEVELOPMENT** | Existing D-layer groundwater storage in the multilayer runoff structure; delayed return, deep-loss and downstream-stage extensions are being strengthened for long-term runoff accuracy |
 
 ## Hillslope, channel routing and terrain/geometry
 

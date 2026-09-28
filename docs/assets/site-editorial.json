@@ -48,14 +48,14 @@
         "question": "강우 종료 후에도 지속되는 하천 유출의 연계 해석",
         "context": "2017년 학술발표는 장기 물순환과 갈수기 유출 해석을 위해 K-DRUM과 지하수유동모형 MODFLOW를 연계하는 방법을 제시했습니다.",
         "method": "K-DRUM에서 계산한 심부 침루량을 MODFLOW의 지하수 함양 입력으로 사용하고, MODFLOW의 기저유량을 K-DRUM 하천유출에 반영하는 연계 방안을 설명했습니다.",
-        "scope": "연계 방법과 향후 활용 방향을 제시한 발표자료입니다. 이 기록만으로 정확도 향상이나 현재 배포본의 연계 기능을 확정할 수 없습니다. 현재 D층·지연 기저유출 및 하천 침투 연계는 개발 중입니다."
+        "scope": "연계 방법과 향후 활용 방향을 제시한 발표자료입니다. 이 기록만으로 정확도 향상이나 현재 배포본의 연계 기능을 확정할 수 없습니다. D층은 기존 다층 유출 구조의 지하수층이며, 장기유출 정확도 향상을 위한 지연 기저유출·하천 침투 연계 확장은 개발 중입니다."
       },
       "en": {
         "title": "Coupling rainfall runoff and groundwater flow",
         "question": "Coupled analysis of river flow continuing after rainfall ends",
         "context": "A 2017 conference presentation proposed coupling K-DRUM with MODFLOW for long-term water-cycle and low-flow analysis.",
         "method": "The proposed exchange passes K-DRUM deep percolation to MODFLOW as groundwater recharge, then returns MODFLOW baseflow to K-DRUM river runoff.",
-        "scope": "The record presents a coupling method and intended future use. It does not establish a measured accuracy improvement or coupling availability in the downloadable version. Current D-layer/baseflow-return and river-infiltration extensions remain in development."
+        "scope": "The record presents a coupling method and intended future use. It does not establish a measured accuracy improvement or coupling availability in the downloadable version. The D layer is an existing groundwater layer in the multilayer runoff structure; its delayed-baseflow and river-infiltration extensions for long-term runoff accuracy remain in development."
       },
       "paperTitle": "강우유출모형(K-DRUM)과 지하수유동모형(MODFLOW)연계에 대한 연구",
       "link": "https://www.kwater.or.kr/kiwe/resu/thesView.do?mngtno=A2017255&pageNo=252&s_mid=454"

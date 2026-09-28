@@ -64,10 +64,10 @@ function diagram(id,lang){const L=(k,e)=>lang==='ko'?k:e;let body,title,subtitle
   body+=text(660,513,L('여러 관측소를 거리 가중으로 결합','Combine stations by distance weights'),22)+text(660,551,L('가중치 설정과 관측소 배치 확인','Check weighting settings and station layout'),22);
  }
  if(id==='wb-1d2d'){
-  title=L('교환량은 하나, 회계는 두 영역','One exchange, two domain accounts');subtitle=L('ΔV는 같은 시간 구간의 교환 체적입니다. 부호는 각 영역의 증감입니다.','ΔV is exchanged volume over one interval; signs denote domain gain or loss.');
+  title=L('교환량은 하나, 물수지는 두 영역','One exchange, two domain balances');subtitle=L('ΔV는 같은 시간 구간의 교환 체적입니다. 부호는 각 영역의 증감입니다.','ΔV is exchanged volume over one interval; signs denote domain gain or loss.');
   body=box(60,205,340,120,L('1D 하천','1D river'))+box(800,205,340,120,L('2D 범람원','2D floodplain'))+line(420,240,780,240,undefined,true)+text(600,220,L('월류 ΔV','Overflow ΔV'),23,600,'middle')+line(780,298,420,298,undefined,true)+text(600,337,L('복귀 ΔV','Return ΔV'),23,600,'middle');
   const xs=[95,450,810],ys=[405,473,541];
-  [L('교환 방향','Exchange direction'),L('하천 회계','River account'),L('범람원 회계','Floodplain account')].forEach((s,i)=>body+=text(xs[i],ys[0],s,26,700));
+  [L('교환 방향','Exchange direction'),L('하천 물수지','River water balance'),L('범람원 물수지','Floodplain water balance')].forEach((s,i)=>body+=text(xs[i],ys[0],s,26,700));
   [L('월류','Overflow'),'−ΔV','+ΔV'].forEach((s,i)=>body+=text(xs[i],ys[1],s,28));
   [L('복귀','Return'),'+ΔV','−ΔV'].forEach((s,i)=>body+=text(xs[i],ys[2],s,28));
   body+=line(60,425,1140,425,'#aac7d7')+text(600,614,L('동일 기간·교환량을 비교 · 전체 유역 물수지와 별도 진단','Match interval and volume · separate from whole-basin balance'),25,500,'middle');

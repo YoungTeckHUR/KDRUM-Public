@@ -30,9 +30,9 @@ Current state-management and long-term extensions include:
 
 - warm-up / initial-state stabilization and target-flow diagnostics
 - HotStart / state restart and checkpoint continuity
-- deeper-storage-layer (D-layer) / delayed baseflow-return development
+- D-layer groundwater storage with long-term runoff extensions
 
-Snowmelt includes empirical slope, D8-direction and time-of-day adjustment of the melt factor; it does not directly solve radiation energy balance or slope snow transport. HotStart state coverage depends on the selected calculation path. D-layer delayed return feeds an upper soil-layer pathway, while deep loss requires its separate option.
+Snowmelt includes empirical slope, D8-direction and time-of-day adjustment of the melt factor; it does not directly solve radiation energy balance or slope snow transport. HotStart state coverage depends on the selected calculation path. The existing D layer feeds an upper soil-layer pathway through delayed return; optional deep loss and downstream-stage effects are being extended for long-term runoff accuracy. This remains distinct from a full groundwater-flow solver.
 
 ## 3. Routing and river terrain
 

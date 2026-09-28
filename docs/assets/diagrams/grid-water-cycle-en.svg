@@ -1,1 +1,81 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" role="img" aria-labelledby="grid-water-cycle-en-title grid-water-cycle-en-desc" lang="en"><title id="grid-water-cycle-en-title">Water movement within a model grid cell</title><desc id="grid-water-cycle-en-desc">Rainfall enters surface storage; infiltration transfers water to soil storage. Evapotranspiration and surface and subsurface runoff remove water. A deeper-storage and delayed-baseflow extension is in development.</desc><defs><marker id="grid-water-cycle-en-blue-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#0077b6"/></marker><marker id="grid-water-cycle-en-blue-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#0077b6"/></marker><marker id="grid-water-cycle-en-teal-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#13878c"/></marker><marker id="grid-water-cycle-en-teal-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#13878c"/></marker><marker id="grid-water-cycle-en-amber-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#b47013"/></marker><marker id="grid-water-cycle-en-amber-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9 Z" fill="#b47013"/></marker></defs><g font-family="Pretendard, Noto Sans KR, Malgun Gothic, Arial, sans-serif" stroke-linecap="round" stroke-linejoin="round"><text x="24" y="44" font-size="30" font-weight="700" fill="#15364f" text-anchor="start">Water movement within a model grid cell</text><text x="24" y="83" font-size="19" font-weight="400" fill="#4d687c" text-anchor="start">Conceptual storage and flux schematic · geometry is not to scale.</text><rect x="72" y="267" width="704" height="177" rx="0" fill="#eef4ee" stroke="none" stroke-width="1.8"/><rect x="72" y="238" width="704" height="29" rx="0" fill="#d7eefb" stroke="none" stroke-width="1.8"/><path d="M72 267 H776" fill="none" stroke="#71977d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><text x="97" y="316" font-size="23" font-weight="700" fill="#15364f" text-anchor="start">Soil-water storage</text><text x="97" y="349" font-size="19" font-weight="400" fill="#4d687c" text-anchor="start">Infiltration · storage · lateral flow</text><text x="97" y="425" font-size="18" font-weight="400" fill="#4d687c" text-anchor="start">WITHIN THE GRID CELL</text><line x1="154" y1="159" x2="154" y2="228" stroke="#0077b6" stroke-width="2.5" marker-end="url(#grid-water-cycle-en-blue-arrow)"/><line x1="187" y1="159" x2="187" y2="228" stroke="#0077b6" stroke-width="2.5" marker-end="url(#grid-water-cycle-en-blue-arrow)"/><line x1="220" y1="159" x2="220" y2="228" stroke="#0077b6" stroke-width="2.5" marker-end="url(#grid-water-cycle-en-blue-arrow)"/><line x1="253" y1="159" x2="253" y2="228" stroke="#0077b6" stroke-width="2.5" marker-end="url(#grid-water-cycle-en-blue-arrow)"/><text x="149" y="138" font-size="23" font-weight="700" fill="#005f90" text-anchor="start">Rainfall P</text><line x1="458" y1="246" x2="458" y2="374" stroke="#13878c" stroke-width="4" marker-end="url(#grid-water-cycle-en-teal-arrow)"/><text x="478" y="315" font-size="21" font-weight="700" fill="#11695d" text-anchor="start">Infiltration</text><text x="478" y="344" font-size="18" font-weight="400" fill="#4d687c" text-anchor="start">Green–Ampt</text><line x1="665" y1="334" x2="665" y2="155" stroke="#13878c" stroke-width="4" marker-end="url(#grid-water-cycle-en-teal-arrow)"/><text x="688" y="161" font-size="19" font-weight="400" fill="#11695d" text-anchor="start">Evapotranspiration</text><text x="688" y="190" font-size="19" font-weight="400" fill="#11695d" text-anchor="start">ET · surface / soil</text><text x="302" y="222" font-size="20" font-weight="700" fill="#15364f" text-anchor="start">Surface storage</text><line x1="736" y1="251" x2="907" y2="251" stroke="#0077b6" stroke-width="4" marker-end="url(#grid-water-cycle-en-blue-arrow)"/><text x="790" y="289" font-size="19" font-weight="400" fill="#005f90" text-anchor="start">Surface runoff</text><text x="790" y="317" font-size="19" font-weight="400" fill="#005f90" text-anchor="start">Qsurface</text><line x1="652" y1="401" x2="907" y2="401" stroke="#13878c" stroke-width="4" marker-end="url(#grid-water-cycle-en-teal-arrow)"/><text x="790" y="361" font-size="19" font-weight="400" fill="#11695d" text-anchor="start">Subsurface flow</text><text x="790" y="435" font-size="19" font-weight="400" fill="#11695d" text-anchor="start">Qsubsurface</text><rect x="72" y="470" width="704" height="83" rx="9" fill="#fff5e2" stroke="#d7aa65" stroke-width="1.8" stroke-dasharray="7 6"/><text x="97" y="504" font-size="19" font-weight="400" fill="#885112" text-anchor="start">Deeper storage (D-layer)</text><text x="97" y="533" font-size="19" font-weight="400" fill="#885112" text-anchor="start">Storage + delayed baseflow extension · development</text><line x1="458" y1="447" x2="458" y2="465" stroke="#b47013" stroke-width="2.5" stroke-dasharray="6 6" marker-end="url(#grid-water-cycle-en-amber-arrow)"/><path d="M776 512 H886 V472" fill="none" stroke="#b47013" stroke-width="3" stroke-dasharray="7 6" marker-end="url(#grid-water-cycle-en-amber-arrow)" stroke-linecap="round" stroke-linejoin="round"/><text x="792" y="544" font-size="18" font-weight="400" fill="#885112" text-anchor="start">Delayed return</text><text x="72" y="583" font-size="18" font-weight="400" fill="#4d687c" text-anchor="start">Water balance relates storage changes to inflow and outflow fluxes.</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc" lang="en">
+<title id="title">Mechanisms represented in each grid cell</title>
+<desc id="desc">Conceptual cell cross-section connecting hillslope, channel and layer storage/fluxes · not a simulation result. Existing groundwater layer · long-term runoff extension</desc>
+<defs>
+ <marker id="arrow-blue-en" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#1976a5"/></marker>
+ <marker id="arrow-teal-en" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#14877d"/></marker>
+ <marker id="arrow-amber-en" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#ad6c16"/></marker>
+ <marker id="arrow-purple-en" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" height="8" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#7056a3"/></marker>
+</defs>
+<g font-family="Noto Sans CJK KR, Noto Sans KR, Pretendard, Malgun Gothic, Arial, sans-serif" stroke-linecap="round" stroke-linejoin="round">
+ <rect width="1200" height="720" fill="#fff"/>
+ <text x="42" y="43" font-size="18" font-weight="700" fill="#607f94">VISUAL CONCEPT</text>
+ <text x="42" y="83" font-size="32" font-weight="750" fill="#173d59">Mechanisms represented in each grid cell</text>
+ <text x="42" y="113" font-size="18" fill="#526d7e">Conceptual cell cross-section connecting hillslope, channel and layer storage/fluxes · not a simulation result.</text>
+
+ <rect x="42" y="132" width="1116" height="512" rx="16" fill="#fbfdfe" stroke="#b7ccd9" stroke-width="2" stroke-dasharray="9 7"/>
+ <text x="68" y="162" font-size="18" font-weight="700" fill="#607f94">ONE GRID CELL</text>
+ <text x="610" y="162" font-size="17" fill="#607f94">This structure is applied to each grid cell</text>
+
+ <!-- Layered unit-cell cross section. -->
+ <path d="M92 207 L408 275 L538 303 L610 326 L878 326 L878 600 L92 600 Z" fill="#eef5ef" stroke="none"/>
+ <path d="M92 278 L408 346 L538 374 L610 397 L878 397 L878 476 L92 476 Z" fill="#fbf1dc" stroke="none"/>
+ <path d="M92 364 L408 432 L538 460 L610 483 L878 483 L878 557 L92 557 Z" fill="#e4f1f1" stroke="none"/>
+ <path d="M92 445 L408 513 L538 541 L610 564 L878 564 L878 600 L92 600 Z" fill="#e7e9f6" stroke="none"/>
+ <!-- surface and channel water -->
+ <path d="M92 207 L408 275 L538 303 L610 326 L642 306 L878 306" fill="none" stroke="#5b866f" stroke-width="4"/>
+ <path d="M642 306 L878 306 L878 343 L642 343 Z" fill="#cfeafb" stroke="#6fa8c5" stroke-width="2"/>
+ <path d="M642 343 L878 343" fill="none" stroke="#4c6d7b" stroke-width="5"/>
+ <path d="M92 600 L878 600" fill="none" stroke="#6b7a84" stroke-width="3"/>
+ <!-- internal layer boundaries -->
+ <path d="M92 278 L408 346 L538 374 L610 397 L878 397" fill="none" stroke="#cfa96c" stroke-width="2" stroke-dasharray="6 5"/>
+ <path d="M92 364 L408 432 L538 460 L610 483 L878 483" fill="none" stroke="#75a9a7" stroke-width="2" stroke-dasharray="6 5"/>
+ <path d="M92 445 L408 513 L538 541 L610 564 L878 564" fill="none" stroke="#8c8eb4" stroke-width="2" stroke-dasharray="6 5"/>
+ <!-- labels -->
+ <text x="115" y="244" font-size="18" font-weight="700" fill="#173d59">A · surface / upper soil</text>
+ <text x="115" y="325" font-size="18" font-weight="700" fill="#6b4c16">B · soil storage</text>
+ <text x="115" y="410" font-size="18" font-weight="700" fill="#246d6a">C · intermediate storage</text>
+ <text x="115" y="492" font-size="18" font-weight="700" fill="#534b85">D · groundwater layer</text>
+ <text x="222" y="190" font-size="18" font-weight="700" fill="#426c57">HILLSLOPE</text>
+ <text x="724" y="286" font-size="18" font-weight="700" fill="#2c6684">CHANNEL</text>
+
+ <!-- rainfall and evapotranspiration -->
+ <path d="M178 170 V214 M248 170 V230 M318 170 V246" fill="none" stroke="#1976a5" stroke-width="3" marker-end="url(#arrow-blue-en)"/>
+ <text x="136" y="151" font-size="17" font-weight="700" fill="#1976a5">Rain / meltwater P</text>
+ <path d="M152 275 C132 246 132 222 151 198" fill="none" stroke="#14877d" stroke-width="3" marker-end="url(#arrow-teal-en)"/>
+ <path d="M366 318 C350 287 351 263 370 239" fill="none" stroke="#14877d" stroke-width="3" marker-end="url(#arrow-teal-en)"/>
+ <text x="92" y="244" font-size="15" fill="#14877d">Evapotranspiration</text>
+
+ <!-- surface runoff to channel -->
+ <path d="M270 235 C360 252 444 275 555 310 C584 320 606 324 638 324" fill="none" stroke="#1976a5" stroke-width="4" marker-end="url(#arrow-blue-en)"/>
+ <text x="318" y="254" font-size="16" font-weight="700" fill="#1976a5">Channel routing</text>
+
+ <!-- vertical infiltration/transfer through A/B/C -->
+ <path d="M436 285 V338 M436 355 V424 M436 444 V500" fill="none" stroke="#14877d" stroke-width="4" marker-end="url(#arrow-teal-en)"/>
+ <text x="455" y="388" font-size="16" font-weight="700" fill="#14877d">Infiltration / vertical transfer</text>
+
+ <!-- lateral subsurface flow and D return -->
+ <path d="M485 411 C535 421 574 436 621 454" fill="none" stroke="#14877d" stroke-width="4" marker-end="url(#arrow-teal-en)"/>
+ <text x="492" y="447" font-size="15" fill="#14877d">Subsurface flow</text>
+ <path d="M742 542 C700 527 664 505 634 469 C617 449 611 423 620 386" fill="none" stroke="#7056a3" stroke-width="4" stroke-dasharray="9 6" marker-end="url(#arrow-purple-en)"/>
+ <text x="744" y="535" font-size="16" font-weight="700" fill="#7056a3">Delayed baseflow</text>
+
+ <!-- channel downstream arrow -->
+ <path d="M690 325 H850" fill="none" stroke="#1976a5" stroke-width="4" marker-end="url(#arrow-blue-en)"/>
+ <text x="704" y="370" font-size="15" fill="#1976a5">Channel routing</text>
+
+ <!-- right legend -->
+ <rect x="924" y="190" width="200" height="330" rx="12" fill="#f5f9fb" stroke="#c7dbe5" stroke-width="2"/>
+ <text x="946" y="222" font-size="19" font-weight="700" fill="#173d59">Mechanisms and fluxes</text>
+ <line x1="946" y1="250" x2="982" y2="250" stroke="#1976a5" stroke-width="4" marker-end="url(#arrow-blue-en)"/><text x="994" y="256" font-size="15" fill="#173d59">Rain / meltwater P</text>
+ <line x1="946" y1="286" x2="982" y2="286" stroke="#14877d" stroke-width="4" marker-end="url(#arrow-teal-en)"/><text x="994" y="292" font-size="15" fill="#173d59">Infiltration / vertical transfer</text>
+ <line x1="946" y1="322" x2="982" y2="322" stroke="#14877d" stroke-width="4" marker-end="url(#arrow-teal-en)"/><text x="994" y="328" font-size="15" fill="#173d59">Subsurface flow</text>
+ <line x1="946" y1="358" x2="982" y2="358" stroke="#7056a3" stroke-width="4" stroke-dasharray="8 5" marker-end="url(#arrow-purple-en)"/><text x="994" y="364" font-size="15" fill="#173d59">Delayed baseflow</text>
+ <line x1="946" y1="394" x2="982" y2="394" stroke="#1976a5" stroke-width="4" marker-end="url(#arrow-blue-en)"/><text x="994" y="400" font-size="15" fill="#173d59">Channel routing</text>
+ <rect x="944" y="428" width="160" height="64" rx="8" fill="#edeafa" stroke="#b8acd5"/>
+ <text x="958" y="453" font-size="15" font-weight="700" fill="#534b85">D층</text>
+ <text x="958" y="476" font-size="14" fill="#534b85">Existing groundwater layer · long-term runoff extension</text>
+
+ <text x="68" y="628" font-size="16" fill="#607789">Concept illustration · layer boundaries and arrows explain mechanisms; they are not cell dimensions or computed values.</text>
+</g>
+</svg>

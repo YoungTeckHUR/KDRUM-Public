@@ -32,12 +32,12 @@ function diagram(name,lang){
   box(60,412,330,155,L('수문 입력','Hydrologic input'),[L('강우 + 융설수','Rain + meltwater'),L('침투 · 유출 계산으로','To infiltration and runoff')])+
   route('M435 492H401')+text(810,515,L('직접 일사·적설 이동','Radiation / snow transport'),22,600)+text(810,547,L('해석과 구분','are not directly solved'),22)+
   text(600,623,L('경사·방향은 융설계수에 반영되며, 그림은 계산 결과가 아닙니다.','Slope and direction modify melt factors; no simulation result is shown.'),24,400,'middle'));
- if(name==='deep-storage-path')return frame(name,lang,L('D층 저장·복귀·손실의 구분','D-layer storage, return and loss'),L('지연 복귀와 별도 선택 조건의 심부 손실을 구분합니다.','Development path · delayed return and deep loss have separate controls.'),
-  box(60,225,330,190,L('D층 저장','D-layer storage'),[L('유입과 저장량 갱신','Inflow and storage update'),L('저장량 내에서 방출','Release within storage')])+
+ if(name==='deep-storage-path')return frame(name,lang,L('기존 D층 저장·복귀·손실의 구분','Existing D-layer storage, return and loss'),L('기존 D층 저장에서 지연 복귀와 별도 선택 조건의 심부 손실을 구분합니다.','Existing D-layer storage · delayed return and deep loss have separate controls.'),
+  box(60,225,330,190,L('D층 저장','D-layer storage'),[L('기존 지하수층','Existing groundwater layer'),L('유입·방출과 저장량 갱신','Storage: inflow / release')])+
   line(405,317,427,317,undefined,true)+box(435,225,330,190,L('상부 토양층 경로','Upper soil-layer path'),[L('지연 복귀 수용','Receives delayed return'),L('토양층 유출과 연결','Connects to soil runoff')],'#ecf6f3')+
   line(779,317,804,317,undefined,true)+box(810,225,330,190,L('유출 전달','Runoff routing'),[L('다른 유출 기여와 결합','Joins other contributions'),L('하류 유량에 기여','Contributes downstream')])+
   route('M225 430V466')+box(60,480,330,120,L('선택적 심부 손실','Optional deep loss'),[L('활성 옵션 확인','Check enabled option')])+
-  text(435,522,L('저장·복귀·손실을 따로 집계','Account for each term separately'),26,600)+text(435,569,L('완전한 지하수유동 해석과 구분','Distinct from full groundwater flow'),24));
+  text(435,522,L('저장·복귀·손실을 물수지에서 구분','Separate storage, return and loss in the water balance'),26,600)+text(435,569,L('완전한 지하수유동 해석과 구분','Distinct from full groundwater flow'),24));
  if(name==='input-readiness')return frame(name,lang,L('입력자료와 실행 준비 점검','Input data and execution readiness'),L('입력 조건을 확인하고 문제 항목을 실행 전에 정리합니다.','Review input conditions and identify issues before a model run.'),
   box(60,218,310,236,L('원자료','Source data'),[L('지형 · 강우 · 하천','Terrain · rain · rivers'),L('좌표 · 시간 · 단위','Coordinates · units')])+line(380,330,425,330,undefined,true)+
   box(440,218,310,236,L('정합성 검사','Consistency checks'),[L('공간 · 시간 범위','Space · time extent'),L('연결성 · 값의 범위','Connectivity · ranges')])+line(760,330,805,330,undefined,true)+
