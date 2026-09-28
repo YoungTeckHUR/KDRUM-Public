@@ -42,10 +42,10 @@
     "exampleEn": "With similar runoff volume but an early peak, inspect routing. With overly rapid post-event recession, inspect soil and deeper storage contributions rather than treating both as the same parameter error."
   },
   "continuous": {
-    "principleKo": "저장상태를 이어가면 강우가 없는 동안의 증발산·배출도 다음 사상의 초기조건을 바꿉니다. 이 때문에 연속모의는 개별 홍수뿐 아니라 계절별 물 이용 가능량과 저유량의 지속성을 검토하는 데 의미가 있습니다.",
-    "principleEn": "Carried storage lets dry-period evaporation and drainage alter the initial conditions of later storms. Continuous simulation therefore supports seasonal water availability and low-flow persistence as well as individual floods.",
-    "exampleKo": "연간 유출량이 맞더라도 여름 과대·겨울 과소가 상쇄됐을 수 있습니다. 연간 합계에 더해 월별 저장 변화와 갈수기 유량을 비교하면 이런 보상오차를 찾을 수 있습니다.",
-    "exampleEn": "An accurate annual total can hide offsetting summer and winter errors. Monthly storage changes and dry-season flows help reveal this compensation."
+    "principleKo": "강우가 없는 동안의 증발산과 배출도 토양수분·저류 상태를 바꾸어 다음 사상의 초기조건에 영향을 줍니다. 연속모의 결과는 계절별 유출 특성과 저유량의 지속성, 장기 유역 물수지를 분석하고 이수 및 가뭄 관련 검토의 기초자료로 활용할 수 있습니다.",
+    "principleEn": "Evapotranspiration and drainage between rainfall events alter soil moisture and storage, affecting the initial conditions of subsequent events. Continuous simulation supports analysis of seasonal runoff, low-flow persistence and long-term basin water balance, providing inputs to water-use and drought-related assessments.",
+    "exampleKo": "연간 누적 유출량이 맞더라도 특정 기간의 과대모의와 다른 기간의 과소모의가 상쇄됐을 수 있습니다. 연간 합계에 더해 월별 저류량 변화와 갈수기 유량을 비교하면 이런 보상오차를 찾을 수 있습니다.",
+    "exampleEn": "An accurate annual runoff volume can hide overestimation in one period offset by underestimation in another. Compare monthly storage changes and flows during low-flow periods as well as the annual total."
   },
   "et": {
     "principleKo": "기상으로 산정한 증발산 수요와 실제 물 손실은 다릅니다. 식생·뿌리 영역이 물을 가져갈 층을 정하고, 수관과 토양의 가용 저장량이 실제 공급량을 제한합니다.",
@@ -56,7 +56,7 @@
   "snow": {
     "principleKo": "적설은 강수와 유출 사이에 계절적 저장을 추가합니다. 비·눈 분리와 융설률을 함께 다뤄야 봄철 유량 증가 시점과 겨울철 저장을 설명할 수 있으며, 경험적 융설계수 보정과 열수지 계산은 구분해야 합니다.",
     "principleEn": "Snow introduces seasonal storage between precipitation and runoff. Rain/snow partition and melt rate together explain winter storage and spring flow timing; empirical melt adjustment differs from a heat-budget calculation.",
-    "exampleKo": "봄 유량이 너무 일찍 증가하면 유출 전달만 바꾸기 전에 고도별 기온과 비·눈 구분, 융설 시기를 비교합니다. 유량만 맞추면 잘못된 적설 저장량이 가려질 수 있습니다.",
+    "exampleKo": "봄 유량이 너무 일찍 증가하면 유출 전달만 바꾸기 전에 고도별 기온과 비·눈 구분, 융설 시기를 비교합니다. 유량만 맞추면 잘못된 적설수량이 가려질 수 있습니다.",
     "exampleEn": "For an early spring rise, compare elevation-adjusted temperature, phase partition and melt timing before changing routing alone. Matching discharge can conceal incorrect snow storage."
   },
   "warmup": {
@@ -84,14 +84,14 @@
     "exampleEn": "For a timing mismatch, compare DEM hillslope gradients with the channel longitudinal profile. Changing both slope and roughness at once makes their effects harder to distinguish."
   },
   "kw-hill": {
-    "principleKo": "운동파 근사는 중력에 의한 구동과 마찰의 균형으로 흐름량을 저장상태에 연결합니다. 사면에서 발생한 초과량이 격자 연결을 따라 이동하는 시간을 표현하며, 물이 발생하는 침투 계산과는 다른 단계입니다.",
-    "principleEn": "The kinematic approximation relates flow to storage through gravity–friction balance. It represents travel along connected hillslope cells after runoff generation, a separate step from infiltration.",
-    "exampleKo": "동일 강우에서 출구 첨두가 너무 이르면 사면 길이·경사·저항과 격자 연결을 살펴봅니다. 하류 수위가 올라 사면 배출을 억제하는 문제는 운동파만으로 충분히 설명하기 어렵습니다.",
-    "exampleEn": "For an early outlet peak, inspect hillslope length, slope, resistance and connectivity. Suppression of drainage by a rising downstream stage requires physics beyond simple kinematic routing."
+    "principleKo": "운동파 근사는 중력에 의한 구동과 마찰의 균형으로 유량을 저류 상태에 연결합니다. 사면 유입량이 격자 연결을 따라 이동하는 시간을 표현하며, 강우의 침투·유출 배분을 계산하는 과정과는 구분됩니다.",
+    "principleEn": "The kinematic approximation relates discharge to storage through a gravity–friction balance. It represents travel of hillslope inflow along connected cells, separately from partitioning rainfall into infiltration and runoff.",
+    "exampleKo": "동일 강우에서 유역 출구의 첨두유량 도달시간이 너무 이르면 사면 길이·경사·저항과 격자 연결을 살펴봅니다. 하류 수위 상승에 따른 사면 배출 억제는 운동파만으로 충분히 설명하기 어렵습니다.",
+    "exampleEn": "If peak discharge reaches the basin outlet too early under the same rainfall, inspect hillslope length, slope, resistance and connectivity. Suppression of drainage by rising downstream stage requires physics beyond kinematic routing."
   },
   "kw-river": {
-    "principleKo": "하도 운동파는 유량–저장 관계를 연속식과 결합해 상류·측방 유입을 하류로 전달합니다. 운동량의 시간·공간 가속도와 수심경사에 의한 배수위 작용을 생략하므로, 유출 도달시간 해석과 수위 지배 문제를 구별해야 합니다.",
-    "principleEn": "Channel kinematic routing couples a flow–storage relation with continuity. It omits local/advective acceleration and depth-gradient backwater effects, so runoff timing and stage-controlled hydraulics require different interpretations.",
+    "principleKo": "하도 운동파는 유량–저류 관계를 연속식과 결합해 상류측·측방 유입을 하류로 전달합니다. 국부가속도·이류가속도와 수심경사 항을 생략하므로 하류 수위에 따른 배수위 영향을 표현하지 못합니다. 등류 근사를 사용하더라도 유량과 저류량의 시간 변화는 계산합니다.",
+    "principleEn": "Channel kinematic routing combines a discharge–storage relation with continuity to route upstream and lateral inflow. It omits local and advective acceleration and the depth-gradient term, so it cannot represent downstream-stage-induced backwater. Despite the uniform-flow approximation, discharge and storage still evolve over time.",
     "exampleKo": "하류 수위를 높였을 때 상류 수위나 역류가 어떻게 달라지는지를 묻는다면 운동파의 범위를 벗어납니다. 이 경우 횡단면과 경계조건을 갖춘 수리해석 경로를 검토합니다.",
     "exampleEn": "If the question concerns upstream stage or flow reversal under a higher downstream level, kinematic routing is insufficient. Consider a hydraulic path with cross sections and suitable boundary conditions."
   },
@@ -108,10 +108,10 @@
     "exampleEn": "For anomalous initial flooding near a channel, check bed/DEM references and joins. Compare cross sections and effective conveyance area before and after supplementation."
   },
   "wb": {
-    "principleKo": "K-DRUM의 물수지 평가는 강우·증발산·유출과 저장량 변화를 연결하고, 내부 전달량을 구분해 전체 수지가 닫히는지 확인합니다. 총량뿐 아니라 물의 이동 경로를 함께 읽을 수 있어 계산 결과를 설명하고 차이의 원인을 좁히는 데 도움이 됩니다.",
-    "principleEn": "K-DRUM links rainfall, evapotranspiration, outflow and storage change, distinguishing internal transfers when assessing closure. Reading transfer pathways alongside totals helps explain results and narrow down the causes of differences.",
-    "exampleKo": "폐합오차가 작아도 유량 첨두가 틀릴 수 있습니다. 보존이 맞는지 먼저 확인한 뒤 관측과의 크기·시점 차이를 평가하면 수치 회계 문제와 모형 재현성 문제를 구분할 수 있습니다.",
-    "exampleEn": "A small residual can coexist with an incorrect peak. Check conservation first, then observed magnitude and timing, separating accounting errors from model-performance errors."
+    "principleKo": "K-DRUM의 물수지 평가는 강우·증발산·유출과 저류량 변화를 연결하고 내부 교환량을 구분해 물수지 균형과 오차(잔차)를 확인합니다. 총량뿐 아니라 물의 이동 경로를 함께 읽을 수 있어 계산 결과를 설명하고 차이의 원인을 좁히는 데 도움이 됩니다.",
+    "principleEn": "K-DRUM links rainfall, evapotranspiration, outflow and storage changes, separating internal exchanges when assessing water balance and its residual. Transfer pathways alongside totals help explain results and identify the causes of differences.",
+    "exampleKo": "물수지 오차가 작아도 첨두유량이나 도달시간이 관측과 다를 수 있습니다. 보존성을 확인한 뒤 관측과의 크기·시점 차이를 평가하면 물수지 산정의 누락·중복 등 수치적 문제와 관측 재현성 문제를 구분할 수 있습니다.",
+    "exampleEn": "A small water-balance residual can coexist with errors in peak discharge or its timing. Check conservation, then observed magnitude and timing, to distinguish omissions or double counting in the water balance from errors in reproducing observations."
   },
   "wb-1d2d": {
     "principleKo": "하천에서 범람원으로 이동한 체적은 하천에 음수, 범람원에 양수로 작용합니다. 교환 물수지는 이 짝이 일치하는지 보는 것이며, 강우·외부 유입까지 포함한 전체 영역의 폐합과는 집계 범위가 다릅니다.",
@@ -134,8 +134,8 @@
   "optimization": {
     "principleKo": "NSE는 관측 평균 대비 제곱오차 개선, RMSE는 원래 유량 단위의 오차 크기, PBIAS는 총량 편향을 읽는 데 쓰입니다. KGE는 상관·변동성·평균의 일치를 함께 보므로 지표마다 좋은 결과의 의미가 다릅니다.",
     "principleEn": "NSE compares squared error with an observed-mean baseline; RMSE retains discharge units; PBIAS expresses volume bias. KGE combines correlation, variability and mean agreement, so these metrics reward different properties.",
-    "exampleKo": "첨두를 맞추며 갈수부가 나빠질 수 있습니다. 평가기간을 분리하고 수문곡선·총량·저유량을 함께 비교한 뒤 매개변수 대안을 선택합니다. PBIAS 부호 해석은 결과요약에 제시된 정의를 따릅니다.",
-    "exampleEn": "Peak improvement can degrade low flows. Use separate evaluation periods and compare hydrographs, volume and low flows before choosing parameters. Interpret PBIAS signs using the report’s convention."
+    "exampleKo": "첨두유량의 재현성을 높이는 과정에서 저유량 구간의 재현성이 낮아질 수 있습니다. 평가기간을 분리하고 유량 수문곡선·누적 유출량·저유량을 함께 비교한 뒤 매개변수 대안을 선택합니다. PBIAS 부호 해석은 결과요약에 제시된 정의를 따릅니다.",
+    "exampleEn": "Improving peak-discharge reproduction can reduce performance during low-flow periods. Use separate evaluation periods and compare discharge hydrographs, runoff volume and low flows before selecting parameters. Interpret PBIAS signs using the report’s definition."
   },
   "subcal": {
     "principleKo": "공간 진단은 수정할 지역을 찾고, 목표지점 보정은 후보 설정의 결과를 비교합니다. 두 기능을 연결하면 전체 유역을 일괄 조정하기 전에 오차가 발생한 위치와 수문 과정부터 좁힐 수 있습니다.",
@@ -150,10 +150,10 @@
     "exampleEn": "For a short time series, compare its final timestamp, sampling interval and termination record. Filling missing output with zero can invalidate performance evaluation."
   },
   "dwnet": {
-    "principleKo": "동역학파는 연속식과 운동량식을 함께 다뤄 유량뿐 아니라 수위의 상호작용을 표현합니다. 횡단면의 수위–면적·통수 특성, 하류 경계와 하천망 연결이 중요하며, 수리 경로의 실제 구성은 실행 설정에 따라 구분해야 합니다.",
-    "principleEn": "Dynamic-wave analysis couples continuity and momentum to represent interacting discharge and stage. Cross-section geometry, downstream boundaries and network connectivity matter; distinguish the actual hydraulic path selected for a run.",
-    "exampleKo": "홍수기에 하류 수위가 상승해 상류 수위를 밀어 올리는 상황에서는 운동파와 다른 반응이 예상됩니다. 같은 유입 조건에서 수위 종단과 유량의 방향·시점을 함께 비교합니다.",
-    "exampleEn": "Rising downstream stage during a flood can back water upstream. Compare stage profiles and flow direction/timing under the same inflow, rather than examining outlet discharge alone."
+    "principleKo": "1D 하천망에서는 국부관성파와 동역학파 경로 모두 연속식과 운동량 관계를 사용하지만, 이류 운동량 항의 포함 여부가 다릅니다. 횡단면의 수위–면적·통수 특성, 하류 경계와 연결 관계를 함께 사용하며 실제로 선택한 계산 경로를 기준으로 해석합니다.",
+    "principleEn": "Local-inertial and dynamic-wave 1D network paths both use continuity and a momentum relation, but differ in whether advective momentum terms are retained. Cross-section geometry, downstream boundaries and connectivity work together; interpret results using the selected solver path.",
+    "exampleKo": "홍수 시 하류측 수위 상승에 따른 배수위 영향이 나타나는 경우에는 운동파와 다른 반응이 예상됩니다. 같은 유입 조건에서 수위 종단과 유량의 방향·시점을 함께 비교합니다.",
+    "exampleEn": "Backwater caused by rising downstream stage during a flood can produce a response different from kinematic routing. Compare stage profiles and discharge direction and timing under the same inflow conditions."
   },
   "junction": {
     "principleKo": "합류부는 여러 유입을 더하는 위치이면서 인접 구간의 수위·유량이 서로 영향을 주는 연결점입니다. 분기 유량은 연결 구조와 수리조건에 따라 달라지므로, 단순한 고정 분배와 수리적으로 계산된 분배를 구분합니다.",
@@ -162,22 +162,22 @@
     "exampleEn": "A high stage in one branch can alter drainage from another. Junction mass balance and signed branch flows help identify implausible flow division."
   },
   "structures": {
-    "principleKo": "구조물은 상·하류 수위차와 개구·월류 조건을 유량으로 연결합니다. 같은 수위차라도 턱 높이, 개구 면적과 잠김 여부가 달라지면 통과량이 달라지므로, 일반 하천 조도를 바꾸는 것과 다른 표현입니다.",
+    "principleKo": "구조물은 상·하류 수위차와 개구·월류 조건을 유량으로 연결합니다. 같은 수위차라도 턱 높이, 개구 면적과 잠수 여부가 달라지면 통과량이 달라지므로, 일반 하천 조도를 바꾸는 것과 다른 표현입니다.",
     "principleEn": "Structures translate head difference and opening/overflow conditions into discharge. Crest elevation, opening area and submergence can change passage under the same head; this differs from changing reach roughness.",
-    "exampleKo": "구조물 전후 수위를 비교할 때 하류 잠김과 개도 조건을 함께 봅니다. 계산된 통과 유량이 실제 운영 명령이나 시설의 안전 한계를 자동으로 보장하지는 않습니다.",
+    "exampleKo": "구조물 전후 수위를 비교할 때 하류 수위에 따른 잠수 영향과 수문 개도 조건을 함께 봅니다. 계산된 통과 유량이 실제 운영 명령이나 시설의 안전 한계를 자동으로 보장하지는 않습니다.",
     "exampleEn": "Compare upstream/downstream stage together with submergence and opening conditions. Computed passage does not itself constitute an operating command or a safety guarantee."
   },
   "dam-operation": {
-    "principleKo": "저수지는 유입과 방류의 차이를 저장하며, 저장량–수위 관계로 수위를 갱신합니다. 운영 조건은 이 저장 변화와 방류 제약을 연결하므로, 유입량만 보는 것과 홍수조절 효과를 보는 것은 다릅니다.",
+    "principleKo": "저수지는 유입과 방류의 차이를 저장하며, 저수량–수위 관계로 수위를 갱신합니다. 운영 조건은 이 저수량 변화와 방류 제약을 연결하므로, 유입량만 보는 것과 홍수조절 효과를 보는 것은 다릅니다.",
     "principleEn": "A reservoir stores the difference between inflow and release, with storage–level relations converting it to stage. Operating constraints connect release decisions with storage evolution and flood attenuation.",
-    "exampleKo": "첨두 방류가 줄어도 이후 수위 회복과 총방류량이 달라질 수 있습니다. 한 시점의 방류량뿐 아니라 수위·저장·방류 시계열 전체로 대안을 비교합니다.",
+    "exampleKo": "첨두 방류가 줄어도 이후 수위 회복과 총방류량이 달라질 수 있습니다. 한 시점의 방류량뿐 아니라 수위·저수량·방류 시계열 전체로 대안을 비교합니다.",
     "exampleEn": "A reduced release peak can change later storage recovery and total release. Compare complete stage, storage and release time series rather than a single operating instant."
   },
   "dam-forecast": {
     "principleKo": "예측 유입은 아직 발생하지 않은 물에 대한 정보이므로, 사전방류 효과는 예측 오차와 함께 판단해야 합니다. 하류 유량에는 댐 방류뿐 아니라 중간 유역의 유입과 도달시간도 작용합니다.",
     "principleEn": "Forecast inflow describes water that has not yet arrived, so prerelease benefits depend on forecast uncertainty. Downstream flow also includes intervening runoff and routing delays.",
-    "exampleKo": "예측 강우가 과대였던 경우와 과소였던 경우를 구분해 수위·하류 첨두·잔여 저장을 비교합니다. 하나의 예측 시나리오에서 좋은 대안이 모든 오차 상황에서도 우수하다고 볼 수 없습니다.",
-    "exampleEn": "Compare overforecast and underforecast cases using reservoir stage, downstream peak and remaining storage. A good option for one forecast need not remain best under other errors."
+    "exampleKo": "예측 강우가 과대였던 경우와 과소였던 경우를 구분해 수위·하류 첨두유량·잔여 저수량을 비교합니다. 하나의 예측 시나리오에서 좋은 대안이 모든 오차 상황에서도 우수하다고 볼 수 없습니다.",
+    "exampleEn": "Compare overforecast and underforecast cases using reservoir stage, downstream peak discharge and remaining storage. A good option for one forecast need not remain best under other errors."
   },
   "dam-scenario": {
     "principleKo": "여러 댐의 방류는 하류에서 도달시간에 따라 겹칩니다. 개별 댐의 첨두 방류를 줄여도 서로 겹치는 시각이 달라지면 하류 합성 첨두가 커질 수 있어 네트워크 수준의 비교가 필요합니다.",
@@ -188,8 +188,8 @@
   "coupling": {
     "principleKo": "교환 방향은 하천과 범람원의 상대 수위 및 연결 형상에 의해 결정됩니다. 양방향 연계에서는 범람원의 수위 변화가 하천으로 되돌아오는 흐름에도 영향을 주므로 두 영역을 독립 계산한 뒤 그림만 합치는 것과 다릅니다.",
     "principleEn": "Relative stage and connection geometry govern exchange direction. Two-way coupling lets floodplain state influence return flow and river response; it is more than overlaying independently computed maps.",
-    "exampleKo": "상승기 월류와 감수기 복귀를 나누어 보고 하천·범람원 저장 변화가 맞물리는지 확인합니다. 교환 시간간격을 바꾸었을 때 결과가 얼마나 달라지는지도 연계 해석의 판단 자료입니다.",
-    "exampleEn": "Separate rising-stage overflow from recession return and compare storage changes in both domains. Sensitivity to exchange timing is also relevant when assessing coupling behavior."
+    "exampleKo": "홍수의 진행 단계별로 하천에서 범람원으로의 월류와 범람원에서 하천으로의 복귀 흐름을 구분하고, 두 영역의 저류량 변화가 맞물리는지 확인합니다. 교환 시간간격에 따른 결과의 민감도도 함께 검토합니다.",
+    "exampleEn": "At each stage of a flood, distinguish river-to-floodplain overflow from floodplain-to-river return flow and check the corresponding storage changes in both domains. Also assess sensitivity to the exchange interval."
   },
   "local-inertia": {
     "principleKo": "국부관성 근사는 시간에 따른 유량 변화는 유지하고 유속의 공간 변화에 따른 이류 가속도는 생략합니다. 따라서 이전 흐름과 수면차·마찰을 이용해 침수 확산을 계산하며, 관성을 모두 생략하는 확산파와 구분됩니다.",
@@ -198,7 +198,7 @@
     "exampleEn": "Gradual inundation spreading differs from rapid contraction or fast flow. For strong velocity changes, compare a Full SWE path and separate terrain, roughness and timestep effects."
   },
   "fullswe": {
-    "principleKo": "Full SWE는 수심과 두 수평방향 운동량을 보존형으로 다루어 이류와 중력파 전파를 함께 표현합니다. 다만 정수압·수심평균 가정은 유지되므로, 수직 가속도나 구조물 주변의 모든 3차원 난류까지 해석하는 것은 아닙니다.",
+    "principleKo": "Full SWE는 수심과 두 수평방향 운동량을 보존형으로 다루어 이류와 중력파 전파를 함께 표현합니다. 다만 정수압·수심평균 가정은 유지되므로, 연직 가속도나 구조물 주변의 모든 3차원 난류까지 해석하는 것은 아닙니다.",
     "principleEn": "Full SWE evolves depth and two horizontal momentum components in conservation form, retaining advection and gravity-wave propagation. Hydrostatic, depth-averaged assumptions remain; it does not resolve all vertical acceleration or three-dimensional turbulence.",
     "exampleKo": "급격한 유입이나 지형 변화에서 첨두 유속·수심과 전파 시점을 함께 비교합니다. 격자 세분화가 지형 표현을 개선해도 시간간격·건습 경계·수치 확산의 영향은 별도로 확인해야 합니다.",
     "exampleEn": "For abrupt inflow or terrain changes, compare peak depth, velocity and arrival time. Finer terrain representation still requires checks of timestep, wet/dry fronts and numerical diffusion."
@@ -212,8 +212,8 @@
   "flood-extras": {
     "principleKo": "강우·배수는 셀의 물수지 항이고, 구조물·Face Mask는 셀 사이 연결 조건이며, 추적자·입자는 계산된 흐름 위의 수송 표현입니다. 이들을 구분해야 침수량 변화와 이동 경로 변화를 같은 효과로 오해하지 않습니다.",
     "principleEn": "Rain and drainage are cell water-budget terms; structures and face masks control connections; tracers and particles describe transport on the flow field. These roles distinguish inundation-volume effects from transport pathways.",
-    "exampleKo": "배수량을 늘린 경우와 벽을 추가한 경우는 침수도가 비슷해 보여도 원인이 다릅니다. 전자는 외부 배출량을, 후자는 막힌 경계와 우회 흐름을 확인합니다.",
-    "exampleEn": "Increased drainage and an added wall can produce superficially similar maps for different reasons. Inspect external removal for the former and blocked edges/diverted flow for the latter."
+    "exampleKo": "배수량을 늘린 경우와 벽을 추가한 경우는 침수범위와 침수심 분포가 비슷해 보여도 원인이 다릅니다. 전자는 외부 배출량을, 후자는 막힌 경계와 우회 흐름을 확인합니다.",
+    "exampleEn": "Increased drainage and an added wall can produce similar inundation extents and depth patterns for different reasons. Inspect external removal for the former and blocked boundaries and diverted flow for the latter."
   },
   "sed-hill": {
     "principleKo": "유사는 물과 함께 이동하지만 토양에서 공급되는 양과 흐름이 운반할 수 있는 양이 따로 있습니다. 공급이 충분해도 운반능이 줄면 퇴적이 생길 수 있어, 유출량과 유사량의 관계가 일정하지 않습니다.",
@@ -224,8 +224,8 @@
   "sed-river": {
     "principleKo": "하천 구간에 들어온 유사는 하류로 운반되거나 구간에 남습니다. 상류 공급량과 구간의 운반능 변화가 함께 작용하므로, 하류 유사량 변화가 그 구간의 침식만을 뜻하지는 않습니다.",
     "principleEn": "Incoming channel sediment is transported onward or retained. Upstream supply and local capacity both matter; a downstream load change does not isolate erosion within that reach.",
-    "exampleKo": "유량이 감소하는 감수기에 유사량이 줄었다면 공급 감소와 퇴적을 구분해야 합니다. 유입·유출 유사량 및 구간 저장 변화를 같은 기간으로 비교합니다.",
-    "exampleEn": "A falling sediment load on the recession limb may reflect reduced supply or deposition. Compare sediment inflow, outflow and reach storage over matching intervals."
+    "exampleKo": "유량 수문곡선의 감수부에서 유사량이 감소했다면 공급 감소와 퇴적을 구분해야 합니다. 유입·유출 유사량 및 구간 내 유사 저장량 변화를 같은 기간으로 비교합니다.",
+    "exampleEn": "A decrease in sediment load on the recession limb of the discharge hydrograph may reflect reduced supply or deposition. Compare sediment inflow, outflow and changes in reach sediment storage over matching periods."
   },
   "dye": {
     "principleKo": "보존성 추적자는 반응·분해를 가정하지 않고 이동과 희석을 읽는 도구입니다. 같은 질량이 더 많은 물에 섞이면 농도는 낮아져도 질량이 제거된 것은 아니므로 두 양을 함께 추적해야 합니다.",
@@ -266,7 +266,7 @@
   "estuary": {
     "principleKo": "염분은 하천수와 해수의 혼합 및 밀도 차와 연결됩니다. 종·연직 단면은 수면과 바닥 부근의 차이를 표현하는 데 목적이 있고, 폭평균 가정 때문에 좌우 방향의 세부 차이는 직접 나타내지 않습니다.",
     "principleEn": "Salinity relates to freshwater–seawater mixing and density differences. A longitudinal–vertical section resolves surface-to-bottom differences; width averaging does not resolve lateral detail.",
-    "exampleKo": "표층 염분이 낮아도 저층에 염수가 남아 있을 수 있습니다. 조위·유입량과 함께 수직 분포와 관측 깊이를 맞춰 비교해야 성층과 혼합의 변화를 해석할 수 있습니다.",
+    "exampleKo": "표층 염분이 낮아도 저층에 염수가 남아 있을 수 있습니다. 조위·유입량과 함께 연직 분포와 관측 깊이를 맞춰 비교해야 성층과 혼합의 변화를 해석할 수 있습니다.",
     "exampleEn": "Low surface salinity can coexist with saline bottom water. Match vertical sampling depth while comparing profiles, tide and inflow to interpret stratification and mixing."
   },
   "river-viewer": {

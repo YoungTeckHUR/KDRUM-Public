@@ -111,11 +111,11 @@
       "id": "download",
       "ko": {
         "question": "K-DRUM의 배포 경로와 버전 범위는 무엇인가요?",
-        "answer": "K-DRUM은 K-water 기술 SW 대국민 개방정책에 따라 MyWater 물정보포털의 K-Series에서 무료로 제공됩니다. 실제 배포 버전과 사용조건은 MyWater의 최신 안내와 이용약관을 기준으로 합니다. 현재 개발 계열은 v3.x이며, MyWater 배포본의 기능 범위와는 차이가 있을 수 있습니다. K-DRUM 공개 저장소는 일반 이용자를 위한 기술정보를 제공하며 계산엔진의 전체 소스코드는 공개하지 않습니다."
+        "answer": "이 홈페이지는 K-DRUM v3.x 계열의 개발·테스트용 버전을 안내합니다. MyWater K-Series의 정식 배포본과는 구분되며, 포함 기능과 업데이트 시점·주기가 다를 수 있습니다. 이 홈페이지의 프로그램 다운로드 링크는 MyWater 정식 배포 페이지로 연결됩니다. 정식 배포본의 정확한 버전과 이용 조건은 MyWater의 최신 안내를 확인해 주세요. v3.x는 버전 계열을 뜻하며, 개별 파일의 세부 버전은 해당 파일의 안내를 따릅니다."
       },
       "en": {
         "question": "Where is K-DRUM distributed, and which version does it cover?",
-        "answer": "K-DRUM is available through MyWater K-Series under K-water's public software access policy, free of charge subject to the published terms. The actual download version and conditions of use are defined by MyWater's current information and terms. The current development line is v3.x, and its feature scope may differ from the MyWater download. The K-DRUM public-information repository provides technical information rather than the complete simulation-engine source code."
+        "answer": "The version described on this website is a K-DRUM v3.x test version. It is distinct from the official release distributed through MyWater K-Series; included features, release dates and update schedules may differ. Software download links on this website lead to the official MyWater distribution page. Check MyWater for the exact official release version and terms of use. The label v3.x identifies a version family; consult the information accompanying each file for its specific version."
       },
       "sources": [
         "mywater-k-series",
