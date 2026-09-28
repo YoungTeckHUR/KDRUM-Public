@@ -72,8 +72,8 @@
     "exampleEn": "Compare uninterrupted and restarted runs at matching times. Also check that no boundary-input interval was repeated or skipped at the restart."
   },
   "dlayer": {
-    "principleKo": "빠르게 빠져나가지 않는 심부 저장은 강우가 끝난 뒤에도 하천 유량을 지탱할 수 있습니다. D층은 이런 지연 기여를 심부 저장과 상부 토양층으로의 지연 복귀로 표현하며, 대수층의 공간적인 수두장을 직접 푸는 지하수 모형과는 다릅니다.",
-    "principleEn": "Slow deep storage can sustain streamflow after rainfall ends. The D-layer represents this delayed contribution through storage and return flow, rather than directly solving a spatial aquifer-head field.",
+    "principleKo": "기존 D층은 다층 유출 구조에 포함된 지하수 저장층입니다. 장기유출 정확도 향상을 위해 D층 저장, 상부 토양층으로의 지연 복귀, 선택적 심부 손실과 하류 수위 영향 표현을 확장합니다. 대수층의 공간 수두장을 직접 푸는 완전한 지하수유동 모형과는 구분합니다.",
+    "principleEn": "The existing D layer is the groundwater-storage component of the multilayer runoff structure. Its long-term runoff extension represents D storage, delayed return to the upper soil pathway, optional deep loss and downstream-stage effects. It is distinct from a full groundwater-flow model that directly solves a spatial aquifer-head field.",
     "exampleKo": "홍수 첨두가 비슷해도 수 주 뒤 유량이 다르면 장기 감수부가 중요한 비교 대상입니다. 심부 손실을 늘려 유량을 줄인 경우에는 유역 전체 물수지의 손실 항도 함께 읽습니다.",
     "exampleEn": "Similar flood peaks can coexist with different flows weeks later. When deep losses are used to reduce flow, review the corresponding loss term in the basin balance."
   },
@@ -176,8 +176,8 @@
   "dam-forecast": {
     "principleKo": "예측 유입은 아직 발생하지 않은 물에 대한 정보이므로, 사전방류 효과는 예측 오차와 함께 판단해야 합니다. 하류 유량에는 댐 방류뿐 아니라 중간 유역의 유입과 도달시간도 작용합니다.",
     "principleEn": "Forecast inflow describes water that has not yet arrived, so prerelease benefits depend on forecast uncertainty. Downstream flow also includes intervening runoff and routing delays.",
-    "exampleKo": "예측 강우가 과대였던 경우와 과소였던 경우를 구분해 수위·하류 첨두유량·잔여 저수량을 비교합니다. 하나의 예측 시나리오에서 좋은 대안이 모든 오차 상황에서도 우수하다고 볼 수 없습니다.",
-    "exampleEn": "Compare overforecast and underforecast cases using reservoir stage, downstream peak discharge and remaining storage. A good option for one forecast need not remain best under other errors."
+    "exampleKo": "예측 강우가 과대였던 경우와 과소였던 경우를 구분해 수위·하류 첨두유량·모의 종료 시 저수량을 비교합니다. 하나의 예측 시나리오에서 좋은 대안이 모든 오차 상황에서도 우수하다고 볼 수 없습니다.",
+    "exampleEn": "Compare overforecast and underforecast cases using reservoir stage, downstream peak discharge and ending reservoir storage. A good option for one forecast need not remain best under other errors."
   },
   "dam-scenario": {
     "principleKo": "여러 댐의 방류는 하류에서 도달시간에 따라 겹칩니다. 개별 댐의 첨두 방류를 줄여도 서로 겹치는 시각이 달라지면 하류 합성 첨두가 커질 수 있어 네트워크 수준의 비교가 필요합니다.",
@@ -200,8 +200,8 @@
   "fullswe": {
     "principleKo": "Full SWE는 수심과 두 수평방향 운동량을 보존형으로 다루어 이류와 중력파 전파를 함께 표현합니다. 다만 정수압·수심평균 가정은 유지되므로, 연직 가속도나 구조물 주변의 모든 3차원 난류까지 해석하는 것은 아닙니다.",
     "principleEn": "Full SWE evolves depth and two horizontal momentum components in conservation form, retaining advection and gravity-wave propagation. Hydrostatic, depth-averaged assumptions remain; it does not resolve all vertical acceleration or three-dimensional turbulence.",
-    "exampleKo": "급격한 유입이나 지형 변화에서 첨두 유속·수심과 전파 시점을 함께 비교합니다. 격자 세분화가 지형 표현을 개선해도 시간간격·건습 경계·수치 확산의 영향은 별도로 확인해야 합니다.",
-    "exampleEn": "For abrupt inflow or terrain changes, compare peak depth, velocity and arrival time. Finer terrain representation still requires checks of timestep, wet/dry fronts and numerical diffusion."
+    "exampleKo": "급격한 유입이나 지형 변화에서 첨두 유속·수심과 전파 시점을 함께 비교합니다. 격자 세분화가 지형 표현을 개선해도 시간간격·마름·젖음 경계·수치 확산의 영향은 별도로 확인해야 합니다.",
+    "exampleEn": "For abrupt inflow or terrain changes, compare peak depth, velocity and arrival time. Finer terrain representation still requires checks of timestep, wetting/drying fronts and numerical diffusion."
   },
   "multires": {
     "principleKo": "계산 셀을 큰 배경영역과 세밀한 관심영역으로 나누면 비용을 줄이면서 필요한 지형을 남길 수 있습니다. 그러나 원지형보다 상세한 정보가 생기는 것은 아니며, 격자 크기가 바뀌는 경계의 전달이 중요합니다.",

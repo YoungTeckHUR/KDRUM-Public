@@ -38,7 +38,7 @@ The public website organizes K-DRUM capabilities into eight user-oriented techni
 | 적설·융설 | **ESTABLISHED** | 강우·강설 분리와 적설저장·융설, 경사·D8 방향·시간대의 경험적 융설계수 보정 |
 | 워밍업·초기상태 안정화 | **IMPLEMENTED / QA** | 초기 토양·유출 상태와 목표지점 유량의 수렴상태를 진단 |
 | 상태 저장·재시작 (HotStart) | **IMPLEMENTED / QA** | 저장된 상태로 계산 재시작 지원. 실행 경로별 저장·복원 상태와 호환성 확인 필요 |
-| 심부저류(D층)·지연 기저유출 | **ACTIVE DEVELOPMENT** | 심부저류와 상부 토양층 경로로의 지연복류. 심부 손실은 별도 활성 옵션에 따름 |
+| D층 지하수층·장기유출 확장 | **ACTIVE DEVELOPMENT** | 기존 다층 유출 구조의 D층 지하수 저장에 지연복귀·심부손실·하류 수위 영향 표현을 확장하여 장기유출의 저유량 반응을 개선 |
 
 ## 3. 흐름추적·하천지형
 
@@ -54,7 +54,7 @@ The public website organizes K-DRUM capabilities into eight user-oriented techni
 
 | 기능 | 공개 상태 | 설명 |
 |---|---|---|
-| 유역 물수지·폐합 평가 | **IMPLEMENTED / QA** | 강우·증발산·유출·저장량 변화와 내부 이동을 동일 기간·단위로 연결하여 물의 회계와 폐합오차를 평가 |
+| 유역 물수지·폐합 평가 | **IMPLEMENTED / QA** | 강우·증발산·유출·저장량 변화와 내부 이동을 동일 기간·단위로 연결하여 물수지와 수지오차를 평가 |
 | 1차원–2차원 교환 물수지 | **VALIDATED DEVELOPMENT** | 하천과 홍수터 사이의 동일 교환유량을 양 영역에 반대 부호로 반영하여 질량보존을 점검 |
 | 통합 실행결과 보고 | **IMPLEMENTED / QA** | 입력조건, 실행모드, 초기상태, 물수지, 경고 및 계산시간을 통합 보고 |
 | 소유역별 결과보고 | **IMPLEMENTED / QA** | 전체 유역 결과를 소유역 단위로 분리하여 비교·검토 |

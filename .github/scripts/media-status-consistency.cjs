@@ -21,8 +21,8 @@ const waterQualityDisabled=items.some(item=>
 );
 
 assert(waterQualityDisabled,'water-quality capability remains explicitly disabled/redevelopment');
-assert(siteJs.includes("patchCard('02_water_cycle.jpg','Core 확립 · D-layer 개발 중','Established Core · D-layer in development')"),'gallery 02 distinguishes established Core from D-layer development');
-assert(siteJs.includes("patchCard('07_continuous_hydrology.jpg','Core 확립 · D-layer 개발 중','Established Core · D-layer in development')"),'gallery 07 distinguishes established Core from D-layer development');
+assert(siteJs.includes("patchCard('02_water_cycle.jpg','Core 확립 · 기존 D층 · 장기유출 확장 중','Established Core · existing D-layer, long-term extension')"),'gallery 02 distinguishes established Core from existing D-layer and its extension');
+assert(siteJs.includes("patchCard('07_continuous_hydrology.jpg','Core 확립 · 기존 D층 · 장기유출 확장 중','Established Core · existing D-layer, long-term extension')"),'gallery 07 distinguishes established Core from existing D-layer and its extension');
 assert(siteJs.includes('수질 출력은 그림에 포함된 확장 개념이며, 현재 공개 버전에서는 비활성·재개발 후보입니다.'),'gallery 04 carries adjacent Korean water-quality status clarification');
 assert(siteJs.includes('Water-quality output is an illustrated extension concept; it is disabled in the current public version and remains a redevelopment candidate.'),'gallery 04 carries adjacent English water-quality status clarification');
 
