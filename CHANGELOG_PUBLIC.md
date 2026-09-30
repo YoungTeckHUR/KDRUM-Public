@@ -1,5 +1,23 @@
 # K-DRUM Public Information Changelog
 
+## 2026-10-01 — Core/InputStudio public-description synchronization
+
+Reviewed the current K-DRUM Core and InputStudio development lines against the public website and synchronized only changes that are already integrated in the current main development paths.
+
+Updated:
+
+- expanded InputStudio from a generic input editor description to a spatial-input and project-authoring environment covering DEM preprocessing, basin/flow-direction/stream-network construction, K-DRUM calculation-grid generation, land-cover/soil/depth preparation, guided project completion checks and controlled engine-input generation
+- clarified that parseable or provisional project objects are not automatically treated as completed physical basin data, and that workspace state is distinguished from materialized engine inputs
+- clarified one-dimensional river hydraulics so measured cross-section relative shape is preserved while vertical placement follows the longitudinal hydraulic bed reference
+- updated the bidirectional coupling description to reflect integration of the dynamic-wave 1D–local-inertial 2D development path and controlled verification of actual two-way exchange and transfer accounting
+- retained the public maturity labels: one-dimensional dynamic-wave hydraulics and InputStudio remain **ACTIVE DEVELOPMENT**, and bidirectional one-dimensional/two-dimensional coupling remains **VALIDATED DEVELOPMENT**
+- kept the public capability inventory at 46 items; no new capability was created only to represent implementation refinements
+- excluded still-open/draft expert hydraulic Review diagnostics and Studio-native unified Result & Review viewer work from the current-capability wording
+
+Patch-level solver settings, internal tuning values, private validation identifiers and development-only diagnostics remain outside the public-information boundary.
+
+See [HOMEPAGE_GITHUB_UPDATE_REVIEW_20261001.md](HOMEPAGE_GITHUB_UPDATE_REVIEW_20261001.md) for the review boundary.
+
 ## 2026-09-28 — Hydrology terminology and unit-cell mechanism clarification
 
 Reviewed the current public copy against the latest K-DRUM Core development notes and updated wording without changing capability IDs or maturity labels.

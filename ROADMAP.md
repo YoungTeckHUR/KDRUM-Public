@@ -7,12 +7,12 @@ This is a high-level public roadmap. It intentionally excludes internal schedule
 1. **Hydraulic reliability**
    - strengthen 1D dynamic-wave river-network regression
    - expand branch/confluence network testing
-   - consolidate cross-section and river-axis geometry consistency
+   - consolidate cross-section, river-axis and longitudinal bed-elevation consistency while preserving measured-section shape
 
 2. **1D-2D integration**
-   - continue bidirectional coupling validation
+   - continue bidirectional coupling validation for the current dynamic-wave 1D–local-inertial 2D path
    - verify floodplain return flow and exchange water balance
-   - broaden validation across multiple development configurations
+   - broaden full-period and observation-based validation across multiple development configurations
 
 3. **2D flood analysis**
    - improve domain, barrier, structure, and multi-resolution handling
@@ -28,7 +28,7 @@ This is a high-level public roadmap. It intentionally excludes internal schedule
    - maintain alignment among high-resolution terrain, river axes, cross sections, and hydraulic domains
 
 6. **User environment**
-   - continue K-DRUM InputStudio development
+   - continue K-DRUM InputStudio spatial-input construction, guided authoring and precheck development
    - continue K-DRUM FloodViewer release-candidate validation
    - improve interoperable NetCDF-centered output
 

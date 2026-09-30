@@ -25,5 +25,5 @@ for(const rel of ['index.html','ko/index.html','media.html','seo-kdrum.html']){c
 }
 const js=fs.readFileSync(path.join(docs,'assets/site.js'),'utf8');assert.ok(!/MutationObserver|setInterval|setTimeout/.test(js));
 assert.equal(fs.readdirSync(path.join(docs,'assets/diagrams')).filter(n=>n.endsWith('.svg')).length,12);
-assert.ok(fs.readFileSync(path.join(root,'DEVELOPMENT_STATUS.md'),'utf8').includes('Status reviewed: 2026-09-21'));
+assert.ok(fs.readFileSync(path.join(root,'DEVELOPMENT_STATUS.md'),'utf8').includes('Status reviewed: 2026-10-01'));
 console.log('PASS static routes, local assets, stable capability IDs/statuses, reviewed public labels/groups, bilingual descriptions, separate unpublished viewer, 46 entries, 12 diagrams, one runtime');

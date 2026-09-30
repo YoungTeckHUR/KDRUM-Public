@@ -1,10 +1,10 @@
 # K-DRUM Public Development Status
 
-**Status reviewed: 2026-09-21**
+**Status reviewed: 2026-10-01**
 
 This file describes public-facing maturity only. It intentionally does not expose source code, internal solver settings, validation datasets, development branches, failure diagnostics, operational reservoir rules, or unpublished numerical implementation details.
 
-The September 21, 2026 review reconfirms the public maturity boundary below while updating public organization and wording. No capability has been promoted solely because code exists; status upgrades require appropriate validation evidence.
+The October 1, 2026 review updates the public description against the current Core and InputStudio main lines while preserving the same evidence-based maturity boundary. No capability has been promoted solely because code exists; status upgrades require appropriate validation evidence.
 
 ## Rainfall-runoff hydrology, forcing and model state
 
@@ -32,7 +32,7 @@ The September 21, 2026 review reconfirms the public maturity boundary below whil
 | Separate hillslope and channel slope representations | **IMPLEMENTED / QA** | Hillslope and river flow paths use separate slope variables |
 | Kinematic-wave channel discharge routing | **ESTABLISHED** | Historical K-DRUM channel-routing basis |
 | River infiltration / exchange with deeper storage | **ACTIVE DEVELOPMENT** | Current river/D-layer exchange path with available-storage limiting |
-| High-resolution terrain and river geometry | **ACTIVE DEVELOPMENT** | Current hydraulic-geometry development track |
+| High-resolution terrain and river geometry | **ACTIVE DEVELOPMENT** | Current hydraulic-geometry development track, including measured-section shape preservation and longitudinal bed-elevation placement |
 | Virtual channel-bed generation (ChannelBed) | **ACTIVE DEVELOPMENT** | Reusable terrain/channel-bed support tool under development |
 
 ## Water balance, parameter calibration and result reporting
@@ -51,7 +51,7 @@ The September 21, 2026 review reconfirms the public maturity boundary below whil
 
 | Capability / component | Public status | Public interpretation |
 |---|---|---|
-| One-dimensional dynamic-wave river network | **ACTIVE DEVELOPMENT** | River-network hydraulic extension remains under integration, regression and verification |
+| One-dimensional dynamic-wave river network | **ACTIVE DEVELOPMENT** | Current Core includes measured/virtual cross-section network hydraulics, measured-section vertical placement and continuing reliability/regression verification |
 | Branch / confluence river-network hydraulics | **ACTIVE DEVELOPMENT** | Network reliability and junction behavior remain active development topics |
 | Hydraulic structures | **ACTIVE DEVELOPMENT** | Structure hydraulics and common interfaces remain under continuing integration |
 | Dam / reservoir operation rules | **ACTIVE DEVELOPMENT** | Operation and release-component functionality under continuing development |
@@ -62,7 +62,7 @@ The September 21, 2026 review reconfirms the public maturity boundary below whil
 
 | Capability / component | Public status | Public interpretation |
 |---|---|---|
-| Bidirectional one-dimensional/two-dimensional river-floodplain coupling | **VALIDATED DEVELOPMENT** | Demonstrated in controlled development validation; not a production certification |
+| Bidirectional one-dimensional/two-dimensional river-floodplain coupling | **VALIDATED DEVELOPMENT** | Dynamic-wave 1D–local-inertial 2D is integrated in the current Core development path and has controlled functional/mass-transfer validation; not a production certification |
 | Two-dimensional Local Inertia flood-inundation path | **ACTIVE DEVELOPMENT** | Main efficient floodplain development capability under verification |
 | Full shallow-water-equation option | **ACTIVE DEVELOPMENT** | Specialized solver path; not the default public production claim |
 | Multi-resolution / locally refined two-dimensional domains | **ACTIVE DEVELOPMENT** | Focused high-resolution hydraulic-domain development |
@@ -86,19 +86,19 @@ The September 21, 2026 review reconfirms the public maturity boundary below whil
 | MPI-based parallel computation | **ESTABLISHED** | Published K-DRUM research lineage |
 | Current serial / OpenMP / MPI result consistency | **ACTIVE MODERNIZATION / QA** | Current parallel execution and consistency remain active verification topics |
 | NetCDF integrated result output | **ACTIVE DEVELOPMENT** | Current output modernization and viewer integration |
-| K-DRUM InputStudio | **ACTIVE DEVELOPMENT** | Canonical project authoring and input-data verification environment |
+| K-DRUM InputStudio | **ACTIVE DEVELOPMENT** | Spatial-input construction, guided real-basin project authoring, consistency checks and controlled engine-input generation are integrated; broader Studio/result integration remains under development |
 | K-DRUM FloodViewer | **RELEASE CANDIDATE** | Viewer is in release-candidate development rather than a final 1.0 public release |
 | 1D River Hydraulics Results Viewer | **SEPARATE DEVELOPMENT / NOT YET PUBLIC ON GITHUB** | Separate viewer for longitudinal/cross-section results and water-level/discharge time series; development exists outside the current public GitHub repositories |
 
 ## Current Core baseline
 
-Current K-DRUM Core development is in the **v3.x** line. Patch-level internal identifiers may change more frequently than this public page and are intentionally not published here.
+Current K-DRUM Core development is in the **v3.x** line. The current development line includes the bidirectional dynamic-wave 1D–local-inertial 2D path and continuing 1D river-network reliability improvements. Patch-level internal identifiers may change more frequently than this public page and are intentionally not published here.
 
 The public status of the one-dimensional river-network track remains **ACTIVE DEVELOPMENT** while numerical reliability, network coupling, production integration and regression evidence continue to be strengthened. Internal implementation progress does not by itself change the public maturity label.
 
 ## One-dimensional/two-dimensional validation boundary
 
-Controlled development validation in August 2026 demonstrated active two-way exchange between the one-dimensional river and two-dimensional floodplain and internally consistent exchange accounting in the tested configuration.
+Controlled development validation through September 2026 demonstrated active two-way exchange between the one-dimensional river and two-dimensional floodplain, including the current dynamic-wave 1D–local-inertial 2D development path, with internally consistent transfer accounting in tested configurations.
 
 This statement means:
 
