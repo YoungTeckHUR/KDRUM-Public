@@ -1,6 +1,6 @@
 # K-DRUM Public Capability Reference
 
-**Reviewed: 2026-09-21**
+**Reviewed: 2026-10-01**
 
 K-DRUM은 K-water가 개발한 **물리적 기반의 격자단위 분포형 강우유출모형**입니다. 이 문서는 공개 가능한 K-DRUM 기능을 수자원·토목 분야에서 일반적으로 사용하는 용어를 중심으로 정리합니다. 코드가 존재한다는 사실만으로 실무 적용성이 확정된 것으로 보지 않으며, 각 기능의 개발·검증 상태는 [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md)와 함께 해석해야 합니다.
 
@@ -25,7 +25,7 @@ The public website organizes K-DRUM capabilities into eight user-oriented techni
 | 강우 공간배분 (IDW) | **IMPLEMENTED / QA** | 강우관측소 자료를 IDW(역거리가중기법)로 격자단위 공간분포 산정 |
 | 강우 고도보정·품질검사 (QC) | **IMPLEMENTED / QA** | 고도보정과 강우자료 품질검사를 결합한 입력자료 처리 |
 | 강우자료 완전성·결측 평가 | **IMPLEMENTED / QA** | 관측·예측·결측 자료의 구성과 누락 상태를 결과보고에서 확인 |
-| 입력자료 사전검사·정합성 점검 | **ACTIVE DEVELOPMENT** | 공간·시간·연결성·입력범위 오류를 모의 전에 점검 |
+| 입력자료 사전검사·정합성 점검 | **ACTIVE DEVELOPMENT** | 공간·시간·연결성·값 범위와 프로젝트 구축 완료상태를 구분해 모의 전 점검 |
 
 ## 2. 유역 수문·연속상태
 
@@ -66,7 +66,7 @@ The public website organizes K-DRUM capabilities into eight user-oriented techni
 
 | 기능 | 공개 상태 | 설명 |
 |---|---|---|
-| 1D 동역학파 하천망 해석 | **ACTIVE DEVELOPMENT** | 횡단면 기반 수위·유량과 하천망 흐름을 동역학파로 해석 |
+| 1D 동역학파 하천망 해석 | **ACTIVE DEVELOPMENT** | 실측·가상 횡단면 기반 수위·유량을 해석하며 실측 단면 형상은 보존하고 종단 하상고에 맞춰 수직 위치를 정합 |
 | 분기·합류부 하천수리 | **ACTIVE DEVELOPMENT** | 하천망 연결부에서 연속방정식과 수리조건을 일관되게 처리 |
 | 수리구조물 | **ACTIVE DEVELOPMENT** | 게이트·월류 등 수리구조물의 유량을 하천 및 2차원 해석과 연계 |
 | 댐·저수지 운영 | **ACTIVE DEVELOPMENT** | 수위, 방류제약, 환경유량, 방류변화율 등을 고려한 운영규칙 및 방류계산 |
@@ -79,7 +79,7 @@ The public website organizes K-DRUM capabilities into eight user-oriented techni
 
 | 기능 | 공개 상태 | 설명 |
 |---|---|---|
-| 1차원–2차원 양방향 연계 | **VALIDATED DEVELOPMENT** | 양방향 경로에서 월류·복귀유량을 연결. 별도 단방향·진단 실행과 구분 필요 |
+| 1차원–2차원 양방향 연계 | **VALIDATED DEVELOPMENT** | 현행 Core의 1D 동역학파–2D 국부관성파 경로에서 양방향 교환과 교환량 보존을 개발검증. 전기간·정확도 검증은 별도 |
 | 2D 국부관성(Local Inertia) 범람 | **ACTIVE DEVELOPMENT** | 효율적인 2차원 홍수범람 계산을 위한 주 개발경로 |
 | 2D 완전 천수방정식(Full SWE) | **ACTIVE DEVELOPMENT** | 급변류 등 운동량항을 보다 완전하게 고려해야 하는 구간의 특수 해석경로 |
 | 다중해상도·국부 Patch 2D | **ACTIVE DEVELOPMENT** | 원지형 격자를 묶은 배경과 원해상도를 유지한 관심 Patch를 구성 |
@@ -102,7 +102,7 @@ The public website organizes K-DRUM capabilities into eight user-oriented techni
 | 단일·OpenMP·MPI 병렬계산 | **ESTABLISHED / MODERNIZING** | 단일 실행, 공유메모리 및 분산메모리 실행경로의 결과정합성과 병렬효율을 검증 |
 | NetCDF 통합 결과출력 | **ACTIVE DEVELOPMENT** | 계산 경로별 시간·좌표·변수 정보를 저장. 파일별 격자·출력 시각의 일치 여부 확인 필요 |
 | FloodViewer 결과분석 | **RELEASE CANDIDATE** | 공간분포·시계열·침수심·유속 등 수문·수리 계산결과를 통합 분석 |
-| InputStudio 입력자료 작성·점검 | **ACTIVE DEVELOPMENT** | 지형, 강우, 하천, 횡단면, 수리구조물과 모의조건을 프로젝트 단위로 작성·점검 |
+| InputStudio 입력자료 작성·점검 | **ACTIVE DEVELOPMENT** | DEM·유역·흐름방향·하천망·계산격자·토지피복·토양·토심 구축부터 단계별 프로젝트 작성·검증과 엔진 입력자료 생성까지 연결 |
 
 ### 별도 개발 중인 결과분석 프로그램
 

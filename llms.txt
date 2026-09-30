@@ -18,11 +18,11 @@ The public K-DRUM research record includes flood simulation with radar/grid rain
 The current v3.x generation extends the established hydrologic core toward an integrated modeling platform with:
 - 1D dynamic-wave river-network hydraulics
 - branched and merged river networks
-- bidirectional 1D-2D river-floodplain exchange
+- bidirectional 1D-2D river-floodplain exchange, including the current dynamic-wave 1D–local-inertial 2D development path
 - 2D flood-inundation analysis
 - hydraulic structures and reservoir-operation scenarios
 - high-resolution terrain and channel-geometry processing
-- K-DRUM InputStudio for project authoring
+- K-DRUM InputStudio for spatial-input construction, guided project authoring and prechecks
 - K-DRUM FloodViewer for result visualization
 - K-DRUM Estuary2DV as a separate estuary hydrodynamics and salinity research prototype
 

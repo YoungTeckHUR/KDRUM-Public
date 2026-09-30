@@ -42,6 +42,7 @@ Publicly describable capabilities include:
 - established kinematic-wave channel discharge routing
 - river infiltration / exchange with deeper storage
 - cross-section and river-geometry preparation
+- measured cross-section shape preservation with longitudinal bed-elevation placement
 - high-resolution terrain processing and ChannelBed development
 
 ## 4. Water balance, calibration and result QA
@@ -65,6 +66,7 @@ The optimization path supports observation-based case comparison and multiple pe
 Current hydraulic development includes:
 
 - cross-section-based one-dimensional dynamic-wave river-network analysis
+- measured/virtual cross-section geometry with longitudinal bed-elevation alignment
 - branch / confluence river hydraulics
 - hydraulic structures
 - dam / reservoir operation rules and release-component handling
@@ -84,7 +86,7 @@ Current development includes:
 - direct rainfall, drainage and hydraulic-structure interaction
 - two-dimensional particle / material-tracking analysis support
 
-The one-dimensional/two-dimensional exchange path has a **validated-development** boundary from controlled testing; this is not universal basin certification.
+The current Core development path includes bidirectional dynamic-wave 1D–local-inertial 2D exchange. Its public status remains **validated development** based on controlled functional and transfer-accounting tests; this is not universal basin certification or observation-based accuracy validation.
 
 One-way transfer, diagnostic and two-way feedback paths must be distinguished for each run. Multi-resolution patches retain source-terrain resolution against a grouped, coarser background; they do not create finer terrain information than the input.
 
@@ -108,7 +110,7 @@ The wider K-DRUM environment includes:
 
 - serial, OpenMP and MPI execution tracks
 - NetCDF-based integrated result output
-- InputStudio project authoring and input-data checks
+- InputStudio spatial-input construction (DEM/hydrology/calculation grid/land cover/soil/depth), guided project authoring, input-data checks and controlled engine-input generation
 - FloodViewer map/time-series result analysis
 - **1D River Hydraulics Results Viewer** — a separate program for longitudinal/cross-section results and water-level/discharge time series; under development and **not yet published to the public GitHub repositories**
 

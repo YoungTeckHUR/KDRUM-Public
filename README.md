@@ -4,7 +4,7 @@
 
 K-DRUM is K-water's physically based, grid-based distributed rainfall-runoff model. It has an established public research record and is currently maintained in a **v3.x** development line that extends rainfall-runoff simulation toward one-dimensional river hydraulics, river-floodplain interaction, two-dimensional flood-inundation analysis, project authoring, and result visualization.
 
-K-DRUM은 K-water가 개발해 온 **물리적 기반의 격자단위 분포형 강우유출모형**입니다. 공개 연구성과와 확립된 강우유출 해석기능을 기반으로, 현행 v3.x 체계에서는 1차원 하천수리해석, 하천-홍수터 연계, 2차원 홍수범람해석, 입력자료 작성과 결과분석 기능을 함께 확장하고 있습니다.
+K-DRUM은 K-water가 개발해 온 **물리적 기반의 격자단위 분포형 강우유출모형**입니다. 공개 연구성과와 확립된 강우유출 해석기능을 기반으로, 현행 v3.x 체계에서는 1차원 하천수리해석, 하천-홍수터 연계, 2차원 홍수범람해석, 공간입력 구축·프로젝트 작성과 결과분석 기능을 함께 확장하고 있습니다.
 
 - Public website: https://youngteckhur.github.io/KDRUM-Public/
 - Korean page: https://youngteckhur.github.io/KDRUM-Public/ko/
@@ -33,12 +33,12 @@ Public K-DRUM research supports the following high-level capabilities:
 The current generation builds on the established rainfall-runoff core and organizes K-DRUM as a connected analysis environment:
 
 - **K-DRUM Core** — distributed rainfall-runoff, river-hydraulic and flood-inundation simulation engine
-- **K-DRUM InputStudio** — project configuration, time series, terrain, river geometry, hydraulic structures, scenarios, consistency checks, and engine-input generation
+- **K-DRUM InputStudio** — spatial-input construction, guided project authoring, time series, terrain/river geometry, hydraulic structures, scenarios, consistency checks, and controlled engine-input generation
 - **K-DRUM FloodViewer** — integrated map and time-series analysis of hydrologic and hydraulic simulation results
 - **1D River Hydraulics Results Viewer** — separate viewer for longitudinal/cross-section results and water-level/discharge time series; under development and **not yet published to the public GitHub repositories**
 - **K-DRUM ChannelBed** — reusable high-resolution terrain, river-geometry, and virtual channel-bed processing
 
-Current hydraulic extensions include cross-section-based one-dimensional dynamic-wave river-network analysis, branch/confluence hydraulics, bidirectional one-dimensional/two-dimensional river-floodplain exchange, two-dimensional flood-inundation analysis, hydraulic structures, and reservoir-operation scenarios. Water-balance accounting, InputStudio authoring/checks and result viewers are presented as connected parts of the analysis workflow. These components have different validation levels; see [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) for the public maturity boundary.
+Current hydraulic extensions include measured/virtual cross-section-based one-dimensional dynamic-wave river-network analysis, branch/confluence hydraulics, the integrated dynamic-wave 1D–local-inertial 2D bidirectional development path, two-dimensional flood-inundation analysis, hydraulic structures, and reservoir-operation scenarios. Water-balance accounting, InputStudio authoring/checks and result viewers are presented as connected parts of the analysis workflow. These components have different validation levels; see [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) for the public maturity boundary.
 
 ## Research extensions
 
@@ -92,4 +92,4 @@ The current canonical expansion used by this public site is **K-water Grid-based
 ---
 
 **Canonical model name:** K-DRUM  
-**Current public baseline:** v3.x / September 2026
+**Current public baseline:** v3.x / October 2026

@@ -31,11 +31,11 @@ The current development direction broadens the model from watershed rainfall-run
 4. **High-resolution terrain and river geometry**
    - terrain
    - river alignment
-   - cross sections
+   - cross sections with measured-shape preservation and longitudinal bed-elevation placement
    - channel-bed generation
 
 5. **Input preparation, result output and analysis programs**
-   - InputStudio
+   - InputStudio spatial-input construction, guided project authoring and prechecks
    - NetCDF-centered result output
    - FloodViewer
    - separate 1D River Hydraulics Results Viewer (under development; not yet published to the public GitHub repositories)

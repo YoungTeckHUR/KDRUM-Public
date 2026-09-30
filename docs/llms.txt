@@ -24,11 +24,11 @@ Publicly documented application themes:
 Current v3.x platform direction:
 - 1D dynamic-wave river-network hydraulics
 - branched and merged networks
-- bidirectional 1D-2D river-floodplain exchange
+- bidirectional 1D-2D river-floodplain exchange, including the current dynamic-wave 1D–local-inertial 2D development path
 - 2D flood-inundation analysis
 - hydraulic structures and reservoir-operation scenarios
 - high-resolution terrain and channel geometry
-- InputStudio project authoring
+- InputStudio spatial-input construction, guided project authoring and prechecks
 - FloodViewer result visualization
 - Estuary2DV as a separate estuary hydrodynamics and salinity research prototype
 

@@ -53,8 +53,8 @@
       "id": "platform",
       "ko": "입력·실행·결과도구",
       "en": "Input, execution & result tools",
-      "descKo": "InputStudio의 입력자료 작성·점검, 병렬실행, NetCDF 출력과 결과 Viewer를 하나의 사용자 작업흐름으로 연결합니다.",
-      "descEn": "Connect InputStudio authoring and checks, execution modes, NetCDF output and result viewers as one user workflow."
+      "descKo": "InputStudio의 공간입력 구축·프로젝트 작성·점검, 병렬실행, NetCDF 출력과 결과 Viewer를 하나의 사용자 작업흐름으로 연결합니다.",
+      "descEn": "Connect InputStudio spatial-input construction, project authoring and checks, execution modes, NetCDF output and result viewers as one user workflow."
     }
   ],
   "items": [
@@ -178,8 +178,8 @@
       "v": "checklist",
       "ko": "입력자료 사전점검·정합성",
       "en": "Input precheck & consistency",
-      "sumKo": "입력 사전점검은 공간·시간·연결성·범위 오류를 실행 전에 줄이기 위해 확장 중인 점검 체계입니다.",
-      "sumEn": "Input prechecks are under development to reduce spatial, temporal, connectivity and range errors before simulation.",
+      "sumKo": "입력 사전점검은 공간·시간·연결성·범위 오류와 프로젝트 구축 완료상태를 실행 전에 확인하도록 확장 중인 점검 체계입니다.",
+      "sumEn": "Input prechecks are under development to verify spatial, temporal, connectivity and range consistency together with project-build readiness before simulation.",
       "stepsKo": [
         "입력자료",
         "정합성 검사",
@@ -190,10 +190,10 @@
         "consistency checks",
         "run readiness"
       ],
-      "nowKo": "입력 사전점검은 K-DRUM과 InputStudio에서 입력자료의 일관성을 확인하는 기능으로 개발 중입니다.",
-      "nowEn": "Input prechecks remain in development as consistency checking is integrated across the K-DRUM simulation engine and InputStudio.",
-      "detailKo": "공간·시간 범위뿐 아니라 하천·격자의 연결성과 값의 범위를 검사합니다. InputStudio에서 프로젝트를 작성한 뒤에도 실제 모의에 사용할 입력자료의 공간·시간·연결성·값 범위를 다시 확인합니다.",
-      "detailEn": "Checks cover connectivity and value ranges as well as spatial and temporal extent. A project prepared in InputStudio still needs a final consistency check for the model setup that will be run.",
+      "nowKo": "입력 사전점검은 K-DRUM과 InputStudio에서 엔진 입력 적합성과 실제 프로젝트 구축 완료상태를 구분해 확인하는 기능으로 개발 중입니다.",
+      "nowEn": "Input prechecks remain in development to distinguish engine-input validity from actual project-build completeness across K-DRUM and InputStudio.",
+      "detailKo": "공간·시간 범위, 하천·격자 연결성, 값 범위와 필수 구성요소를 점검합니다. InputStudio의 단계별 구축상태는 파일이 읽힌다는 사실만으로 완료로 보지 않으며, 임시·미확정 자료와 실제 모의에 사용할 확정 자료를 구분해 최종 입력자료 생성 전 다시 확인합니다.",
+      "detailEn": "Checks cover spatial and temporal extent, river/grid connectivity, value ranges and required components. InputStudio does not treat a parseable file or provisional object as a completed basin setup; provisional and confirmed physical data are distinguished before final model-input generation.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -781,8 +781,8 @@
       "v": "dwnet",
       "ko": "1D 하천망 수리 해석",
       "en": "1D river-network hydraulics",
-      "sumKo": "횡단면 기반 하천망의 수위·유량을 계산하며, 국부관성파와 동역학파 계산 경로를 구분합니다.",
-      "sumEn": "Compute stage and discharge on a cross-section-based river network, with distinct local-inertial and dynamic-wave solver paths.",
+      "sumKo": "실측·가상 횡단면 기반 하천망의 수위·유량을 계산하며, 국부관성파와 동역학파 계산 경로를 구분합니다.",
+      "sumEn": "Compute stage and discharge on a measured/virtual cross-section river network, with distinct local-inertial and dynamic-wave solver paths.",
       "stepsKo": [
         "하천망·횡단면",
         "선택한 1D 수리 해석",
@@ -793,10 +793,10 @@
         "selected 1D hydraulic solver",
         "Q + WL"
       ],
-      "nowKo": "1D 동역학파 하천망은 신뢰성과 네트워크 연계성을 검증하며 개발 중입니다.",
-      "nowEn": "The 1D dynamic-wave river network remains in development, with reliability and network-integration verification continuing.",
-      "detailKo": "하천 구간의 횡단면과 연결 관계를 계산망으로 구성합니다. 국부관성파 경로는 국부가속도·수면경사·마찰을 다루고, vNext 동역학파 경로는 이류 운동량 플럭스까지 포함합니다. DWNET이라는 이름이나 음해 시간적분만으로 동역학파 해석 여부를 판단하지 않습니다.",
-      "detailEn": "Cross sections and reach connections define the computational network. Local-inertial paths retain local acceleration, water-surface gradients and friction; the vNext dynamic-wave path also includes advective momentum flux. Neither the DWNET name nor implicit time integration alone identifies a dynamic-wave calculation.",
+      "nowKo": "1D 동역학파 하천망은 실측 횡단면의 형상 보존과 종단 하상고 정합을 포함해 실제 하천망 계산의 신뢰성과 연계성을 검증하며 개발 중입니다.",
+      "nowEn": "The 1D dynamic-wave river network remains in development, including verification of measured-section shape preservation, longitudinal bed placement, reliability and network integration.",
+      "detailKo": "실측 횡단면 X-Z 자료의 상대 형상은 보존하고 각 수리 계산지점의 종단 하상고를 기준으로 수직 위치를 정합합니다. 단면 자체를 임의로 평활화하거나 폭을 바꾸는 방식과 구분합니다. 국부관성파 경로는 국부가속도·수면경사·마찰을 다루고, 동역학파 경로는 이류 운동량 플럭스까지 포함합니다. DWNET이라는 이름이나 음해 시간적분만으로 동역학파 해석 여부를 판단하지 않습니다.",
+      "detailEn": "Measured X-Z sections preserve their relative cross-section shape while vertical placement is aligned to the longitudinal bed elevation at each hydraulic cell. This is distinct from arbitrarily smoothing a section or changing its width. Local-inertial paths retain local acceleration, water-surface gradients and friction; the dynamic-wave path also includes advective momentum flux. Neither the DWNET name nor implicit time integration alone identifies a dynamic-wave calculation.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
@@ -961,15 +961,15 @@
         "overflow and return flow at a common interface",
         "bidirectional exchange applied to both domains"
       ],
-      "nowKo": "양방향 1D-2D 교환은 통제된 시험조건에서 확인된 개발·검증 중 기능입니다. 다른 유역·조건에는 별도 검증이 필요합니다.",
-      "nowEn": "Bidirectional 1D-2D exchange has been demonstrated in controlled development validation, without universal basin applicability or production certification.",
+      "nowKo": "현행 Core에는 1D 동역학파–2D 국부관성파 양방향 개발경로가 통합되어 있으며, 통제된 시험에서 양방향 교환과 교환량 물수지가 확인되었습니다. 유역별 전기간·정확도 검증은 별도로 필요합니다.",
+      "nowEn": "The current Core includes the bidirectional dynamic-wave 1D–local-inertial 2D development path. Controlled validation has confirmed two-way exchange and transfer accounting, while basin-specific full-period and accuracy validation remain separate.",
       "detailKo": "교환경계에서 산정한 월류·복귀유량으로 두 영역의 상태를 연결합니다. 단방향 전달과 양방향 교환은 서로 다른 방식이므로, 선택한 연계 방식에서 하천과 범람원의 상호작용이 어떻게 반영되는지 확인합니다.",
       "detailEn": "Overflow and return fluxes at the interface connect the domain states. One-way and diagnostic-only paths also exist; confirm that the selected mode actually applies feedback.",
       "diagram": "river-floodplain",
       "diagramCaptionKo": "개념도: 하천–범람원 경계의 화살표는 월류와 복귀유량의 두 방향을 나타냅니다. 통제된 시험조건에서 검토한 교환 개념이며 실제 유역 결과가 아닙니다.",
       "diagramCaptionEn": "Process-family schematic: arrows at the river–floodplain interface show overflow and return flow. This illustrates exchange with controlled development validation, not real-basin results.",
-      "moreKo": "최근 섬진강 부분기간 시험에서 1D 동역학파–2D 국부관성파 및 1D·2D 국부관성파 조합의 월류·복귀 교환을 확인했습니다. 각 시험의 수렴·수용 조건이 다르며, 전기간 완료와 관측자료를 이용한 정확도 검증은 별도로 확인해야 합니다.",
-      "moreEn": "Recent partial-period Seomjin tests demonstrated overflow and return flow for dynamic-wave 1D with local-inertial 2D, and for local-inertial 1D with local-inertial 2D. Acceptance and convergence conditions differ between tests; full-period completion and accuracy against observations require separate verification."
+      "moreKo": "현행 Core의 1D 동역학파–2D 국부관성파 양방향 경로에서 실제 1D→2D 및 2D→1D 교환과 교환량 보존을 개발검증으로 확인했습니다. 이는 기능적 연계 확인을 의미하며, 전기간 완료·관측자료 기반 정확도·모든 유역의 적용성 인증을 뜻하지 않습니다.",
+      "moreEn": "Development validation of the current dynamic-wave 1D–local-inertial 2D path has confirmed actual 1D→2D and 2D→1D exchange together with consistent transfer accounting. This is functional coupling evidence, not full-period completion, observation-based accuracy validation or universal basin certification."
     },
     {
       "id": "local-inertia",
@@ -1294,8 +1294,8 @@
       "v": "studio",
       "ko": "InputStudio 입력자료 작성·점검",
       "en": "InputStudio input authoring & checks",
-      "sumKo": "지형·강우·하천망·횡단면·구조물·경계조건과 모의조건을 프로젝트로 구성하고 실행 전 정합성을 점검합니다.",
-      "sumEn": "Assemble terrain, rainfall, river networks, cross sections, structures, boundary conditions and simulation settings into a project and check consistency before a run.",
+      "sumKo": "DEM·흐름방향·하천망·계산격자·토지피복·토양·토심을 구축하고, 강우·하천수리·구조물·모의조건을 프로젝트로 연결해 실행 전 정합성을 점검합니다.",
+      "sumEn": "Build DEM-derived hydrologic and calculation-grid inputs, land cover, soil and depth, then connect forcing, river hydraulics, structures and simulation settings into a checked project.",
       "stepsKo": [
         "원자료",
         "프로젝트 작성·점검",
@@ -1306,15 +1306,15 @@
         "project authoring + checks",
         "K-DRUM inputs"
       ],
-      "nowKo": "InputStudio는 프로젝트 입력 작성과 사전검사를 통합하는 개발 단계입니다.",
-      "nowEn": "InputStudio remains in development to integrate project-input authoring and prechecks.",
-      "detailKo": "InputStudio는 원자료를 K-DRUM 계산 프로젝트로 바꾸는 작업환경입니다. 계산영역과 공간자료를 준비하고, 강우·시계열과 하천망·횡단면·구조물·경계조건·시나리오를 연결한 뒤 좌표·시간·연결성·범위 오류를 점검하고 K-DRUM 입력자료를 생성합니다. 계산 후 결과 분석은 FloodViewer 등 결과 분석 도구와 구분합니다.",
-      "detailEn": "InputStudio is the project-authoring environment that turns source data into K-DRUM simulation inputs. It prepares the computational domain and spatial data, connects rainfall and time series with river networks, cross sections, structures, boundaries and scenarios, checks spatial, temporal, connectivity and value-range consistency, and generates K-DRUM input files. Result interpretation after a simulation remains a separate viewer task.",
+      "nowKo": "InputStudio는 공간입력 구축부터 단계별 프로젝트 작성·검증, K-DRUM 입력자료 생성까지 연결하는 개발 단계입니다.",
+      "nowEn": "InputStudio is in active development as an environment connecting spatial-input construction, guided project authoring and validation, and K-DRUM input generation.",
+      "detailKo": "독립 공간입력 경로는 원자료 점검과 DEM 전처리에서 유역·흐름방향·하천망, K-DRUM 계산격자, 토지피복·토양·토심까지 생성하고 검증된 산출물의 계보와 정합성을 확인해 프로젝트로 가져옵니다. 이후 강우·기상·검증자료, 하천망·횡단면·구조물·경계조건·1D–2D 연계와 시나리오를 연결하고 공간·시간·연결성·값 범위를 점검합니다.",
+      "detailEn": "The independent spatial-input path proceeds from source-data checks and DEM preprocessing through basin/flow-direction/stream-network construction, the K-DRUM calculation grid, and land-cover, soil and depth inputs, then verifies accepted output lineage and consistency before project import. The project workflow then connects rainfall, meteorology and validation data with river networks, cross sections, structures, boundaries, 1D–2D coupling and scenarios, and checks spatial, temporal, connectivity and value-range consistency.",
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null,
-      "moreKo": "기준안(Base)과 시나리오를 분리해 입력을 준비합니다. 최근 공간입력 생성 코드에는 DEM 전처리, 흐름방향·하천망 구성과 계산격자 생성 경로가 추가되었습니다. 고해상도 흐름 연결을 계산격자로 축약하고 출구 연결성·흐름방향 코드·경사 단위를 검사합니다. 독립 공간처리 경로의 구현과 모든 기능의 GUI 통합 완료는 구분합니다.",
-      "moreEn": "Prepare inputs while keeping Base and scenarios separate. Recent spatial-input code adds DEM preprocessing, flow-direction and stream-network construction, and calculation-grid generation. It contracts high-resolution flow connectivity onto the calculation grid and checks outlet connectivity, direction codes and slope units. Implementation of this independent pipeline does not imply complete GUI integration.",
+      "moreKo": "단계별 구축 흐름은 공간격자·유출경로, 강우, 기상·증발산, 검증자료, 프로젝트 제어, 구조물, DWNET, 2D 국부관성/1D–2D 연계, 최종점검을 순차 확인합니다. 작업공간 저장과 실제 엔진 입력자료 생성을 구분하고, 기준안(Base)과 시나리오를 분리해 원본 입력이 의도치 않게 바뀌지 않도록 합니다. 계산 후 결과 분석은 현재 결과 Viewer 기능과 구분합니다.",
+      "moreEn": "The guided build checks spatial grids and flow paths, rainfall, meteorology/ET, validation data, project controls, structures, DWNET, 2D local-inertial/1D–2D coupling and final readiness in sequence. Workspace saving is separated from materializing engine inputs, and Base/scenario isolation protects the original setup from unintended changes. Post-run result interpretation remains distinct from the current result-viewer functions.",
       "searchTerms": "시나리오 scenario base domain face mask"
     },
     {
