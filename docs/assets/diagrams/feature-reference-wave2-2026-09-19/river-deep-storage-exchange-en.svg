@@ -13,7 +13,7 @@
 <rect x="615" y="195" width="525" height="410" rx="14" fill="#edf7f4" stroke="#83b9ae" stroke-width="2"/><text x="641" y="235" font-size="29" font-weight="700" fill="#173d59">Deep storage / D-layer balance</text>
 <rect x="675" y="310" width="405" height="135" rx="10" fill="#c7e3df" stroke="#83b9ae" stroke-width="2"/><text x="878" y="352" text-anchor="middle" font-size="25" font-weight="700" fill="#173d59">D-layer storage</text><text x="878" y="385" text-anchor="middle" font-size="18" fill="#486171">Transfer limited by available storage</text>
 <path d="M878 445V500" fill="none" stroke="#247eaa" stroke-width="3" marker-end="url(#arrow)"/><text x="903" y="480" font-size="19" font-weight="700" fill="#11695d">Delayed return</text>
-<text x="641" y="548" font-size="18" font-weight="600" fill="#486171">River loss ↔ deep-storage gain use the same transferred volume</text>
+<text x="878" y="538" text-anchor="middle" font-size="16" font-weight="600" fill="#486171">River loss ↔ deep-storage gain</text><text x="878" y="560" text-anchor="middle" font-size="16" font-weight="600" fill="#486171">use the same transferred volume</text>
 <text x="600" y="630" text-anchor="middle" font-size="18" font-weight="600" fill="#173d59">River infiltration links to D-layer storage/long-term runoff extensions; it is not full groundwater-flow simulation</text>
 <line x1="60" y1="663" x2="1140" y2="663" stroke="#d7e4ec" stroke-width="3"/>
 <text x="60" y="697" font-size="19" fill="#607789">Concept schematic · not calculated values or a software screenshot.</text>
