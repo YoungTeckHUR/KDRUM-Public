@@ -37,7 +37,7 @@ const wave2Concepts = {
  'river-viewer': ['river-result-views', '1D 결과를 종단면·횡단면과 수위·유량 시계열로 읽는 개념입니다. 뷰어는 별도 개발 중입니다.', 'The schematic shows longitudinal, cross-sectional and time-series views of 1D outputs. The viewer is under separate development.'],
  continuous: ['continuous-state-cycle', '강우가 없는 기간에도 저장상태를 이어가며 다음 강우에 대한 유역의 반응을 계산합니다.', 'Storage states carry through drier periods and influence the response to subsequent rainfall.'],
  hotstart: ['state-save-restart', '계산 중 저장한 모형 상태를 읽어 이후 시점의 모의를 이어가는 상태 저장·재시작 개념입니다.', 'Saved model states provide the starting point for a subsequent simulation.'],
- 'dam-operation': ['reservoir-operation', '저수지 상태와 운영규칙·구조물 조건을 이용해 방류를 하류 하천과 연결하는 개념입니다.', 'Reservoir state and operating constraints are linked to structure releases and downstream conditions.'],
+ 'dam-operation': ['reservoir-operation', '저수지 상태와 운영규칙·방류 제약을 이용해 방류를 하류 하천과 연결하는 개념입니다.', 'Reservoir state and operating constraints are linked to structure releases and downstream conditions.'],
  'dam-forecast': ['reservoir-scenario-assessment', '같은 예측조건에서 여러 방류대안의 저수지·하류 영향을 비교하는 개념입니다.', 'Alternative releases are compared under common forecast conditions for reservoir and downstream effects.'],
  'sed-hill': ['sediment-transport-pathways', '사면에서 발생한 유사가 하천으로 유입되어 이송·퇴적되는 연결을 보여줍니다.', 'Hillslope sediment is delivered to the river and then transported or deposited.'],
  dye: ['conservative-tracer-path', '상류에서 주입한 보존성 물질이 하류로 이동하고 지점별로 확인되는 과정을 보여줍니다.', 'A conservative tracer moves downstream and is reviewed at selected locations.']
