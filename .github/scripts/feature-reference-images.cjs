@@ -18,6 +18,10 @@ const wave2Directory = 'assets/diagrams/feature-reference-wave2-2026-09-19/';
 const wave2Concepts = {
  snow: ['snow-process', '강우·강설 구분, 적설 저장량, 경험적 융설계수 보정과 수문 입력의 관계입니다.', 'Precipitation partition, snow storage, empirical melt-factor adjustment and hydrologic input.'],
  dlayer: ['deep-storage-path', 'A/B/C/D 다층 구조에서 D층이 기존 지하수 저장층임을 확인하고, 지연 복귀와 선택적 심부 손실을 구분합니다.', 'The A/B/C/D structure shows D as the existing groundwater-storage layer and separates delayed return from optional deep loss.'],
+ 'rain-spatial': ['rainfall-spatial-forcing', '관측소 강우는 IDW로, 레이더·격자 강우는 공간정보를 맞춰 계산격자의 강우 입력으로 연결합니다.', 'Station rainfall uses IDW, while radar/gridded fields are spatially aligned to model-cell forcing.'],
+ channelbed: ['channelbed-terrain', 'DEM·중심선·추가 단면이 제공하는 범위에서 저수로·하상을 보완하고 높이 기준과 연결성을 확인합니다.', 'Low-flow and bed geometry are supplemented only where supported by DEM, centerline and section data, with datum and continuity checks.'],
+ structures: ['hydraulic-structure-interface', '월류와 게이트·개구부 흐름을 구분하고 산정 유량을 상·하류 1D/2D 계산에 전달하는 개념입니다.', 'Crest overflow and gate/opening flow are distinguished before calculated discharge is passed to adjoining 1D/2D domains.'],
+ 'river-infil': ['river-deep-storage', '하천에서 D층으로 이동하는 물을 가용 하천수·침투가능량·저장여유로 제한하고 두 영역 물수지에 반영합니다.', 'River-to-D-layer transfer is limited by available river water, infiltration capacity and storage space and accounted for in both domains.'],
  continuous: ['continuous-water-storage', '강우가 없는 기간에도 저장상태를 이어가며 다음 강우에 대한 유역의 반응을 계산합니다.', 'Storage states carry through drier periods and influence the response to subsequent rainfall.'],
  'river-infil': ['riverbed-deep-storage', '하천에서 심부 저장층으로 이동하는 물을 보여줍니다. 실제 이동량에는 침투가능량과 저장여유의 제한이 적용됩니다.', 'The illustration shows transfer from a river into deeper storage. Transfer is constrained by infiltration capacity and available storage.'],
  dwnet: ['river-network-hydraulics', 'Reach, 분기·합류와 횡단면을 한 하천망에서 연결하여 수위와 유량을 함께 해석하는 개념입니다.', 'Reaches, branches, confluences and cross sections are linked to analyze water level and discharge across one river network.'],
@@ -34,7 +38,7 @@ const wave2Concepts = {
  multires: ['nested-grid-patch', '원지형 격자를 묶은 배경과 원해상도를 유지한 관심영역(Patch)의 관계입니다. 입력보다 세밀한 지형정보를 생성하지 않습니다.', 'Background cells group source-terrain cells while patches retain source resolution; no finer terrain data is created.'],
  'river-viewer': ['river-result-views', '1D 결과를 종단면·횡단면과 수위·유량 시계열로 읽는 개념입니다. 뷰어는 별도 개발 중입니다.', 'The schematic shows longitudinal, cross-sectional and time-series views of 1D outputs. The viewer is under separate development.']
 };
-const schematicIds=new Set(['input-precheck','rain-summary','warmup','wb','optimization','output-integrity','multires','river-viewer','snow','dlayer','dwnet','coupling','local-inertia']);
+const schematicIds=new Set(['input-precheck','rain-summary','warmup','wb','optimization','output-integrity','multires','river-viewer','snow','dlayer','rain-spatial','channelbed','structures','river-infil','dwnet','coupling','local-inertia']);
 Object.assign(concepts,wave2Concepts);
 // Shared references stay links, preserving one representative inline illustration.
 const linkedConcepts={
