@@ -20,7 +20,10 @@ const requiredLabels={
  'nested-grid-patch':{ko:['원지형 격자','배경 병합 · 관심영역 유지'],en:['Source terrain grid','Grouped background · retained patch']},
  'snow-process':{ko:['강우·강설 구분','융설계수 보정','적설 저장량 · 융설'],en:['Rain / snow partition','Melt adjustment','Snow storage / melt']},
  'deep-storage-path':{ko:['D층 저장','상부 토양층 경로','선택적 심부 손실'],en:['D-layer storage','Upper soil-layer path','Optional deep loss']},
- 'river-result-views':{ko:['종단면','횡단면','시계열','η₀','t₀'],en:['Longitudinal profile','Cross section','Time series','η₀','t₀']}
+ 'river-result-views':{ko:['종단면','횡단면','시계열','η₀','t₀'],en:['Longitudinal profile','Cross section','Time series','η₀','t₀']},
+ 'river-network-hydraulics':{ko:['하천망','합류','분기','수위 η','유량 Q'],en:['River network','Confluence','Branch','Water level η','Discharge Q']},
+ 'river-floodplain-coupling':{ko:['1D 하천','2D 범람원','월류','복귀'],en:['1D river','2D floodplain','Overflow','Return flow']},
+ 'local-inertia-grid':{ko:['2D 계산격자','수심 h','격자면 유량 q','3 · 수심 h 갱신'],en:['2D computational grid','depth h','face discharge q','3 · update depth h']}
 };
 async function run(browser,base,out){
  const destination=path.join(out,'schematics');fs.mkdirSync(destination,{recursive:true});
