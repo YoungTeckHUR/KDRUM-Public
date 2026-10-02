@@ -36,7 +36,7 @@ const wave2Concepts = {
  multires: ['nested-grid-patch', '원지형 격자를 묶은 배경과 원해상도를 유지한 관심영역(Patch)의 관계입니다. 입력보다 세밀한 지형정보를 생성하지 않습니다.', 'Background cells group source-terrain cells while patches retain source resolution; no finer terrain data is created.'],
  'river-viewer': ['river-result-views', '1D 결과를 종단면·횡단면과 수위·유량 시계열로 읽는 개념입니다. 뷰어는 별도 개발 중입니다.', 'The schematic shows longitudinal, cross-sectional and time-series views of 1D outputs. The viewer is under separate development.']
 };
-const schematicIds=new Set(['rain-spatial','input-precheck','rain-summary','warmup','wb','optimization','output-integrity','multires','river-viewer','snow','dlayer','river-infil','channelbed','dwnet','structures','coupling','local-inertia']);
+const schematicIds=new Set(['rain-spatial','input-precheck','rain-summary','warmup','wb','optimization','output-integrity','multires','river-viewer','snow','continuous','hotstart','dlayer','river-infil','channelbed','dwnet','structures','dam-operation','dam-forecast','coupling','local-inertia','sed-hill','dye']);
 Object.assign(concepts,wave2Concepts);
 // Shared references stay links, preserving one representative inline illustration.
 const linkedConcepts={
