@@ -135,7 +135,7 @@ function diagram(name,lang){
   body+='<path d="M700 405 L785 370 L845 388 L895 472 L945 505 L995 472 L1045 388 L1100 405" fill="none" stroke="#967b59" stroke-width="6"/>';
   body+=line(700,405,1100,405,'#78bfdc')+text(900,438,L('수면','Water surface'),18,600,'middle','#247eaa');
   body+=text(945,535,L('저수로·하상 보완','Supplemented low-flow channel'),20,700,'middle','#11695d');
-  body+=rect(720,555,370,45,'#fff6e7','#e6bf7d',8)+(lang==='ko'?text(905,584,'측량 원자료와 보완 지형을 구분',17,600,'middle','#75470f'):(text(905,573,'Keep survey source and',14,600,'middle','#75470f')+text(905,587,'supplemented terrain distinct',14,600,'middle','#75470f')));
+  body+=rect(720,555,370,45,'#fff6e7','#e6bf7d',8)+(lang==='ko'?text(905,584,'측량 원자료와 보완 지형을 구분',17,600,'middle','#75470f'):(text(905,573,'Keep survey source and',14,600,'middle','#75470f')+text(905,584,'supplemented terrain distinct',13,600,'middle','#75470f')));
   body+=text(600,630,L('목적: 1D/2D 수리해석에 사용할 하상·저수로 형상을 더 일관되게 준비','Purpose: prepare consistent channel-bed and low-flow geometry for 1D/2D hydraulics'),19,600,'middle');
   return frame(name,lang,L('DEM과 수리해석용 ChannelBed','DEM and hydraulic ChannelBed terrain'),L('DEM으로 부족한 수중 하상·저수로 형상을 추가 자료로 보완합니다.','Supplement submerged channel-bed geometry that a surface DEM may not resolve.'),body);
  }
