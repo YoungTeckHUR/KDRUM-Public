@@ -239,17 +239,17 @@ function diagram(name,lang){
   return frame(name,lang,L('예측 기반 저수지 운영대안 비교','Forecast-based reservoir scenario comparison'),L('같은 예측조건에서 여러 방류대안의 저수지·하류 영향을 비교합니다.','Compare reservoir and downstream effects of alternative releases under common forecast conditions.'),body);
  }
  if(name==='sediment-transport-pathways'){
-  let body=rect(60,205,320,365,'#f5f9fb','#aac7d7',14)+text(86,245,L('사면 유사 발생','Hillslope sediment source'),27,700);
+  let body=rect(60,205,320,365,'#f5f9fb','#aac7d7',14)+text(86,245,L('사면 유사 발생','Hillslope sediment source'),lang==='ko'?27:21,700);
   body+='<path d="M100 430 L185 300 L340 430 Z" fill="#e7dcc6" stroke="#a98f6a" stroke-width="3"/>';
   body+=route('M175 340C210 360 245 382 300 410')+text(132,322,L('침식·이동','Erosion / movement'),18,700,'start','#75470f');
   body+=rect(105,455,230,62,'#fff6e7','#e6bf7d',8)+text(220,493,L('유사 공급량','Sediment supply'),19,700,'middle');
   body+=line(395,390,430,390,'#247eaa',true);
-  body+=rect(445,205,320,365,'#edf7f4','#83b9ae',14)+text(471,245,L('하천 유입·이송','Delivery and river transport'),25,700);
+  body+=rect(445,205,320,365,'#edf7f4','#83b9ae',14)+text(471,245,L('하천 유입·이송','Delivery and river transport'),lang==='ko'?25:20,700);
   body+='<path d="M490 410 C555 360 625 360 720 420" fill="none" stroke="#78bfdc" stroke-width="28" stroke-linecap="round"/>';
   body+=route('M520 393C575 360 635 370 690 405')+text(605,337,L('흐름에 따라 하류 이동','Move downstream with flow'),18,700,'middle','#11695d');
   body+=text(605,470,L('하천 유사이송과 연결','Link to river sediment transport'),18,600,'middle','#486171');
   body+=line(780,390,815,390,'#247eaa',true);
-  body+=rect(830,205,310,365,'#f5f9fb','#aac7d7',14)+text(856,245,L('퇴적·통과','Deposition / onward transport'),25,700);
+  body+=rect(830,205,310,365,'#f5f9fb','#aac7d7',14)+text(856,245,L('퇴적·통과','Deposition / onward transport'),lang==='ko'?25:18,700);
   body+='<path d="M870 390 C920 360 1010 360 1100 405" fill="none" stroke="#78bfdc" stroke-width="24" stroke-linecap="round"/>';
   body+='<path d="M920 438 Q985 402 1055 438 Q985 458 920 438Z" fill="#d6b47a" stroke="#a98f6a" stroke-width="2"/>';
   body+=text(987,475,L('퇴적 가능 구간','Potential deposition reach'),18,700,'middle','#75470f')+text(987,510,L('남은 유사는 하류로 전달','Remaining load continues downstream'),16,500,'middle','#486171');
