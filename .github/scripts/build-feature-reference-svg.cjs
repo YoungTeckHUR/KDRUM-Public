@@ -159,7 +159,7 @@ function diagram(name,lang){
     [L('3 · 수심 h 갱신','3 · update depth h'),L('유입 − 유출로 셀 저장량 갱신','Update cell storage from inflow − outflow'),'#fff6e7']
   ];
   steps.forEach((row,i)=>{const y=285+i*92;body+=rect(650,y,460,72,row[2],'#d4e1e8',10)+text(674,y+29,row[0],21,700)+text(674,y+56,row[1],17,500,'start','#486171');if(i<2)body+=route('M880 '+(y+76)+'V'+(y+88));});
-  body+=text(646,555,L('이류가속도는 생략 · 국부관성·수면경사·마찰은 반영','Advective acceleration omitted; local inertia, water-surface slope and friction retained'),18,600,'start','#75470f');
+  body+=text(646,548,L('이류가속도 생략','Advective acceleration omitted'),18,600,'start','#75470f')+text(646,572,L('국부관성·수면경사·마찰 반영','Local inertia, surface slope and friction retained'),18,600,'start','#75470f');
   body+=text(600,625,L('공간 격자에서 q를 먼저 갱신하고, 그 유입·유출로 h를 갱신하는 범람해석 개념','Update face q, then update cell h from the resulting inflow and outflow'),20,600,'middle');
   return frame(name,lang,L('2D Local Inertia 격자 계산 개념','2D Local Inertia grid-update concept'),L('셀 수심 h와 격자면 단위폭 유량 q를 시간에 따라 갱신합니다.','Cell depth h and face unit-width discharge q are advanced through time.'),body);
  }
