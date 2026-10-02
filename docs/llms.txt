@@ -1,6 +1,6 @@
 # K-DRUM
 
-K-DRUM stands for K-water Grid-based Distributed Rainfall rUnoff Model.
+K-DRUM stands for K-water Distributed Rainfall-runoff Model.
 
 K-DRUM is K-water's established physically based, grid-distributed hydrologic model for rainfall-runoff simulation and watershed analysis.
 
