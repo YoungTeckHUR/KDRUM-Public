@@ -10,7 +10,7 @@
 <rect x="88" y="280" width="120" height="88" rx="10" fill="#e8f3f9" stroke="#aac7d7" stroke-width="2"/><text x="148" y="318" text-anchor="middle" font-size="21" font-weight="700" fill="#173d59">관측소</text><text x="148" y="347" text-anchor="middle" font-size="17" fill="#486171">시계열</text>
 <rect x="235" y="280" width="120" height="88" rx="10" fill="#e9f5ef" stroke="#83b9ae" stroke-width="2"/><text x="295" y="318" text-anchor="middle" font-size="21" font-weight="700" fill="#173d59">레이더</text><text x="295" y="347" text-anchor="middle" font-size="17" fill="#486171">강우장</text>
 <rect x="88" y="395" width="267" height="88" rx="10" fill="#fff6e7" stroke="#e6bf7d" stroke-width="2"/><text x="221" y="433" text-anchor="middle" font-size="21" font-weight="700" fill="#173d59">격자 강우자료</text><text x="221" y="462" text-anchor="middle" font-size="17" fill="#75470f">공간·시간 기준 확인</text>
-<text x="86" y="546" font-size="18" font-weight="600" fill="#486171">자료형식에 따라 공간 연결 방식이 다름</text>
+<text x="221" y="538" text-anchor="middle" font-size="17" font-weight="600" fill="#486171">자료형식별 공간 연결</text><text x="221" y="562" text-anchor="middle" font-size="17" font-weight="600" fill="#486171">방식이 다름</text>
 <line x1="405" y1="392" x2="460" y2="392" stroke="#247eaa" stroke-width="3" marker-end="url(#arrow)"/>
 <rect x="475" y="195" width="300" height="405" rx="14" fill="#edf7f4" stroke="#83b9ae" stroke-width="2"/><text x="501" y="235" font-size="29" font-weight="700" fill="#173d59">공간 배분·정합</text>
 <rect x="510" y="282" width="230" height="82" rx="10" fill="#fff" stroke="#d4e1e8" stroke-width="2"/><text x="625" y="315" text-anchor="middle" font-size="24" font-weight="700" fill="#173d59">IDW</text><text x="625" y="344" text-anchor="middle" font-size="18" fill="#486171">관측소 → 격자</text>
