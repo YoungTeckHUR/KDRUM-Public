@@ -31,7 +31,7 @@ const requiredLabels={
  'reservoir-operation':{ko:['저수지 상태','운영규칙·제약','방류와 하류영향'],en:['Reservoir state','Rules and constraints','Release and downstream']},
  'reservoir-scenario-assessment':{ko:['예측 유입·초기상태','운영대안 A / B / C','비교·검토'],en:['Forecast inflow + initial state','Operating alternatives A / B / C','Compare and review']},
  'sediment-transport-pathways':{ko:['사면 유사 발생','하천 유입·이송','퇴적·통과'],en:['Hillslope sediment source','Delivery and river transport','Deposition / onward transport']},
- 'conservative-tracer-path':{ko:['주입·초기조건','보존성 물질 이동','지점별 확인'],en:['Injection / initial condition','Conservative transport','Observation by location']},
+ 'conservative-tracer-path':{ko:['주입·초기조건','보존성 물질 이동','지점별 확인'],en:['Injection / initial','condition','Conservative transport','Observation points']},
 
  'river-floodplain-coupling':{ko:['1D 하천','2D 범람원','월류','복귀'],en:['1D river','2D floodplain','Overflow','Return flow']},
  'local-inertia-grid':{ko:['2D 계산격자','수심 h','격자면 유량 q','3 · 수심 h 갱신'],en:['2D computational grid','depth h','face discharge q','3 · update depth h']}
