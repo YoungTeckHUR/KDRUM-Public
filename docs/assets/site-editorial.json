@@ -66,11 +66,11 @@
       "id": "model-definition",
       "ko": {
         "question": "K-DRUM은 어떤 모형인가요?",
-        "answer": "K-DRUM은 K-water가 개발한 물리적 기반의 격자단위 분포형 강우유출모형입니다. 유역을 격자로 나누고 강우, 침투, 지표·지표하 유출과 하천 흐름을 계산합니다. 현재는 유역 수문과 하천·범람원 수리를 연계하는 방향으로 개발하고 있습니다. 공식 영문 명칭은 K-water Grid-based Distributed Rainfall rUnoff Model입니다."
+        "answer": "K-DRUM은 K-water가 개발한 물리적 기반의 격자단위 분포형 강우유출모형입니다. 유역을 격자로 나누고 강우, 침투, 지표·지표하 유출과 하천 흐름을 계산합니다. 현재는 유역 수문과 하천·범람원 수리를 연계하는 방향으로 개발하고 있습니다. 공식 영문 명칭은 K-water Distributed Rainfall-runoff Model입니다."
       },
       "en": {
         "question": "What is K-DRUM?",
-        "answer": "K-DRUM is a physically based, grid-distributed rainfall-runoff model developed by K-water. It represents a watershed as cells and calculates rainfall response, infiltration, surface/subsurface runoff and channel routing. Current development extends toward integrated watershed hydrology and river/floodplain hydraulics. Its canonical full name is K-water Grid-based Distributed Rainfall rUnoff Model."
+        "answer": "K-DRUM is a physically based, grid-distributed rainfall-runoff model developed by K-water. It represents a watershed as cells and calculates rainfall response, infiltration, surface/subsurface runoff and channel routing. Current development extends toward integrated watershed hydrology and river/floodplain hydraulics. Its canonical full name is K-water Distributed Rainfall-runoff Model."
       },
       "sources": [
         "model-card",
