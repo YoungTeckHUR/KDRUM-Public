@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+<title id="title">공간 강우 입력의 구성</title><desc id="desc">강우 원자료를 공간·시간 기준에 맞춰 계산격자별 입력으로 구성합니다. 개념도 · 실제 계산값 또는 프로그램 화면이 아닙니다.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#247eaa"/></marker></defs>
+<rect width="1200" height="720" fill="#fff"/><g font-family="Noto Sans CJK KR,Noto Sans KR,Malgun Gothic,Arial,sans-serif">
+<text x="60" y="43" font-size="18" font-weight="600" fill="#607f94">VISUAL CONCEPT</text>
+<text x="60" y="97" font-size="40" font-weight="700" fill="#173d59">공간 강우 입력의 구성</text>
+<text x="60" y="142" font-size="23" fill="#526d7e">강우 원자료를 공간·시간 기준에 맞춰 계산격자별 입력으로 구성합니다.</text>
+
+<rect x="60" y="195" width="330" height="405" rx="14" fill="#f5f9fb" stroke="#aac7d7" stroke-width="2"/><text x="86" y="235" font-size="29" font-weight="700" fill="#173d59">강우 원자료</text>
+<rect x="88" y="280" width="120" height="88" rx="10" fill="#e8f3f9" stroke="#aac7d7" stroke-width="2"/><text x="148" y="318" text-anchor="middle" font-size="21" font-weight="700" fill="#173d59">관측소</text><text x="148" y="347" text-anchor="middle" font-size="17" fill="#486171">시계열</text>
+<rect x="235" y="280" width="120" height="88" rx="10" fill="#e9f5ef" stroke="#83b9ae" stroke-width="2"/><text x="295" y="318" text-anchor="middle" font-size="21" font-weight="700" fill="#173d59">레이더</text><text x="295" y="347" text-anchor="middle" font-size="17" fill="#486171">강우장</text>
+<rect x="88" y="395" width="267" height="88" rx="10" fill="#fff6e7" stroke="#e6bf7d" stroke-width="2"/><text x="221" y="433" text-anchor="middle" font-size="21" font-weight="700" fill="#173d59">격자 강우자료</text><text x="221" y="462" text-anchor="middle" font-size="17" fill="#75470f">공간·시간 기준 확인</text>
+<text x="86" y="546" font-size="18" font-weight="600" fill="#486171">자료형식에 따라 공간 연결 방식이 다름</text>
+<line x1="405" y1="392" x2="460" y2="392" stroke="#247eaa" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="475" y="195" width="300" height="405" rx="14" fill="#edf7f4" stroke="#83b9ae" stroke-width="2"/><text x="501" y="235" font-size="29" font-weight="700" fill="#173d59">공간 배분·정합</text>
+<rect x="510" y="282" width="230" height="82" rx="10" fill="#fff" stroke="#d4e1e8" stroke-width="2"/><text x="625" y="315" text-anchor="middle" font-size="24" font-weight="700" fill="#173d59">IDW</text><text x="625" y="344" text-anchor="middle" font-size="18" fill="#486171">관측소 → 격자</text>
+<rect x="510" y="390" width="230" height="82" rx="10" fill="#fff" stroke="#d4e1e8" stroke-width="2"/><text x="625" y="423" text-anchor="middle" font-size="21" font-weight="700" fill="#173d59">레이더·격자</text><text x="625" y="451" text-anchor="middle" font-size="17" fill="#486171">좌표·해상도 정합</text>
+<text x="625" y="536" text-anchor="middle" font-size="18" font-weight="600" fill="#11695d">시간간격·단위·결측도 함께 확인</text>
+<line x1="790" y1="392" x2="845" y2="392" stroke="#247eaa" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="860" y="195" width="280" height="405" rx="14" fill="#f5f9fb" stroke="#aac7d7" stroke-width="2"/><text x="886" y="235" font-size="29" font-weight="700" fill="#173d59">계산격자 강우</text>
+<rect x="900" y="290" width="50" height="50" fill="#edf4ef" stroke="#fff" stroke-width="2"/><rect x="952" y="290" width="50" height="50" fill="#d9ebf2" stroke="#fff" stroke-width="2"/><rect x="1004" y="290" width="50" height="50" fill="#bfdfeb" stroke="#fff" stroke-width="2"/><rect x="1056" y="290" width="50" height="50" fill="#8fc7dd" stroke="#fff" stroke-width="2"/><rect x="900" y="342" width="50" height="50" fill="#d9ebf2" stroke="#fff" stroke-width="2"/><rect x="952" y="342" width="50" height="50" fill="#bfdfeb" stroke="#fff" stroke-width="2"/><rect x="1004" y="342" width="50" height="50" fill="#8fc7dd" stroke="#fff" stroke-width="2"/><rect x="1056" y="342" width="50" height="50" fill="#edf4ef" stroke="#fff" stroke-width="2"/><rect x="900" y="394" width="50" height="50" fill="#bfdfeb" stroke="#fff" stroke-width="2"/><rect x="952" y="394" width="50" height="50" fill="#8fc7dd" stroke="#fff" stroke-width="2"/><rect x="1004" y="394" width="50" height="50" fill="#edf4ef" stroke="#fff" stroke-width="2"/><rect x="1056" y="394" width="50" height="50" fill="#d9ebf2" stroke="#fff" stroke-width="2"/><rect x="900" y="446" width="50" height="50" fill="#8fc7dd" stroke="#fff" stroke-width="2"/><rect x="952" y="446" width="50" height="50" fill="#edf4ef" stroke="#fff" stroke-width="2"/><rect x="1004" y="446" width="50" height="50" fill="#d9ebf2" stroke="#fff" stroke-width="2"/><rect x="1056" y="446" width="50" height="50" fill="#bfdfeb" stroke="#fff" stroke-width="2"/>
+<text x="1004" y="530" text-anchor="middle" font-size="21" font-weight="700" fill="#173d59">격자별 강우 입력</text><text x="1004" y="560" text-anchor="middle" font-size="17" fill="#486171">실제 값은 입력자료에서 확인</text>
+<text x="600" y="630" text-anchor="middle" font-size="19" font-weight="600" fill="#173d59">관측소 공간배분은 IDW · 레이더/격자 강우는 공간좌표를 계산격자와 정합</text>
+<line x1="60" y1="663" x2="1140" y2="663" stroke="#d7e4ec" stroke-width="3"/>
+<text x="60" y="697" font-size="19" fill="#607789">개념도 · 실제 계산값 또는 프로그램 화면이 아닙니다.</text>
+</g></svg>
