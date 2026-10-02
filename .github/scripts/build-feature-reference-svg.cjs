@@ -169,6 +169,112 @@ function diagram(name,lang){
   return frame(name,lang,L('수리구조물의 유량 연결','Hydraulic-structure flow relations'),L('월류와 게이트 통과 흐름을 구조물 형식·제원·수위조건에 따라 구분합니다.','Distinguish overflow and gate flow using structure type, geometry and water levels.'),body);
  }
 
+
+ if(name==='continuous-state-cycle'){
+  let body=rect(60,205,320,365,'#f5f9fb','#aac7d7',14)+text(86,245,L('강우사상 A','Rain event A'),27,700);
+  body+=rect(95,295,250,54,'#dceef8','#8bbbd0',8)+text(220,329,L('강우·융설 입력','Rain / melt input'),19,700,'middle');
+  body+=route('M220 350V382');
+  body+=rect(95,390,250,125,'#e9f5ef','#83b9ae',10)+text(220,422,L('A/B/C/D 상태','A/B/C/D states'),22,700,'middle')+text(220,455,L('토양수분·저장량 갱신','Update soil water + storage'),17,500,'middle','#486171')+text(220,484,L('유출·기저유출 반응','Runoff / baseflow response'),17,500,'middle','#486171');
+  body+=line(390,390,425,390,'#247eaa',true);
+  body+=rect(440,205,320,365,'#fffaf0','#e6bf7d',14)+text(466,245,L('무강우·건기','Dry / no-rain period'),27,700);
+  body+=route('M600 300V265',true)+text(625,286,L('증발산','ET'),18,700,'start','#75470f');
+  body+=rect(475,330,250,155,'#edf7f4','#83b9ae',10)+(lang==='ko'?(text(600,366,'상태는 계속 유지·갱신',21,700,'middle')+text(600,404,'저장량 감소·재분배',17,500,'middle','#486171')+text(600,435,'D층·지연유출 연속성',17,500,'middle','#486171')+text(600,466,'다음 계산으로 전달',17,600,'middle','#11695d')):(text(600,358,'States persist',18,700,'middle')+text(600,382,'through dry periods',18,700,'middle')+text(600,416,'Storage depletion',15,500,'middle','#486171')+text(600,438,'+ redistribution',15,500,'middle','#486171')+text(600,462,'D-layer continuity',15,600,'middle','#11695d')));
+  body+=line(770,390,805,390,'#247eaa',true);
+  body+=rect(820,205,320,365,'#f5f9fb','#aac7d7',14)+text(846,245,L('강우사상 B','Rain event B'),27,700);
+  body+=rect(855,295,250,54,'#dceef8','#8bbbd0',8)+text(980,329,L('새 강우 입력','New rainfall input'),19,700,'middle');
+  body+=route('M980 350V382');
+  body+=rect(855,390,250,125,'#e9f5ef','#83b9ae',10)+(lang==='ko'?(text(980,422,'이전 상태를 이어 계산',21,700,'middle')+text(980,455,'같은 강우라도 초기상태 영향',16,500,'middle','#486171')+text(980,484,'연속 물수지 유지',17,600,'middle','#11695d')):(text(980,416,'Continue from',18,700,'middle')+text(980,440,'prior states',18,700,'middle')+text(980,470,'Starting state',14,500,'middle','#486171')+text(980,491,'affects response',14,600,'middle','#11695d')));
+  body+=text(600,620,L('연속모의는 강우사상 사이의 저장상태를 끊지 않고 다음 시점으로 전달합니다.','Continuous simulation carries storage states across events instead of resetting them.'),19,600,'middle');
+  return frame(name,lang,L('연속모의와 상태 연속성','Continuous simulation and model states'),L('강우가 없는 기간에도 저장상태를 이어 다음 강우 반응에 사용합니다.','Carry storage states through dry periods so they affect the next event.'),body);
+ }
+ if(name==='state-save-restart'){
+  let body=rect(60,215,300,350,'#f5f9fb','#aac7d7',14)+text(86,255,L('1 · 계산 진행','1 · Run to checkpoint'),lang==='ko'?27:22,700);
+  body+=rect(95,310,230,88,'#e8f3f9','#aac7d7',10)+text(210,344,L('모형 상태 갱신','Update model states'),20,700,'middle')+text(210,373,L('토양·저장·유출 등','Soil · storage · runoff'),17,500,'middle','#486171');
+  body+=route('M210 400V445')+text(235,431,L('시점 t₁','time t₁'),18,700,'start','#11695d');
+  body+=rect(95,455,230,68,'#edf7f4','#83b9ae',10)+text(210,497,L('체크포인트 도달','Reach checkpoint'),19,700,'middle');
+  body+=line(375,390,415,390,'#247eaa',true);
+  body+=rect(430,215,330,350,'#fffaf0','#e6bf7d',14)+text(456,255,L('2 · 상태 저장','2 · Save state'),27,700);
+  body+=rect(480,315,230,125,'#fff','#d4e1e8',10)+text(595,350,L('상태 파일','Saved-state file'),22,700,'middle')+text(595,383,L('활성 기능의 내부 상태','States for enabled functions'),17,500,'middle','#486171')+text(595,414,L('다음 실행의 시작점','Starting point for next run'),17,600,'middle','#11695d');
+  body+=text(595,500,L('입력자료와 구분해 보존','Keep separate from forcing inputs'),17,600,'middle','#75470f');
+  body+=line(775,390,815,390,'#247eaa',true);
+  body+=rect(830,215,310,350,'#f5f9fb','#aac7d7',14)+text(856,255,L('3 · 재시작','3 · Restart'),27,700);
+  body+=rect(865,310,240,78,'#e9f5ef','#83b9ae',10)+text(985,344,L('상태 파일 읽기','Read saved state'),20,700,'middle')+text(985,372,L('t₁ 상태 복원','Restore t₁ states'),17,500,'middle','#486171');
+  body+=route('M985 390V430');
+  body+=rect(865,440,240,78,'#e8f3f9','#aac7d7',10)+text(985,474,L('이후 입력으로 계속 계산','Continue with later forcing'),18,700,'middle')+text(985,502,L('t₁ 이후 시간대','Times after t₁'),17,500,'middle','#486171');
+  body+=text(600,620,L('저장·복원 범위는 활성 기능과 버전에 따라 확인하며, 모든 수리 확장이 동일하게 복원되는 것은 아닙니다.','Saved-state coverage depends on enabled functions and build; not every hydraulic extension is restored identically.'),17,600,'middle');
+  return frame(name,lang,L('HotStart 상태 저장과 재시작','HotStart state save and restart'),L('계산 중 저장한 상태를 다음 실행의 시작상태로 사용해 모의를 이어갑니다.','Use saved model states as the starting point for a subsequent run.'),body);
+ }
+ if(name==='reservoir-operation'){
+  let body=rect(60,205,300,365,'#f5f9fb','#aac7d7',14)+text(86,245,L('저수지 상태','Reservoir state'),27,700);
+  body+=rect(95,300,230,78,'#dceef8','#8bbbd0',10)+text(210,334,L('유입량·수위','Inflow · level'),20,700,'middle')+text(210,362,L('저류량·여유용량','Storage · capacity margin'),17,500,'middle','#486171');
+  body+=route('M210 380V430');
+  body+=rect(95,440,230,76,'#edf7f4','#83b9ae',10)+text(210,473,L('현재 운영조건','Current operating state'),19,700,'middle')+text(210,499,L('시점별 갱신','Updated each step'),17,500,'middle','#486171');
+  body+=line(375,390,415,390,'#247eaa',true);
+  body+=rect(430,205,330,365,'#fffaf0','#e6bf7d',14)+text(456,245,L('운영규칙·제약','Rules and constraints'),27,700);
+  body+=rect(470,300,250,150,'#fff','#d4e1e8',10)+text(595,334,L('방류 목표·운영규칙','Release target / rule'),19,700,'middle')+text(595,368,L('최소 환경유량','Minimum environmental flow'),lang==='ko'?17:15,500,'middle','#486171')+text(595,400,L('시간당 방류 증·감 한도','Hourly release ramp limits'),lang==='ko'?17:15,500,'middle','#486171')+text(595,430,L('수위·방류 허용범위','Level / discharge bounds'),lang==='ko'?17:15,600,'middle','#75470f');
+  body+=text(595,505,L('운영자 판단을 지원하는 계산조건','Computation supports operator review'),17,600,'middle','#11695d');
+  body+=line(775,390,815,390,'#247eaa',true);
+  body+=rect(830,205,310,365,'#f5f9fb','#aac7d7',14)+text(856,245,L('방류와 하류영향','Release and downstream'),lang==='ko'?27:23,700);
+  body+=rect(865,300,240,82,'#e9f5ef','#83b9ae',10)+text(985,335,L('게이트·월류 Q','Gate / overflow Q'),20,700,'middle')+text(985,364,L('구조물별 유량관계','Structure-specific relation'),16,500,'middle','#486171');
+  body+=route('M985 384V430');
+  body+=rect(865,440,240,82,'#e8f3f9','#aac7d7',10)+text(985,474,L('하류 하천으로 연결','Connect to downstream river'),lang==='ko'?18:16,700,'middle')+text(985,503,L('수위·유량 변화 확인','Review level / discharge'),17,500,'middle','#486171');
+  body+=text(600,620,L('저수지 상태 → 운영규칙·방류 제약 → 구조물 방류 → 하류 수리조건을 하나의 흐름으로 연결합니다.','Link reservoir state, operating constraints, structure releases and downstream hydraulics.'),18,600,'middle');
+  return frame(name,lang,L('댐·저수지 운영의 계산 연결','Dam and reservoir operating logic'),L('저수지 상태와 운영규칙·방류 제약을 이용해 방류를 하류 하천과 연결합니다.','Connect reservoir state and operating constraints to releases and downstream conditions.'),body);
+ }
+ if(name==='reservoir-scenario-assessment'){
+  let body=rect(60,205,285,365,'#f5f9fb','#aac7d7',14)+text(86,245,L('예측 유입·초기상태','Forecast inflow + initial state'),lang==='ko'?25:18,700);
+  body+=rect(95,305,215,82,'#dceef8','#8bbbd0',10)+text(202,339,L('예측 유입계열','Forecast inflow series'),19,700,'middle')+text(202,368,L('저수위·저류량','Level · storage'),17,500,'middle','#486171');
+  body+=route('M202 390V450')+(lang==='ko'?text(228,432,'공통 입력조건',17,600,'start','#11695d'):text(202,432,'Common inputs',16,600,'middle','#11695d'));
+  body+=rect(95,462,215,66,'#edf7f4','#83b9ae',10)+(lang==='ko'?text(202,503,'동일 기준으로 비교',18,700,'middle'):(text(202,488,'Use one',15,700,'middle')+text(202,511,'comparison basis',15,700,'middle')));
+  body+=line(360,390,400,390,'#247eaa',true);
+  body+=rect(415,205,350,365,'#fffaf0','#e6bf7d',14)+text(441,245,L('운영대안 A / B / C','Operating alternatives A / B / C'),lang==='ko'?25:19,700);
+  const ys=[305,382,459],labels=[L('대안 A','Alternative A'),L('대안 B','Alternative B'),L('대안 C','Alternative C')];
+  ys.forEach((y,i)=>{body+=rect(455,y,270,58,i===1?'#e9f5ef':'#fff','#d4e1e8',8)+text(478,y+36,labels[i],18,700)+line(570,y+29,685,y+29,i===0?'#247eaa':(i===1?'#328c79':'#b07a31'),true);});
+  body+=text(590,550,L('방류 시점·크기·구조물 조합','Compare timing, magnitude and structures'),16,600,'middle','#75470f');
+  body+=line(780,390,820,390,'#247eaa',true);
+  body+=rect(835,205,305,365,'#f5f9fb','#aac7d7',14)+text(861,245,L('비교·검토','Compare and review'),27,700);
+  body+=rect(870,302,235,155,'#edf7f4','#83b9ae',10)+text(987,336,L('저수지 수위·저류','Reservoir level / storage'),18,700,'middle')+text(987,369,L('방류량·시점','Release amount / timing'),17,500,'middle','#486171')+text(987,401,L('하류 제약조건','Downstream constraints'),17,500,'middle','#486171')+text(987,432,L('물수지·운영한계','Balance / operating limits'),17,500,'middle','#486171');
+  body+=rect(870,475,235,55,'#fff6e7','#e6bf7d',8)+(lang==='ko'?text(987,509,'운영자가 대안을 비교',17,700,'middle','#75470f'):(text(987,496,'Operator compares',14,700,'middle','#75470f')+text(987,516,'alternatives',14,700,'middle','#75470f')));
+  body+=text(600,620,L('예측은 대안 비교의 입력이며, 그림은 자동 의사결정이나 실제 방류량을 의미하지 않습니다.','Forecasts support alternative comparison; the schematic does not imply automatic decisions or actual releases.'),17,600,'middle');
+  return frame(name,lang,L('예측 기반 저수지 운영대안 비교','Forecast-based reservoir scenario comparison'),L('같은 예측조건에서 여러 방류대안의 저수지·하류 영향을 비교합니다.','Compare reservoir and downstream effects of alternative releases under common forecast conditions.'),body);
+ }
+ if(name==='sediment-transport-pathways'){
+  let body=rect(60,205,320,365,'#f5f9fb','#aac7d7',14)+text(86,245,L('사면 유사 발생','Hillslope sediment source'),lang==='ko'?27:21,700);
+  body+='<path d="M100 430 L185 300 L340 430 Z" fill="#e7dcc6" stroke="#a98f6a" stroke-width="3"/>';
+  body+=route('M175 340C210 360 245 382 300 410')+text(132,322,L('침식·이동','Erosion / movement'),18,700,'start','#75470f');
+  body+=rect(105,455,230,62,'#fff6e7','#e6bf7d',8)+text(220,493,L('유사 공급량','Sediment supply'),19,700,'middle');
+  body+=line(395,390,430,390,'#247eaa',true);
+  body+=rect(445,205,320,365,'#edf7f4','#83b9ae',14)+text(471,245,L('하천 유입·이송','Delivery and river transport'),lang==='ko'?25:20,700);
+  body+='<path d="M490 410 C555 360 625 360 720 420" fill="none" stroke="#78bfdc" stroke-width="28" stroke-linecap="round"/>';
+  body+=route('M520 393C575 360 635 370 690 405')+text(605,337,L('흐름에 따라 하류 이동','Move downstream with flow'),18,700,'middle','#11695d');
+  body+=text(605,470,L('하천 유사이송과 연결','Link to river sediment transport'),18,600,'middle','#486171');
+  body+=line(780,390,815,390,'#247eaa',true);
+  body+=rect(830,205,310,365,'#f5f9fb','#aac7d7',14)+text(856,245,L('퇴적·통과','Deposition / onward transport'),lang==='ko'?25:18,700);
+  body+='<path d="M870 390 C920 360 1010 360 1100 405" fill="none" stroke="#78bfdc" stroke-width="24" stroke-linecap="round"/>';
+  body+='<path d="M920 438 Q985 402 1055 438 Q985 458 920 438Z" fill="#d6b47a" stroke="#a98f6a" stroke-width="2"/>';
+  body+=text(987,475,L('퇴적 가능 구간','Potential deposition reach'),18,700,'middle','#75470f')+text(987,510,L('남은 유사는 하류로 전달','Remaining load continues downstream'),16,500,'middle','#486171');
+  body+=text(600,620,L('사면에서 발생한 유사와 하천 유사이송을 구분하되, 유역의 연속된 이동경로로 연결해 설명합니다.','Separate hillslope sediment generation from river transport while showing their connected pathway.'),17,600,'middle');
+  return frame(name,lang,L('사면–하천 유사 이동 경로','Hillslope-to-river sediment pathway'),L('사면에서 발생한 유사가 하천으로 유입되어 이송·퇴적되는 연결을 보여줍니다.','Show how hillslope sediment is delivered to the river and then transported or deposited.'),body);
+ }
+ if(name==='conservative-tracer-path'){
+  let body=rect(60,205,300,365,'#f5f9fb','#aac7d7',14)+(lang==='ko'?text(86,245,'주입·초기조건',27,700):(text(86,238,'Injection / initial',22,700)+text(86,266,'condition',22,700)));
+  body+=rect(95,315,230,82,'#e8f3f9','#aac7d7',10)+(lang==='ko'?text(210,349,'상류 주입 위치',19,700,'middle'):(text(210,343,'Upstream injection',17,700,'middle')+text(210,365,'point',17,700,'middle')))+text(210,385,L('시점·투입량 정의','Define timing / amount'),lang==='ko'?17:15,500,'middle','#486171');
+  body+=route('M210 400V455')+text(236,438,L('하천으로 입력','Enter river'),17,600,'start','#11695d');
+  body+=line(375,390,415,390,'#247eaa',true);
+  body+=rect(430,205,330,365,'#edf7f4','#83b9ae',14)+text(456,245,L('보존성 물질 이동','Conservative transport'),27,700);
+  body+='<path d="M475 420 C540 360 625 360 715 425" fill="none" stroke="#78bfdc" stroke-width="32" stroke-linecap="round"/>';
+  body+=route('M500 401C565 360 630 370 690 412')+text(595,330,L('흐름과 함께 하류 이동','Move downstream with flow'),18,700,'middle','#11695d');
+  body+=rect(495,460,200,52,'#fff','#d4e1e8',8)+text(595,493,L('반응·붕괴 없는 추적','No reactive decay'),17,700,'middle','#486171');
+  body+=line(775,390,815,390,'#247eaa',true);
+  body+=rect(830,205,310,365,'#f5f9fb','#aac7d7',14)+text(856,245,L('지점별 확인','Observation points'),lang==='ko'?27:24,700);
+  body+=line(885,330,1085,330,'#78bfdc')+line(885,415,1085,415,'#78bfdc');
+  [920,985,1050].forEach((x,i)=>{body+='<circle cx="'+x+'" cy="330" r="9" fill="#fff" stroke="#247eaa" stroke-width="3"/>'+text(x,365,'P'+(i+1),16,700,'middle');});
+  body+='<path d="M885 485 C920 485 930 450 955 450 S995 500 1025 490 S1060 465 1090 480" fill="none" stroke="#247eaa" stroke-width="4"/>';
+  body+=text(985,525,L('농도·도달시간 시계열','Concentration / arrival-time series'),16,600,'middle','#486171');
+  body+=text(600,620,L('보존성 추적은 물질의 이동경로를 확인하는 기능이며, 반응성 수질과정 모듈과 구분합니다.','Conservative tracking follows material movement and is distinct from reactive water-quality processes.'),17,600,'middle');
+  return frame(name,lang,L('보존성 물질·염료 추적 경로','Conservative material and dye tracking'),L('상류에서 주입한 보존성 물질의 하류 이동과 지점별 확인 흐름을 보여줍니다.','Show downstream movement of a conservative tracer and observation at selected locations.'),body);
+ }
+
  if(name==='river-network-hydraulics'){
   let body=rect(60,190,510,390,'#f5f9fb','#aac7d7',14)+text(86,230,L('하천망','River network'),29,700);
   body+=text(86,258,L('Reach · 분기 · 합류 연결','Reach · branch · confluence connectivity'),18,600,'start','#486171');
@@ -257,7 +363,7 @@ function diagram(name,lang){
 
  throw new Error('Unknown reference schematic: '+name);
 }
-const names=['input-readiness','rainfall-coverage','initial-state-warmup','watershed-water-balance','calibration-evaluation','result-lifecycle','nested-grid-patch','river-result-views','snow-process','deep-storage-path','rainfall-spatial-forcing','channelbed-hydraulic-terrain','river-deep-storage-exchange','hydraulic-structures','river-network-hydraulics','river-floodplain-coupling','local-inertia-grid'];
+const names=['input-readiness','rainfall-coverage','initial-state-warmup','watershed-water-balance','calibration-evaluation','result-lifecycle','nested-grid-patch','river-result-views','snow-process','deep-storage-path','continuous-state-cycle','state-save-restart','reservoir-operation','reservoir-scenario-assessment','sediment-transport-pathways','conservative-tracer-path','rainfall-spatial-forcing','channelbed-hydraulic-terrain','river-deep-storage-exchange','hydraulic-structures','river-network-hydraulics','river-floodplain-coupling','local-inertia-grid'];
 function build(){const out=path.resolve(__dirname,'../../docs',directory);fs.mkdirSync(out,{recursive:true});for(const name of names)for(const lang of ['ko','en'])fs.writeFileSync(path.join(out,name+'-'+lang+'.svg'),diagram(name,lang));}
 if(require.main===module)build();
 module.exports={names,directory,build,diagram,frame,text,rect,line,route,box};

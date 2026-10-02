@@ -34,9 +34,16 @@ const wave2Concepts = {
  optimization: ['calibration-evaluation', '관측유량과 여러 매개변수 조합의 결과를 같은 조건에서 비교하고 성능지표로 평가합니다.', 'Observed discharge and parameter-case results are compared under consistent conditions using performance metrics.'],
  'output-integrity': ['result-lifecycle', '실행 조건과 진단을 기록하고 출력 파일의 생성·종료 및 필요한 항목을 점검하여 결과 분석 준비 상태를 확인합니다.', 'Run conditions and diagnostics are recorded, and output creation, closure and requirements are checked for postprocessing readiness.'],
  multires: ['nested-grid-patch', '원지형 격자를 묶은 배경과 원해상도를 유지한 관심영역(Patch)의 관계입니다. 입력보다 세밀한 지형정보를 생성하지 않습니다.', 'Background cells group source-terrain cells while patches retain source resolution; no finer terrain data is created.'],
- 'river-viewer': ['river-result-views', '1D 결과를 종단면·횡단면과 수위·유량 시계열로 읽는 개념입니다. 뷰어는 별도 개발 중입니다.', 'The schematic shows longitudinal, cross-sectional and time-series views of 1D outputs. The viewer is under separate development.']
+ 'river-viewer': ['river-result-views', '1D 결과를 종단면·횡단면과 수위·유량 시계열로 읽는 개념입니다. 뷰어는 별도 개발 중입니다.', 'The schematic shows longitudinal, cross-sectional and time-series views of 1D outputs. The viewer is under separate development.'],
+ continuous: ['continuous-state-cycle', '강우가 없는 기간에도 저장상태를 이어가며 다음 강우에 대한 유역의 반응을 계산합니다.', 'Storage states carry through drier periods and influence the response to subsequent rainfall.'],
+ hotstart: ['state-save-restart', '계산 중 저장한 모형 상태를 읽어 이후 시점의 모의를 이어가는 상태 저장·재시작 개념입니다.', 'Saved model states provide the starting point for a subsequent simulation.'],
+ 'dam-operation': ['reservoir-operation', '저수지 상태와 운영규칙·방류 제약을 이용해 방류를 하류 하천과 연결하는 개념입니다.', 'Reservoir state and operating constraints are linked to structure releases and downstream conditions.'],
+ 'dam-forecast': ['reservoir-scenario-assessment', '같은 예측조건에서 여러 방류대안의 저수지·하류 영향을 비교하는 개념입니다.', 'Alternative releases are compared under common forecast conditions for reservoir and downstream effects.'],
+ 'sed-hill': ['sediment-transport-pathways', '사면에서 발생한 유사가 하천으로 유입되어 이송·퇴적되는 연결을 보여줍니다.', 'Hillslope sediment is delivered to the river and then transported or deposited.'],
+ dye: ['conservative-tracer-path', '상류에서 주입한 보존성 물질이 하류로 이동하고 지점별로 확인되는 과정을 보여줍니다.', 'A conservative tracer moves downstream and is reviewed at selected locations.']
+
 };
-const schematicIds=new Set(['rain-spatial','input-precheck','rain-summary','warmup','wb','optimization','output-integrity','multires','river-viewer','snow','dlayer','river-infil','channelbed','dwnet','structures','coupling','local-inertia']);
+const schematicIds=new Set(['rain-spatial','input-precheck','rain-summary','warmup','wb','optimization','output-integrity','multires','river-viewer','snow','continuous','hotstart','dlayer','river-infil','channelbed','dwnet','structures','dam-operation','dam-forecast','coupling','local-inertia','sed-hill','dye']);
 Object.assign(concepts,wave2Concepts);
 // Shared references stay links, preserving one representative inline illustration.
 const linkedConcepts={
