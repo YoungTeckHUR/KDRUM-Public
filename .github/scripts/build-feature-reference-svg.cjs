@@ -32,12 +32,22 @@ function diagram(name,lang){
   box(60,412,330,155,L('수문 입력','Hydrologic input'),[L('강우 + 융설수','Rain + meltwater'),L('침투 · 유출 계산으로','To infiltration and runoff')])+
   route('M435 492H401')+text(810,515,L('직접 일사·적설 이동','Radiation / snow transport'),22,600)+text(810,547,L('해석과 구분','are not directly solved'),22)+
   text(600,623,L('경사·방향은 융설계수에 반영되며, 그림은 계산 결과가 아닙니다.','Slope and direction modify melt factors; no simulation result is shown.'),24,400,'middle'));
- if(name==='deep-storage-path')return frame(name,lang,L('기존 D층 저장·복귀·손실의 구분','Existing D-layer storage, return and loss'),L('기존 D층 저장에서 지연 복귀와 별도 선택 조건의 심부 손실을 구분합니다.','Existing D-layer storage · delayed return and deep loss have separate controls.'),
-  box(60,225,330,190,L('D층 저장','D-layer storage'),[L('기존 지하수층','Existing groundwater layer'),L('유입·방출과 저장량 갱신','Storage: inflow / release')])+
-  line(405,317,427,317,undefined,true)+box(435,225,330,190,L('상부 토양층 경로','Upper soil-layer path'),[L('지연 복귀 수용','Receives delayed return'),L('토양층 유출과 연결','Connects to soil runoff')],'#ecf6f3')+
-  line(779,317,804,317,undefined,true)+box(810,225,330,190,L('유출 전달','Runoff routing'),[L('다른 유출 기여와 결합','Joins other contributions'),L('하류 유량에 기여','Contributes downstream')])+
-  route('M225 430V466')+box(60,480,330,120,L('선택적 심부 손실','Optional deep loss'),[L('활성 옵션 확인','Check enabled option')])+
-  text(435,522,L('저장·복귀·손실을 물수지에서 구분','Separate storage, return and loss in the water balance'),26,600)+text(435,569,L('완전한 지하수유동 해석과 구분','Distinct from full groundwater flow'),24));
+ if(name==='deep-storage-path'){
+  let body=rect(60,195,500,400,'#f8fbfc','#aac7d7',14)+text(86,235,L('단위격자 다층 저장구조','Multi-layer unit-cell storage'),28,700);
+  const layers=[[L('A층','A layer'),270,58,'#f1e2c8'],[L('B층','B layer'),328,58,'#e8d4b1'],[L('C층','C layer'),386,70,'#dcc39b'],[L('D층 저장','D-layer storage'),456,105,'#c7e3df']];
+  layers.forEach(([label,y,h,color])=>{body+=rect(95,y,300,h,color,'#c7b18e',0)+text(118,y+37,label,label.includes('D')?24:25,700);});
+  body+=route('M250 316V329')+route('M250 374V387')+route('M250 444V457');
+  body+=text(278,303,L('침루','Percolation'),18,600,'start','#486171');
+  body+=rect(455,310,70,145,'#dceef8','#8bbbd0',8)+text(490,388,L('하천','River'),20,700,'middle');
+  body+=line(395,299,452,330,'#247eaa',true)+line(395,357,452,366,'#247eaa',true)+line(395,421,452,405,'#247eaa',true);
+  body+=route('M370 520H425V430H390')+text(245,535,L('지연 복귀','Delayed return'),18,700,'start','#11695d');
+  body+=`<path d="M250 561V584" fill="none" stroke="#a36a2c" stroke-width="3" stroke-dasharray="7 6" marker-end="url(#arrow)"/>`+text(278,580,L('선택적 심부 손실','Optional deep loss'),18,600,'start','#75470f');
+  body+=rect(615,205,525,120,'#e9f5ef','#83b9ae',12)+text(642,243,L('D층은 기존 구성','D layer is an existing component'),27,700)+text(642,278,L('다층 유출구조의 지하수 저장층','Groundwater storage in the multilayer structure'),19)+text(642,307,L('신규 층이 아님','Not a newly added layer'),18,600,'start','#486171');
+  body+=rect(615,350,525,145,'#f5f9fb','#aac7d7',12)+text(642,390,L('상부 토양층 경로','Upper soil-layer path'),26,700)+text(642,420,L('지연 복귀와 유출 연결','Delayed return and runoff linkage'),18,600,'start','#486171')+text(642,449,L('D층 저장량을 갱신하고 상부 유출경로와 연결','Update D storage and connect it to the upper runoff path'),19)+text(642,477,L('저장·복귀·손실은 물수지에서 구분','Separate storage, return and loss in the water balance'),19);
+  body+=rect(615,510,525,85,'#fff6e7','#e6bf7d',12)+text(642,548,L('완전한 지하수유동모형과 구분','Distinct from a full groundwater-flow model'),22,700,'start','#75470f')+text(642,577,L('기능별 활성조건과 적용범위를 별도 확인','Check feature-specific activation and scope'),18,500,'start','#75470f');
+  body+=text(600,640,L('D층 자체와 장기유출 개선 기능을 구분해서 해석','Distinguish the existing D layer from long-term runoff extensions'),22,500,'middle');
+  return frame(name,lang,L('A/B/C/D층과 D층의 수문학적 역할','A/B/C/D layers and the hydrologic role of D'),L('기존 다층 구조에서 D층 저장, 지연 복귀와 선택적 손실을 구분합니다.','Within the existing multilayer structure, distinguish D-layer storage, delayed return and optional loss.'),body);
+ }
  if(name==='input-readiness')return frame(name,lang,L('입력자료와 실행 준비 점검','Input data and execution readiness'),L('입력 조건을 확인하고 문제 항목을 실행 전에 정리합니다.','Review input conditions and identify issues before a model run.'),
   box(60,218,310,236,L('원자료','Source data'),[L('지형 · 강우 · 하천','Terrain · rain · rivers'),L('좌표 · 시간 · 단위','Coordinates · units')])+line(380,330,425,330,undefined,true)+
   box(440,218,310,236,L('정합성 검사','Consistency checks'),[L('공간 · 시간 범위','Space · time extent'),L('연결성 · 값의 범위','Connectivity · ranges')])+line(760,330,805,330,undefined,true)+

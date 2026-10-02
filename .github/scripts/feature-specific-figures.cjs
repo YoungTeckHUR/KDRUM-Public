@@ -64,13 +64,20 @@ function diagram(id,lang){const L=(k,e)=>lang==='ko'?k:e;let body,title,subtitle
   body+=text(660,513,L('여러 관측소를 거리 가중으로 결합','Combine stations by distance weights'),22)+text(660,551,L('가중치 설정과 관측소 배치 확인','Check weighting settings and station layout'),22);
  }
  if(id==='wb-1d2d'){
-  title=L('교환량은 하나, 물수지는 두 영역','One exchange, two domain balances');subtitle=L('ΔV는 같은 시간 구간의 교환 체적입니다. 부호는 각 영역의 증감입니다.','ΔV is exchanged volume over one interval; signs denote domain gain or loss.');
-  body=box(60,205,340,120,L('1D 하천','1D river'))+box(800,205,340,120,L('2D 범람원','2D floodplain'))+line(420,240,780,240,undefined,true)+text(600,220,L('월류 ΔV','Overflow ΔV'),23,600,'middle')+line(780,298,420,298,undefined,true)+text(600,337,L('복귀 ΔV','Return ΔV'),23,600,'middle');
-  const xs=[95,450,810],ys=[405,473,541];
-  [L('교환 방향','Exchange direction'),L('하천 물수지','River water balance'),L('범람원 물수지','Floodplain water balance')].forEach((s,i)=>body+=text(xs[i],ys[0],s,26,700));
-  [L('월류','Overflow'),'−ΔV','+ΔV'].forEach((s,i)=>body+=text(xs[i],ys[1],s,28));
-  [L('복귀','Return'),'+ΔV','−ΔV'].forEach((s,i)=>body+=text(xs[i],ys[2],s,28));
-  body+=line(60,425,1140,425,'#aac7d7')+text(600,614,L('동일 기간·교환량을 비교 · 전체 유역 물수지와 별도 진단','Match interval and volume · separate from whole-basin balance'),25,500,'middle');
+  title=L('하천–범람원 교환량과 물수지','River–floodplain exchange balance');subtitle=L('같은 교환체적 ΔV를 두 영역에 반대 부호로 반영합니다.','The same exchanged volume ΔV enters the two domains with opposite signs.');
+  body=rect(60,195,460,300,'#f4f9fc','#aac7d7',14)+rect(680,195,460,300,'#f4faf6','#aac7d7',14);
+  body+=text(88,238,L('1D 하천','1D river'),30,700)+text(708,238,L('2D 범람원','2D floodplain'),30,700);
+  body+=`<path d="M95 450V350H170C198 350 214 371 229 397C243 421 265 430 290 430C315 430 337 421 351 397C366 371 382 350 410 350H500V450Z" fill="#e1d4bd" stroke="#a98f6a" stroke-width="3"/><path d="M209 386H371C357 389 348 399 339 413C329 425 313 430 290 430C267 430 251 425 241 413C232 399 223 389 209 386Z" fill="#78bfdc" stroke="#247eaa" stroke-width="3"/><line x1="209" y1="386" x2="371" y2="386" stroke="#247eaa" stroke-width="3"/>`;
+  body+=text(290,462,L('하천 단면·수위','section + stage'),22,600,'middle');
+  for(let y=0;y<4;y++)for(let x=0;x<6;x++)body+=rect(738+x*58,280+y*42,56,40,(x+y>4)?'#9bcde0':(x+y>2?'#cde6ef':'#edf4ef'),'#fff',0);
+  body+=text(910,462,L('범람원 저장·수심','storage + depth'),22,600,'middle');
+  body+=line(520,292,675,292,'#247eaa',true)+text(600,270,L('월류 ΔV','Overflow ΔV'),22,700,'middle');
+  body+=line(680,365,525,365,'#328c79',true)+text(600,405,L('복귀 ΔV','Return ΔV'),22,700,'middle','#11695d');
+  body+=rect(60,525,1080,98,'#f8fbfc','#d4e1e8',10);
+  body+=text(85,560,L('월류','Overflow'),22,700)+text(270,560,'1D  −ΔV',24,700)+text(535,560,'2D  +ΔV',24,700);
+  body+=text(85,602,L('복귀','Return'),22,700)+text(270,602,'1D  +ΔV',24,700)+text(535,602,'2D  −ΔV',24,700);
+  body+=text(910,568,'ΔV₁ᴰ + ΔV₂ᴰ = 0',27,700,'middle')+text(910,603,L('내부 교환 기준','internal transfer'),20,500,'middle');
+  body+=text(600,644,L('동일 시간구간·동일 교환량 기준 · 유역 전체 물수지와 구분','Match interval and exchange volume · separate from whole-basin balance'),22,500,'middle');
  }
  if(id==='netcdf'){
   title=L('결과 파일을 비교하기 전 확인할 축','Check the axes before comparing files');subtitle=L('형식은 같아도 파일별 격자와 저장 시각은 다를 수 있습니다.','A common format can contain different grids and output times.');
@@ -86,8 +93,23 @@ function diagram(id,lang){const L=(k,e)=>lang==='ko'?k:e;let body,title,subtitle
   body+=text(600,618,L('모식 분포·곡선 · 실제 값은 결과 파일에서 확인','Schematic pattern and curve · read actual values from outputs'),25,500,'middle');
  }
  if(id==='inputstudio'){
-  title=L('원자료를 실행 입력으로 준비하기','Prepare source data as run inputs');subtitle=L('입력 프로젝트의 구성·검사 역할 · 결과 분석은 Viewer에서 수행합니다.','Project preparation and checking; result analysis is performed in a viewer.');
-  body=box(60,200,350,115,L('공간 자료','Spatial data'),[L('지형 · 하천 · 단면','Terrain · rivers · sections')])+box(60,350,350,115,L('시간 자료·조건','Time data / settings'),[L('강우 · 모의조건','Rainfall · run settings')])+route('M423 260H462V315H495')+route('M423 409H462V365H495')+box(510,245,290,205,L('프로젝트','Project'),[L('자료 연결·편집','Link and edit inputs'),L('정합성 점검','Consistency checks')],'#ecf6f3')+line(815,343,864,343,undefined,true)+box(880,245,260,205,L('K-DRUM 입력','K-DRUM inputs'),[L('모의 준비','Ready for run'),L('조건 재확인','Recheck settings')])+text(600,590,L('원자료 변경 시 연결 자료와 좌표·시간 기준을 다시 점검','After source changes, recheck linked data and coordinate/time references'),23,500,'middle');
+  title=L('공간입력에서 K-DRUM 실행입력까지','From spatial inputs to K-DRUM run inputs');subtitle=L('공간입력 구축, 단계별 프로젝트 점검, 저장과 입력자료 생성을 구분합니다.','Separate spatial construction, guided project checks, workspace saving and engine-input generation.');
+  body=rect(60,190,300,405,'#f5f9fb','#aac7d7',14)+text(84,226,L('공간 자료','Spatial data'),28,700)+text(84,252,L('원자료·공간입력 구축','Source + spatial build'),18,600,'start','#486171');
+  const leftRows=[[L('DEM → 유역·흐름방향','DEM → basin · flow'),260],[L('하천망 → 계산격자','Streams → model grid'),327],[L('토지피복·토양·토심','Land cover · soil · depth'),394],[L('강우·기상·검증·단면','Rain · met · validation · XS'),461]];
+  leftRows.forEach(([label,y],i)=>{body+=rect(84,y,252,52,'#fff','#d4e1e8',7)+text(210,y+34,label,i===3?18:20,600,'middle');});
+  body+=text(210,552,L('검증된 공간산출물의 계보 확인','Check spatial lineage'),20,600,'middle','#486171');
+  body+=line(370,392,410,392,'#247eaa',true);
+  body+=rect(425,190,365,405,'#edf7f4','#83b9ae',14)+text(452,226,L('프로젝트','Project'),28,700)+text(452,252,L('단계별 구축·검증','Guided build + validation'),18,600,'start','#486171');
+  const stages=[[L('01–03','01–03'),L('공간격자·유출경로 · 강우','Grid/flow paths · rainfall'),270]];
+  stages.forEach(([no,label,y])=>{body+=rect(452,y-25,70,50,'#dceef8','#aac7d7',25)+text(487,y+8,no,18,700,'middle')+text(545,y+8,label,20,600);});
+  body+=rect(452,330,70,50,'#dceef8','#aac7d7',25)+text(487,363,'04–07',18,700,'middle')+text(545,354,L('기상·검증·제어','Met · validation · controls'),18,600)+text(545,378,L('구조물','Structures'),17,600,'start','#486171');
+  body+=rect(452,419,70,50,'#dceef8','#aac7d7',25)+text(487,452,'08–10',18,700,'middle')+text(545,444,'DWNET · 2D/1D–2D',20,600)+text(545,472,L('최종점검','Final check'),18,600,'start','#486171');
+  body+=rect(452,505,310,54,'#fff6e7','#e6bf7d',7)+text(607,539,L('임시자료 ≠ 확정 물리자료','Provisional ≠ confirmed data'),19,700,'middle','#75470f');
+  body+=route('M802 322H838V273H862')+route('M802 445H838V463H862');
+  body+=rect(875,205,265,145,'#f5f9fb','#aac7d7',12)+text(900,247,L('작업공간 저장','Save workspace'),25,700)+text(900,288,L('작성 상태 보존','Preserve authoring state'),20)+text(900,320,L('엔진 입력은 유지','Engine inputs unchanged'),20);
+  body+=rect(875,390,265,160,'#e9f5ef','#83b9ae',12)+text(900,426,L('K-DRUM 입력','K-DRUM inputs'),25,700)+text(900,454,L('입력자료 생성','Generate inputs'),18,600,'start','#486171')+text(900,487,L('검증된 변경만 반영','Apply reviewed changes'),19)+text(900,519,L('실행 입력으로 생성','Ready for execution'),19);
+  body+=rect(882,568,112,42,'#fff','#aac7d7',21)+text(938,596,'Base',18,700,'middle')+rect(1008,568,126,42,'#fff','#aac7d7',21)+text(1071,596,'Scenario',18,700,'middle');
+  body+=text(600,642,L('Base와 시나리오를 분리해 의도치 않은 원본 변경을 방지','Keep Base and scenarios isolated to protect the original setup'),22,500,'middle');
  }
  if(!body)throw Error(id);return frame(id,lang,title,subtitle,body);
 }
