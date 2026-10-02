@@ -19,7 +19,7 @@ const wave2Concepts = {
  snow: ['snow-process', '강우·강설 구분, 적설 저장량, 경험적 융설계수 보정과 수문 입력의 관계입니다.', 'Precipitation partition, snow storage, empirical melt-factor adjustment and hydrologic input.'],
  dlayer: ['deep-storage-path', 'A/B/C/D 다층 구조에서 D층이 기존 지하수 저장층임을 확인하고, 지연 복귀와 선택적 심부 손실을 구분합니다.', 'The A/B/C/D structure shows D as the existing groundwater-storage layer and separates delayed return from optional deep loss.'],
  continuous: ['continuous-water-storage', '강우가 없는 기간에도 저장상태를 이어가며 다음 강우에 대한 유역의 반응을 계산합니다.', 'Storage states carry through drier periods and influence the response to subsequent rainfall.'],
- rain-spatial: ['rainfall-spatial-forcing', '관측소·레이더·격자 강우를 공간·시간 기준에 맞춰 계산격자별 강우 입력으로 구성합니다.', 'Gauge, radar and gridded rainfall are aligned in space and time to prepare cell-based rainfall forcing.'],
+ 'rain-spatial': ['rainfall-spatial-forcing', '관측소·레이더·격자 강우를 공간·시간 기준에 맞춰 계산격자별 강우 입력으로 구성합니다.', 'Gauge, radar and gridded rainfall are aligned in space and time to prepare cell-based rainfall forcing.'],
  channelbed: ['channelbed-hydraulic-terrain', 'DEM으로 부족한 수중 하상·저수로 형상을 중심선·횡단면 등 추가 자료로 보완하는 개념입니다.', 'Centerline and cross-section information supplement submerged channel-bed geometry that a surface DEM may not resolve.'],
  'river-infil': ['river-deep-storage-exchange', '하천에서 빠진 물과 D층 심부저장 증가를 같은 이동량으로 연결하고, 침투가능량과 저장여유의 제한을 구분합니다.', 'The same transferred volume links river loss to deeper D-layer storage gain, subject to infiltration and storage limits.'],
  dwnet: ['river-network-hydraulics', 'Reach, 분기·합류와 횡단면을 한 하천망에서 연결하여 수위와 유량을 함께 해석하는 개념입니다.', 'Reaches, branches, confluences and cross sections are linked to analyze water level and discharge across one river network.'],
