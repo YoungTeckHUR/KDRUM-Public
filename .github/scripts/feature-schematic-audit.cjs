@@ -47,7 +47,7 @@ async function run(browser,base,out){
    }
    return {texts:texts.length,labels:texts.map(el=>el.textContent),errors,width:view.width,height:view.height};
   });
-  assert.deepEqual(layout.errors,[],file+' text remains within canvas and panels');
+  assert.equal(layout.errors.length,0,file+' text remains within canvas and panels: '+layout.errors.join(' | '));
   for(const label of requiredLabels[name][lang])assert.ok(layout.labels.includes(label),file+' contains required label: '+label);
   if(name==='rain-methods')assert.ok(!layout.labels.some(label=>/Thiessen|티센/i.test(label)),file+' uses IDW-only public terminology');
   await page.setViewportSize({width:layout.width,height:layout.height});
