@@ -19,10 +19,12 @@ const wave2Concepts = {
  snow: ['snow-process', '강우·강설 구분, 적설 저장량, 경험적 융설계수 보정과 수문 입력의 관계입니다.', 'Precipitation partition, snow storage, empirical melt-factor adjustment and hydrologic input.'],
  dlayer: ['deep-storage-path', 'A/B/C/D 다층 구조에서 D층이 기존 지하수 저장층임을 확인하고, 지연 복귀와 선택적 심부 손실을 구분합니다.', 'The A/B/C/D structure shows D as the existing groundwater-storage layer and separates delayed return from optional deep loss.'],
  continuous: ['continuous-water-storage', '강우가 없는 기간에도 저장상태를 이어가며 다음 강우에 대한 유역의 반응을 계산합니다.', 'Storage states carry through drier periods and influence the response to subsequent rainfall.'],
- 'river-infil': ['riverbed-deep-storage', '하천에서 심부 저장층으로 이동하는 물을 보여줍니다. 실제 이동량에는 침투가능량과 저장여유의 제한이 적용됩니다.', 'The illustration shows transfer from a river into deeper storage. Transfer is constrained by infiltration capacity and available storage.'],
+ rain-spatial: ['rainfall-spatial-forcing', '관측소·레이더·격자 강우를 공간·시간 기준에 맞춰 계산격자별 강우 입력으로 구성합니다.', 'Gauge, radar and gridded rainfall are aligned in space and time to prepare cell-based rainfall forcing.'],
+ channelbed: ['channelbed-hydraulic-terrain', 'DEM으로 부족한 수중 하상·저수로 형상을 중심선·횡단면 등 추가 자료로 보완하는 개념입니다.', 'Centerline and cross-section information supplement submerged channel-bed geometry that a surface DEM may not resolve.'],
+ 'river-infil': ['river-deep-storage-exchange', '하천에서 빠진 물과 D층 심부저장 증가를 같은 이동량으로 연결하고, 침투가능량과 저장여유의 제한을 구분합니다.', 'The same transferred volume links river loss to deeper D-layer storage gain, subject to infiltration and storage limits.'],
  dwnet: ['river-network-hydraulics', 'Reach, 분기·합류와 횡단면을 한 하천망에서 연결하여 수위와 유량을 함께 해석하는 개념입니다.', 'Reaches, branches, confluences and cross sections are linked to analyze water level and discharge across one river network.'],
  coupling: ['river-floodplain-coupling', '1D 하천과 2D 범람원의 상대 수위와 교환경계에 따라 월류와 복귀가 바뀌는 양방향 연계 개념입니다.', 'The schematic shows two-way river–floodplain coupling in which overflow or return flow changes with relative levels across the exchange interface.'],
- structures: ['hydraulic-structure-flows', '월류턱을 넘는 흐름과 수문 아래 개구부를 통과하는 흐름을 구분하여 보여줍니다.', 'The illustration distinguishes overflow across a weir crest from flow through the opening beneath a sluice gate.'],
+ structures: ['hydraulic-structures', '월류턱을 넘는 흐름과 게이트·개구부 통과 흐름을 구조물 제원과 수위조건에 따라 구분합니다.', 'Overflow and gate/opening flow are distinguished using structure geometry and water-level conditions.'],
  'dam-forecast': ['reservoir-scenario-assessment', '예측 유입과 저수지 연결, 하류 조건을 함께 검토하여 방류 대안을 비교하는 개념입니다.', 'Forecast inflows, reservoir connections and downstream conditions inform comparison of release alternatives.'],
  'local-inertia': ['local-inertia-grid', '셀 중심 수심 h와 격자면 유량 q를 시간단계마다 갱신하는 Local Inertia 범람 계산 개념입니다.', 'The schematic shows Local Inertia floodplain updates of cell depth h and face discharge q through time.'],
  'input-precheck': ['input-readiness', '원자료의 공간·시간 범위, 연결성과 값의 범위를 확인하여 실행 준비 상태를 점검합니다.', 'Spatial and temporal extent, connectivity and value ranges are checked to assess readiness for execution.'],
@@ -34,7 +36,7 @@ const wave2Concepts = {
  multires: ['nested-grid-patch', '원지형 격자를 묶은 배경과 원해상도를 유지한 관심영역(Patch)의 관계입니다. 입력보다 세밀한 지형정보를 생성하지 않습니다.', 'Background cells group source-terrain cells while patches retain source resolution; no finer terrain data is created.'],
  'river-viewer': ['river-result-views', '1D 결과를 종단면·횡단면과 수위·유량 시계열로 읽는 개념입니다. 뷰어는 별도 개발 중입니다.', 'The schematic shows longitudinal, cross-sectional and time-series views of 1D outputs. The viewer is under separate development.']
 };
-const schematicIds=new Set(['input-precheck','rain-summary','warmup','wb','optimization','output-integrity','multires','river-viewer','snow','dlayer','dwnet','coupling','local-inertia']);
+const schematicIds=new Set(['rain-spatial','input-precheck','rain-summary','warmup','wb','optimization','output-integrity','multires','river-viewer','snow','dlayer','river-infil','channelbed','dwnet','structures','coupling','local-inertia']);
 Object.assign(concepts,wave2Concepts);
 // Shared references stay links, preserving one representative inline illustration.
 const linkedConcepts={
