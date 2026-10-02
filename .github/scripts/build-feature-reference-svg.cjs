@@ -143,16 +143,16 @@ function diagram(name,lang){
   return frame(name,lang,L('1D 하천과 2D 범람원의 양방향 연계','Bidirectional 1D river–2D floodplain coupling'),L('상대 수위와 교환경계에 따라 월류 또는 복귀 흐름을 계산합니다.','Overflow or return flow is determined across the exchange interface as relative levels change.'),body);
  }
  if(name==='local-inertia-grid'){
-  let body=rect(60,195,510,385,'#f5f9fb','#aac7d7',14)+text(86,235,L('2D 계산격자','2D computational grid'),29,700);
+  let body=rect(60,195,510,410,'#f5f9fb','#aac7d7',14)+text(86,235,L('2D 계산격자','2D computational grid'),29,700);
   body+=text(86,262,L('셀 중심 수심 h · 격자면 유량 q','Cell depth h · face discharge q'),18,600,'start','#486171');
   const gx=120,gy=300,s=72;
-  for(let y=0;y<4;y++)for(let x=0;x<5;x++)body+=rect(gx+x*s,gy+y*s,s-2,s-2,(x+y>4)?'#9bcde0':(x+y>2?'#cde6ef':'#edf4ef'),'#fff',0);
+  for(let y=0;y<4;y++)for(let x=0;x<5;x++){const cx=gx+x*s,cy=gy+y*s,fill=(x+y>4)?'#9bcde0':(x+y>2?'#cde6ef':'#edf4ef');body+='<path d="M'+cx+' '+cy+'h'+(s-2)+'v'+(s-2)+'h-'+(s-2)+'Z" fill="'+fill+'" stroke="#fff" stroke-width="2"/>';}
   body+=text(gx+2.5*s,gy+1.65*s,L('수심 h','depth h'),22,700,'middle');
   body+=line(gx+2*s-7,gy+1.5*s,gx+3*s-7,gy+1.5*s,'#247eaa',true)+text(gx+2.5*s,gy+1.5*s-13,L('격자면 유량 q','face discharge q'),17,700,'middle');
   body+=line(gx+1.5*s,gy+2*s-7,gx+1.5*s,gy+3*s-7,'#328c79',true)+text(gx+1.58*s,gy+2.55*s,'q',18,700,'start','#11695d');
   body+=text(86,558,L('η = z + h 로 수면고를 구성','Water level η = z + h'),18,500,'start','#486171');
 
-  body+=rect(620,195,520,385,'#f8fbfc','#aac7d7',14)+text(646,235,L('시간단계 계산 흐름','Time-step update'),29,700);
+  body+=rect(620,195,520,410,'#f8fbfc','#aac7d7',14)+text(646,235,L('시간단계 계산 흐름','Time-step update'),29,700);
   const steps=[
     [L('1 · 수면고·지형','1 · level + terrain'),L('인접 셀의 수면차 확인','Read level difference between cells'),'#e8f3f9'],
     [L('2 · 격자면 유량 q','2 · face discharge q'),L('국부관성·수면경사·마찰로 갱신','Update with local inertia, slope and friction'),'#e9f5ef'],
