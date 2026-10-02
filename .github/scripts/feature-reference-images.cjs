@@ -40,7 +40,7 @@ const wave2Concepts = {
  'dam-operation': ['reservoir-operation', '저수지 상태와 운영규칙·방류 제약을 이용해 방류를 하류 하천과 연결하는 개념입니다.', 'Reservoir state and operating constraints are linked to structure releases and downstream conditions.'],
  'dam-forecast': ['reservoir-scenario-assessment', '같은 예측조건에서 여러 방류대안의 저수지·하류 영향을 비교하는 개념입니다.', 'Alternative releases are compared under common forecast conditions for reservoir and downstream effects.'],
  'sed-hill': ['sediment-transport-pathways', '사면에서 발생한 유사가 하천으로 유입되어 이송·퇴적되는 연결을 보여줍니다.', 'Hillslope sediment is delivered to the river and then transported or deposited.'],
- dye: ['conservative-tracer-path', '상류에서 주입한 보존성 물질이 하류로 이동하고 지점별로 확인되는 과정을 보여줍니다.', 'A conservative tracer moves downstream and is reviewed at selected locations.']
+ dye: ['conservative-tracer-path', '상류에서 주입한 보존성 물질이 하류로 이동하고 지점별로 확인되는 과정을 보여줍니다.', 'A conservative tracer moves downstream and is reviewed at selected locations.'],
  'slope-separate': ['separate-slope-domains', '사면경사와 하도경사를 서로 다른 계산영역의 지형조건으로 구분해 적용하는 개념입니다.', 'Hillslope and channel slopes are applied as terrain conditions in separate calculation domains.'],
  'subbasin-report': ['subbasin-comparison', '유역 결과를 소유역별로 집계하고 관측지점의 집수범위와 비교하는 개념입니다.', 'Watershed results are summarized by subbasin and compared with the contributing area of evaluation sites.'],
  estuary: ['estuary-xz-section', '하천 유입과 해측 경계 사이의 종·연직 x-z 하구 수리동역학·염분 연구영역을 보여줍니다.', 'The x-z estuary section shows longitudinal–vertical hydrodynamics and salinity between river and sea boundaries.'],
