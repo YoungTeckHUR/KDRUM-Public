@@ -313,7 +313,7 @@ function diagram(name,lang){
   body+='<path d="M120 340 C360 335 660 350 1080 365 L1080 505 C950 500 820 485 700 465 C470 430 290 430 120 445 Z" fill="#dceef8" stroke="#78bfdc" stroke-width="2"/>';
   body+='<path d="M520 410 C700 425 880 450 1080 475 L1080 505 C940 500 815 485 700 465 C620 452 555 443 500 440 Z" fill="#b9d8e8" opacity="0.9"/>';
   body+=route('M145 390H330')+text(145,370,L('하천 유입','River inflow'),18,700,'start','#11695d');
-  body+=route('M1060 330H905')+text(1060,310,L('조위·해측 경계','Tide / sea boundary'),18,700,'end','#247eaa');
+  body+=route('M1060 350H905')+text(1060,334,L('조위·해측 경계','Tide / sea boundary'),18,700,'end','#247eaa');
   body+=route('M680 435C720 395 780 395 830 430')+route('M825 455C775 485 720 480 690 450')+text(755,382,L('연직 교환·성층','Vertical exchange / stratification'),lang==='ko'?17:15,600,'middle','#75470f');
   body+=text(170,505,L('담수 우세','Fresher'),17,600,'start','#486171')+text(1010,505,L('염수 영향 증가','More saline influence'),lang==='ko'?17:15,600,'end','#486171');
   body+=rect(735,245,330,70,'#fff6e7','#e6bf7d',8)+(lang==='ko'?(text(900,274,'폭평균 · 정수압 가정',17,700,'middle','#75470f')+text(900,299,'평면 범람해석과 좌표계가 다름',15,600,'middle','#75470f')):(text(900,272,'Width-averaged · hydrostatic',15,700,'middle','#75470f')+text(900,298,'Distinct from plan-view flooding',14,600,'middle','#75470f')));
