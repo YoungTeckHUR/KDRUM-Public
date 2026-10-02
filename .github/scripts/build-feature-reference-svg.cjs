@@ -109,7 +109,7 @@ function diagram(name,lang){
   body+=rect(88,280,120,88,'#e8f3f9','#aac7d7',10)+text(148,318,L('관측소','Gauges'),21,700,'middle')+text(148,347,L('시계열','Time series'),17,500,'middle','#486171');
   body+=rect(235,280,120,88,'#e9f5ef','#83b9ae',10)+text(295,318,L('레이더','Radar'),21,700,'middle')+text(295,347,L('강우장','Rain field'),17,500,'middle','#486171');
   body+=rect(88,395,267,88,'#fff6e7','#e6bf7d',10)+text(221,433,L('격자 강우자료','Gridded rainfall'),21,700,'middle')+text(221,462,L('공간·시간 기준 확인','Check space + time reference'),17,500,'middle','#75470f');
-  body+=text(86,546,L('자료형식에 따라 공간 연결 방식이 다름','Mapping depends on source type'),18,600,'start','#486171');
+  body+=lang==='ko'?(text(221,538,'자료형식별 공간 연결',17,600,'middle','#486171')+text(221,562,'방식이 다름',17,600,'middle','#486171')):text(86,546,'Mapping depends on source type',18,600,'start','#486171');
   body+=line(405,392,460,392,'#247eaa',true);
   body+=rect(475,195,300,405,'#edf7f4','#83b9ae',14)+text(501,235,L('공간 배분·정합','Spatial mapping'),29,700);
   body+=rect(510,282,230,82,'#fff','#d4e1e8',10)+text(625,315,'IDW',24,700,'middle')+text(625,344,L('관측소 → 격자','Gauge → cells'),18,500,'middle','#486171');
