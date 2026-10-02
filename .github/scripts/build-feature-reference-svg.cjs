@@ -123,7 +123,7 @@ function diagram(name,lang){
     body+=line(705,y+3,852,y+3,'#247eaa');
     body+=text(665,y-7,'XS-'+String(i+1).padStart(2,'0'),17,700);
   });
-  body+=route('M930 310V468')+text(956,337,L('수위 η','Water level η'),20,700)+text(956,377,L('유량 Q','Discharge Q'),20,700)+text(956,417,L('상·하류 상호영향','Up/downstream interaction'),18,500,'start','#486171');
+  body+=route('M930 310V468')+text(956,337,L('수위 η','Water level η'),20,700)+text(956,377,L('유량 Q','Discharge Q'),20,700)+text(956,410,L('상·하류','Up/downstream'),18,500,'start','#486171')+text(956,434,L('상호영향','interaction'),18,500,'start','#486171');
   body+=text(646,555,L('단면 형상은 보존하고 종단 위치·연결성을 정합','Preserve section shape; align elevation and connectivity'),18,500,'start','#486171');
   body+=text(600,625,L('입력: 하천망·횡단면·경계조건  →  해석: 연속·운동량  →  결과: 수위 η · 유량 Q','Inputs: network · sections · boundaries  →  solve continuity/momentum  →  level η · discharge Q'),20,600,'middle');
   return frame(name,lang,L('1D 하천망 수리와 단면 연결','1D river-network hydraulics and cross sections'),L('Reach별 횡단면과 연결점을 따라 수위·유량을 함께 해석합니다.','Water level and discharge are linked through reaches, sections and network junctions.'),body);
