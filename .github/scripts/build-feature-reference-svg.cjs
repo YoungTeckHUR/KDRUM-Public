@@ -186,7 +186,7 @@ function diagram(name,lang){
   body+=text(885,548,L('같은 시간구간에서','Over the same interval'),17,600,'middle','#486171');
   body+=text(760,580,L('하천  −ΔV','River  −ΔV'),21,700,'middle')+text(1010,580,L('D층  +ΔV','D layer  +ΔV'),21,700,'middle');
   body+=text(600,628,L('이동량은 가용 하천수·침투가능량·D층 저장여유의 제한을 함께 받음','Transfer is jointly limited by available river water, infiltration capacity and D-layer storage space'),18,600,'middle');
-  return frame(name,lang,L('하천 침투와 D층 심부저장 연계','River infiltration and D-layer storage coupling'),L('하천에서 심부 저장으로 이동 가능한 물을 여러 제한조건으로 제약하고 두 영역의 물수지에 같은 이동량으로 반영합니다.','Constrain river-to-deep-storage transfer by available water, infiltration capacity and storage space, then account for the same transfer in both domains.'),body);
+  return frame(name,lang,L('하천 침투와 D층 심부저장 연계','River infiltration and D-layer storage coupling'),L('하천–D층 이동량을 제한조건으로 산정해 두 영역 물수지에 동일하게 반영합니다.','Constrain river–D-layer transfer, then apply the same volume to both water balances.'),body);
  }
 
  if(name==='river-network-hydraulics'){
