@@ -214,10 +214,10 @@ function diagram(name,lang){
   body+=rect(470,300,250,150,'#fff','#d4e1e8',10)+text(595,334,L('방류 목표·운영규칙','Release target / rule'),19,700,'middle')+text(595,368,L('게이트·여수로 제원','Gate / spillway geometry'),17,500,'middle','#486171')+text(595,400,L('상·하류 수위조건','Up/downstream levels'),17,500,'middle','#486171')+text(595,430,L('허용범위 확인','Check admissible range'),17,600,'middle','#75470f');
   body+=text(595,505,L('운영자 판단을 지원하는 계산조건','Computation supports operator review'),17,600,'middle','#11695d');
   body+=line(775,390,815,390,'#247eaa',true);
-  body+=rect(830,205,310,365,'#f5f9fb','#aac7d7',14)+text(856,245,L('방류와 하류영향','Release and downstream'),27,700);
+  body+=rect(830,205,310,365,'#f5f9fb','#aac7d7',14)+text(856,245,L('방류와 하류영향','Release and downstream'),lang==='ko'?27:23,700);
   body+=rect(865,300,240,82,'#e9f5ef','#83b9ae',10)+text(985,335,L('게이트·월류 Q','Gate / overflow Q'),20,700,'middle')+text(985,364,L('구조물별 유량관계','Structure-specific relation'),16,500,'middle','#486171');
   body+=route('M985 384V430');
-  body+=rect(865,440,240,82,'#e8f3f9','#aac7d7',10)+text(985,474,L('하류 하천으로 연결','Connect to downstream river'),18,700,'middle')+text(985,503,L('수위·유량 변화 확인','Review level / discharge'),17,500,'middle','#486171');
+  body+=rect(865,440,240,82,'#e8f3f9','#aac7d7',10)+text(985,474,L('하류 하천으로 연결','Connect to downstream river'),lang==='ko'?18:16,700,'middle')+text(985,503,L('수위·유량 변화 확인','Review level / discharge'),17,500,'middle','#486171');
   body+=text(600,620,L('저수지 상태 → 운영조건 → 구조물 방류 → 하류 수리조건을 하나의 흐름으로 연결합니다.','Link reservoir state, operating constraints, structure releases and downstream hydraulics.'),18,600,'middle');
   return frame(name,lang,L('댐·저수지 운영의 계산 연결','Dam and reservoir operating logic'),L('저수지 상태와 운영규칙·구조물 조건을 이용해 방류를 하류 하천과 연결합니다.','Connect reservoir state and operating constraints to releases and downstream conditions.'),body);
  }
