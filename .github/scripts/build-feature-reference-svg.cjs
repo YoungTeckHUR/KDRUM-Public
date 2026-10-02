@@ -124,7 +124,7 @@ function diagram(name,lang){
  }
  if(name==='channelbed-hydraulic-terrain'){
   let body=rect(60,195,505,400,'#f5f9fb','#aac7d7',14)+text(86,235,L('원 지형자료','Source terrain'),29,700);
-  body+=text(86,263,L('DEM은 수면 아래 저수로를 충분히 표현하지 못할 수 있음','A DEM may not resolve the submerged low-flow channel'),18,600,'start','#486171');
+  body+=lang==='ko'?text(86,263,'DEM은 수면 아래 저수로를 충분히 표현하지 못할 수 있음',18,600,'start','#486171'):(text(312,257,'A DEM may not resolve the',16,600,'middle','#486171')+text(312,278,'submerged low-flow channel',16,600,'middle','#486171'));
   body+='<path d="M105 405 L190 370 L275 382 L360 360 L505 392" fill="none" stroke="#8ca3af" stroke-width="6"/>';
   body+=line(105,405,505,405,'#78bfdc')+text(310,432,L('DEM 표면','DEM surface'),19,700,'middle','#486171');
   body+='<path d="M185 405 L230 450 L275 495 L330 450 L375 405" fill="none" stroke="#967b59" stroke-width="5" stroke-dasharray="9 6"/>';
@@ -135,7 +135,7 @@ function diagram(name,lang){
   body+='<path d="M700 405 L785 370 L845 388 L895 472 L945 505 L995 472 L1045 388 L1100 405" fill="none" stroke="#967b59" stroke-width="6"/>';
   body+=line(700,405,1100,405,'#78bfdc')+text(900,438,L('수면','Water surface'),18,600,'middle','#247eaa');
   body+=text(945,535,L('저수로·하상 보완','Supplemented low-flow channel'),20,700,'middle','#11695d');
-  body+=rect(720,555,370,45,'#fff6e7','#e6bf7d',8)+text(905,584,L('측량 원자료와 보완 지형을 구분','Keep survey source and supplemented terrain distinct'),17,600,'middle','#75470f');
+  body+=rect(720,555,370,45,'#fff6e7','#e6bf7d',8)+(lang==='ko'?text(905,584,'측량 원자료와 보완 지형을 구분',17,600,'middle','#75470f'):(text(905,573,'Keep survey source and',14,600,'middle','#75470f')+text(905,590,'supplemented terrain distinct',14,600,'middle','#75470f')));
   body+=text(600,630,L('목적: 1D/2D 수리해석에 사용할 하상·저수로 형상을 더 일관되게 준비','Purpose: prepare consistent channel-bed and low-flow geometry for 1D/2D hydraulics'),19,600,'middle');
   return frame(name,lang,L('DEM과 수리해석용 ChannelBed','DEM and hydraulic ChannelBed terrain'),L('DEM으로 부족한 수중 하상·저수로 형상을 추가 자료로 보완합니다.','Supplement submerged channel-bed geometry that a surface DEM may not resolve.'),body);
  }
@@ -150,7 +150,7 @@ function diagram(name,lang){
   body+=rect(615,195,525,410,'#edf7f4','#83b9ae',14)+text(641,235,L('심부저장·D층 물수지','Deep storage / D-layer balance'),29,700);
   body+=rect(675,310,405,135,'#c7e3df','#83b9ae',10)+text(878,352,L('D층 저장','D-layer storage'),25,700,'middle')+text(878,385,L('저장여유만큼 유입','Transfer limited by available storage'),18,500,'middle','#486171');
   body+=route('M878 445V500')+text(903,480,L('지연 복귀','Delayed return'),19,700,'start','#11695d');
-  body+=text(641,548,L('하천 감소량 ↔ 심부저장 증가량을 같은 이동량으로 기록','River loss ↔ deep-storage gain use the same transferred volume'),18,600,'start','#486171');
+  body+=lang==='ko'?text(641,548,'하천 감소량 ↔ 심부저장 증가량을 같은 이동량으로 기록',18,600,'start','#486171'):(text(878,538,'River loss ↔ deep-storage gain',16,600,'middle','#486171')+text(878,560,'use the same transferred volume',16,600,'middle','#486171'));
   body+=text(600,630,L('하천 침투는 기존 D층 저장 및 장기유출 확장과 연결되며, 완전한 지하수유동 해석과는 구분','River infiltration links to D-layer storage/long-term runoff extensions; it is not full groundwater-flow simulation'),18,600,'middle');
   return frame(name,lang,L('하천 침투와 심부저장 연계','River infiltration and deeper storage'),L('하천에서 빠진 물과 심부 저장층에 더해진 물을 하나의 이동량으로 연결합니다.','Link water leaving the river with the corresponding gain in deeper storage.'),body);
  }
@@ -164,7 +164,7 @@ function diagram(name,lang){
   body+=line(670,385,1100,385,'#78bfdc')+rect(860,300,28,185,'#967b59','#75470f',2)+rect(888,410,105,75,'#fff','#967b59',2);
   body+=text(915,447,L('개구부','Opening'),18,700,'middle')+route('M735 430H850')+text(704,411,L('상류 수위','Upstream level'),18,600);
   body+=route('M1000 447H1080')+text(1014,426,L('통과 Q','Gate Q'),18,700,'start','#11695d');
-  body+=text(656,548,L('개도·제원·상하류 수위 조건을 함께 사용','Use opening, geometry and upstream/downstream levels'),18,600,'start','#486171');
+  body+=lang==='ko'?text(656,548,'개도·제원·상하류 수위 조건을 함께 사용',18,600,'start','#486171'):(text(885,538,'Use opening, geometry and',16,600,'middle','#486171')+text(885,560,'upstream/downstream levels',16,600,'middle','#486171'));
   body+=text(600,630,L('구조물 형식별 유량관계를 1D 하천수리 또는 2D 범람 계산과 연결','Structure-specific discharge relations connect to 1D river or 2D flood calculations'),19,600,'middle');
   return frame(name,lang,L('수리구조물의 유량 연결','Hydraulic-structure flow relations'),L('월류와 게이트 통과 흐름을 구조물 형식·제원·수위조건에 따라 구분합니다.','Distinguish overflow and gate flow using structure type, geometry and water levels.'),body);
  }
