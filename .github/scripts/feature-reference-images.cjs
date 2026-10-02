@@ -17,13 +17,14 @@ const directory = 'assets/diagrams/feature-reference-2026-09-19/';
 const wave2Directory = 'assets/diagrams/feature-reference-wave2-2026-09-19/';
 const wave2Concepts = {
  snow: ['snow-process', '강우·강설 구분, 적설 저장량, 경험적 융설계수 보정과 수문 입력의 관계입니다.', 'Precipitation partition, snow storage, empirical melt-factor adjustment and hydrologic input.'],
- dlayer: ['deep-storage-path', '기존 D층에서 상부 토양층으로의 지연 복귀와 별도 활성 조건의 심부 손실을 구분합니다.', 'Delayed return from the existing D layer feeds an upper soil-layer pathway; deep loss has separate activation conditions.'],
+ dlayer: ['deep-storage-path', 'A/B/C/D 다층 구조에서 D층이 기존 지하수 저장층임을 확인하고, 지연 복귀와 선택적 심부 손실을 구분합니다.', 'The A/B/C/D structure shows D as the existing groundwater-storage layer and separates delayed return from optional deep loss.'],
  continuous: ['continuous-water-storage', '강우가 없는 기간에도 저장상태를 이어가며 다음 강우에 대한 유역의 반응을 계산합니다.', 'Storage states carry through drier periods and influence the response to subsequent rainfall.'],
  'river-infil': ['riverbed-deep-storage', '하천에서 심부 저장층으로 이동하는 물을 보여줍니다. 실제 이동량에는 침투가능량과 저장여유의 제한이 적용됩니다.', 'The illustration shows transfer from a river into deeper storage. Transfer is constrained by infiltration capacity and available storage.'],
- dwnet: ['connected-river-network', '분기·합류와 횡단면으로 연결된 하천망의 개념입니다. 각 구간의 수위·유량을 연결하여 해석합니다.', 'The illustration shows river reaches connected through confluences, branches and cross sections for linked water-level and discharge analysis.'],
+ dwnet: ['river-network-hydraulics', 'Reach, 분기·합류와 횡단면을 한 하천망에서 연결하여 수위와 유량을 함께 해석하는 개념입니다.', 'Reaches, branches, confluences and cross sections are linked to analyze water level and discharge across one river network.'],
+ coupling: ['river-floodplain-coupling', '1D 하천과 2D 범람원의 상대 수위와 교환경계에 따라 월류와 복귀가 바뀌는 양방향 연계 개념입니다.', 'The schematic shows two-way river–floodplain coupling in which overflow or return flow changes with relative levels across the exchange interface.'],
  structures: ['hydraulic-structure-flows', '월류턱을 넘는 흐름과 수문 아래 개구부를 통과하는 흐름을 구분하여 보여줍니다.', 'The illustration distinguishes overflow across a weir crest from flow through the opening beneath a sluice gate.'],
  'dam-forecast': ['reservoir-scenario-assessment', '예측 유입과 저수지 연결, 하류 조건을 함께 검토하여 방류 대안을 비교하는 개념입니다.', 'Forecast inflows, reservoir connections and downstream conditions inform comparison of release alternatives.'],
- 'local-inertia': ['floodplain-grid-concept', '지형 위의 얕은 물과 격자별 흐름을 보여주는 범람해석 공간 개념입니다.', 'The illustration shows the terrain, shallow water and computational cells that form the spatial setting for floodplain analysis.'],
+ 'local-inertia': ['local-inertia-grid', '셀 중심 수심 h와 격자면 유량 q를 시간단계마다 갱신하는 Local Inertia 범람 계산 개념입니다.', 'The schematic shows Local Inertia floodplain updates of cell depth h and face discharge q through time.'],
  'input-precheck': ['input-readiness', '원자료의 공간·시간 범위, 연결성과 값의 범위를 확인하여 실행 준비 상태를 점검합니다.', 'Spatial and temporal extent, connectivity and value ranges are checked to assess readiness for execution.'],
  'rain-summary': ['rainfall-coverage', '관측·예측·결측 구간의 시간수를 구분해 강우자료의 구성과 누락 상태를 요약합니다.', 'Observed, forecast and missing intervals are counted by category to summarize rainfall input coverage.'],
  warmup: ['initial-state-warmup', '초기 토양·유출 상태를 반복 조정하고 목표지점 유량과의 오차 및 수렴품질을 평가합니다.', 'Initial soil and runoff states are adjusted iteratively while target-discharge discrepancy and convergence quality are evaluated.'],
@@ -33,7 +34,7 @@ const wave2Concepts = {
  multires: ['nested-grid-patch', '원지형 격자를 묶은 배경과 원해상도를 유지한 관심영역(Patch)의 관계입니다. 입력보다 세밀한 지형정보를 생성하지 않습니다.', 'Background cells group source-terrain cells while patches retain source resolution; no finer terrain data is created.'],
  'river-viewer': ['river-result-views', '1D 결과를 종단면·횡단면과 수위·유량 시계열로 읽는 개념입니다. 뷰어는 별도 개발 중입니다.', 'The schematic shows longitudinal, cross-sectional and time-series views of 1D outputs. The viewer is under separate development.']
 };
-const schematicIds=new Set(['input-precheck','rain-summary','warmup','wb','optimization','output-integrity','multires','river-viewer','snow','dlayer']);
+const schematicIds=new Set(['input-precheck','rain-summary','warmup','wb','optimization','output-integrity','multires','river-viewer','snow','dlayer','dwnet','coupling','local-inertia']);
 Object.assign(concepts,wave2Concepts);
 // Shared references stay links, preserving one representative inline illustration.
 const linkedConcepts={
