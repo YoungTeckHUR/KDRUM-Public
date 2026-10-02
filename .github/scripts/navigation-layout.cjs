@@ -44,7 +44,7 @@ function resultExample(item,lang,pre=''){
  const note=ko?'실제 섬진강 Stage4 검증자료 기반 결과 예시 · 현재는 설명용 구성 예시이며 자동 생성 운영 리포트 화면은 아닙니다.':'Verified Seomjin Stage4 result example · presentation layout only, not yet an automatically generated production report.';
  const label=ko?'그림 확대: 실제 검증자료 기반 물수지 결과 예시':'Enlarge: verified water-balance result example';
  const more=ko?'확대해서 보기 ↗':'Enlarge ↗';
- return `<figure class="figure result-example"><a class="feature-reference-image" href="${src}" data-enlarge data-caption="${esc(caption)}" aria-label="${esc(label)}"><img src="${src}" alt="${esc(alt)}" width="1200" height="720" loading="lazy" decoding="async"></a><figcaption><small>${esc(note)}</small><a href="${src}" data-enlarge data-caption="${esc(caption)}">${more}</a></figcaption></figure>`;
+ return `<figure class="figure result-example"><a class="result-example-image" href="${src}" data-enlarge data-caption="${esc(caption)}" aria-label="${esc(label)}"><img src="${src}" alt="${esc(alt)}" width="1200" height="720" loading="lazy" decoding="async"></a><figcaption><small>${esc(note)}</small><a href="${src}" data-enlarge data-caption="${esc(caption)}">${more}</a></figcaption></figure>`;
 }
 function capability(item,lang,pre,{badge,data,repo,reading}){
  const L=(k,e)=>tr(lang,k,e),suffix=lang==='ko'?'Ko':'En',guide=guidance.get(item.id,lang),pic=asset(item,lang,pre);
