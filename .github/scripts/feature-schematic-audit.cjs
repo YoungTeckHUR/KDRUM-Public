@@ -23,6 +23,10 @@ const requiredLabels={
  'river-result-views':{ko:['종단면','횡단면','시계열','η₀','t₀'],en:['Longitudinal profile','Cross section','Time series','η₀','t₀']},
  'river-network-hydraulics':{ko:['하천망','합류','분기','수위 η','유량 Q'],en:['River network','Confluence','Branch','Water level η','Discharge Q']},
  'river-floodplain-coupling':{ko:['1D 하천','2D 범람원','월류','복귀'],en:['1D river','2D floodplain','Overflow','Return flow']},
+ 'rainfall-spatial-forcing':{ko:['강우 입력원','관측소 시계열','IDW 거리 가중으로 격자화','K-DRUM 계산격자'],en:['Rainfall sources','Gauge time series','Map to cells with IDW','K-DRUM model grid']},
+ 'channelbed-terrain':{ko:['1 · 표면 지형','2 · 보완 자료','3 · 수리 지형'],en:['1 · surface terrain','2 · supplemental data','3 · hydraulic terrain']},
+ 'hydraulic-structure-interface':{ko:['월류 구조물','게이트·개구부','월류 Q','개구부 Q'],en:['Crest overflow','Gate / opening','overflow Q','opening Q']},
+ 'river-deep-storage':{ko:['하천–D층 이동','기존 D층 저장','하천  −ΔV','D층  +ΔV'],en:['River-to-D-layer transfer','Existing D-layer storage','River  −ΔV','D layer  +ΔV']},
  'local-inertia-grid':{ko:['2D 계산격자','수심 h','격자면 유량 q','3 · 수심 h 갱신'],en:['2D computational grid','depth h','face discharge q','3 · update depth h']}
 };
 async function run(browser,base,out){
