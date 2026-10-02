@@ -128,7 +128,7 @@ function diagram(name,lang){
  }
  if(name==='channelbed-terrain'){
   let body=rect(60,195,310,385,'#f5f9fb','#aac7d7',14)+text(86,235,L('1 · 표면 지형','1 · surface terrain'),27,700);
-  body+=text(86,266,L('DEM만으로는 저수로가 약하게 표현될 수 있음','DEM may under-resolve low-flow geometry'),16,600,'start','#486171');
+  body+=text(86,266,L('DEM의 저수로 표현 한계','DEM low-flow limitation'),16,600,'start','#486171');
   body+='<path d="M90 365 L145 335 L205 355 L265 345 L340 365" fill="none" stroke="#8a795f" stroke-width="5"/>';
   body+=line(115,335,320,335,'#78bfdc')+text(215,320,L('수면 예시','example water level'),16,600,'middle','#247eaa');
   body+=text(86,430,L('확인','Review'),19,700)+text(86,458,L('하상·저수로 형상과 높이 기준','bed / low-flow shape and vertical datum'),16,500,'start','#486171');
@@ -137,7 +137,7 @@ function diagram(name,lang){
   body+=text(471,266,L('DEM · 중심선 · 추가 단면','DEM · centerline · added sections'),17,600,'start','#486171');
   body+=line(490,330,700,330,'#247eaa',true)+text(595,312,L('하천 중심선','river centerline'),17,700,'middle');
   [360,425,490].forEach((y,i)=>{body+=rect(500,y,205,45,'#fff','#d4e1e8',6)+text(520,y+29,'XS-'+String(i+1).padStart(2,'0'),17,700)+text(585,y+29,L('단면·하상 정보','section / bed info'),15,500);});
-  body+=text(471,555,L('원자료가 제공하는 정보 범위 안에서 보완','Supplement only within source-data support'),16,500,'start','#486171');
+  body+=text(471,555,L('원자료 범위 안에서 보완','Use only supported source data'),16,500,'start','#486171');
 
   body+=route('M375 385H435')+route('M760 385H820');
   body+=rect(830,195,310,385,'#f4faf6','#aac7d7',14)+text(856,235,L('3 · 수리 지형','3 · hydraulic terrain'),27,700);
