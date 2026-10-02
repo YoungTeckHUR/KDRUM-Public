@@ -128,10 +128,10 @@ function diagram(name,lang){
   body+='<path d="M105 405 L190 370 L275 382 L360 360 L505 392" fill="none" stroke="#8ca3af" stroke-width="6"/>';
   body+=line(105,405,505,405,'#78bfdc')+text(310,432,L('DEM 표면','DEM surface'),19,700,'middle','#486171');
   body+='<path d="M185 405 L230 450 L275 495 L330 450 L375 405" fill="none" stroke="#967b59" stroke-width="5" stroke-dasharray="9 6"/>';
-  body+=text(280,520,L('수중 하상은 별도 자료가 필요','Submerged bed needs added information'),19,600,'middle','#75470f');
+  body+=lang==='ko'?text(280,520,'수중 하상은 별도 자료가 필요',19,600,'middle','#75470f'):(text(280,510,'Submerged bed needs',16,600,'middle','#75470f')+text(280,532,'added information',16,600,'middle','#75470f'));
   body+=line(580,392,635,392,'#247eaa',true);
   body+=rect(650,195,490,400,'#edf7f4','#83b9ae',14)+text(676,235,L('ChannelBed 보완','ChannelBed supplementation'),29,700);
-  body+=text(676,263,L('중심선·횡단면·높이 기준을 이용해 수리지형 구성','Use centerline, sections and vertical reference'),18,600,'start','#486171');
+  body+=lang==='ko'?text(676,263,'중심선·횡단면·높이 기준을 이용해 수리지형 구성',18,600,'start','#486171'):(text(676,257,'Use centerline, sections and',16,600,'start','#486171')+text(676,278,'vertical reference',16,600,'start','#486171'));
   body+='<path d="M700 405 L785 370 L845 388 L895 472 L945 505 L995 472 L1045 388 L1100 405" fill="none" stroke="#967b59" stroke-width="6"/>';
   body+=line(700,405,1100,405,'#78bfdc')+text(900,438,L('수면','Water surface'),18,600,'middle','#247eaa');
   body+=text(945,535,L('저수로·하상 보완','Supplemented low-flow channel'),20,700,'middle','#11695d');
