@@ -113,7 +113,7 @@ function diagram(name,lang){
   body+=line(405,392,460,392,'#247eaa',true);
   body+=rect(475,195,300,405,'#edf7f4','#83b9ae',14)+text(501,235,L('공간 배분·정합','Spatial mapping'),29,700);
   body+=rect(510,282,230,82,'#fff','#d4e1e8',10)+text(625,315,'IDW',24,700,'middle')+text(625,344,L('관측소 → 격자','Gauge → cells'),18,500,'middle','#486171');
-  body+=rect(510,390,230,82,'#fff','#d4e1e8',10)+text(625,423,L('레이더·격자','Radar / grid'),21,700,'middle')+(lang==='ko'?text(625,451,'좌표·해상도 정합',17,500,'middle','#486171'):(text(625,447,'Align coordinates',16,500,'middle','#486171')+text(625,466,'+ resolution',16,500,'middle','#486171')));
+  body+=rect(510,390,230,82,'#fff','#d4e1e8',10)+text(625,423,L('레이더·격자','Radar / grid'),21,700,'middle')+(lang==='ko'?text(625,451,'좌표·해상도 정합',17,500,'middle','#486171'):(text(625,447,'Align coordinates',16,500,'middle','#486171')+text(625,461,'+ resolution',16,500,'middle','#486171')));
   body+=lang==='ko'?text(625,536,'시간간격·단위·결측도 함께 확인',18,600,'middle','#11695d'):(text(625,526,'Check interval, units',16,600,'middle','#11695d')+text(625,550,'and gaps',16,600,'middle','#11695d'));
   body+=line(790,392,845,392,'#247eaa',true);
   body+=rect(860,195,280,405,'#f5f9fb','#aac7d7',14)+text(886,235,L('계산격자 강우','Cell rainfall'),29,700);
