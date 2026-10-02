@@ -13,7 +13,7 @@
 <rect x="630" y="195" width="510" height="410" rx="14" fill="#edf7f4" stroke="#83b9ae" stroke-width="2"/><text x="656" y="235" font-size="29" font-weight="700" fill="#173d59">Gate / opening</text>
 <line x1="670" y1="385" x2="1100" y2="385" stroke="#78bfdc" stroke-width="3"/><rect x="860" y="300" width="28" height="185" rx="2" fill="#967b59" stroke="#75470f" stroke-width="2"/><rect x="888" y="410" width="105" height="75" rx="2" fill="#fff" stroke="#967b59" stroke-width="2"/><text x="940" y="447" text-anchor="middle" font-size="18" font-weight="700" fill="#173d59">Opening</text>
 <path d="M735 430H850" fill="none" stroke="#247eaa" stroke-width="3" marker-end="url(#arrow)"/><text x="704" y="411" font-size="18" font-weight="600" fill="#173d59">Upstream level</text><path d="M1000 447H1080" fill="none" stroke="#247eaa" stroke-width="3" marker-end="url(#arrow)"/><text x="1014" y="426" font-size="18" font-weight="700" fill="#11695d">Gate Q</text>
-<text x="656" y="548" font-size="18" font-weight="600" fill="#486171">Use opening, geometry and upstream/downstream levels</text>
+<text x="885" y="538" text-anchor="middle" font-size="16" font-weight="600" fill="#486171">Use opening, geometry and</text><text x="885" y="560" text-anchor="middle" font-size="16" font-weight="600" fill="#486171">upstream/downstream levels</text>
 <text x="600" y="630" text-anchor="middle" font-size="19" font-weight="600" fill="#173d59">Structure-specific discharge relations connect to 1D river or 2D flood calculations</text>
 <line x1="60" y1="663" x2="1140" y2="663" stroke="#d7e4ec" stroke-width="3"/>
 <text x="60" y="697" font-size="19" fill="#607789">Concept schematic · not calculated values or a software screenshot.</text>
