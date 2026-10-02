@@ -178,12 +178,12 @@ function diagram(name,lang){
   body+=line(390,390,425,390,'#247eaa',true);
   body+=rect(440,205,320,365,'#fffaf0','#e6bf7d',14)+text(466,245,L('무강우·건기','Dry / no-rain period'),27,700);
   body+=route('M600 300V265',true)+text(625,286,L('증발산','ET'),18,700,'start','#75470f');
-  body+=rect(475,330,250,155,'#edf7f4','#83b9ae',10)+text(600,366,L('상태는 계속 유지·갱신','States persist and update'),21,700,'middle')+text(600,404,L('저장량 감소·재분배','Storage depletion / redistribution'),17,500,'middle','#486171')+text(600,435,L('D층·지연유출 연속성','D-layer / delayed-flow continuity'),17,500,'middle','#486171')+text(600,466,L('다음 계산으로 전달','Carry into the next step'),17,600,'middle','#11695d');
+  body+=rect(475,330,250,155,'#edf7f4','#83b9ae',10)+(lang==='ko'?(text(600,366,'상태는 계속 유지·갱신',21,700,'middle')+text(600,404,'저장량 감소·재분배',17,500,'middle','#486171')+text(600,435,'D층·지연유출 연속성',17,500,'middle','#486171')+text(600,466,'다음 계산으로 전달',17,600,'middle','#11695d')):(text(600,358,'States persist',18,700,'middle')+text(600,382,'through dry periods',18,700,'middle')+text(600,416,'Storage depletion',15,500,'middle','#486171')+text(600,438,'+ redistribution',15,500,'middle','#486171')+text(600,462,'D-layer continuity',15,600,'middle','#11695d')));
   body+=line(770,390,805,390,'#247eaa',true);
   body+=rect(820,205,320,365,'#f5f9fb','#aac7d7',14)+text(846,245,L('강우사상 B','Rain event B'),27,700);
   body+=rect(855,295,250,54,'#dceef8','#8bbbd0',8)+text(980,329,L('새 강우 입력','New rainfall input'),19,700,'middle');
   body+=route('M980 350V382');
-  body+=rect(855,390,250,125,'#e9f5ef','#83b9ae',10)+text(980,422,L('이전 상태를 이어 계산','Continue from prior states'),21,700,'middle')+text(980,455,L('같은 강우라도 초기상태 영향','Response depends on starting states'),16,500,'middle','#486171')+text(980,484,L('연속 물수지 유지','Maintain continuous water balance'),17,600,'middle','#11695d');
+  body+=rect(855,390,250,125,'#e9f5ef','#83b9ae',10)+(lang==='ko'?(text(980,422,'이전 상태를 이어 계산',21,700,'middle')+text(980,455,'같은 강우라도 초기상태 영향',16,500,'middle','#486171')+text(980,484,'연속 물수지 유지',17,600,'middle','#11695d')):(text(980,416,'Continue from',18,700,'middle')+text(980,440,'prior states',18,700,'middle')+text(980,470,'Starting state',14,500,'middle','#486171')+text(980,491,'affects response',14,600,'middle','#11695d')));
   body+=text(600,620,L('연속모의는 강우사상 사이의 저장상태를 끊지 않고 다음 시점으로 전달합니다.','Continuous simulation carries storage states across events instead of resetting them.'),19,600,'middle');
   return frame(name,lang,L('연속모의와 상태 연속성','Continuous simulation and model states'),L('강우가 없는 기간에도 저장상태를 이어 다음 강우 반응에 사용합니다.','Carry storage states through dry periods so they affect the next event.'),body);
  }
