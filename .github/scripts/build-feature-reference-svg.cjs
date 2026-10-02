@@ -188,7 +188,7 @@ function diagram(name,lang){
   return frame(name,lang,L('연속모의와 상태 연속성','Continuous simulation and model states'),L('강우가 없는 기간에도 저장상태를 이어 다음 강우 반응에 사용합니다.','Carry storage states through dry periods so they affect the next event.'),body);
  }
  if(name==='state-save-restart'){
-  let body=rect(60,215,300,350,'#f5f9fb','#aac7d7',14)+text(86,255,L('1 · 계산 진행','1 · Run to checkpoint'),27,700);
+  let body=rect(60,215,300,350,'#f5f9fb','#aac7d7',14)+text(86,255,L('1 · 계산 진행','1 · Run to checkpoint'),lang==='ko'?27:22,700);
   body+=rect(95,310,230,88,'#e8f3f9','#aac7d7',10)+text(210,344,L('모형 상태 갱신','Update model states'),20,700,'middle')+text(210,373,L('토양·저장·유출 등','Soil · storage · runoff'),17,500,'middle','#486171');
   body+=route('M210 400V445')+text(235,431,L('시점 t₁','time t₁'),18,700,'start','#11695d');
   body+=rect(95,455,230,68,'#edf7f4','#83b9ae',10)+text(210,497,L('체크포인트 도달','Reach checkpoint'),19,700,'middle');
