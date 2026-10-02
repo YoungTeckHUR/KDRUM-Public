@@ -3,7 +3,7 @@
 ## Identity
 
 - **Name:** K-DRUM
-- **Full name:** K-water Grid-based Distributed Rainfall rUnoff Model
+- **Full name:** K-water Distributed Rainfall-runoff Model
 - **Organization context:** K-water
 - **Domain:** Hydrology and hydraulics
 - **Primary historical role:** Physically based, grid-distributed rainfall-runoff modeling
@@ -38,7 +38,7 @@ See:
 
 ## Naming note
 
-The current canonical expansion used by this public information site is **K-water Grid-based Distributed Rainfall rUnoff Model**. Historical publications contain several expanded English forms of the acronym; publication titles and wording are retained as originally published.
+The current canonical expansion used by this public information site is **K-water Distributed Rainfall-runoff Model**. Historical publications contain several expanded English forms of the acronym; publication titles and wording are retained as originally published.
 
 ## Source-code availability
 

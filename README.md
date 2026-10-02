@@ -1,6 +1,6 @@
 # K-DRUM
 
-**K-water Grid-based Distributed Rainfall rUnoff Model**
+**K-water Distributed Rainfall-runoff Model**
 
 K-DRUM is K-water's physically based, grid-based distributed rainfall-runoff model. It has an established public research record and is currently maintained in a **v3.x** development line that extends rainfall-runoff simulation toward one-dimensional river hydraulics, river-floodplain interaction, two-dimensional flood-inundation analysis, project authoring, and result visualization.
 
@@ -87,7 +87,7 @@ K-DRUM은 **K-water 기술 SW 대국민 개방정책에 따라 MyWater 물정보
 
 ## Naming note
 
-The current canonical expansion used by this public site is **K-water Grid-based Distributed Rainfall rUnoff Model**. Historical publications used several expanded English forms of the acronym; original publication titles and source wording are preserved rather than rewritten.
+The current canonical expansion used by this public site is **K-water Distributed Rainfall-runoff Model**. Historical publications used several expanded English forms of the acronym; original publication titles and source wording are preserved rather than rewritten.
 
 ---
 

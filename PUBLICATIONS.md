@@ -85,4 +85,4 @@ https://www.kwater.or.kr/kiwe/resu/thesView.do?mngtno=A2026019&pageNo=4&s_mid=45
 
 ## Naming note
 
-The current canonical expansion used by this public site is **K-water Grid-based Distributed Rainfall rUnoff Model**. Historical sources used several expanded English forms of the K-DRUM acronym. This bibliography preserves publication titles and source wording as originally published rather than rewriting historical records.
+The current canonical expansion used by this public site is **K-water Distributed Rainfall-runoff Model**. Historical sources used several expanded English forms of the K-DRUM acronym. This bibliography preserves publication titles and source wording as originally published rather than rewriting historical records.

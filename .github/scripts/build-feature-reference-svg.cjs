@@ -102,6 +102,67 @@ function diagram(name,lang){
   body+=text(60,588,L('초록 관심영역은 원해상도 유지 · 배경은 격자 병합','Green patch retains source cells; background cells are grouped'),27,600)+text(60,630,L('입력 지형보다 더 세밀한 지형정보를 생성하지 않습니다.','No terrain detail beyond the input resolution is created.'),23);
   return frame(name,lang,L('다중해상도와 관심영역(Patch)','Multiple resolutions and local patches'),L('격자 배치는 설명용이며 실제 적용 해상도를 나타내지 않습니다.','Illustrative grid layout; no specific model resolution is prescribed.'),body);
  }
+
+ if(name==='river-network-hydraulics'){
+  let body=rect(60,190,510,390,'#f5f9fb','#aac7d7',14)+text(86,230,L('하천망','River network'),29,700);
+  body+=text(86,258,L('Reach · 분기 · 합류 연결','Reach · branch · confluence connectivity'),18,600,'start','#486171');
+  body+='<path d="M130 485 C220 455 290 430 365 380 S470 305 525 275" fill="none" stroke="#4b8fae" stroke-width="16" stroke-linecap="round"/>';
+  body+='<path d="M175 300 C240 335 280 360 350 390" fill="none" stroke="#75a9c0" stroke-width="11" stroke-linecap="round"/>';
+  body+='<path d="M365 380 C410 430 452 462 520 490" fill="none" stroke="#75a9c0" stroke-width="11" stroke-linecap="round"/>';
+  body+='<circle cx="350" cy="390" r="13" fill="#fff" stroke="#247eaa" stroke-width="4"/><circle cx="410" cy="340" r="13" fill="#fff" stroke="#247eaa" stroke-width="4"/>';
+  body+=text(186,291,L('지류','Tributary'),18,600)+text(380,417,L('합류','Confluence'),18,700,'start','#11695d')+text(429,329,L('분기','Branch'),18,700,'start','#75470f');
+  body+=line(155,505,220,472,'#247eaa',true)+text(96,535,L('하류 방향','Downstream'),18,600);
+  body+=text(86,566,L('각 Reach의 횡단면과 연결관계를 함께 사용','Use cross sections and reach connectivity together'),19,500,'start','#486171');
+
+  body+=rect(620,190,520,390,'#f8fbfc','#aac7d7',14)+text(646,230,L('횡단면 기반 수리','Cross-section hydraulics'),29,700);
+  body+=text(646,258,L('같은 하천망에서 수위와 유량을 연결','Link water level and discharge across the network'),18,600,'start','#486171');
+  const ys=[305,395,485];
+  ys.forEach((y,i)=>{
+    body+=rect(650,y-28,250,68,'#fff','#d4e1e8',8);
+    body+='<path d="M670 '+(y+25)+' L705 '+(y-2)+' L755 '+(y+16)+' L810 '+(y-10)+' L880 '+(y+25)+'" fill="none" stroke="#967b59" stroke-width="3"/>';
+    body+=line(705,y+3,852,y+3,'#247eaa');
+    body+=text(665,y-7,'XS-'+String(i+1).padStart(2,'0'),17,700);
+  });
+  body+=route('M930 310V468')+text(956,337,L('수위 η','Water level η'),20,700)+text(956,377,L('유량 Q','Discharge Q'),20,700)+text(956,410,L('상·하류','Up/downstream'),18,500,'start','#486171')+text(956,434,L('상호영향','interaction'),18,500,'start','#486171');
+  body+=text(646,555,L('단면 형상은 보존하고 종단 위치·연결성을 정합','Preserve section shape; align elevation and connectivity'),18,500,'start','#486171');
+  body+=text(600,625,L('입력: 하천망·횡단면·경계조건  →  해석: 연속·운동량  →  결과: 수위 η · 유량 Q','Inputs: network · sections · boundaries  →  solve continuity/momentum  →  level η · discharge Q'),20,600,'middle');
+  return frame(name,lang,L('1D 하천망 수리와 단면 연결','1D river-network hydraulics and cross sections'),L('Reach별 횡단면과 연결점을 따라 수위·유량을 함께 해석합니다.','Water level and discharge are linked through reaches, sections and network junctions.'),body);
+ }
+ if(name==='river-floodplain-coupling'){
+  let body=rect(60,195,460,330,'#f4f9fc','#aac7d7',14)+rect(680,195,460,330,'#f4faf6','#aac7d7',14);
+  body+=text(88,238,L('1D 하천','1D river'),30,700)+text(708,238,L('2D 범람원','2D floodplain'),30,700);
+  body+='<path d="M95 475V355H165C195 355 214 378 230 405C246 431 268 442 292 442C316 442 338 431 354 405C370 378 389 355 419 355H500V475Z" fill="#e1d4bd" stroke="#a98f6a" stroke-width="3"/>';
+  body+='<path d="M210 397H374C360 400 351 410 341 425C331 437 315 442 292 442C269 442 253 437 243 425C233 410 224 400 210 397Z" fill="#78bfdc" stroke="#247eaa" stroke-width="3"/><line x1="210" y1="397" x2="374" y2="397" stroke="#247eaa" stroke-width="3"/>';
+  body+=text(292,474,L('수위 η₁ᴰ','stage η₁ᴰ'),20,700,'middle');
+  for(let y=0;y<4;y++)for(let x=0;x<6;x++)body+=rect(738+x*58,285+y*43,56,41,(x+y>4)?'#9bcde0':(x+y>2?'#cde6ef':'#edf4ef'),'#fff',0);
+  body+=text(910,474,L('수위 η₂ᴰ · 저류','stage η₂ᴰ · storage'),20,700,'middle');
+  body+=line(520,302,675,302,'#247eaa',true)+text(600,280,L('월류','Overflow'),22,700,'middle')+text(600,326,'η₁ᴰ > η₂ᴰ',18,600,'middle','#486171');
+  body+=line(680,382,525,382,'#328c79',true)+text(600,420,L('복귀','Return flow'),22,700,'middle','#11695d')+text(600,446,'η₂ᴰ > η₁ᴰ',18,600,'middle','#486171');
+  body+=text(600,505,L('교환경계','Exchange interface'),18,700,'middle','#75470f');
+  body+=rect(125,535,950,82,'#f8fbfc','#d4e1e8',10)+text(600,570,L('양방향 연계: 교환 후 바뀐 수위·저류가 다음 시간단계의 교환에 다시 영향','Two-way coupling: updated levels and storage affect exchange in the next time step'),19,600,'middle')+text(600,600,L('물수지 판정은 별도 1D–2D 교환 물수지 기능에서 확인','Check transfer accounting separately in the 1D–2D exchange-balance capability'),17,500,'middle','#486171');
+  return frame(name,lang,L('1D 하천과 2D 범람원의 양방향 연계','Bidirectional 1D river–2D floodplain coupling'),L('상대 수위와 교환경계에 따라 월류 또는 복귀 흐름을 계산합니다.','Overflow or return flow is determined across the exchange interface as relative levels change.'),body);
+ }
+ if(name==='local-inertia-grid'){
+  let body=rect(60,195,510,410,'#f5f9fb','#aac7d7',14)+text(86,235,L('2D 계산격자','2D computational grid'),29,700);
+  body+=text(86,262,L('셀 중심 수심 h · 격자면 유량 q','Cell depth h · face discharge q'),18,600,'start','#486171');
+  const gx=120,gy=300,s=72;
+  for(let y=0;y<4;y++)for(let x=0;x<5;x++){const cx=gx+x*s,cy=gy+y*s,fill=(x+y>4)?'#9bcde0':(x+y>2?'#cde6ef':'#edf4ef');body+='<path d="M'+cx+' '+cy+'h'+(s-2)+'v'+(s-2)+'h-'+(s-2)+'Z" fill="'+fill+'" stroke="#fff" stroke-width="2"/>';}
+  body+=text(gx+2.5*s,gy+1.65*s,L('수심 h','depth h'),22,700,'middle');
+  body+=line(gx+2*s-7,gy+1.5*s,gx+3*s-7,gy+1.5*s,'#247eaa',true)+text(gx+2.5*s,gy+1.5*s-13,L('격자면 유량 q','face discharge q'),17,700,'middle');
+  body+=line(gx+1.5*s,gy+2*s-7,gx+1.5*s,gy+3*s-7,'#328c79',true)+text(gx+1.58*s,gy+2.55*s,'q',18,700,'start','#11695d');
+  body+=text(86,558,L('η = z + h 로 수면고를 구성','Water level η = z + h'),18,500,'start','#486171');
+
+  body+=rect(620,195,520,410,'#f8fbfc','#aac7d7',14)+text(646,235,L('시간단계 계산 흐름','Time-step update'),29,700);
+  const steps=[
+    [L('1 · 수면고·지형','1 · level + terrain'),L('인접 셀의 수면차 확인','Read level difference between cells'),'#e8f3f9'],
+    [L('2 · 격자면 유량 q','2 · face discharge q'),L('국부관성·수면경사·마찰로 갱신','Update with local inertia, slope and friction'),'#e9f5ef'],
+    [L('3 · 수심 h 갱신','3 · update depth h'),L('유입 − 유출로 셀 저장량 갱신','Update cell storage from inflow − outflow'),'#fff6e7']
+  ];
+  steps.forEach((row,i)=>{const y=285+i*92;body+=rect(650,y,460,72,row[2],'#d4e1e8',10)+text(674,y+29,row[0],21,700)+text(674,y+56,row[1],17,500,'start','#486171');if(i<2)body+=route('M880 '+(y+76)+'V'+(y+88));});
+  body+=text(646,548,L('이류가속도 생략','Advective acceleration omitted'),18,600,'start','#75470f')+text(646,572,L('국부관성·수면경사·마찰 반영','Local inertia, surface slope and friction retained'),18,600,'start','#75470f');
+  body+=text(600,625,L('공간 격자에서 q를 먼저 갱신하고, 그 유입·유출로 h를 갱신하는 범람해석 개념','Update face q, then update cell h from the resulting inflow and outflow'),20,600,'middle');
+  return frame(name,lang,L('2D Local Inertia 격자 계산 개념','2D Local Inertia grid-update concept'),L('셀 수심 h와 격자면 단위폭 유량 q를 시간에 따라 갱신합니다.','Cell depth h and face unit-width discharge q are advanced through time.'),body);
+ }
  if(name==='river-result-views'){
   const blue='#0077ad',bed='#866d51',orange='#b56114',axis='#9aafbd';
   const curve=(d,c=blue)=>`<path d="${d}" fill="none" stroke="${c}" stroke-width="5" stroke-linejoin="round"/>`;
@@ -130,7 +191,7 @@ function diagram(name,lang){
 
  throw new Error('Unknown reference schematic: '+name);
 }
-const names=['input-readiness','rainfall-coverage','initial-state-warmup','watershed-water-balance','calibration-evaluation','result-lifecycle','nested-grid-patch','river-result-views','snow-process','deep-storage-path'];
+const names=['input-readiness','rainfall-coverage','initial-state-warmup','watershed-water-balance','calibration-evaluation','result-lifecycle','nested-grid-patch','river-result-views','snow-process','deep-storage-path','river-network-hydraulics','river-floodplain-coupling','local-inertia-grid'];
 function build(){const out=path.resolve(__dirname,'../../docs',directory);fs.mkdirSync(out,{recursive:true});for(const name of names)for(const lang of ['ko','en'])fs.writeFileSync(path.join(out,name+'-'+lang+'.svg'),diagram(name,lang));}
 if(require.main===module)build();
 module.exports={names,directory,build,diagram,frame,text,rect,line,route,box};
