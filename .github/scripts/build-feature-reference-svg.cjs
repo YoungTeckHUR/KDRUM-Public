@@ -225,7 +225,7 @@ function diagram(name,lang){
   let body=rect(60,205,285,365,'#f5f9fb','#aac7d7',14)+text(86,245,L('예측 유입·초기상태','Forecast inflow + initial state'),lang==='ko'?25:18,700);
   body+=rect(95,305,215,82,'#dceef8','#8bbbd0',10)+text(202,339,L('예측 유입계열','Forecast inflow series'),19,700,'middle')+text(202,368,L('저수위·저류량','Level · storage'),17,500,'middle','#486171');
   body+=route('M202 390V450')+(lang==='ko'?text(228,432,'공통 입력조건',17,600,'start','#11695d'):text(202,432,'Common inputs',16,600,'middle','#11695d'));
-  body+=rect(95,462,215,66,'#edf7f4','#83b9ae',10)+text(202,503,L('동일 기준으로 비교','Use one comparison basis'),lang==='ko'?18:16,700,'middle');
+  body+=rect(95,462,215,66,'#edf7f4','#83b9ae',10)+(lang==='ko'?text(202,503,'동일 기준으로 비교',18,700,'middle'):(text(202,488,'Use one',15,700,'middle')+text(202,511,'comparison basis',15,700,'middle')));
   body+=line(360,390,400,390,'#247eaa',true);
   body+=rect(415,205,350,365,'#fffaf0','#e6bf7d',14)+text(441,245,L('운영대안 A / B / C','Operating alternatives A / B / C'),lang==='ko'?25:19,700);
   const ys=[305,382,459],labels=[L('대안 A','Alternative A'),L('대안 B','Alternative B'),L('대안 C','Alternative C')];
@@ -234,7 +234,7 @@ function diagram(name,lang){
   body+=line(780,390,820,390,'#247eaa',true);
   body+=rect(835,205,305,365,'#f5f9fb','#aac7d7',14)+text(861,245,L('비교·검토','Compare and review'),27,700);
   body+=rect(870,302,235,155,'#edf7f4','#83b9ae',10)+text(987,336,L('저수지 수위·저류','Reservoir level / storage'),18,700,'middle')+text(987,369,L('방류량·시점','Release amount / timing'),17,500,'middle','#486171')+text(987,401,L('하류 제약조건','Downstream constraints'),17,500,'middle','#486171')+text(987,432,L('물수지·운영한계','Balance / operating limits'),17,500,'middle','#486171');
-  body+=rect(870,475,235,55,'#fff6e7','#e6bf7d',8)+text(987,509,L('운영자가 대안을 비교','Operator compares alternatives'),lang==='ko'?17:15,700,'middle','#75470f');
+  body+=rect(870,475,235,55,'#fff6e7','#e6bf7d',8)+(lang==='ko'?text(987,509,'운영자가 대안을 비교',17,700,'middle','#75470f'):(text(987,496,'Operator compares',14,700,'middle','#75470f')+text(987,516,'alternatives',14,700,'middle','#75470f')));
   body+=text(600,620,L('예측은 대안 비교의 입력이며, 그림은 자동 의사결정이나 실제 방류량을 의미하지 않습니다.','Forecasts support alternative comparison; the schematic does not imply automatic decisions or actual releases.'),17,600,'middle');
   return frame(name,lang,L('예측 기반 저수지 운영대안 비교','Forecast-based reservoir scenario comparison'),L('같은 예측조건에서 여러 방류대안의 저수지·하류 영향을 비교합니다.','Compare reservoir and downstream effects of alternative releases under common forecast conditions.'),body);
  }
