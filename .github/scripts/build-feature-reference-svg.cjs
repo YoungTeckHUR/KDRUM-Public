@@ -257,8 +257,8 @@ function diagram(name,lang){
   return frame(name,lang,L('사면–하천 유사 이동 경로','Hillslope-to-river sediment pathway'),L('사면에서 발생한 유사가 하천으로 유입되어 이송·퇴적되는 연결을 보여줍니다.','Show how hillslope sediment is delivered to the river and then transported or deposited.'),body);
  }
  if(name==='conservative-tracer-path'){
-  let body=rect(60,205,300,365,'#f5f9fb','#aac7d7',14)+text(86,245,L('주입·초기조건','Injection / initial condition'),27,700);
-  body+=rect(95,315,230,82,'#e8f3f9','#aac7d7',10)+text(210,349,L('상류 주입 위치','Upstream injection point'),19,700,'middle')+text(210,378,L('시점·투입량 정의','Define timing / amount'),17,500,'middle','#486171');
+  let body=rect(60,205,300,365,'#f5f9fb','#aac7d7',14)+(lang==='ko'?text(86,245,'주입·초기조건',27,700):(text(86,238,'Injection / initial',22,700)+text(86,266,'condition',22,700)));
+  body+=rect(95,315,230,82,'#e8f3f9','#aac7d7',10)+(lang==='ko'?text(210,349,'상류 주입 위치',19,700,'middle'):(text(210,343,'Upstream injection',17,700,'middle')+text(210,365,'point',17,700,'middle')))+text(210,385,L('시점·투입량 정의','Define timing / amount'),lang==='ko'?17:15,500,'middle','#486171');
   body+=route('M210 400V455')+text(236,438,L('하천으로 입력','Enter river'),17,600,'start','#11695d');
   body+=line(375,390,415,390,'#247eaa',true);
   body+=rect(430,205,330,365,'#edf7f4','#83b9ae',14)+text(456,245,L('보존성 물질 이동','Conservative transport'),27,700);
@@ -266,7 +266,7 @@ function diagram(name,lang){
   body+=route('M500 401C565 360 630 370 690 412')+text(595,330,L('흐름과 함께 하류 이동','Move downstream with flow'),18,700,'middle','#11695d');
   body+=rect(495,460,200,52,'#fff','#d4e1e8',8)+text(595,493,L('반응·붕괴 없는 추적','No reactive decay'),17,700,'middle','#486171');
   body+=line(775,390,815,390,'#247eaa',true);
-  body+=rect(830,205,310,365,'#f5f9fb','#aac7d7',14)+text(856,245,L('지점별 확인','Observation by location'),27,700);
+  body+=rect(830,205,310,365,'#f5f9fb','#aac7d7',14)+text(856,245,L('지점별 확인','Observation points'),lang==='ko'?27:24,700);
   body+=line(885,330,1085,330,'#78bfdc')+line(885,415,1085,415,'#78bfdc');
   [920,985,1050].forEach((x,i)=>{body+='<circle cx="'+x+'" cy="330" r="9" fill="#fff" stroke="#247eaa" stroke-width="3"/>'+text(x,365,'P'+(i+1),16,700,'middle');});
   body+='<path d="M885 485 C920 485 930 450 955 450 S995 500 1025 490 S1060 465 1090 480" fill="none" stroke="#247eaa" stroke-width="4"/>';
