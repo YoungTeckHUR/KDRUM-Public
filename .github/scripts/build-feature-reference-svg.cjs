@@ -161,10 +161,10 @@ function diagram(name,lang){
   body+='<path d="M675 430H820V315H875V430H1110" fill="#e7d9bd" stroke="#9a825f" stroke-width="3"/>';
   body+='<rect x="827" y="350" width="41" height="80" fill="#fff" stroke="#647785" stroke-width="3"/>';
   body+=line(685,350,818,350,'#247eaa')+line(880,405,1100,405,'#78bfdc');
-  body+=route('M790 390H930')+text(860,375,L('개구부 Q','opening Q'),19,700,'middle');
+  body+=route('M790 390H930')+text(975,375,L('개구부 Q','opening Q'),19,700,'middle');
   body+=text(685,340,L('상류 수위','upstream level'),15,600)+text(920,395,L('하류 수위','downstream level'),15,600);
 
-  body+=rect(115,575,970,62,'#f8fbfc','#d4e1e8',9)+text(600,603,L('수위·구조물 제원','heads + geometry'),18,700,'middle')+text(600,630,L('→ 구조물 유량 Q 산정 → 1D/2D 상·하류 계산에 전달','→ calculate structure discharge Q → pass to upstream/downstream 1D/2D calculations'),17,600,'middle','#486171');
+  body+=rect(115,575,970,62,'#f8fbfc','#d4e1e8',9)+text(600,603,L('수위·구조물 제원','heads + geometry'),18,700,'middle')+text(600,625,L('→ 구조물 유량 Q 산정 → 1D/2D 상·하류 계산에 전달','→ calculate structure discharge Q → pass to upstream/downstream 1D/2D calculations'),17,600,'middle','#486171');
   return frame(name,lang,L('수리구조물 유량과 계산영역 연결','Hydraulic-structure discharge and domain coupling'),L('월류와 게이트·개구부 흐름을 구조물 조건에 맞게 구분하고 산정 유량을 상·하류 계산에 전달합니다.','Distinguish crest overflow from gate/opening flow and pass the calculated discharge to adjoining domains.'),body);
  }
  if(name==='river-deep-storage'){
