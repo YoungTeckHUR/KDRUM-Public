@@ -275,6 +275,70 @@ function diagram(name,lang){
   return frame(name,lang,L('보존성 물질·염료 추적 경로','Conservative material and dye tracking'),L('상류에서 주입한 보존성 물질의 하류 이동과 지점별 확인 흐름을 보여줍니다.','Show downstream movement of a conservative tracer and observation at selected locations.'),body);
  }
 
+
+ if(name==='separate-slope-domains'){
+  let body=rect(60,205,500,360,'#f5f9fb','#aac7d7',14)+text(86,245,L('사면 계산영역','Hillslope domain'),29,700);
+  body+=text(86,276,L('격자 지형의 사면경사 Sₕ','Hillslope-cell slope Sₕ'),18,600,'start','#486171');
+  body+='<path d="M110 455 L245 295 L465 455 Z" fill="#e7dcc6" stroke="#a98f6a" stroke-width="3"/>';
+  body+=route('M205 342C255 365 305 397 365 430')+text(125,325,L('사면 유출 경로','Hillslope runoff path'),18,700,'start','#75470f');
+  body+=rect(115,480,390,52,'#edf7f4','#83b9ae',8)+text(310,513,L('Sₕ를 사면 격자 흐름 계산에 적용','Apply Sₕ to hillslope-cell routing'),lang==='ko'?18:16,600,'middle','#11695d');
+  body+=line(580,385,620,385,'#247eaa',false,'7 6');
+  body+=rect(640,205,500,360,'#f8fbfc','#aac7d7',14)+text(666,245,L('하도 계산영역','Channel domain'),29,700);
+  body+=text(666,276,L('하도 종단경사 S𝚌','Channel longitudinal slope S𝚌'),18,600,'start','#486171');
+  body+='<path d="M700 330 C790 350 900 395 1080 445" fill="none" stroke="#78bfdc" stroke-width="28" stroke-linecap="round"/>';
+  body+=route('M720 330C815 353 910 392 1055 432')+text(810,330,L('하류 방향','Downstream'),18,700,'start','#11695d');
+  body+=rect(690,480,400,52,'#fff6e7','#e6bf7d',8)+text(890,513,L('S𝚌를 길이·폭·조도와 함께 하도추적에 적용','Use S𝚌 with length, width and roughness'),lang==='ko'?17:15,600,'middle','#75470f');
+  body+=text(600,620,L('두 경사는 순차 처리단계가 아니라 서로 다른 계산영역에 적용되는 지형조건입니다.','The two slopes are terrain conditions for separate domains, not sequential processing stages.'),18,600,'middle');
+  return frame(name,lang,L('사면경사와 하도경사의 개별 적용','Separate hillslope and channel slopes'),L('사면과 하도에 서로 다른 경사를 적용하는 계산영역을 구분합니다.','Distinguish the terrain slopes used for hillslope and channel calculations.'),body);
+ }
+ if(name==='subbasin-comparison'){
+  let body=rect(60,205,520,365,'#f5f9fb','#aac7d7',14)+text(86,245,L('유역과 소유역','Watershed and subbasins'),29,700);
+  body+='<path d="M120 300 L245 270 L365 300 L510 355 L470 510 L315 535 L170 500 L105 405 Z" fill="#f8fbfc" stroke="#7fa7ba" stroke-width="3"/>';
+  body+='<path d="M245 270 L250 410 L170 500" fill="none" stroke="#9db7c5" stroke-width="2"/><path d="M250 410 L365 300 L510 355" fill="none" stroke="#9db7c5" stroke-width="2"/><path d="M250 410 L315 535" fill="none" stroke="#9db7c5" stroke-width="2"/>';
+  body+=text(178,355,'S1',20,700,'middle')+text(345,350,'S2',20,700,'middle')+text(390,470,'S3',20,700,'middle');
+  body+='<circle cx="455" cy="485" r="10" fill="#fff" stroke="#247eaa" stroke-width="4"/>'+text(455,520,'G',18,700,'middle','#247eaa');
+  body+=route('M205 375C275 405 360 445 445 480')+text(180,455,L('상류 기여가 지점 G로 집수','Upstream areas contribute to gauge G'),16,600,'start','#486171');
+  body+=line(600,385,640,385,'#247eaa',true);
+  body+=rect(655,205,485,365,'#edf7f4','#83b9ae',14)+text(681,245,L('같은 공간범위끼리 비교','Compare consistent spatial units'),lang==='ko'?28:23,700);
+  body+=rect(700,300,390,65,'#fff','#d4e1e8',8)+text(725,339,L('강우','Rainfall'),19,700)+text(870,339,L('유출','Runoff'),19,700)+text(1015,339,L('상태','States'),19,700);
+  body+=rect(700,390,390,56,'#f5f9fb','#aac7d7',8)+text(725,425,L('소유역 S1 / S2 / S3 집계','Subbasin S1 / S2 / S3 summaries'),17,600);
+  body+=rect(700,470,390,56,'#fff6e7','#e6bf7d',8)+text(725,504,L('지점 G는 여러 상류 기여를 통합','Gauge G integrates multiple upstream areas'),lang==='ko'?17:15,600,'start','#75470f');
+  body+=text(600,620,L('관측지점의 집수범위와 개별 소유역 집계범위가 같은지 확인한 뒤 결과를 비교합니다.','Check gauge contributing area against subbasin aggregation before comparing results.'),18,600,'middle');
+  return frame(name,lang,L('소유역 결과요약과 지점 비교','Subbasin summaries and gauge comparison'),L('유역을 소유역으로 나눠 결과를 집계하고 관측지점의 집수범위와 비교합니다.','Aggregate results by subbasin and relate them to the contributing area of evaluation sites.'),body);
+ }
+ if(name==='estuary-xz-section'){
+  let body=rect(60,195,1080,405,'#f5f9fb','#aac7d7',14)+text(86,235,L('종·연직 x-z 하구 단면','Longitudinal–vertical x-z estuary section'),lang==='ko'?29:26,700);
+  body+=line(110,525,1090,525,'#9aafbd')+line(110,525,110,285,'#9aafbd')+text(1080,555,'x →',20,600,'end','#486171')+text(92,300,'z ↑',20,600,'end','#486171');
+  body+='<path d="M120 470 C300 455 500 470 720 500 C860 520 980 535 1080 540 L1080 560 L120 560 Z" fill="#e2d3ba" stroke="#a98f6a" stroke-width="3"/>';
+  body+='<path d="M120 340 C360 335 660 350 1080 365 L1080 505 C950 500 820 485 700 465 C470 430 290 430 120 445 Z" fill="#dceef8" stroke="#78bfdc" stroke-width="2"/>';
+  body+='<path d="M520 410 C700 425 880 450 1080 475 L1080 505 C940 500 815 485 700 465 C620 452 555 443 500 440 Z" fill="#b9d8e8" opacity="0.9"/>';
+  body+=route('M145 390H330')+text(145,370,L('하천 유입','River inflow'),18,700,'start','#11695d');
+  body+=route('M1060 330H905')+text(1060,310,L('조위·해측 경계','Tide / sea boundary'),18,700,'end','#247eaa');
+  body+=route('M680 435C720 395 780 395 830 430')+route('M825 455C775 485 720 480 690 450')+text(755,382,L('연직 교환·성층','Vertical exchange / stratification'),lang==='ko'?17:15,600,'middle','#75470f');
+  body+=text(170,505,L('담수 우세','Fresher'),17,600,'start','#486171')+text(1010,505,L('염수 영향 증가','More saline influence'),lang==='ko'?17:15,600,'end','#486171');
+  body+=rect(735,245,330,70,'#fff6e7','#e6bf7d',8)+(lang==='ko'?(text(900,274,'폭평균 · 정수압 가정',17,700,'middle','#75470f')+text(900,299,'평면 범람해석과 좌표계가 다름',15,600,'middle','#75470f')):(text(900,272,'Width-averaged · hydrostatic',15,700,'middle','#75470f')+text(900,298,'Distinct from plan-view flooding',14,600,'middle','#75470f')));
+  body+=text(600,625,L('Estuary2DV는 K-DRUM 기본 계산엔진과 분리된 실험적 하구 수리동역학·염분 연구모형입니다.','Estuary2DV is a separate experimental estuary hydrodynamics/salinity model, not the standard K-DRUM engine.'),17,600,'middle');
+  return frame(name,lang,L('Estuary2DV 하구 x-z 연구영역','Estuary2DV x-z research domain'),L('하천 유입과 조위 경계 사이의 종·연직 수리동역학과 염분 분포를 개념적으로 나타냅니다.','Conceptualize longitudinal–vertical hydrodynamics and salinity between river and sea boundaries.'),body);
+ }
+ if(name==='parallel-execution-modes'){
+  let body=rect(60,205,215,350,'#f5f9fb','#aac7d7',14)+text(86,245,L('동일 입력','Same inputs'),27,700);
+  body+=rect(95,315,145,105,'#fff','#d4e1e8',10)+text(167,350,'K-DRUM',20,700,'middle')+text(167,382,L('동일 조건','Same case'),17,600,'middle','#486171');
+  body+=line(290,380,335,380,'#247eaa',true);
+  body+=rect(350,205,230,350,'#f8fbfc','#aac7d7',14)+text(376,245,L('단일 실행','Serial'),25,700);
+  body+=rect(395,315,140,105,'#fff','#d4e1e8',10)+text(465,350,L('1개 작업','One task'),18,700,'middle')+text(465,382,L('순차 계산','Sequential'),17,600,'middle','#486171');
+  body+=rect(610,205,240,350,'#edf7f4','#83b9ae',14)+text(636,245,'OpenMP',25,700);
+  body+=text(730,280,L('공유메모리','Shared memory'),18,600,'middle','#486171');
+  [655,725,795].forEach((x,i)=>{body+=rect(x-25,325,50,70,'#fff','#83b9ae',8)+text(x,367,'T'+(i+1),17,700,'middle');});
+  body+=line(650,425,810,425,'#83b9ae')+text(730,455,L('한 프로세스 안의 스레드','Threads in one process'),lang==='ko'?16:14,600,'middle','#11695d');
+  body+=rect(880,205,260,350,'#fffaf0','#e6bf7d',14)+text(906,245,'MPI',25,700);
+  body+=text(1010,280,L('분산메모리','Distributed memory'),18,600,'middle','#486171');
+  [930,1010,1090].forEach((x,i)=>{body+=rect(x-28,325,56,70,'#fff','#e6bf7d',8)+text(x,367,'P'+(i+1),17,700,'middle');});
+  body+=line(958,360,982,360,'#b07a31',true)+line(1038,360,1062,360,'#b07a31',true)+text(1010,455,L('프로세스 간 메시지 교환','Message exchange between processes'),lang==='ko'?16:14,600,'middle','#75470f');
+  body+=route('M275 455C320 500 340 500 395 475')+route('M275 455C470 555 620 550 700 490')+route('M275 455C630 590 900 570 1010 490');
+  body+=text(600,620,L('먼저 동일 입력의 결과 일관성을 확인하고, 병렬 성능은 실행환경과 버전에 맞춰 별도로 비교합니다.','Check result consistency under the same inputs first; assess parallel performance separately for each build and environment.'),17,600,'middle');
+  return frame(name,lang,L('단일·OpenMP·MPI 실행 비교','Serial, OpenMP and MPI execution'),L('같은 입력을 서로 다른 실행방식으로 계산하고 결과 일관성과 병렬 효율을 구분해 평가합니다.','Run the same case in different execution modes and separate result-consistency checks from performance evaluation.'),body);
+ }
+
  if(name==='river-network-hydraulics'){
   let body=rect(60,190,510,390,'#f5f9fb','#aac7d7',14)+text(86,230,L('하천망','River network'),29,700);
   body+=text(86,258,L('Reach · 분기 · 합류 연결','Reach · branch · confluence connectivity'),18,600,'start','#486171');
@@ -363,7 +427,7 @@ function diagram(name,lang){
 
  throw new Error('Unknown reference schematic: '+name);
 }
-const names=['input-readiness','rainfall-coverage','initial-state-warmup','watershed-water-balance','calibration-evaluation','result-lifecycle','nested-grid-patch','river-result-views','snow-process','deep-storage-path','continuous-state-cycle','state-save-restart','reservoir-operation','reservoir-scenario-assessment','sediment-transport-pathways','conservative-tracer-path','rainfall-spatial-forcing','channelbed-hydraulic-terrain','river-deep-storage-exchange','hydraulic-structures','river-network-hydraulics','river-floodplain-coupling','local-inertia-grid'];
+const names=['input-readiness','rainfall-coverage','initial-state-warmup','watershed-water-balance','calibration-evaluation','result-lifecycle','nested-grid-patch','river-result-views','snow-process','deep-storage-path','continuous-state-cycle','state-save-restart','reservoir-operation','reservoir-scenario-assessment','sediment-transport-pathways','conservative-tracer-path','separate-slope-domains','subbasin-comparison','estuary-xz-section','parallel-execution-modes','rainfall-spatial-forcing','channelbed-hydraulic-terrain','river-deep-storage-exchange','hydraulic-structures','river-network-hydraulics','river-floodplain-coupling','local-inertia-grid'];
 function build(){const out=path.resolve(__dirname,'../../docs',directory);fs.mkdirSync(out,{recursive:true});for(const name of names)for(const lang of ['ko','en'])fs.writeFileSync(path.join(out,name+'-'+lang+'.svg'),diagram(name,lang));}
 if(require.main===module)build();
 module.exports={names,directory,build,diagram,frame,text,rect,line,route,box};
