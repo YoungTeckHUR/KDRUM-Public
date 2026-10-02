@@ -103,6 +103,72 @@ function diagram(name,lang){
   return frame(name,lang,L('다중해상도와 관심영역(Patch)','Multiple resolutions and local patches'),L('격자 배치는 설명용이며 실제 적용 해상도를 나타내지 않습니다.','Illustrative grid layout; no specific model resolution is prescribed.'),body);
  }
 
+
+ if(name==='rainfall-spatial-forcing'){
+  let body=rect(60,195,330,405,'#f5f9fb','#aac7d7',14)+text(86,235,L('강우 원자료','Rainfall sources'),29,700);
+  body+=rect(88,280,120,88,'#e8f3f9','#aac7d7',10)+text(148,318,L('관측소','Gauges'),21,700,'middle')+text(148,347,L('시계열','Time series'),17,500,'middle','#486171');
+  body+=rect(235,280,120,88,'#e9f5ef','#83b9ae',10)+text(295,318,L('레이더','Radar'),21,700,'middle')+text(295,347,L('강우장','Rain field'),17,500,'middle','#486171');
+  body+=rect(88,395,267,88,'#fff6e7','#e6bf7d',10)+text(221,433,L('격자 강우자료','Gridded rainfall'),21,700,'middle')+text(221,462,L('공간·시간 기준 확인','Check space + time reference'),17,500,'middle','#75470f');
+  body+=text(86,546,L('자료형식에 따라 공간 연결 방식이 다름','Mapping depends on source type'),18,600,'start','#486171');
+  body+=line(405,392,460,392,'#247eaa',true);
+  body+=rect(475,195,300,405,'#edf7f4','#83b9ae',14)+text(501,235,L('공간 배분·정합','Spatial mapping'),29,700);
+  body+=rect(510,282,230,82,'#fff','#d4e1e8',10)+text(625,315,'IDW',24,700,'middle')+text(625,344,L('관측소 → 격자','Gauge → cells'),18,500,'middle','#486171');
+  body+=rect(510,390,230,82,'#fff','#d4e1e8',10)+text(625,423,L('레이더·격자','Radar / grid'),21,700,'middle')+text(625,451,L('좌표·해상도 정합','Align coordinates + resolution'),17,500,'middle','#486171');
+  body+=text(625,536,L('시간간격·단위·결측도 함께 확인','Also check interval, units and gaps'),18,600,'middle','#11695d');
+  body+=line(790,392,845,392,'#247eaa',true);
+  body+=rect(860,195,280,405,'#f5f9fb','#aac7d7',14)+text(886,235,L('계산격자 강우','Cell rainfall'),29,700);
+  for(let y=0;y<4;y++)for(let x=0;x<4;x++)body+=rect(900+x*52,290+y*52,50,50,['#edf4ef','#d9ebf2','#bfdfeb','#8fc7dd'][(x+y)%4],'#fff',0);
+  body+=text(1004,530,L('격자별 강우 입력','Rainfall by cell'),21,700,'middle')+text(1004,560,L('실제 값은 입력자료에서 확인','Read actual values from inputs'),17,500,'middle','#486171');
+  body+=text(600,630,L('관측소 공간배분은 IDW · 레이더/격자 강우는 공간좌표를 계산격자와 정합','Station mapping uses IDW; radar/gridded fields are aligned spatially to model cells'),19,600,'middle');
+  return frame(name,lang,L('공간 강우 입력의 구성','Preparing spatial rainfall forcing'),L('강우 원자료를 공간·시간 기준에 맞춰 계산격자별 입력으로 구성합니다.','Prepare rainfall sources as cell-based forcing with consistent space and time references.'),body);
+ }
+ if(name==='channelbed-hydraulic-terrain'){
+  let body=rect(60,195,505,400,'#f5f9fb','#aac7d7',14)+text(86,235,L('원 지형자료','Source terrain'),29,700);
+  body+=text(86,263,L('DEM은 수면 아래 저수로를 충분히 표현하지 못할 수 있음','A DEM may not resolve the submerged low-flow channel'),18,600,'start','#486171');
+  body+='<path d="M105 405 L190 370 L275 382 L360 360 L505 392" fill="none" stroke="#8ca3af" stroke-width="6"/>';
+  body+=line(105,405,505,405,'#78bfdc')+text(310,432,L('DEM 표면','DEM surface'),19,700,'middle','#486171');
+  body+='<path d="M185 405 L230 450 L275 495 L330 450 L375 405" fill="none" stroke="#967b59" stroke-width="5" stroke-dasharray="9 6"/>';
+  body+=text(280,520,L('수중 하상은 별도 자료가 필요','Submerged bed needs added information'),19,600,'middle','#75470f');
+  body+=line(580,392,635,392,'#247eaa',true);
+  body+=rect(650,195,490,400,'#edf7f4','#83b9ae',14)+text(676,235,L('ChannelBed 보완','ChannelBed supplementation'),29,700);
+  body+=text(676,263,L('중심선·횡단면·높이 기준을 이용해 수리지형 구성','Use centerline, sections and vertical reference'),18,600,'start','#486171');
+  body+='<path d="M700 405 L785 370 L845 388 L895 472 L945 505 L995 472 L1045 388 L1100 405" fill="none" stroke="#967b59" stroke-width="6"/>';
+  body+=line(700,405,1100,405,'#78bfdc')+text(900,438,L('수면','Water surface'),18,600,'middle','#247eaa');
+  body+=text(945,535,L('저수로·하상 보완','Supplemented low-flow channel'),20,700,'middle','#11695d');
+  body+=rect(720,555,370,45,'#fff6e7','#e6bf7d',8)+text(905,584,L('측량 원자료와 보완 지형을 구분','Keep survey source and supplemented terrain distinct'),17,600,'middle','#75470f');
+  body+=text(600,630,L('목적: 1D/2D 수리해석에 사용할 하상·저수로 형상을 더 일관되게 준비','Purpose: prepare consistent channel-bed and low-flow geometry for 1D/2D hydraulics'),19,600,'middle');
+  return frame(name,lang,L('DEM과 수리해석용 ChannelBed','DEM and hydraulic ChannelBed terrain'),L('DEM으로 부족한 수중 하상·저수로 형상을 추가 자료로 보완합니다.','Supplement submerged channel-bed geometry that a surface DEM may not resolve.'),body);
+ }
+ if(name==='river-deep-storage-exchange'){
+  let body=rect(60,195,470,410,'#f5f9fb','#aac7d7',14)+text(86,235,L('하천','River'),30,700);
+  body+='<path d="M105 360 L180 320 L260 335 L340 320 L485 360 L485 470 L105 470Z" fill="#e1d4bd" stroke="#a98f6a" stroke-width="3"/>';
+  body+='<path d="M175 390 H415 L390 430 L350 450 L240 450 L200 430Z" fill="#78bfdc" stroke="#247eaa" stroke-width="3"/><line x1="175" y1="390" x2="415" y2="390" stroke="#247eaa" stroke-width="3"/>';
+  body+=text(295,420,L('하천수','River water'),22,700,'middle');
+  body+=route('M295 458V520')+text(320,493,L('침투','Infiltration'),20,700,'start','#11695d');
+  body+=text(86,570,L('침투가능량과 하상 조건에 의해 제한','Limited by infiltration capacity and bed conditions'),18,600,'start','#486171');
+  body+=line(545,392,600,392,'#247eaa',true);
+  body+=rect(615,195,525,410,'#edf7f4','#83b9ae',14)+text(641,235,L('심부저장·D층 물수지','Deep storage / D-layer balance'),29,700);
+  body+=rect(675,310,405,135,'#c7e3df','#83b9ae',10)+text(878,352,L('D층 저장','D-layer storage'),25,700,'middle')+text(878,385,L('저장여유만큼 유입','Transfer limited by available storage'),18,500,'middle','#486171');
+  body+=route('M878 445V500')+text(903,480,L('지연 복귀','Delayed return'),19,700,'start','#11695d');
+  body+=text(641,548,L('하천 감소량 ↔ 심부저장 증가량을 같은 이동량으로 기록','River loss ↔ deep-storage gain use the same transferred volume'),18,600,'start','#486171');
+  body+=text(600,630,L('하천 침투는 기존 D층 저장 및 장기유출 확장과 연결되며, 완전한 지하수유동 해석과는 구분','River infiltration links to D-layer storage/long-term runoff extensions; it is not full groundwater-flow simulation'),18,600,'middle');
+  return frame(name,lang,L('하천 침투와 심부저장 연계','River infiltration and deeper storage'),L('하천에서 빠진 물과 심부 저장층에 더해진 물을 하나의 이동량으로 연결합니다.','Link water leaving the river with the corresponding gain in deeper storage.'),body);
+ }
+ if(name==='hydraulic-structures'){
+  let body=rect(60,195,510,410,'#f5f9fb','#aac7d7',14)+text(86,235,L('월류 구조물','Overflow structure'),29,700);
+  body+=line(100,385,520,385,'#78bfdc')+rect(285,360,95,125,'#c7b18e','#967b59',2);
+  body+=text(332,347,L('월류턱','Crest'),19,700,'middle','#75470f')+route('M185 340H275')+text(176,322,L('상류 수위','Upstream level'),18,600);
+  body+=route('M390 340H485')+text(414,322,L('월류 Q','Overflow Q'),18,700,'start','#11695d');
+  body+=text(86,548,L('수위와 월류턱 높이의 관계로 유량 산정','Discharge depends on head relative to crest'),18,600,'start','#486171');
+  body+=rect(630,195,510,410,'#edf7f4','#83b9ae',14)+text(656,235,L('게이트·개구부','Gate / opening'),29,700);
+  body+=line(670,385,1100,385,'#78bfdc')+rect(860,300,28,185,'#967b59','#75470f',2)+rect(888,410,105,75,'#fff','#967b59',2);
+  body+=text(915,447,L('개구부','Opening'),18,700,'middle')+route('M735 430H850')+text(704,411,L('상류 수위','Upstream level'),18,600);
+  body+=route('M1000 447H1080')+text(1014,426,L('통과 Q','Gate Q'),18,700,'start','#11695d');
+  body+=text(656,548,L('개도·제원·상하류 수위 조건을 함께 사용','Use opening, geometry and upstream/downstream levels'),18,600,'start','#486171');
+  body+=text(600,630,L('구조물 형식별 유량관계를 1D 하천수리 또는 2D 범람 계산과 연결','Structure-specific discharge relations connect to 1D river or 2D flood calculations'),19,600,'middle');
+  return frame(name,lang,L('수리구조물의 유량 연결','Hydraulic-structure flow relations'),L('월류와 게이트 통과 흐름을 구조물 형식·제원·수위조건에 따라 구분합니다.','Distinguish overflow and gate flow using structure type, geometry and water levels.'),body);
+ }
+
  if(name==='river-network-hydraulics'){
   let body=rect(60,190,510,390,'#f5f9fb','#aac7d7',14)+text(86,230,L('하천망','River network'),29,700);
   body+=text(86,258,L('Reach · 분기 · 합류 연결','Reach · branch · confluence connectivity'),18,600,'start','#486171');
@@ -191,7 +257,7 @@ function diagram(name,lang){
 
  throw new Error('Unknown reference schematic: '+name);
 }
-const names=['input-readiness','rainfall-coverage','initial-state-warmup','watershed-water-balance','calibration-evaluation','result-lifecycle','nested-grid-patch','river-result-views','snow-process','deep-storage-path','river-network-hydraulics','river-floodplain-coupling','local-inertia-grid'];
+const names=['input-readiness','rainfall-coverage','initial-state-warmup','watershed-water-balance','calibration-evaluation','result-lifecycle','nested-grid-patch','river-result-views','snow-process','deep-storage-path','rainfall-spatial-forcing','channelbed-hydraulic-terrain','river-deep-storage-exchange','hydraulic-structures','river-network-hydraulics','river-floodplain-coupling','local-inertia-grid'];
 function build(){const out=path.resolve(__dirname,'../../docs',directory);fs.mkdirSync(out,{recursive:true});for(const name of names)for(const lang of ['ko','en'])fs.writeFileSync(path.join(out,name+'-'+lang+'.svg'),diagram(name,lang));}
 if(require.main===module)build();
 module.exports={names,directory,build,diagram,frame,text,rect,line,route,box};
