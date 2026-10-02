@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+<title id="title">하천 침투와 심부저장 연계</title><desc id="desc">하천에서 빠진 물과 심부 저장층에 더해진 물을 하나의 이동량으로 연결합니다. 개념도 · 실제 계산값 또는 프로그램 화면이 아닙니다.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#247eaa"/></marker></defs>
+<rect width="1200" height="720" fill="#fff"/><g font-family="Noto Sans CJK KR,Noto Sans KR,Malgun Gothic,Arial,sans-serif">
+<text x="60" y="43" font-size="18" font-weight="600" fill="#607f94">VISUAL CONCEPT</text>
+<text x="60" y="97" font-size="40" font-weight="700" fill="#173d59">하천 침투와 심부저장 연계</text>
+<text x="60" y="142" font-size="23" fill="#526d7e">하천에서 빠진 물과 심부 저장층에 더해진 물을 하나의 이동량으로 연결합니다.</text>
+
+<rect x="60" y="195" width="470" height="410" rx="14" fill="#f5f9fb" stroke="#aac7d7" stroke-width="2"/><text x="86" y="235" font-size="30" font-weight="700" fill="#173d59">하천</text>
+<path d="M105 360 L180 320 L260 335 L340 320 L485 360 L485 470 L105 470Z" fill="#e1d4bd" stroke="#a98f6a" stroke-width="3"/><path d="M175 390 H415 L390 430 L350 450 L240 450 L200 430Z" fill="#78bfdc" stroke="#247eaa" stroke-width="3"/><line x1="175" y1="390" x2="415" y2="390" stroke="#247eaa" stroke-width="3"/><text x="295" y="420" text-anchor="middle" font-size="22" font-weight="700" fill="#173d59">하천수</text>
+<path d="M295 458V520" fill="none" stroke="#247eaa" stroke-width="3" marker-end="url(#arrow)"/><text x="320" y="493" font-size="20" font-weight="700" fill="#11695d">침투</text><text x="86" y="570" font-size="18" font-weight="600" fill="#486171">침투가능량과 하상 조건에 의해 제한</text>
+<line x1="545" y1="392" x2="600" y2="392" stroke="#247eaa" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="615" y="195" width="525" height="410" rx="14" fill="#edf7f4" stroke="#83b9ae" stroke-width="2"/><text x="641" y="235" font-size="29" font-weight="700" fill="#173d59">심부저장·D층 물수지</text>
+<rect x="675" y="310" width="405" height="135" rx="10" fill="#c7e3df" stroke="#83b9ae" stroke-width="2"/><text x="878" y="352" text-anchor="middle" font-size="25" font-weight="700" fill="#173d59">D층 저장</text><text x="878" y="385" text-anchor="middle" font-size="18" fill="#486171">저장여유만큼 유입</text>
+<path d="M878 445V500" fill="none" stroke="#247eaa" stroke-width="3" marker-end="url(#arrow)"/><text x="903" y="480" font-size="19" font-weight="700" fill="#11695d">지연 복귀</text>
+<text x="641" y="548" font-size="18" font-weight="600" fill="#486171">하천 감소량 ↔ 심부저장 증가량을 같은 이동량으로 기록</text>
+<text x="600" y="630" text-anchor="middle" font-size="18" font-weight="600" fill="#173d59">하천 침투는 기존 D층 저장 및 장기유출 확장과 연결되며, 완전한 지하수유동 해석과는 구분</text>
+<line x1="60" y1="663" x2="1140" y2="663" stroke="#d7e4ec" stroke-width="3"/>
+<text x="60" y="697" font-size="19" fill="#607789">개념도 · 실제 계산값 또는 프로그램 화면이 아닙니다.</text>
+</g></svg>
