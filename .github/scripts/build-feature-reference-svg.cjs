@@ -333,10 +333,10 @@ function diagram(name,lang){
   body+=rect(880,205,260,350,'#fffaf0','#e6bf7d',14)+text(906,245,'MPI',25,700);
   body+=text(1010,280,L('분산메모리','Distributed memory'),18,600,'middle','#486171');
   [930,1010,1090].forEach((x,i)=>{body+=rect(x-28,325,56,70,'#fff','#e6bf7d',8)+text(x,367,'P'+(i+1),17,700,'middle');});
-  body+=line(958,360,982,360,'#b07a31',true)+line(1038,360,1062,360,'#b07a31',true)+text(1010,455,L('프로세스 간 메시지 교환','Message exchange between processes'),lang==='ko'?16:14,600,'middle','#75470f');
+  body+=line(958,360,982,360,'#b07a31',true)+line(1038,360,1062,360,'#b07a31',true)+(lang==='ko'?text(1010,455,'프로세스 간 메시지 교환',16,600,'middle','#75470f'):(text(1010,447,'Message exchange',13,600,'middle','#75470f')+text(1010,467,'between processes',13,600,'middle','#75470f')));
   body+=route('M275 455C320 500 340 500 395 475')+route('M275 455C470 555 620 550 700 490')+route('M275 455C630 590 900 570 1010 490');
   body+=text(600,620,L('먼저 동일 입력의 결과 일관성을 확인하고, 병렬 성능은 실행환경과 버전에 맞춰 별도로 비교합니다.','Check result consistency under the same inputs first; assess parallel performance separately for each build and environment.'),17,600,'middle');
-  return frame(name,lang,L('단일·OpenMP·MPI 실행 비교','Serial, OpenMP and MPI execution'),L('같은 입력을 서로 다른 실행방식으로 계산하고 결과 일관성과 병렬 효율을 구분해 평가합니다.','Run the same case in different execution modes and separate result-consistency checks from performance evaluation.'),body);
+  return frame(name,lang,L('단일·OpenMP·MPI 실행 비교','Serial, OpenMP and MPI execution'),L('같은 입력을 서로 다른 실행방식으로 계산하고 결과 일관성과 병렬 효율을 구분해 평가합니다.','Compare one case across execution modes, separating result consistency from performance.'),body);
  }
 
  if(name==='river-network-hydraulics'){
