@@ -32,6 +32,10 @@ const requiredLabels={
  'reservoir-scenario-assessment':{ko:['예측 유입·초기상태','운영대안 A / B / C','비교·검토'],en:['Forecast inflow + initial state','Operating alternatives A / B / C','Compare and review']},
  'sediment-transport-pathways':{ko:['사면 유사 발생','하천 유입·이송','퇴적·통과'],en:['Hillslope sediment source','Delivery and river transport','Deposition / onward transport']},
  'conservative-tracer-path':{ko:['주입·초기조건','보존성 물질 이동','지점별 확인'],en:['Injection / initial','condition','Conservative transport','Observation points']},
+ 'separate-slope-domains':{ko:['사면 계산영역','격자 지형의 사면경사 Sₕ','하도 계산영역','하도 종단경사 S𝚌'],en:['Hillslope domain','Hillslope-cell slope Sₕ','Channel domain','Channel longitudinal slope S𝚌']},
+ 'subbasin-comparison':{ko:['유역과 소유역','S1','S2','S3','G','같은 공간범위끼리 비교'],en:['Watershed and subbasins','S1','S2','S3','G','Compare consistent spatial units']},
+ 'estuary-xz-section':{ko:['종·연직 x-z 하구 단면','하천 유입','조위·해측 경계','연직 교환·성층'],en:['Longitudinal–vertical x-z estuary section','River inflow','Tide / sea boundary','Vertical exchange / stratification']},
+ 'parallel-execution-modes':{ko:['동일 입력','단일 실행','OpenMP','MPI','공유메모리','분산메모리'],en:['Same inputs','Serial','OpenMP','MPI','Shared memory','Distributed memory']},
 
  'river-floodplain-coupling':{ko:['1D 하천','2D 범람원','월류','복귀'],en:['1D river','2D floodplain','Overflow','Return flow']},
  'local-inertia-grid':{ko:['2D 계산격자','수심 h','격자면 유량 q','3 · 수심 h 갱신'],en:['2D computational grid','depth h','face discharge q','3 · update depth h']}
