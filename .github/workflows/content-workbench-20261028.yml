@@ -1,0 +1,53 @@
+name: Staged public-content workbench
+on:
+  push:
+    branches: [content/full-methodology-review-20261028]
+    paths: [.github/workflows/content-workbench-20261028.yml]
+permissions:
+  contents: write
+jobs:
+  materialize:
+    if: github.event.head_commit.message == 'Finalize editable gallery descriptions against current hydraulic status'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: content/full-methodology-review-20261028
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Align editable captions with reviewed capability status
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.github/scripts/sync-current-data.cjs')
+          s=p.read_text()
+          anchor="write('docs/assets/site-content.json',data);write('docs/assets/feature-depth.json',depth);"
+          assert s.count(anchor)==1 and 'const captionMap=' not in s
+          code="""// Editable gallery captions must match the current badges, not the original slide date.
+          const captionMap={
+           11:['Established kinematic routing and completed 1D hydraulic formulations','확립된 운동파 흐름추적과 개발 완료된 1D 하천수리'],
+           12:['Implemented river structures, reservoir operation and gate-flow calculations','구현된 하천 수리구조물·저수지 운영·수문 유량 계산'],
+           13:['Completed 1D–2D coupling and 2D inundation; multi-resolution is selectively supported','개발 완료된 1D–2D 연계·2D 범람과 선택 적용되는 다중해상도 해석']
+          };
+          const gallery=data.media.data.flatMap(group=>group[3]);
+          for(const [id,pair] of Object.entries(captionMap)){
+           const card=gallery.find(entry=>entry[0]===Number(id));
+           if(!card)throw Error('Missing current gallery caption '+id);
+           [card[3],card[4]]=pair;
+          }
+          """
+          p.write_text(s.replace(anchor,code+anchor))
+          PY
+          node .github/scripts/build-site.cjs
+          node .github/scripts/site-static-audit.cjs
+          node .github/scripts/media-status-consistency.cjs
+      - name: Commit reviewed caption source and generated pages
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- .github/scripts/sync-current-data.cjs docs
+          git diff --cached --quiet && exit 0
+          git commit -m 'Remove stale development wording from hydraulic gallery captions'
+          git push origin HEAD:content/full-methodology-review-20261028
