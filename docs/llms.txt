@@ -1,51 +1,22 @@
-# K-DRUM
+# K-DRUM — current technical information
 
-K-DRUM stands for K-water Distributed Rainfall-runoff Model.
+Reviewed 2026-10-28.
+K-DRUM means K-water Distributed Rainfall-runoff Model.
 
-K-DRUM is K-water's established physically based, grid-distributed hydrologic model for rainfall-runoff simulation and watershed analysis.
+K-DRUM is a physically based, grid-distributed rainfall–runoff model. The current engine includes completed 1D river-network hydraulics, junctions, 2D local-inertial inundation and bidirectional 1D–2D exchange. Full SWE is development-complete for supported configurations; it is not interchangeable with every coupling/grid combination.
 
-Publicly established foundation:
-- grid-distributed rainfall-runoff processes
-- Green-Ampt infiltration
-- surface and subsurface runoff
-- evapotranspiration-related water balance
-- kinematic-wave routing
-- long-term runoff and snowmelt applications
-- MPI-based parallel-computation lineage
+Established hydrology: spatial rainfall/IDW, Green–Ampt infiltration, surface/subsurface runoff, A/B/C/D stores, ET, snow, continuous simulation and kinematic routing. The D layer is an existing storage component, with implemented delayed-return/deep-loss extensions; it is not a spatial aquifer-flow solver.
 
-Publicly documented application themes:
-- flood simulation using radar and grid rainfall
-- large-domain parallel computation
-- long-term runoff and snowmelt
-- drought and watershed water balance
-- surface-water/groundwater coupling
-- wildfire and extreme-rainfall runoff response
+Current implemented support: warm-up/state save/restart, calibration/evaluation, input/output integrity, structure and reservoir-operation functions, water-balance reporting and NetCDF. Hydrologic warm-up cache and full HotStart have different state coverage.
 
-Current v3.x platform direction:
-- 1D dynamic-wave river-network hydraulics
-- branched and merged networks
-- bidirectional 1D-2D river-floodplain exchange, including the current dynamic-wave 1D–local-inertial 2D development path
-- 2D flood-inundation analysis
-- hydraulic structures and reservoir-operation scenarios
-- high-resolution terrain and channel geometry
-- InputStudio spatial-input construction, guided project authoring and prechecks
-- FloodViewer result visualization
-- Estuary2DV as a separate estuary hydrodynamics and salinity research prototype
+Implementation completion is separate from basin-specific validation and official distribution. Do not label completed hydraulics as unfinished simply because performance refinement, new validation or GUI work continues.
 
-The hydrologic core is established. Current hydraulic and platform components have different validation levels; detailed maturity is maintained in the public DEVELOPMENT_STATUS.md and MODEL_CARD.md documents. Production source code, restricted datasets, sensitive operational information, private diagnostics, and unpublished implementation details are not public.
+Existing InputStudio is an input-authoring tool. New K-DRUM Studio is separate integrated project/control/run/analysis development, not merely a product rename. FloodViewer is a release candidate; the 1D Viewer is separately developed. Sediment/tracer remain research functions, water-quality processes are disabled/redevelopment, and Estuary2DV is experimental.
 
-English homepage:
-https://youngteckhur.github.io/KDRUM-Public/
-
-Korean homepage:
-https://youngteckhur.github.io/KDRUM-Public/ko/
-
-Public repository:
-https://github.com/YoungTeckHUR/KDRUM-Public
-
-Selected references:
-https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md
-
-Official K-water context:
-https://www.water.or.kr/kor/menu/sub.do?menuId=15_126_127
-https://www.kwater.or.kr/kiwe/main.do
+Official executables and terms: https://www.water.or.kr/kor/board/index.do?bid=BD_00026&menuId=15_126_128&mode=list
+This technical repository does not directly distribute production source or executables.
+Korean homepage: https://youngteckhur.github.io/KDRUM-Public/ko/
+English homepage: https://youngteckhur.github.io/KDRUM-Public/
+Methods: https://youngteckhur.github.io/KDRUM-Public/ko/#numerical-methods
+Scope: https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md
+Publications: https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/PUBLICATIONS.md

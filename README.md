@@ -2,9 +2,9 @@
 
 **K-water Distributed Rainfall-runoff Model**
 
-K-DRUM is K-water's physically based, grid-based distributed rainfall-runoff model. It has an established public research record and is currently maintained in a **v3.x** development line that extends rainfall-runoff simulation toward one-dimensional river hydraulics, river-floodplain interaction, two-dimensional flood-inundation analysis, project authoring, and result visualization.
+K-DRUM is K-water’s physically based grid-distributed rainfall–runoff model. The current engine includes completed 1D river hydraulics, 2D inundation and bidirectional coupling, alongside established hydrology, implemented balance/output functions, separately developed tools and clearly identified research modules.
 
-K-DRUM은 K-water가 개발해 온 **물리적 기반의 격자단위 분포형 강우유출모형**입니다. 공개 연구성과와 확립된 강우유출 해석기능을 기반으로, 현행 v3.x 체계에서는 1차원 하천수리해석, 하천-홍수터 연계, 2차원 홍수범람해석, 공간입력 구축·프로젝트 작성과 결과분석 기능을 함께 확장하고 있습니다.
+K-DRUM은 K-water의 물리적 기반 격자단위 분포형 강우유출모형입니다. 1D 하천수리·2D 범람·양방향 연계는 개발 완료 기능이며, 기존 수문·물수지·출력 기능과 함께 유역–하천–범람원을 연결합니다. 도구 개발·연구 기능·공식 배포 여부는 별도로 안내합니다.
 
 - Public website: https://youngteckhur.github.io/KDRUM-Public/
 - Korean page: https://youngteckhur.github.io/KDRUM-Public/ko/
@@ -33,13 +33,13 @@ Public K-DRUM research supports the following high-level capabilities:
 The current generation builds on the established rainfall-runoff core and organizes K-DRUM as a connected analysis environment:
 
 - **K-DRUM Core** — distributed rainfall-runoff, river-hydraulic and flood-inundation simulation engine
-- **K-DRUM Studio (in development)** — a developing integrated project/run/review workflow, not an officially released consolidated product.
+- **K-DRUM Studio (in development)** — separate new integrated project/control/run/analysis development, not simply a renamed InputStudio or an official consolidated release.
 - **K-DRUM InputStudio** — spatial-input construction, guided project authoring, time series, terrain/river geometry, hydraulic structures, scenarios, consistency checks, and controlled engine-input generation
 - **K-DRUM FloodViewer** — integrated map and time-series analysis of hydrologic and hydraulic simulation results
 - **1D River Hydraulics Results Viewer** — separate viewer for longitudinal/cross-section results and water-level/discharge time series; under development and **not yet published to the public GitHub repositories**
 - **K-DRUM ChannelBed** — reusable high-resolution terrain, river-geometry, and virtual channel-bed processing
 
-Current hydraulic extensions include measured/virtual cross-section-based one-dimensional dynamic-wave river-network analysis, branch/confluence hydraulics, the integrated dynamic-wave 1D–local-inertial 2D bidirectional development path, two-dimensional flood-inundation analysis, hydraulic structures, and reservoir-operation scenarios. Water-balance accounting, InputStudio authoring/checks and result viewers are presented as connected parts of the analysis workflow. These components have different validation levels; see [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md) for the public maturity boundary.
+Current hydraulic capabilities include completed 1D networks, branch/confluence hydraulics, 2D local-inertial inundation and bidirectional dynamic-wave 1D/local-inertial 2D exchange, plus Full SWE within supported configurations. Structure, reservoir, state/output and water-balance functions are implemented. See [current implementation scope](DEVELOPMENT_STATUS.md) and [theory/methods](TECHNICAL_METHODS.md).
 
 ## Research extensions
 
@@ -62,7 +62,7 @@ See [PUBLICATIONS.md](PUBLICATIONS.md) for the selected bibliography.
 
 This repository is a **public technical-information repository**, not a distribution of the production source code.
 
-The homepage presents K-DRUM's established rainfall-runoff foundation, current hydraulic development, analysis/support programs, and public research evidence. Detailed readiness claims are kept separately in:
+The homepage presents K-DRUM's established rainfall-runoff foundation, completed hydraulic capabilities, analysis/support programs, and public research evidence. Detailed readiness claims are kept separately in:
 
 - [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md)
 - [CAPABILITIES.md](CAPABILITIES.md)
@@ -93,4 +93,4 @@ The current canonical expansion used by this public site is **K-water Distribute
 ---
 
 **Canonical model name:** K-DRUM  
-**Current public baseline:** v3.x / October 2026
+**Current technical review:** v3.x / 2026-10-28. Implementation, validation and distribution are tracked separately.

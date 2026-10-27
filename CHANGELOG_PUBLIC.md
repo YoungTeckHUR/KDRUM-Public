@@ -1,5 +1,12 @@
 # K-DRUM Public Information Changelog
 
+## 2026-10-28 — Full implementation and methodology review
+
+- Corrected completed 1D river/2D flood capabilities and distinguished implementation from application validation and official release.
+- Rewrote all 46 bilingual capability descriptions with inputs, mechanisms, representative relationships/units, outputs, checks and references.
+- Added six substantive methodology chapters and aligned current status documents, FAQ, search summaries and historical-media annotations.
+- Preserved original media and feature identity; current readiness is tested against the explicit new review matrix rather than frozen old labels.
+
 ## 2026-10-27 — Content, usability and opening-video refresh
 
 - Reviewed current Core, InputStudio and Viewer main lines without promoting unmerged or experimental features.
