@@ -5,11 +5,16 @@
 - KDRUM-Public은 공개 기술설명용 GitHub Pages 정적 저장소다.
 - 실제 화면은 `docs/index.html`(영문), `docs/ko/index.html`(국문), `docs/assets/site.js`의 해시 라우터와 `site.css`로 구성된다.
 - 46개 기능의 상세 설명은 기존 HTML 그대로 유지한다.
-- 2026-10-27 현재 repository의 `has_discussions=false`, `has_issues=true`다.
+- 2026-10-27 저장소에서 GitHub Discussions가 활성화되어 `has_discussions=true`, `has_issues=true`임을 확인했다. 첫 공지 #92가 `Announcements`로 게시되었다.
 - GoatCounter 방문통계와 공개자료 정책은 계속 유지한다.
 - 기존 페이지에 외부 스크립트와 신규 데이터 저장 기능을 설치하지 않는다.
 
 ## 시범 PR의 범위
+
+실제 게시판: https://github.com/YoungTeckHUR/KDRUM-Public/discussions
+
+첫 공지: https://github.com/YoungTeckHUR/KDRUM-Public/discussions/92
+
 
 - 기존 메뉴에 국문 '사용자 소통', 영문 'Community' 한 항목만 추가.
 - `#community` 내부 화면을 기존 해시 라우터에 연결.
@@ -17,11 +22,11 @@
 - 게시 → 사후 확인·답변 → 지식 공유의 예상 운영 흐름 표시.
 - 개인정보·비공개 자료의 게시 금지와 GitHub 로그인·즉시 공개 경고.
 - 기존 FAQ로 연결, 모형 원본·기능 상태·정적 미디어·분석 설정은 수정하지 않음.
-- 이 PR 자체에는 실제 댓글 전송, 계정인증, giscus, 외부 API 접근 기능이 없음.
+- 이 PR은 이용자가 클릭하면 실제 GitHub Discussions로 이동하도록 안내한다. 이 PR 자체에는 자체 댓글 전송, 계정인증, giscus, 외부 API 접근 기능이 없음.
 
 ## 제안 운영 방침 (확정 전)
 
-1. GitHub Discussions를 저장소 Settings > General > Features에서 활성화한다. 관리자 승인 후 실시.
+1. **완료** — GitHub Discussions 활성화, 환영 공지 #92 게시. 현재 확인된 범주는 Announcements이며 Q&A·Ideas 등 다른 범주의 실제 설정은 운영 전 확인이 필요하다.
 2. 카테고리: Q&A (질문·답변), Ideas (기능 제안), General (활용 의견), Announcements (공지·업데이트; 관리자 작성).
 3. 모든 등록 내용은 GitHub에 공개되므로 **사전 검토 후 공개**와 혼동하지 않는다. 운영자는 사후 모니터링 및 신고·잠금·수정 등으로 관리한다.
 4. 질문을 작성하려면 GitHub 계정이 필요하다. 비회원 쓰기는 이 방식에서 지원하지 않는다.
@@ -43,10 +48,10 @@
 
 - 기존 46개 기능의 한·영 페이지와 메뉴, 라우팅·영문 전환, 모바일 320px/390px/768px 및 데스크톱 1280px 확인.
 - 키보드 탭 이동, 포커스, screen reader heading, 터치 크기, 링크 끊김, 해시 직접 진입 확인.
-- 설정을 켜기 전까지 사용자가 글을 작성할 수 있는 것처럼 속이지 않는다.
-- GitHub Discussions 활성화, 카테고리·관리자 지정, 운영정책 안내문, 실제 계정 로그인 시나리오 확인.
+- 이미 활성화된 GitHub Discussions로 명확하게 이동하도록 안내하고, 홈페이지 자체에 글쓰기 양식이 있는 것처럼 오해시키지 않는다.
+- GitHub Discussions 활성화는 완료. 카테고리·관리자 지정, 운영정책 안내문, 실제 계정 로그인 시나리오 확인은 별도 점검.
 - 외부 iframe 채택 시 CSP·Referrer Policy·분석 거부 규칙과 별도 충돌 검사.
 - 모든 기존 CI와 Pages 공개본 검증 통과 후 **검토 승인 시** main 병합 및 배포.
 - 문제 발생 시 해당 PR을 병합하지 않거나 커뮤니티 화면·메뉴·라우팅·스타일을 함께 되돌린다.
 
-**이 설계 PR은 현재 운영 홈페이지에 공개하지 않는다.** GitHub Discussions와 댓글 기능도 켜지 않는다.
+**이 설계 PR은 현재 운영 홈페이지에 공개하지 않는다.** GitHub Discussions 자체는 사용자가 이미 활성화했으며, 홈페이지에서 게시판으로 이동하는 링크는 이 PR 병합 후에만 표시된다.
