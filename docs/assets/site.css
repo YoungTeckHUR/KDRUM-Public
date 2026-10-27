@@ -235,3 +235,9 @@
 .community-faq{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;font-weight:750}
 @media(max-width:900px){.community-cards{grid-template-columns:1fr}.community-details{grid-template-columns:1fr}.community-card{padding:20px 22px}}
 @media(max-width:560px){.community-page{padding:30px 0 52px}.community-notice{padding:14px}.community-hero>p:last-child{font-size:1rem}.community-details{gap:18px;padding-top:22px}.community-safety{padding:18px}.workspace-nav a{overflow-wrap:normal}}
+
+/* Open Discussions only through an explicit user-activated link. */
+.community-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px;margin:-6px 0 28px}
+.community-actions .button{min-height:44px;display:inline-flex;align-items:center;justify-content:center;text-align:center;white-space:normal}
+.community-welcome-link{font-weight:650;font-size:.94rem;min-height:44px;display:inline-flex;align-items:center}
+@media(max-width:560px){.community-actions{align-items:stretch;flex-direction:column}.community-actions .button{width:100%}}
