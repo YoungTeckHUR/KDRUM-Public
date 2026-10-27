@@ -241,3 +241,13 @@
 .community-actions .button{min-height:44px;display:inline-flex;align-items:center;justify-content:center;text-align:center;white-space:normal}
 .community-welcome-link{font-weight:650;font-size:.94rem;min-height:44px;display:inline-flex;align-items:center}
 @media(max-width:560px){.community-actions{align-items:stretch;flex-direction:column}.community-actions .button{width:100%}}
+
+/* October 2026: all six navigation links remain visible and balanced at phone widths. */
+@media(max-width:600px){
+ [data-navigation-layout] .workspace-header .workspace-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:4px;order:3;margin-left:0;justify-content:stretch!important}
+ [data-navigation-layout] .workspace-header .workspace-nav a{min-width:0;min-height:44px;padding:8px 3px;text-align:center;justify-content:center;line-height:1.35;overflow-wrap:break-word}
+}
+.studio-development-note{margin:22px 0 8px;padding:18px 20px;background:#f5fafc;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:8px}
+.studio-development-note strong{display:block;color:var(--blue-dark);font-size:1.04rem}
+.studio-development-note p{margin-top:8px;color:var(--muted);font-size:.95rem;line-height:1.65}
+@media(max-width:600px){.studio-development-note{padding:15px 16px}}

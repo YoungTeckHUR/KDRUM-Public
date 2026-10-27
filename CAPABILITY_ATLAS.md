@@ -1,6 +1,6 @@
 # K-DRUM Public Capability Reference
 
-**Reviewed: 2026-10-01**
+**Public maturity reviewed: 2026-10-01 · cross-repository descriptions rechecked: 2026-10-27**
 
 K-DRUM은 K-water가 개발한 **물리적 기반의 격자단위 분포형 강우유출모형**입니다. 이 문서는 공개 가능한 K-DRUM 기능을 수자원·토목 분야에서 일반적으로 사용하는 용어를 중심으로 정리합니다. 코드가 존재한다는 사실만으로 실무 적용성이 확정된 것으로 보지 않으며, 각 기능의 개발·검증 상태는 [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md)와 함께 해석해야 합니다.
 

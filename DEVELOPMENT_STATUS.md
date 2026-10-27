@@ -1,10 +1,12 @@
 # K-DRUM Public Development Status
 
-**Status reviewed: 2026-10-01**
+**Status re-reviewed: 2026-10-27 · public maturity baseline reviewed 2026-10-01**
 
 This file describes public-facing maturity only. It intentionally does not expose source code, internal solver settings, validation datasets, development branches, failure diagnostics, operational reservoir rules, or unpublished numerical implementation details.
 
 The October 1, 2026 review updates the public description against the current Core and InputStudio main lines while preserving the same evidence-based maturity boundary. No capability has been promoted solely because code exists; status upgrades require appropriate validation evidence.
+
+The October 27 cross-repository review checked newer Core, InputStudio and Viewer development. Public maturity labels retain the October 1, 2026 evidence baseline: newer code, draft pull requests and limited tests do not alone establish official public release or basin-wide validation.
 
 ## Rainfall-runoff hydrology, forcing and model state
 

@@ -79,3 +79,7 @@ Then update `docs/media.html` and the version manifest after review. This keeps 
 - [ ] Feature wording is consistent with `CAPABILITIES.md` and `DEVELOPMENT_STATUS.md`.
 - [ ] Add a `Visual Guide` / `시각자료` link to the English and Korean home-page navigation after assets are confirmed.
 - [ ] Verify the GitHub Pages deployment before merging to `main`.
+
+## October 2026 opening-title media
+
+A separately dated public-video version is prepared from the original September web MP4. The published PDF, images and 22-second video remain unchanged. The new file opens on the K-DRUM title, removes the original black startup frames, retains the remaining concept sequence and identifies itself as an explanatory concept video, not a numerical calculation. Publication requires duration, first-frame and SHA-256 verification.

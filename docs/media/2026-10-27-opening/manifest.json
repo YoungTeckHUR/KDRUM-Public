@@ -1,0 +1,21 @@
+{
+  "version": "opening-title-v1.1",
+  "source": "2026-09-12-p18 web concept MP4",
+  "source_sha256": "14b8173bdd1126049ad624ce4c335de72590f691dc46aab170d22bffe68dd54f",
+  "duration_seconds": 23.7,
+  "opening_seconds": 1.8,
+  "removed_black_seconds": 0.1,
+  "title_frame_source_seconds": 20.5,
+  "assets": {
+    "video": {
+      "file": "KDRUM_OpeningTitle_v1.1_web.mp4",
+      "size": 5345709,
+      "sha256": "69813b8c86ea009e91d1e4f8bb917105ff96127a102098729e0b2f9b8e24aed3"
+    },
+    "poster": {
+      "file": "KDRUM_OpeningTitle_v1.1_poster.jpg",
+      "size": 167374,
+      "sha256": "89cb7835910b6e002faf991fd5b8b7b5874417f765ec380ab399769b21bf9ea4"
+    }
+  }
+}

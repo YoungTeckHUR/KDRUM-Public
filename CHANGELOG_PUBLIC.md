@@ -1,5 +1,14 @@
 # K-DRUM Public Information Changelog
 
+## 2026-10-27 — Content, usability and opening-video refresh
+
+- Reviewed current Core, InputStudio and Viewer main lines without promoting unmerged or experimental features.
+- Clarified the developing K-DRUM Studio integration direction, preserving the roles of InputStudio and separate result viewers.
+- Added 2024 Jeju surface/groundwater and 2026 Namgang wildfire/extreme-rainfall public research examples while keeping the historical research record.
+- Corrected FAQ dates, MyWater official-distribution wording and HotStart versus warm-up-state reuse explanations.
+- Balanced the six mobile navigation labels; prepared a versioned K-DRUM opening-title video without overwriting September media.
+
+
 ## 2026-10-01 — Core/InputStudio public-description synchronization
 
 Reviewed the current K-DRUM Core and InputStudio development lines against the public website and synchronized only changes that are already integrated in the current main development paths.

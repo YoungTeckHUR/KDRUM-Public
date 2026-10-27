@@ -232,6 +232,38 @@ jobs:
 
           findings = []
           checked = 0
+          opening_manifest_path = Path('docs/media/2026-10-27-opening/manifest.json')
+          opening_assets = {}
+          opening_expected = {
+              'video': ('KDRUM_OpeningTitle_v1.1_web.mp4', 20_000_000),
+              'poster': ('KDRUM_OpeningTitle_v1.1_poster.jpg', 1_000_000)
+          }
+          if not opening_manifest_path.is_file():
+              findings.append('missing dated opening-video manifest')
+          else:
+              try:
+                  import json
+                  manifest = json.loads(opening_manifest_path.read_text(encoding='utf-8'))
+                  if manifest.get('source_sha256') != '14b8173bdd1126049ad624ce4c335de72590f691dc46aab170d22bffe68dd54f':
+                      raise ValueError('unrecognized reviewed original video')
+                  if manifest.get('version') != 'opening-title-v1.1':
+                      raise ValueError('unrecognized opening video version')
+                  if not 23 <= float(manifest.get('duration_seconds', 0)) <= 25:
+                      raise ValueError('opening video duration outside approved range')
+                  for kind, (filename, size_limit) in opening_expected.items():
+                      asset = manifest['assets'][kind]
+                      if asset['file'] != filename:
+                          raise ValueError(f'unexpected {kind} filename')
+                      sha = asset['sha256']
+                      if len(sha) != 64 or any(ch not in '0123456789abcdef' for ch in sha):
+                          raise ValueError(f'invalid {kind} SHA-256')
+                      size = int(asset['size'])
+                      if not 0 < size <= size_limit:
+                          raise ValueError(f'{kind} size exceeds limit')
+                      opening_assets[f'docs/media/2026-10-27-opening/{filename}'] = {'sha': sha, 'size': size, 'kind': kind}
+              except (ValueError, KeyError, TypeError, OSError) as exc:
+                  findings.append(f'invalid dated opening-video manifest: {exc}')
+
 
           for path in root.rglob('*'):
               if not path.is_file():
@@ -245,6 +277,17 @@ jobs:
               if rel in approved_p18_assets:
                   if hashlib.sha256(path.read_bytes()).hexdigest() != approved_p18_assets[rel]:
                       findings.append(f'{path}: p18 public asset checksum mismatch')
+                  continue
+
+              if rel in opening_assets:
+                  rule = opening_assets[rel]
+                  payload = path.read_bytes()
+                  if len(payload) != rule['size'] or hashlib.sha256(payload).hexdigest() != rule['sha']:
+                      findings.append(f'{path}: opening media manifest checksum or size mismatch')
+                  elif rule['kind'] == 'video' and (len(payload) < 12 or payload[4:8] != b'ftyp'):
+                      findings.append(f'{path}: invalid MP4 signature')
+                  elif rule['kind'] == 'poster' and not payload.startswith(b'\\xff\\xd8\\xff'.decode('unicode_escape').encode('latin1')):
+                      findings.append(f'{path}: invalid JPEG signature')
                   continue
 
               if rel in approved_binary_assets:
@@ -278,6 +321,10 @@ jobs:
               for label, regex in patterns:
                   if regex.search(text):
                       findings.append(f'{path}: possible {label}')
+
+          for rel in opening_assets:
+              if not Path(rel).is_file():
+                  findings.append(f'{rel}: missing declared opening media')
 
           for rel, rule in approved_binary_assets.items():
               if 'sha256' in rule and not Path(rel).is_file():
