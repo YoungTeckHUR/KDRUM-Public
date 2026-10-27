@@ -26,7 +26,7 @@
   if(id==='capabilities'){id='cap-'+activeFeature;target=document.getElementById(id);}
   if(target?.matches('.capability')){feature=target;activeFeature=target.dataset.feature;page='model';view=document.getElementById('capabilities');}
   else if(target?.closest('[data-model-view]')){page='model';view=target.closest('[data-model-view]');}
-  else if(['programs','research','download'].includes(id))page=id;
+  else if(['programs','research','download','community'].includes(id))page=id;
   else{id='home';target=document.getElementById('home');}
   document.querySelectorAll('[data-workspace-page]').forEach(el=>el.hidden=el.dataset.workspacePage!==page);
   if(page!=='home')document.querySelectorAll('.home-introduction video').forEach(video=>video.pause());
