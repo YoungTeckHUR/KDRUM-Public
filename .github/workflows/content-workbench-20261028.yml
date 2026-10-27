@@ -1,0 +1,20 @@
+name: Staged public-content workbench
+on:
+  push:
+    branches: [content/full-methodology-review-20261028]
+    paths: [.github/workflows/content-workbench-20261028.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Archive public website sources for offline content and layout review
+        run: git archive --format=tar.gz HEAD > /tmp/kdrum-public-content-source.tar.gz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: staged-public-content-source
+          path: /tmp/kdrum-public-content-source.tar.gz
+          retention-days: 7
