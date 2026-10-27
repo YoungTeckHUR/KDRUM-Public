@@ -4,6 +4,7 @@ const guidance=require('./capability-guidance.cjs');
 const focused=require('./feature-specific-figures.cjs');
 const useCases=require('./feature-use-cases.cjs');
 const numerical=require('./numerical-guide.cjs');
+const community=require('./community-center-preview.cjs');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const tr=(l,k,e)=>l==='ko'?k:e;
 const gallery={ga:'green-ampt-infiltration',runoff:'surface-subsurface-runoff',et:'evapotranspiration-soil-water',dlayer:'dlayer-delayed-baseflow'};
@@ -56,7 +57,7 @@ function capability(item,lang,pre,{badge,data,repo,reading}){
 function sections(html){const out={};let depth=0,start=0,key;for(const m of html.matchAll(/<\/?section\b[^>]*>/g)){if(m[0].startsWith('</')){if(--depth===0)out[key]=html.slice(start,m.index+m[0].length);}else{if(depth++===0){start=m.index;key=/\bid="([^"]+)"/.exec(m[0])?.[1]||'hero';}}}if(depth!==0)throw Error('Unbalanced sections');return out;}
 function compose(html,lang,{data}){
  guidance.validate(data);useCases.validate(data);validateAssets(data);const L=(k,e)=>tr(lang,k,e),pre=lang==='ko'?'../':'',s=sections(html);
- const pages=[['home',L('홈','Home')],['capabilities',L('모형·기능','Model & capabilities')],['programs',L('프로그램','Programs')],['research',L('적용·연구','Research')],['download',L('자료·다운로드','Resources')]];
+ const pages=[['home',L('홈','Home')],['capabilities',L('모형·기능','Model & capabilities')],['programs',L('프로그램','Programs')],['research',L('적용·연구','Research')],['download',L('자료·다운로드','Resources')],['community',L('사용자 소통','Community')]];
  const header=`<header class="site-header"><div class="wrap workspace-header"><a class="brand" href="#home"><img src="${pre}assets/kdrum-symbol.png" alt="" width="32" height="32">K-DRUM</a><nav class="workspace-nav" aria-label="${L('주 메뉴','Main navigation')}">${pages.map(([id,title])=>`<a href="#${id==='capabilities'?'overview':id}" data-page-link="${id}">${title}</a>`).join('')}</nav><div class="language"><a href="${pre||'./'}" lang="en" ${lang==='en'?'aria-current="page"':''}>English</a><a href="${pre}ko/" lang="ko" ${lang==='ko'?'aria-current="page"':''}>한국어</a></div></div></header>`;
  const topics=[
  ['ga','01',L('유역 수문','Watershed hydrology'),L('비가 유출로 이어지는 과정','From rainfall to runoff'),L('공간 강우가 침투·토양수분·유출로 이어지는 흐름을 봅니다.','Follow spatial rainfall through infiltration, soil water and runoff.')],
@@ -82,6 +83,6 @@ function compose(html,lang,{data}){
  resources=resources.replace('</ol><div class="resource-links">',`</ol><div class="resource-links"><a href="${pre}media.html?lang=${lang}">${L('발표자료·영상·이미지','Presentation, video and images')} ↗</a>`);
  const start=html.slice(0,html.indexOf('<header class="site-header">')).replace('<body>','<body data-navigation-layout="workspace">');
  const end=html.slice(html.indexOf('</main>')+7);
- return start+header+'<main id="main">'+home+model+programs.replace('<section ','<section data-workspace-page="programs" ')+s.research.replace('<section ','<section data-workspace-page="research" ')+resources.replace('<section ','<section data-workspace-page="download" ')+'</main>'+end;
+ return start+header+'<main id="main">'+home+model+programs.replace('<section ','<section data-workspace-page="programs" ')+s.research.replace('<section ','<section data-workspace-page="research" ')+resources.replace('<section ','<section data-workspace-page="download" ')+community.render(lang)+'\n</main>'+end;
 }
 module.exports={capability,compose,asset,validateAssets};

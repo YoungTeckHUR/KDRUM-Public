@@ -59,7 +59,7 @@ async function navigation(page,lang,width){
  await page.evaluate(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async()=>{throw Error('Denied');}}}));await page.locator('#cap-ga .feature-share').click();assert.equal(await page.locator('#cap-ga .feature-share-status').innerText(),lang==='ko'?'주소창의 링크를 복사해 주세요.':'Copy the link from the address bar.');
  await page.locator('#cap-ga .technical-details>summary').focus();await page.keyboard.press('Enter');assert.ok(await page.locator('#cap-ga .technical-details').evaluate(e=>e.open));await page.keyboard.press('Enter');
  await zoom(page,page.locator('#cap-ga .feature-reference-image'));
- for(const id of ['programs','research','download','home']){await page.locator('.workspace-nav [data-page-link="'+id+'"]').click();await page.locator('[data-workspace-page="'+id+'"]').waitFor({state:'visible'});assert.equal(await page.locator('[data-workspace-page]:visible').count(),1);assert.ok(await page.locator('[data-workspace-page="'+id+'"]').isVisible());await bounds(page,lang+' '+width+' '+id);}
+ for(const id of ['programs','research','download','community','home']){await page.locator('.workspace-nav [data-page-link="'+id+'"]').click();await page.locator('[data-workspace-page="'+id+'"]').waitFor({state:'visible'});assert.equal(await page.locator('[data-workspace-page]:visible').count(),1);assert.ok(await page.locator('[data-workspace-page="'+id+'"]').isVisible());if(id==='community'){assert.ok(await page.locator('#community .community-notice').isVisible());assert.equal(await page.locator('#community form').count(),0);assert.equal(await page.locator('#community .community-forum-link').getAttribute('href'),'https://github.com/YoungTeckHUR/KDRUM-Public/discussions');assert.equal(await page.locator('#community .community-forum-link').getAttribute('rel'),'noopener noreferrer');}await bounds(page,lang+' '+width+' '+id);}
  for(const [hash,selector] of [['architecture','#overview'],['features','#cap-ga'],['platform','#programs'],['references','#research'],['concept-ga','#concept-ga'],['results','#results'],['cap-not-real','#home']]){await ready(page,home(lang)+'#'+hash);assert.ok(await page.locator(selector).isVisible(),hash+' resolves');await bounds(page,hash);if(hash==='platform')await diagramScale(page);}
  await ready(page,home(lang)+'#cap-river-viewer');
  await page.waitForFunction(()=>scrollY===0);
@@ -83,7 +83,7 @@ async function run(mode='navigation'){
    const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'}),page=await context.newPage(),errors=[];
    page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)errors.push(r.status()+' '+r.url());});
    await ready(page,home(lang));
-   assert.equal(await page.locator('h1').count(),1);assert.equal(await page.locator('.capability').count(),46);assert.equal(await page.locator('.capability:visible').count(),0);assert.equal(await page.locator('[data-workspace-page]:visible').count(),1);assert.ok(await page.locator('#home').isVisible());
+   assert.equal(await page.locator('h1:visible').count(),1);assert.equal(await page.locator('.capability').count(),46);assert.equal(await page.locator('.capability:visible').count(),0);assert.equal(await page.locator('[data-workspace-page]:visible').count(),1);assert.ok(await page.locator('#home').isVisible());
    assert.equal(await page.locator('#home .hero-image img').count(),1);assert.equal(await page.locator('.home-topics article').count(),4);
    assert.equal(await page.locator('link[rel=canonical]').getAttribute('href'),'https://youngteckhur.github.io/KDRUM-Public/'+(lang==='ko'?'ko/':''));
    assert.deepEqual(await page.evaluate(()=>{const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);return ids.filter((id,i)=>ids.indexOf(id)!==i);}),[]);
@@ -96,7 +96,7 @@ async function run(mode='navigation'){
     await page.locator('.workspace-nav [data-page-link="capabilities"]').click();
     for(const item of data.items){await choose(page,item);await inspectFeature(page,item,lang,width);if(process.env.AUDIT_SCREENSHOTS!=='0'){const card=page.locator('#cap-'+item.id);await card.locator('.technical-details>summary').click();await card.screenshot({path:path.join(out,lang+'-'+width+'-'+item.id+'.png')});await card.locator('.technical-details>summary').click();}results.push({lang,width,id:item.id,status:'PASS'});}
    }else{
-    for(const id of ['overview','cap-ga','cap-input-precheck','cap-fullswe','programs','research','download','grid-hydrology-concepts','results']){
+    for(const id of ['overview','cap-ga','cap-input-precheck','cap-fullswe','programs','research','download','community','grid-hydrology-concepts','results']){
      await ready(page,home(lang)+'#'+id);for(const img of await page.locator('main img:visible').all())await img.evaluate(i=>i.decode());await bounds(page,lang+' '+width+' '+id);
      if(id.startsWith('cap-')){await page.locator('#'+id+' .technical-details>summary').click();await bounds(page,id+' expanded');await page.locator('#'+id+' .technical-details>summary').click();}
     }
