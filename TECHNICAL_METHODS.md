@@ -1,0 +1,219 @@
+# K-DRUM 이론·수치방법 / Theory and numerical methodology
+
+**Reviewed: 2026-10-28**
+
+다음 식은 지배관계와 보존·해석 원리를 설명합니다. 입력파일의 비공개 형식이나 내부 조정값을 나열하지 않습니다. 외부 참고문헌은 일반 이론의 근거이며 외부 모형과 K-DRUM의 구현·성능이 동일하다는 뜻은 아닙니다.
+
+Equations explain governing principles and interpretation. External references support theory; they do not establish identical implementation or performance between K-DRUM and other models.
+
+운동파·확산파·국부관성·동역학파는 유지하는 물리항의 차이이고, 유한체적·차분·양해·음해는 수치해법의 차이입니다.
+
+Kinematic, diffusion, local-inertial and dynamic waves describe equation approximations; finite-volume/difference and explicit/implicit describe numerical methods.
+
+## 07 · 격자 수문: 침투·저장·증발산·적설 / 07 · Cell hydrology: infiltration, storage, ET and snow
+
+### 한 격자 안에서도 역할이 다른 저장을 구분합니다 / Different stores play different roles within one cell
+
+K-DRUM의 격자 수문은 지표와 A/B/C/D층의 저장·이동을 연결합니다. 강우·융설수는 침투 또는 지표유출에 기여하고, 토양수분은 증발산과 지표하 유출의 공급원이 됩니다. D층은 원래 존재하는 심부 저장이며 지연 복귀·기저유출 표현을 통해 강우가 끝난 뒤의 반응에 기여합니다. 유역 전체로 합산할 때 층간 이동은 내부 항으로 상쇄하고, 증발산·출구유출·영역 밖 심부손실을 외부 항으로 분리합니다.
+
+K-DRUM links surface and A/B/C/D-layer storage and transfer. Rain and melt supply infiltration or surface runoff; soil water supplies ET and subsurface flow. The D layer is an existing deep store whose delayed return contributes to post-storm response. Interlayer transfers cancel in a whole-domain budget, while ET, outlet export and external deep loss are separate boundary terms.
+
+`ΔSdomain = P + Iexternal − Qout − ET − Lexternal`
+
+모두 같은 기간·영역의 체적[m³] 또는 같은 면적으로 환산한 수심[mm]입니다. / All terms refer to a common period/domain in volume [m³], or depth [mm] on a consistent area basis.
+
+### 침투능과 실제 침투량은 다릅니다 / Capacity is not the same as actual infiltration
+
+Green-Ampt는 습윤전선 전후의 함수율 차이와 흡인수두를 이용해 침투능을 계산합니다. 누적침투가 작은 초기에는 흡인효과가 상대적으로 크고, 시간이 지나면 포화투수계수의 역할이 커집니다. 하지만 실제로 토양으로 들어가는 물은 지표에 공급된 물을 넘을 수 없습니다. 침투량을 계산한 뒤 토양저장 증가와 지표 초과량이 원래 공급량과 맞는지 확인해야 합니다.
+
+Green–Ampt uses wetting-front suction and the moisture difference across the front to estimate infiltration capacity. Suction matters relatively more at small cumulative infiltration; conductivity becomes dominant later. Actual entry cannot exceed water supplied at the surface. The storage increment and remaining surface excess must reconcile with the original supply.
+
+`f_c = Kₛ [1 + ψf Δθ/F];   ΔFinfil ≤ min(f_cΔt, Wsurface)`
+
+대표 설명식: Kₛ·f_c [길이/시간], F·ψf·Wsurface [길이]. 담수고·초기화 등 실제 조건은 별도로 반영합니다. / Representative expression: Kₛ/f_c [length/time], F/ψf/Wsurface [length]. Actual ponding and initialization are treated separately.
+
+### 실제 증발산과 융설은 저장량을 넘지 않도록 연결합니다 / ET and melt are tied to available storage
+
+증발산은 기상 수요를 식생·뿌리 분포에 연결하되 토양 가용수로 제한합니다. 적설·융설은 기온과 지형·시간 보정을 포함한 경험적 경로로 적설수량을 갱신하며, 눈을 물로 환산한 깊이와 적설심은 다릅니다. 이 홈페이지에서 FAO 문헌은 증발산 일반 개념의 참고자료이지 K-DRUM의 모든 수요 계산식이 FAO-56과 동일하다는 뜻이 아닙니다.
+
+ET links atmospheric demand to vegetation/root distribution but remains limited by available soil water. Empirical snow/melt calculations update water-equivalent storage with temperature and terrain/time modifiers; snow-water equivalent differs from physical snow depth. FAO is cited for ET concepts, not to claim every K-DRUM demand formula is identical to FAO-56.
+
+`SWEⁿ⁺¹ = SWEⁿ + snowfall − melt`
+
+각 항은 같은 구간의 물환산 깊이입니다. 융설수는 사라지는 손실이 아니라 수문계로 전달되는 입력입니다. / All terms are interval water-equivalent depths. Melt transfers water into hydrology rather than removing it from the domain.
+
+[USACE HEC-HMS: Green and Ampt loss model](https://www.hec.usace.army.mil/confluence/hmsdocs/hmstrm/canopy-surface-infiltration-and-runoff-volume/infiltration/green-and-ampt-loss-model) · [K-DRUM: long-term snowmelt application (2013)](https://doi.org/10.12652/Ksce.2013.33.6.2237) · [FAO-56: evaporative demand and crop evapotranspiration](https://www.fao.org/4/x0490e/x0490e06.htm)
+
+## 08 · 1D 하천망의 실제 계산 구성 / 08 · The implemented 1D hydraulic calculation
+
+### 실측 단면에서 수리량을 구합니다 / Hydraulic metrics are derived from cross sections
+
+횡단면 X–Z 좌표에서 수위 η에 따른 통수면적 A, 수면폭 T, 윤변 P, 동수반경 R=A/P와 정수압 적분 I₁을 산정합니다. 실측 단면의 상대 형상은 유지하고 종단 하상고에 맞게 수직 배치합니다. 단면 폭이나 하상고를 임의로 바꾸면 저장량·통수능력·월류조건이 함께 바뀌므로 단순한 화면 보정으로 취급할 수 없습니다.
+
+Section X–Z coordinates define wetted area A, top width T, wetted perimeter P, hydraulic radius R=A/P and hydrostatic integral I₁ at stage η. Relative measured shape is retained and placed on the longitudinal bed. Changing width or bed elevation alters storage, conveyance and overflow conditions; it is not merely a visual adjustment.
+
+`A(η) = ∫ max(η − z(s), 0) ds;   c = √(gA/T)`
+
+A [m²], T·P·R [m], c [m/s]. c는 1D 자유수면파의 단면 의존 전파속도입니다. / A [m²], T/P/R [m], c [m/s]. c is the section-dependent free-surface wave speed.
+
+### 동역학파는 질량과 이류 운동량을 함께 계산합니다 / Dynamic waves retain mass and advective momentum
+
+현행 동역학파 경로는 유한체적 공간 연산과 하천망 연결을 사용합니다. 셀 경계의 공통 질량 플럭스는 이웃 셀에 반대 부호로 작용합니다. 운동량 플럭스는 Q²/A의 이류항과 gI₁의 정수압 항을 포함하며 비등단면 지형과 마찰 소스를 함께 처리합니다. 코드에 있는 HLLE 계열 플럭스와 제한자를 사용한 재구성 선택은 불연속 부근의 안정성과 매끄러운 영역의 정확도를 조절하는 수치기법이지 새로운 물리 방정식이 아닙니다.
+
+The current dynamic-wave route combines a finite-volume spatial operator with network connectivity. Shared mass flux enters neighboring cells with opposite signs. Momentum flux includes Q²/A advection and gI₁ hydrostatic pressure, together with non-prismatic geometry and friction sources. HLLE-family fluxes and limited reconstruction options concern numerical stability/accuracy, not a different physical equation.
+
+`d(UᵢΔxᵢ)/dt = Fᵢ₋½ − Fᵢ₊½ + SᵢΔxᵢ;   U=(A,Q)ᵀ`
+
+보존형 개요입니다. 비등단면의 압력·지형항을 직사각형 하도식 하나로 대체해서는 안 됩니다. / Conservative overview; non-prismatic pressure/geometry terms must not be replaced indiscriminately by a rectangular-channel formula.
+
+### 음해 시간적분과 비선형 반복을 구분해 읽습니다 / Separate implicit time stepping from nonlinear solution
+
+현재 1D 음해 경로에는 후진 Euler와 TR-BDF2가 연결되어 있습니다. 후진 Euler는 다음 시점 상태의 잔차를 풀며, TR-BDF2는 사다리꼴 중간단계와 BDF2 후속단계를 결합합니다. 비선형 반복은 상태·수리량·플럭스를 다시 평가하여 잔차를 줄이고, 선형화된 연립계를 풀어 보정량을 구합니다. 음해법도 시간간격이 지나치게 크면 첨두·도달시간이 달라질 수 있으므로 수렴 여부와 시간해상도 민감도를 별도로 확인합니다.
+
+Backward Euler and TR-BDF2 are connected to the present implicit 1D route. Backward Euler solves a new-time residual; TR-BDF2 combines a trapezoidal intermediate stage with a BDF2 stage. Nonlinear iterations reevaluate states, geometry and fluxes, solve linearized systems and reduce residuals. Implicit stability does not eliminate timestep sensitivity in peak magnitude or arrival time.
+
+`R(Xⁿ⁺¹)=M(Xⁿ⁺¹)−M(Xⁿ)−Δt F(Xⁿ⁺¹)=0;   J δX=−R`
+
+음해 잔차와 Newton 보정의 개념식입니다. X: 상태, M: 보존량, J: 잔차의 Jacobian. / Implicit residual and Newton-correction concept: X state, M conserved quantities, J residual Jacobian.
+
+### 하천망·접합부·경계는 한 시스템으로 연결합니다 / The network connects junctions and external boundaries
+
+분기·합류는 유입·유출 방향, 접합부 저장과 각 연결면의 담당 영역을 일관되게 처리합니다. 상류 유량·측방유입·저수지 방류·하류 수위는 서로 다른 외부 조건이며 중복 투입하지 않습니다. 국부관성 경로는 이류 운동량을 생략하므로 동역학파와 구분하며, DWNET이라는 프로그램 이름만으로 방정식을 판단하지 않습니다. 개발 완료와 개별 실유역의 관측 검증은 별개의 판단입니다.
+
+Branches/confluences require consistent flow signs, junction storage and ownership of connected faces. Upstream flow, lateral input, reservoir release and downstream stage are distinct boundary inputs and must not be applied twice. Local-inertial paths omit advective momentum; the DWNET name alone does not identify the equations. Implementation completion remains separate from a particular basin’s observation-based validation.
+
+[USACE: 1D unsteady-flow hydrodynamics](https://www.hec.usace.army.mil/confluence/rasdocs/ras1dtechref/6.5/theoretical-basis-for-one-dimensional-and-two-dimensional-hydrodynamic-calculations/1d-unsteady-flow-hydrodynamics) · [Hodges (2019): conservative finite-volume Saint-Venant forms](https://hess.copernicus.org/articles/23/1281/2019/)
+
+## 09 · 2D 국부관성과 Full SWE의 방법론 / 09 · 2D local inertia and Full SWE methods
+
+### 국부관성은 이전 유량과 수면경사를 사용합니다 / Local inertia retains previous flow and surface-gradient forcing
+
+2D 국부관성 계산은 국부가속도를 유지하고 이류 운동량을 생략합니다. 한 방향의 경계 단위폭 유량 q는 이전 유량에 수면경사에 의한 변화를 더하고 마찰로 감쇠시킵니다. 마찰항을 반음해로 처리하는 대표 갱신식은 아래와 같으며, 실제 경계의 유효수심·지형과 가용체적 제한이 함께 적용됩니다. x·y방향 경계 흐름은 동일한 셀 저장 갱신에 모입니다.
+
+Local inertia retains local acceleration but omits advective momentum. A face’s unit-width discharge q combines previous flow, surface-gradient acceleration and friction damping. The representative semi-implicit friction update below is used with effective face depth, terrain and available-volume handling. Both horizontal face-flow directions contribute to the same storage update.
+
+`qⁿ⁺¹ = [qⁿ − g hf Δt (ηR−ηL)/Δx] / [1 + g n² Δt |qⁿ|/hf⁷ᐟ³]`
+
+q [m²/s], hf [m], η [m], Δx [m], Δt [s]. 대표식이며 마른 경계의 세부 처리와 격자방향 조합은 별도입니다. / q [m²/s], hf/η/Δx [m], Δt [s]. This representative form excludes the separate details of dry-face handling and multidirectional flow.
+
+### 면 유량을 셀 체적으로 환산합니다 / Face discharge updates cell volume
+
+q는 단위폭 유량이므로 경계 길이를 곱해 체적 유량 Q를 얻습니다. 셀마다 순유입체적을 합하여 저장량을 바꾸고 지형–저장 관계에서 수심과 수면을 구합니다. 직접강우·배수·하천교환은 같은 시간구간의 소스·싱크로 더합니다. 불투수 경계와 계산영역 제외는 다른 조건이므로 셀 포함 여부와 경계 연결을 별도로 정의합니다.
+
+Multiplying unit-width q by face length gives volumetric discharge Q. Net interval volumes update cell storage, from which depth/stage follows the terrain–storage relationship. Rainfall, drainage and river exchange enter as sources/sinks on the same interval. Excluded cells and impermeable faces are different conditions and are represented separately.
+
+`Vᵢⁿ⁺¹=Vᵢⁿ+Δt[Σf σᵢf qf Lf + Qsource,ᵢ]`
+
+V [m³], Lf [m], σ: 셀에 들어오면 +, 나가면 −인 부호입니다. / V [m³], Lf [m]; σ is positive for inflow to a cell and negative for outflow.
+
+### Full SWE는 두 방향 운동량 이류를 추가로 보존합니다 / Full SWE also evolves horizontal advective momentum
+
+Full SWE의 상태는 수심 h와 두 방향 단위폭 유량 hu, hv입니다. 질량뿐 아니라 운동량의 이류와 정수압 플럭스를 HLL 계열 경계 계산으로 갱신하고 지형·마찰을 소스로 반영합니다. HLL은 양쪽 상태 사이를 지나는 파속 범위를 이용하는 근사 Riemann 방식입니다. 공간 복원과 시간적분 차수 선택은 해상도·마름젖음·경계 처리와 함께 평가해야 합니다. 해당 경로의 지원 격자와 결합 조건이 맞는지도 확인합니다.
+
+Full SWE evolves depth h and both unit-width discharges hu/hv. HLL-family interface calculations update advective and hydrostatic momentum fluxes along with mass, with terrain/friction sources. HLL approximates the Riemann problem using a bounding wave-speed range. Reconstruction and time order must be assessed with resolution, wet/dry and boundary handling, using supported grid/coupling configurations.
+
+`F(U)=(hu, hu²+gh²/2, huv)ᵀ;   G(U)=(hv, huv, hv²+gh²/2)ᵀ`
+
+h [m], u·v [m/s]. 이 식은 2D 평면 천수방정식의 플럭스이며 1D 임의 단면의 압력 적분과 구분됩니다. / h [m], u/v [m/s]. These plan-view 2D fluxes differ from pressure integrals for arbitrary 1D sections.
+
+### 마름·젖음과 시간간격은 보존성과 함께 확인합니다 / Check wetting/drying and timestep with conservation
+
+얕은 셀에서 유출할 수 있는 물보다 많은 체적이 빠져나가면 음의 수심이 생깁니다. 따라서 공급 가능한 체적, 유효수심, 내부 시간분할과 재시도를 함께 처리합니다. 계산이 끝났다는 이유만으로 급변류 정확도를 판단하지 않고, 수심·유속·전선 이동과 물수지를 비교합니다. 관심영역 다중해상도는 원자료를 묶거나 유지하는 계산망 선택이지 새로운 지형정보의 생성이 아닙니다.
+
+Outflow beyond the water available in a shallow cell would create negative depth. Available volume, effective depth, substepping and retry handling must work together. Completion alone does not establish rapid-flow accuracy; compare depth, velocity, front movement and balance. Multi-resolution patches aggregate or retain source terrain rather than generating new terrain detail.
+
+`Δt ≲ C Δx/(|u|+√(gh))`
+
+천수파 시간해상도의 대표 관계이며, 2D 방향·소스·연계는 추가 제한을 가질 수 있습니다. C를 모든 모드의 동일 상수로 단정하지 않습니다. / Representative shallow-wave timing relation; 2D directions, sources and coupling can impose additional limits. C is not assumed universal across modes.
+
+[Bates, Horritt & Fewtrell (2010): local-inertial formulation](https://doi.org/10.1016/j.jhydrol.2010.03.027) · [Clawpack Riemann book: shallow-water equations](https://www.clawpack.org/riemann_book/html/Shallow_water.html) · [Hodges (2019): conservative finite-volume Saint-Venant forms](https://hess.copernicus.org/articles/23/1281/2019/)
+
+## 10 · 1D–2D 교환의 계산·수지·지형 조건 / 10 · 1D–2D exchange, conservation and geometry
+
+### 두 영역은 하나의 교환체적을 공유합니다 / Both domains share one accepted exchange volume
+
+하천 수면, 범람원 수면과 연결 제방고에 따라 월류 또는 복귀를 계산합니다. 교환유량을 시간에 적분한 체적을 하천에서는 제거하고 범람원에 더하며, 복귀에서는 부호를 바꿉니다. 양방향 누적체적은 각각 양의 크기로 보고할 수 있지만 순교환량과 혼동하지 않아야 합니다. 교환 질량수지가 닫히는 것과 각 영역의 전체 물수지·운동량이 보존되는 것은 서로 다른 검사입니다.
+
+River head, floodplain head and interface crest determine overflow or return. The time-integrated exchange is removed from one domain and added to the other. Directional gross volumes may be reported as positive magnitudes but differ from net transfer. Exchange closure, full-domain water balance and momentum conservation are distinct tests.
+
+`Vnet = V₁→₂ − V₂→₁;   εexchange = ΔVriver + ΔVflood`
+
+모두 같은 확정 시간구간의 체적[m³]을 사용합니다. / All quantities are volumes [m³] over the same accepted interval.
+
+### 결합 반복과 최종 반영을 구분합니다 / Separate coupling trials from final acceptance
+
+현행 양방향 경로는 구간 시작의 상태를 보관하고 1D와 2D의 수리 반응과 교환량을 반복하여 맞춥니다. 반복을 새 물의 유입으로 누적하면 같은 물이 중복 이동하므로 매 시도는 같은 시작상태에서 평가합니다. 최종 교환량과 수위 반응을 확인한 뒤 두 영역을 함께 확정하고, 받아들일 수 없는 구간은 일관되게 재시도합니다. 결과에는 최종 채택된 상태·교환을 사용합니다.
+
+The current bidirectional route preserves interval-start states and iterates hydraulic response and exchange. Each trial must use the same starting state; otherwise repeated trials would move the same water repeatedly. Final exchange and stage response are checked before jointly accepting the two domains, with consistent retries for unacceptable intervals. Outputs use accepted states and transfer.
+
+### 단면·DEM·제방은 동일한 물리 경계를 표현해야 합니다 / Sections, DEM and banks must describe the same physical interface
+
+실측 단면은 수중 저수로를 포함하지만 지표 DEM은 이를 충분히 포함하지 않을 수 있습니다. 1D 단면 하상고·좌우안 위치와 2D 지형의 연결을 비교하고 동일 표고 기준을 적용해야 합니다. 수치 계산을 통과시키기 위해 제방고를 임의로 높이거나 가짜 단면을 넣는 방식은 적용 검증을 대신할 수 없습니다. 예제자료와 실제 측량자료의 역할도 구분합니다.
+
+Measured sections can include submerged channels absent from surface DEMs. Compare 1D bed/bank geometry with 2D terrain using a common datum. Arbitrarily modifying crests or inserting fabricated sections to avoid solver difficulties is not validation. Distinguish illustrative sample geometry from measured application data.
+
+### 해석 조합을 명확히 선택합니다 / Choose the actual solver combination explicitly
+
+1D 동역학파–2D 국부관성의 양방향 경로, 1D 국부관성 경로, 2D Full SWE 선택 경로, 침수 후보영역 매핑은 서로 구분합니다. 모형 전체에 기능이 있다는 이유만으로 모든 계산기 조합과 경계조건을 자동 지원한다고 안내하지 않습니다. 완료된 핵심 기능은 완료로 표시하면서 조합별 지원 범위를 함께 제시하는 이유입니다.
+
+Distinguish bidirectional 1D dynamic-wave/2D local-inertial coupling from 1D local inertia, selectable Full SWE and terrain-based inundation screening. The existence of a capability does not imply every solver/boundary combination. Completed core functionality is therefore presented with its supported configuration scope.
+
+[Bates, Horritt & Fewtrell (2010): local-inertial formulation](https://doi.org/10.1016/j.jhydrol.2010.03.027) · [Hodges (2019): conservative finite-volume Saint-Venant forms](https://hess.copernicus.org/articles/23/1281/2019/) · [USACE: 1D unsteady-flow hydrodynamics](https://www.hec.usace.army.mil/confluence/rasdocs/ras1dtechref/6.5/theoretical-basis-for-one-dimensional-and-two-dimensional-hydrodynamic-calculations/1d-unsteady-flow-hydrodynamics)
+
+## 11 · 구조물·저수지·보정의 해석 방법 / 11 · Structures, reservoirs and calibration
+
+### 구조물 수리와 운영 의사결정은 다른 층입니다 / Hydraulic structure laws differ from operating decisions
+
+수리구조물은 상하류 수두와 형상·개구를 입력받아 통과유량을 계산합니다. 저수지 운영은 수위·저류·방류 능력과 최소유량·방류 변화율 등의 조건을 이용해 운영안을 정합니다. 예측 유입을 이용하는 사전방류와 다수 댐 시나리오는 이 결정지원 층의 확장입니다. 실제 시설 제어 권한이나 운영승인을 대신하는 기능으로 설명하지 않습니다.
+
+Structure hydraulics calculates throughflow from heads, geometry and opening. Reservoir operation chooses releases using stage/storage, capacity, minimum flow and ramp constraints. Forecast pre-release and multi-reservoir scenarios extend this decision-support layer; they do not grant real-facility control or substitute for operational approval.
+
+`Vⁿ⁺¹ = Vⁿ + Δt(Qin − Qrelease − Qloss)`
+
+저수량[m³]과 유량[m³/s]의 보존 개요입니다. H–V 관계와 초기 수위·저장 기준을 함께 적용합니다. / Storage [m³] and discharge [m³/s] continuity; use the H–V relationship and consistent initial stage/storage.
+
+### 평가지표는 서로 다른 오차를 보여줍니다 / Metrics describe different errors
+
+NSE는 관측 평균을 기준으로 한 오차 감소를, RMSE는 원단위 오차 크기를 보여줍니다. 총량 편향은 전체 유출 과대·과소를, 첨두·도달시간 비교는 홍수 반응을 살펴보는 지표입니다. 지표는 같은 유효 시각에 대해 계산해야 하며 결측 처리·평가기간·단위를 명시해야 합니다. 지점 여러 개를 보고하는 것과 모든 매개변수를 동시에 최적화하는 것은 다릅니다.
+
+NSE expresses squared-error reduction relative to the observed mean, and RMSE gives error in original units. Volume bias describes over/under-export, while peaks and arrival timing describe flood response. Use matched valid timestamps and declare missing-data handling, period and units. Multi-site reporting differs from simultaneous optimization of every parameter.
+
+`RMSE = √[Σ(Qsim−Qobs)²/N];   PBIAS = 100 Σ(Qsim−Qobs)/ΣQobs`
+
+여기서는 PBIAS 양수를 과대모의로 정의한 설명식입니다. 실제 결과파일의 부호 정의를 확인합니다. / This illustrative PBIAS convention is positive for overprediction; check the convention in the actual report.
+
+### 보정·검증·성능 최적화를 분리합니다 / Separate calibration, validation and computational optimization
+
+매개변수 보정은 관측 반응을 더 잘 재현하는 값을 찾는 과정입니다. 독립 검증은 보정에 사용하지 않은 기간·자료에서 재현성을 평가합니다. 병렬·메모리 최적화는 계산시간과 자원 사용을 줄이는 것으로, 물리계수 보정과 목적이 다릅니다. 세 작업의 결과를 섞지 않고 실행조건·초기상태·자료 범위를 함께 기록해야 변경 효과를 설명할 수 있습니다.
+
+Calibration selects parameters to reproduce observations; independent validation evaluates unused periods/data. Parallel or memory optimization reduces runtime/resource cost rather than calibrating physical response. Record configuration, initial state and data scope separately so the effect of each change remains interpretable.
+
+[USACE HEC-HMS: reservoir routing](https://www.hec.usace.army.mil/confluence/hmsdocs/hmstrm/reservoir-modeling/reservoir-modeling-concepts-and-equations) · [USACE: hydraulic structures and flow equations](https://www.hec.usace.army.mil/confluence/rasdocs/ras1dtechref/6.5) · [Nash & Sutcliffe (1970): river-flow forecasting and model evaluation](https://www.sciencedirect.com/science/article/pii/0022169470902556)
+
+## 12 · 상태·결과파일·병렬실행의 일관성 / 12 · Consistency of states, output and execution
+
+### 준비상태 재사용과 전체 재시작 / Warm-up-state reuse versus full restart
+
+워밍업은 초기 상태를 조정하는 계산이고, 초기상태 캐시는 그 일부를 재사용하여 반복 준비를 줄이는 장치입니다. HotStart는 해당 형식이 저장한 시점과 상태를 복원해 이어가는 기능입니다. 수문상태만 복원했는데 적설·저수지·하천망 상태까지 모두 복원했다고 가정해서는 안 됩니다. 연속 계산과 재시작 결과를 같은 시점에서 비교하고 모형·입력·상태 형식의 호환성을 확인합니다.
+
+Warm-up adjusts initial states; a cache reuses part of that preparation. HotStart resumes the time/state covered by its saved format. Restoring hydrologic state does not imply restoration of every snow, reservoir and hydraulic variable. Compare uninterrupted and restarted results at matched times and verify model/input/format compatibility.
+
+### NetCDF는 파일 형식이지 동일 격자 보증이 아닙니다 / NetCDF is a format, not a guarantee of aligned meshes
+
+좌표·차원·단위·시간 원점·결측 표시를 읽어야 배열의 의미를 알 수 있습니다. 유역 격자, 하천 단면, 범람 격자는 서로 다른 공간 표현이며 저장 간격도 다를 수 있습니다. 지도와 그래프를 연결할 때는 실제 시각과 위치를 기준으로 선택하고 원자료 값을 바꾸지 않습니다. 모의 중 부분 파일과 정상 종료 파일도 구분합니다.
+
+Coordinates, dimensions, units, time reference and missing-value markers define array meaning. Watershed cells, river sections and flood grids differ spatially and may have different output intervals. Link plots/maps by actual time/location without changing producer values, and distinguish partial from finalized files.
+
+### 병렬효율은 의존성과 동기화 비용까지 포함해 평가합니다 / Parallel efficiency includes dependency and synchronization costs
+
+운동파의 상하류 전달과 하천망 연결에는 계산 순서의 제약이 있습니다. 독립 작업을 나누더라도 스레드 대기·메모리 접근·파일 출력 비용이 남으며, 작은 유역에서는 작업 분할 비용이 이득보다 클 수 있습니다. 현재 OMP 중심 패키지와 다른 실행계열을 구분하고, 같은 입력·컴퓨터·출력조건에서 결과 일관성과 실제 경과시간을 함께 측정합니다.
+
+Upstream/downstream routing and network coupling impose ordering constraints. Parallel work still incurs waiting, memory and I/O costs, and overhead can dominate for small domains. Distinguish the current OMP-focused package from other execution families and measure output consistency and elapsed time on matched workloads/hardware.
+
+### 개발 완료·적용 검증·공식 배포를 별도로 표시합니다 / Track completion, validation and distribution separately
+
+완료된 1D 하천·2D 범람 계산은 기능 자체의 구현상태입니다. 특정 유역에서의 적합성은 자료·경계·해상도·관측 비교에 대한 적용 판단입니다. 사용자가 공식적으로 받을 수 있는 파일은 MyWater의 실제 배포 버전과 이용조건을 따릅니다. 따라서 관측자료를 더 검증한다고 이미 완성된 계산 기능을 다시 개발 중이라고 표기하지 않습니다.
+
+Completion of the 1D river and 2D flood solvers describes implementation. Suitability for a particular basin depends on data, boundaries, resolution and observational evaluation. Officially downloadable files follow the actual MyWater release and terms. Ongoing application validation is therefore not a reason to relabel a completed solver as unfinished.
+
+[Unidata: NetCDF data model](https://docs.unidata.ucar.edu/netcdf-c/current/netcdf_data_model.html) · [OpenMP: specifications](https://www.openmp.org/specifications/) · [K-DRUM: current capability status and scope](https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md)

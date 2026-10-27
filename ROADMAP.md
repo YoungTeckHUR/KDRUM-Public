@@ -1,44 +1,23 @@
-# K-DRUM Public Roadmap
+# K-DRUM 개선·확장 계획 / Refinement and extension roadmap
 
-This is a high-level public roadmap. It intentionally excludes internal schedules, unpublished algorithms, sensitive operational logic, and repository-specific implementation details.
+**Reviewed: 2026-10-28**
 
-## Near-term development priorities
+## Completed calculation foundation / 완료된 계산 기능
 
-1. **Hydraulic reliability**
-   - strengthen 1D dynamic-wave river-network regression
-   - expand branch/confluence network testing
-   - consolidate cross-section, river-axis and longitudinal bed-elevation consistency while preserving measured-section shape
+1D river-network hydraulics, 2D local-inertial inundation and two-way exchange are complete; they are not future milestones. Full SWE is complete within supported configurations. Existing watershed hydrology, state/output and conservation functions provide the foundation.
 
-2. **1D-2D integration**
-   - continue bidirectional coupling validation for the current dynamic-wave 1D–local-inertial 2D path
-   - verify floodplain return flow and exchange water balance
-   - broaden full-period and observation-based validation across multiple development configurations
+1D 하천수리·2D 국부관성 범람·양방향 연계는 완료 기능이며 향후 개발 예정 항목으로 다시 표시하지 않습니다. Full SWE는 지원 구성 안에서 선택합니다.
 
-3. **2D flood analysis**
-   - improve domain, barrier, structure, and multi-resolution handling
-   - maintain separate specialized Full-SWE capability for cases that require it
+## Further work / 후속 개선
 
-4. **Water-balance and QA**
-   - strengthen basin-scale accounting
-   - maintain explicit water-balance QA and acceptance criteria
-   - improve automated build/regression evidence
+Refine computational performance and diagnostics without conflating speed with numerical accuracy. Expand basin-specific application evidence through measured geometry, observed stage/flow and inundation comparisons. Improve user-facing setup, error recovery and result interpretation in the new K-DRUM Studio, keeping prior InputStudio and separate Viewer provenance clear.
 
-5. **High-resolution geometry**
-   - develop reusable channel-bed and virtual-channel geometry workflows
-   - maintain alignment among high-resolution terrain, river axes, cross sections, and hydraulic domains
+계산 효율·진단·사용성을 개선하고 유역별 단면·관측자료·침수 비교 사례를 확충합니다. 새 K-DRUM Studio의 프로젝트·제어·실행·분석 연결은 별도 도구 개발 과제입니다.
 
-6. **User environment**
-   - continue K-DRUM InputStudio spatial-input construction, guided authoring and precheck development
-   - continue K-DRUM FloodViewer release-candidate validation
-   - improve interoperable NetCDF-centered output
+## Research / 연구 기능
 
-## Research track
+Sediment/tracer and the independent Estuary2DV model retain explicit research scope. The inactive water-quality process module requires separate redevelopment before it is described as available.
 
-### Estuary and salinity
-K-DRUM Estuary2DV will remain an independently verifiable research prototype until its numerical tests are sufficiently mature for controlled coupling with river hydraulics and structure operation.
+## Publication / 공개
 
-## Public-release principle
-
-A feature may exist in source code before it is described as an established public capability.
-
-Public status is promoted only when the development team determines that the corresponding validation evidence is sufficient.
+Update implementation, validation and distribution independently. Official installation packages and licensing follow [MyWater](https://www.water.or.kr/kor/board/index.do?bid=BD_00026&menuId=15_126_128&mode=list); technical pages should not imply that every current option is bundled in an older official release.

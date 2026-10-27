@@ -7,17 +7,10 @@ const detailTemplate=generator.slice(generator.indexOf('function capability('),g
 assert.ok(!/domain\[|d\[lang\]|d\.diagram/.test(detailTemplate),'No group fallback in capability rendering');
 assert.ok(detailTemplate.includes("item['detail'+suffix]"),'Individual detail field rendered');
 require('./capability-guidance.cjs').validate(data);
-const baseline=fs.readFileSync(path.join(docs,'assets/capability-atlas.js'),'utf8');
-const vm=require('node:vm');const old=vm.runInNewContext(baseline.slice(baseline.indexOf('  const groups='),baseline.indexOf('  const css='))+';items');
-// Capability IDs, maturity and computational identity remain stable.
-// Public labels and navigation groups may change after an explicit
-// information-architecture review. Those reviewed changes are documented in
-// HOMEPAGE_INFORMATION_ARCHITECTURE_REVIEW_20260921.md.
-for(const item of old){
- const now=data.items.find(i=>i.id===item.id);assert.ok(now,item.id);
- for(const key of ['s','kind','v'])assert.equal(now[key],item[key],item.id+' '+key);
- for(const key of ['ko','en','sumKo','sumEn','nowKo','nowEn'])assert.ok(typeof now[key]==='string'&&now[key].trim(),item.id+' '+key);
-}
+// Immutable feature identity and current approved state are deliberately separate.
+const identity=require('../../docs/assets/capability-identity.json');
+assert.deepEqual(data.items.map(i=>i.id).sort(),Object.keys(identity).sort());
+for(const now of data.items){for(const key of ['kind','v'])assert.equal(now[key],identity[now.id][key],now.id+' '+key);}
 assert.equal(data.items.find(i=>i.id==='estuary').g,'transport');
 assert.equal(data.items.find(i=>i.id==='river-viewer').s,'SEPARATE DEVELOPMENT');
 for(const rel of ['index.html','ko/index.html','media.html','seo-kdrum.html']){const html=fs.readFileSync(path.join(docs,rel),'utf8');assert.equal((html.match(/rel="canonical"/g)||[]).length,1,rel);assert.equal((html.match(/<h1>/g)||[]).length,1,rel);assert.ok(!/experience-v[234]|brand-runtime|tech-description-runtime/.test(html),'No legacy runtime chain');
@@ -25,5 +18,7 @@ for(const rel of ['index.html','ko/index.html','media.html','seo-kdrum.html']){c
 }
 const js=fs.readFileSync(path.join(docs,'assets/site.js'),'utf8');assert.ok(!/MutationObserver|setInterval|setTimeout/.test(js));
 assert.equal(fs.readdirSync(path.join(docs,'assets/diagrams')).filter(n=>n.endsWith('.svg')).length,12);
-assert.ok(fs.readFileSync(path.join(root,'DEVELOPMENT_STATUS.md'),'utf8').includes('public maturity baseline reviewed 2026-10-01'));
+require('./current-content.cjs').validate(data);
+assert.ok(fs.readFileSync(path.join(root,'DEVELOPMENT_STATUS.md'),'utf8').includes('2026-10-28'));
+require('./current-content-audit.cjs');
 console.log('PASS static routes, local assets, stable capability IDs/statuses, reviewed public labels/groups, bilingual descriptions, separate unpublished viewer, 46 entries, 12 diagrams, one runtime');

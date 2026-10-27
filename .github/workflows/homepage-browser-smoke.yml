@@ -71,6 +71,12 @@ jobs:
           CAPABILITY_AUDIT_DIR: browser-artifacts/capability-details
         run: node .github/scripts/capability-detail-audit.cjs
 
+      - name: Verify reviewed methods, lifecycle status and overview SVG text
+        env:
+          BASE_URL: http://127.0.0.1:8000/KDRUM-Public
+          METHOD_AUDIT_DIR: browser-artifacts/methodology
+        run: node .github/scripts/methodology-browser-audit.cjs
+
       - name: Compare laptop typography at six viewport widths
         env:
           BASE_URL: http://127.0.0.1:8000/KDRUM-Public

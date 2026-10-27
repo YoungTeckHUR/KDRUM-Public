@@ -1,122 +1,105 @@
-# K-DRUM Public Capability Reference
+# K-DRUM 기능별 현재 설명 / Current capability reference
 
-**Public maturity reviewed: 2026-10-01 · cross-repository descriptions rechecked: 2026-10-27**
+**검토일 / Reviewed: 2026-10-28**
 
-K-DRUM은 K-water가 개발한 **물리적 기반의 격자단위 분포형 강우유출모형**입니다. 이 문서는 공개 가능한 K-DRUM 기능을 수자원·토목 분야에서 일반적으로 사용하는 용어를 중심으로 정리합니다. 코드가 존재한다는 사실만으로 실무 적용성이 확정된 것으로 보지 않으며, 각 기능의 개발·검증 상태는 [DEVELOPMENT_STATUS.md](DEVELOPMENT_STATUS.md)와 함께 해석해야 합니다.
+1D 하천망 수리, 분기·합류, 2D 국부관성 범람과 양방향 1D–2D 연계는 **개발 완료** 기능입니다. Full SWE는 지원하는 격자·경계·연계 조건에 맞춰 사용하는 **개발 완료·선택 적용** 기능입니다. 기능 개선이나 새로운 유역 검증이 계속된다는 이유로 완료된 기능을 개발 중으로 되돌리지 않습니다.
 
-The public website organizes K-DRUM capabilities into eight user-oriented technical areas. A separate 1D River Hydraulics Results Viewer also exists in development and is identified separately because it is not yet published to the public GitHub repositories.
+**1D river-network hydraulics, junctions, 2D local-inertial inundation and two-way 1D–2D exchange are development-complete.** Full SWE is complete for supported configurations. Continued refinement and basin-specific evaluation do not change implementation completion into an unfinished capability.
 
-## Public status vocabulary
+구현 완료, 유역별 적용·관측 검증, 공식 배포는 별개의 정보입니다. 개발 완료는 모든 유역의 무조건적 정확도 인증이나 모든 공식 배포본에 포함되었다는 뜻이 아닙니다. 공식 설치파일·이용조건은 [MyWater K-Series](https://www.water.or.kr/kor/board/index.do?bid=BD_00026&menuId=15_126_128&mode=list)에서 확인합니다.
 
-- **ESTABLISHED** — supported by the historical/public K-DRUM model lineage and/or published applications.
-- **IMPLEMENTED / QA** — implemented in the current Core and subject to verification, reporting, or regression checks.
-- **ACTIVE DEVELOPMENT** — integrated development capability whose scope, robustness, or workflow is still being strengthened.
-- **VALIDATED DEVELOPMENT** — demonstrated in controlled development validation without claiming universal certification.
-- **RESEARCH FUNCTION** — available for research use; application boundaries require explicit review.
-- **RELEASE CANDIDATE** — near-release application component, not yet represented as a final public release.
-- **EXPERIMENTAL** — independent research prototype or exploratory extension.
-- **DISABLED / REDEVELOPMENT CANDIDATE** — historical/research code exists but the current active build does not present it as an active capability.
+Implementation completion, application/observation-based validation and official distribution are distinct. Consult MyWater for actual package versions and terms; do not infer universal accuracy or distribution from implementation alone.
 
-## 1. 강우 입력·품질관리
+## 강우 입력·품질관리 / Rainfall input & quality checks
 
-| 기능 | 공개 상태 | 설명 |
+| 기능 | 현재 구현 | 핵심 역할 |
 |---|---|---|
-| 공간분포 강우 입력자료 | **ESTABLISHED** | 관측소·레이더·격자 강우를 계산 격자에 공간적으로 적용 |
-| 강우 공간배분 (IDW) | **IMPLEMENTED / QA** | 강우관측소 자료를 IDW(역거리가중기법)로 격자단위 공간분포 산정 |
-| 강우 고도보정·품질검사 (QC) | **IMPLEMENTED / QA** | 고도보정과 강우자료 품질검사를 결합한 입력자료 처리 |
-| 강우자료 완전성·결측 평가 | **IMPLEMENTED / QA** | 관측·예측·결측 자료의 구성과 누락 상태를 결과보고에서 확인 |
-| 입력자료 사전검사·정합성 점검 | **ACTIVE DEVELOPMENT** | 공간·시간·연결성·값 범위와 프로젝트 구축 완료상태를 구분해 모의 전 점검 |
+| [공간 강우 입력](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-rain-spatial) / [Spatial rainfall forcing](https://youngteckhur.github.io/KDRUM-Public/#cap-rain-spatial) | 확립된 기능 / Established | 관측소·레이더·격자 강우의 공간·시간 분포를 유역 계산격자에 연결합니다. / Maps the spatial and temporal distribution of gauge, radar and gridded rainfall to watershed cells. |
+| [강우 공간배분 (IDW)](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-rain-methods) / [Rainfall mapping (IDW)](https://youngteckhur.github.io/KDRUM-Public/#cap-rain-methods) | 구현 완료 / Implemented | 역거리가중기법(IDW)으로 여러 관측소의 강우를 계산격자에 배분합니다. / Distributes station rainfall to computational cells with inverse-distance weighting (IDW). |
+| [강우 고도보정·품질점검 (QC)](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-rain-qc) / [Elevation correction & rainfall quality checks](https://youngteckhur.github.io/KDRUM-Public/#cap-rain-qc) | 구현 완료 / Implemented | 강우의 고도 차이와 원자료 품질을 구분하여 격자 강우 입력을 점검합니다. / Separately assesses elevation effects and observation quality when preparing gridded rainfall. |
+| [강우자료 완전성 점검](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-rain-summary) / [Rainfall data completeness check](https://youngteckhur.github.io/KDRUM-Public/#cap-rain-summary) | 구현 완료 / Implemented | 모의기간의 관측·예측·결측 구성을 집계해 강우자료의 완전성을 확인합니다. / Summarizes observed, forecast and missing intervals over the simulation period. |
+| [입력자료 사전점검·정합성](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-input-precheck) / [Input precheck & consistency](https://youngteckhur.github.io/KDRUM-Public/#cap-input-precheck) | 구현 완료 / Implemented | 공간·시간·연결성·값 범위를 검사하여 실행 전에 입력 불일치를 찾습니다. / Checks spatial, temporal, connectivity and value-range consistency before a run. |
 
-## 2. 유역 수문·연속상태
+## 유역 수문·연속모의 / Watershed hydrology & state
 
-| 기능 | 공개 상태 | 설명 |
+| 기능 | 현재 구현 | 핵심 역할 |
 |---|---|---|
-| Green-Ampt 침투 | **ESTABLISHED** | 강우의 토양침투와 초과강우 산정 |
-| 지표·지표하 유출 | **ESTABLISHED** | 토양층 저장과 지표 및 지표하 유출 계산 |
-| 연속유출·장기모의 | **ESTABLISHED** | 사상 사이의 상태를 연속하여 계절·장기 유출과 물수지를 계산 |
-| 증발산·토양수분 | **ESTABLISHED** | 증발산과 토양수분 저장을 연속 물수지에 반영 |
-| 적설·융설 | **ESTABLISHED** | 강우·강설 분리와 적설저장·융설, 경사·D8 방향·시간대의 경험적 융설계수 보정 |
-| 워밍업·초기상태 안정화 | **IMPLEMENTED / QA** | 초기 토양·유출 상태와 목표지점 유량의 수렴상태를 진단 |
-| 상태 저장·재시작 (HotStart) | **IMPLEMENTED / QA** | 저장된 상태로 계산 재시작 지원. 실행 경로별 저장·복원 상태와 호환성 확인 필요 |
-| D층 지하수층·장기유출 확장 | **ACTIVE DEVELOPMENT** | 기존 다층 유출 구조의 D층 지하수 저장에 지연복귀·심부손실·하류 수위 영향 표현을 확장하여 장기유출의 저유량 반응을 개선 |
+| [Green-Ampt 침투](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-ga) / [Green-Ampt infiltration](https://youngteckhur.github.io/KDRUM-Public/#cap-ga) | 확립된 기능 / Established | Green-Ampt 침투로 토양에 들어가는 물과 지표유출에 기여하는 초과량을 구분합니다. / Uses Green–Ampt infiltration to partition soil entry and surface rainfall excess. |
+| [지표·지표하 유출](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-runoff) / [Surface & subsurface runoff](https://youngteckhur.github.io/KDRUM-Public/#cap-runoff) | 확립된 기능 / Established | 각 격자의 지표와 토양층 저장·층간 이동·측방유출을 연결해 유출을 생성합니다. / Generates runoff through surface/soil storage, vertical transfer and lateral flow in each cell. |
+| [연속·장기모의](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-continuous) / [Continuous / long-term simulation](https://youngteckhur.github.io/KDRUM-Public/#cap-continuous) | 확립된 기능 / Established | 토양수분·적설·심부 저장의 이력을 이어받아 장기간 유역 반응을 계산합니다. / Carries soil water, snow and deep-storage history through continuous long-term simulation. |
+| [증발산·토양수분](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-et) / [Evapotranspiration & soil water](https://youngteckhur.github.io/KDRUM-Public/#cap-et) | 확립된 기능 / Established | 기상에 따른 증발산 수요를 식생·뿌리 분포와 실제 토양 가용수로 제한합니다. / Combines atmospheric evaporative demand with vegetation/root distribution and available soil water. |
+| [적설·융설](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-snow) / [Snow accumulation & melt](https://youngteckhur.github.io/KDRUM-Public/#cap-snow) | 확립된 기능 / Established | 강우·강설 구분, 적설수량의 저장과 경험적 융설을 수문 입력에 연결합니다. / Connects precipitation phase, snow-water storage and empirical melt to hydrologic forcing. |
+| [워밍업·초기상태 안정화](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-warmup) / [Warm-up & initial-state stabilization](https://youngteckhur.github.io/KDRUM-Public/#cap-warmup) | 구현 완료 / Implemented | 초기 토양·유출 상태를 반복 조정하여 모의 시작의 불균형을 줄입니다. / Iteratively adjusts initial soil/runoff states to reduce initialization imbalance. |
+| [상태 저장·재시작 (HotStart)](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-hotstart) / [State save & restart (HotStart)](https://youngteckhur.github.io/KDRUM-Public/#cap-hotstart) | 구현 완료 / Implemented | 저장된 상태를 복원해 계산을 재시작하며, 수문 초기상태 캐시와 구분합니다. / Restores saved state for restart, distinguishing full restart from hydrologic initialization caches. |
+| [D층 지하수 저장·장기유출](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-dlayer) / [D-layer groundwater storage & long-term runoff](https://youngteckhur.github.io/KDRUM-Public/#cap-dlayer) | 구현 완료 / Implemented | 기존 D층의 심부 저장에 지연 복귀·기저유출 반응과 선택적 손실을 연결합니다. / Connects the existing D-layer deep store with delayed return, baseflow response and optional losses. |
 
-## 3. 흐름추적·하천지형
+## 유출전달·하천지형 / Routing & river terrain
 
-| 기능 | 공개 상태 | 설명 |
+| 기능 | 현재 구현 | 핵심 역할 |
 |---|---|---|
-| 사면·하도 경사 개별 적용 | **IMPLEMENTED / QA** | 사면 유출과 하도 흐름에 서로 다른 경사값을 적용 |
-| 사면 운동파 유출추적 | **ESTABLISHED** | 격자 사면에서 발생한 유출을 운동파 방법으로 하류에 전달 |
-| 하도 운동파 유량추적 | **ESTABLISHED** | 하도 길이·폭·경사·조도를 이용한 하천 유량추적 |
-| 하천 침투·심부저류층 연계 | **ACTIVE DEVELOPMENT** | 하천수의 심부저류층 이동량을 침투가능량과 저장여유를 고려해 산정 |
-| 수리해석 지형·ChannelBed | **ACTIVE DEVELOPMENT** | DEM만으로 부족한 하상·저수로 형상을 보완하여 수리해석용 지형자료를 작성 |
+| [사면·하도 경사 개별 적용](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-slope-separate) / [Separate hillslope & channel slopes](https://youngteckhur.github.io/KDRUM-Public/#cap-slope-separate) | 구현 완료 / Implemented | 사면 유출과 하도 흐름에 서로 다른 경사를 적용하여 이동 경로를 구분합니다. / Uses distinct hillslope and channel slopes for their respective flow paths. |
+| [사면 운동파 추적](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-kw-hill) / [Hillslope kinematic routing](https://youngteckhur.github.io/KDRUM-Public/#cap-kw-hill) | 확립된 기능 / Established | 사면에서 생성된 유출을 연결 격자를 따라 운동파 방식으로 전달합니다. / Routes generated hillslope runoff along connected cells using a kinematic-wave approach. |
+| [하도 운동파 추적](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-kw-river) / [Channel kinematic routing](https://youngteckhur.github.io/KDRUM-Public/#cap-kw-river) | 확립된 기능 / Established | 상류와 측방 유입을 합쳐 하도망을 따라 유량을 보존형으로 추적합니다. / Conservatively routes upstream and lateral inflows through the channel network. |
+| [하천 침투·심부저장 연계](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-river-infil) / [River infiltration to deeper storage](https://youngteckhur.github.io/KDRUM-Public/#cap-river-infil) | 구현 완료 / Implemented | 하천의 가용수와 침투능·심부 저장여유를 연결해 하천–D층 교환을 계산합니다. / Calculates river-to-D-layer exchange subject to available river water, infiltration capacity and deep-storage space. |
+| [수리해석 지형·하상 보완(ChannelBed)](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-channelbed) / [Hydraulic terrain & channel-bed representation (ChannelBed)](https://youngteckhur.github.io/KDRUM-Public/#cap-channelbed) | 구현 · 조건부 적용 / Implemented · conditional use | DEM에서 부족한 수중 하상 정보를 단면·중심선 자료와 결합해 보완합니다. / Supplements submerged channel terrain that a DEM alone cannot resolve using sections and centerline data. |
 
-## 4. 물수지·보정·결과검증
+## 물수지·보정·결과검증 / Water balance, calibration & result checks
 
-| 기능 | 공개 상태 | 설명 |
+| 기능 | 현재 구현 | 핵심 역할 |
 |---|---|---|
-| 유역 물수지·폐합 평가 | **IMPLEMENTED / QA** | 강우·증발산·유출·저장량 변화와 내부 이동을 동일 기간·단위로 연결하여 물수지와 수지오차를 평가 |
-| 1차원–2차원 교환 물수지 | **VALIDATED DEVELOPMENT** | 하천과 홍수터 사이의 동일 교환유량을 양 영역에 반대 부호로 반영하여 질량보존을 점검 |
-| 통합 실행결과 보고 | **IMPLEMENTED / QA** | 입력조건, 실행모드, 초기상태, 물수지, 경고 및 계산시간을 통합 보고 |
-| 소유역별 결과보고 | **IMPLEMENTED / QA** | 전체 유역 결과를 소유역 단위로 분리하여 비교·검토 |
-| 목표지점 매개변수 보정·최적화 | **ACTIVE DEVELOPMENT** | 관측유량과 여러 매개변수 조합을 NSE, KGE, PBIAS, RMSE 등으로 비교 |
-| 소유역·목표지점 평가 및 보정 지원 | **ACTIVE DEVELOPMENT** | 소유역 결과보고와 목표지점 최적화를 결합한 유역별 보정 의사결정 지원; 모든 소유역의 자동 보정을 의미하지 않음 |
-| 결과출력 무결성 점검 | **IMPLEMENTED / QA** | 출력파일 생성·종료·결과계약 및 후처리 가능 여부를 실행과정에서 점검 |
+| [유역 물수지 분석](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-wb) / [Basin water-balance analysis](https://youngteckhur.github.io/KDRUM-Public/#cap-wb) | 구현 완료 / Implemented | 유입·유출·증발산·저장 변화의 연결을 분석해 유역 전체 물수지를 점검합니다. / Links inflow, outflow, evapotranspiration and storage changes to audit basin water balance. |
+| [1D-2D 교환 물수지](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-wb-1d2d) / [1D-2D exchange water balance](https://youngteckhur.github.io/KDRUM-Public/#cap-wb-1d2d) | 개발 완료 / Development complete | 하천과 범람원이 주고받은 같은 물의 체적을 반대 부호로 대조합니다. / Matches the same exchanged water volume with opposite signs in river and floodplain balances. |
+| [통합 실행 결과요약](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-run-report) / [Unified run summary](https://youngteckhur.github.io/KDRUM-Public/#cap-run-report) | 구현 완료 / Implemented | 실행조건·초기화·물수지·경고·성능 정보를 한 실행 단위로 정리합니다. / Summarizes configuration, initialization, balance, warnings and timing for one simulation. |
+| [소유역 결과요약](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-subbasin-report) / [Subbasin result summary](https://youngteckhur.github.io/KDRUM-Public/#cap-subbasin-report) | 구현 완료 / Implemented | 유역을 소유역·목표지점으로 나눠 기여량과 모의반응을 비교합니다. / Compares contributions and model response by subbasin and target location. |
+| [목표지점 매개변수 보정·최적화](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-optimization) / [Target-point parameter calibration & optimization](https://youngteckhur.github.io/KDRUM-Public/#cap-optimization) | 구현 · 조건부 적용 / Implemented · conditional use | 목표지점의 관측·계산 차이를 여러 성능지표로 비교해 매개변수를 보정합니다. / Calibrates target-site parameters by comparing observations and simulations with multiple performance metrics. |
+| [소유역·목표지점 평가 및 보정](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-subcal) / [Subbasin & target-site evaluation and calibration](https://youngteckhur.github.io/KDRUM-Public/#cap-subcal) | 구현 · 조건부 적용 / Implemented · conditional use | 소유역 진단과 목표지점 보정을 연결하여 보정 영향의 공간 범위를 살펴봅니다. / Links subbasin diagnostics and target-site calibration to assess spatial effects of parameter changes. |
+| [출력 파일 무결성·생성상태 점검](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-output-integrity) / [Output-file integrity & completion checks](https://youngteckhur.github.io/KDRUM-Public/#cap-output-integrity) | 구현 완료 / Implemented | 결과 파일의 기록기간·변수·마감 상태를 점검하여 사용할 수 있는 결과를 구분합니다. / Checks recorded periods, variables and finalization to identify usable output files. |
 
-## 5. 1D 하천수리·구조물·댐
+## 1D 하천수리·구조물·댐 / 1D river hydraulics, structures & dams
 
-| 기능 | 공개 상태 | 설명 |
+| 기능 | 현재 구현 | 핵심 역할 |
 |---|---|---|
-| 1D 동역학파 하천망 해석 | **ACTIVE DEVELOPMENT** | 실측·가상 횡단면 기반 수위·유량을 해석하며 실측 단면 형상은 보존하고 종단 하상고에 맞춰 수직 위치를 정합 |
-| 분기·합류부 하천수리 | **ACTIVE DEVELOPMENT** | 하천망 연결부에서 연속방정식과 수리조건을 일관되게 처리 |
-| 수리구조물 | **ACTIVE DEVELOPMENT** | 게이트·월류 등 수리구조물의 유량을 하천 및 2차원 해석과 연계 |
-| 댐·저수지 운영 | **ACTIVE DEVELOPMENT** | 수위, 방류제약, 환경유량, 방류변화율 등을 고려한 운영규칙 및 방류계산 |
-| 예측·사전방류·하류제어 | **ACTIVE DEVELOPMENT** | 예측유입과 하류 제약조건을 고려한 사전방류 및 하류영향 검토 |
-| 다중댐 운영 시나리오·재운영 | **ACTIVE DEVELOPMENT** | 댐군 운영 시나리오와 목적지표를 비교하여 재운영 대안을 평가 |
+| [1D 하천망 수리 해석](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-dwnet) / [1D river-network hydraulics](https://youngteckhur.github.io/KDRUM-Public/#cap-dwnet) | 개발 완료 / Development complete | 실측·가상 횡단면과 하천망을 이용하여 1차원 수위·유량을 계산합니다. / Computes one-dimensional stage and discharge on a network of measured or virtual cross sections. |
+| [하천 분기·합류 수리해석](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-junction) / [Branch & confluence hydraulics](https://youngteckhur.github.io/KDRUM-Public/#cap-junction) | 개발 완료 / Development complete | 분기·합류 접합부의 저장과 유출입을 연결하여 하천망 전체 수리상태를 계산합니다. / Connects storage and inflow/outflow at branches and confluences in a hydraulic network. |
+| [수리구조물](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-structures) / [Hydraulic structures](https://youngteckhur.github.io/KDRUM-Public/#cap-structures) | 구현 완료 / Implemented | 보·수문 등 구조물의 수두·개구 조건에 따라 흐름을 계산해 하천망에 반영합니다. / Calculates weir/gate flows from heads and opening conditions and applies them to the river network. |
+| [댐·저수지 운영](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-dam-operation) / [Dam & reservoir operation](https://youngteckhur.github.io/KDRUM-Public/#cap-dam-operation) | 구현 완료 / Implemented | 유입·저류·방류의 연속관계와 수위·방류 제약을 결합해 저수지 운영을 모의합니다. / Simulates reservoir operation using inflow–storage–release continuity and stage/release constraints. |
+| [예측 기반 사전방류·하류 제약 검토](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-dam-forecast) / [Forecast-based pre-release & downstream constraints](https://youngteckhur.github.io/KDRUM-Public/#cap-dam-forecast) | 구현 · 조건부 적용 / Implemented · conditional use | 예측 유입과 하류 제약을 이용해 사전방류 대안을 비교합니다. / Compares pre-release options using forecast inflow and downstream constraints. |
+| [다수 댐 운영 시나리오 비교](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-dam-scenario) / [Multi-reservoir operating scenarios](https://youngteckhur.github.io/KDRUM-Public/#cap-dam-scenario) | 구현 · 조건부 적용 / Implemented · conditional use | 여러 댐의 운영 대안을 재모의·하도 추적하여 상하류 영향을 비교합니다. / Compares multi-reservoir operation alternatives through replay and river routing. |
 
-실제 댐 운영규칙, 제한자료 및 운영 의사결정 정보는 이 공개 저장소에 게시하지 않습니다.
+## 1D–2D 연계·홍수범람 / 1D–2D coupling & floodplain
 
-## 6. 1D–2D 연계·홍수범람
-
-| 기능 | 공개 상태 | 설명 |
+| 기능 | 현재 구현 | 핵심 역할 |
 |---|---|---|
-| 1차원–2차원 양방향 연계 | **VALIDATED DEVELOPMENT** | 현행 Core의 1D 동역학파–2D 국부관성파 경로에서 양방향 교환과 교환량 보존을 개발검증. 전기간·정확도 검증은 별도 |
-| 2D 국부관성(Local Inertia) 범람 | **ACTIVE DEVELOPMENT** | 효율적인 2차원 홍수범람 계산을 위한 주 개발경로 |
-| 2D 완전 천수방정식(Full SWE) | **ACTIVE DEVELOPMENT** | 급변류 등 운동량항을 보다 완전하게 고려해야 하는 구간의 특수 해석경로 |
-| 다중해상도·국부 Patch 2D | **ACTIVE DEVELOPMENT** | 원지형 격자를 묶은 배경과 원해상도를 유지한 관심 Patch를 구성 |
-| 2D 직접강우·배수·구조물·물질추적 | **ACTIVE DEVELOPMENT** | 직접강우, 배수, 구조물 및 물질추적 기능을 홍수범람해석과 연계 |
+| [양방향 1D-2D 연계](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-coupling) / [Bidirectional 1D-2D coupling](https://youngteckhur.github.io/KDRUM-Public/#cap-coupling) | 개발 완료 / Development complete | 하천의 월류와 범람원의 복귀유량을 양방향으로 교환하여 두 계산영역을 연결합니다. / Connects river and floodplain domains through bidirectional overflow and return flow. |
+| [2D 국부관성(Local Inertia) 범람](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-local-inertia) / [2D Local-Inertia floodplain analysis](https://youngteckhur.github.io/KDRUM-Public/#cap-local-inertia) | 개발 완료 / Development complete | 수면경사·국부가속도·마찰을 이용해 2차원 범람의 수심과 흐름을 계산합니다. / Computes 2D inundation depths and flow using surface gradients, local acceleration and friction. |
+| [2D 완전 천수방정식(Full SWE)](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-fullswe) / [2D full shallow-water equations (Full SWE)](https://youngteckhur.github.io/KDRUM-Public/#cap-fullswe) | 개발 완료 · 선택 적용 / Complete · selected configurations | 이류 운동량을 포함하는 완전 천수방정식으로 선택한 2D 수리영역을 해석합니다. / Solves the full shallow-water equations, including advective momentum, for supported 2D configurations. |
+| [다중해상도·관심영역(Patch) 2D](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-multires) / [Multi-resolution & local-area (Patch) 2D](https://youngteckhur.github.io/KDRUM-Public/#cap-multires) | 구현 · 조건부 적용 / Implemented · conditional use | 관심영역은 원지형 해상도를 유지하고 배경영역을 묶어 계산량을 조절합니다. / Retains original terrain resolution in selected patches while aggregating the background domain. |
+| [2D 직접강우·배수·구조물·물질추적](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-flood-extras) / [2D rainfall, drainage, structures & material tracking](https://youngteckhur.github.io/KDRUM-Public/#cap-flood-extras) | 구현 · 조건부 적용 / Implemented · conditional use | 2D 계산에 직접강우·배수·구조물과 추적물질·입자 기능을 선택적으로 연결합니다. / Adds optional direct rainfall, drainage, structures, tracers and particles to supported 2D paths. |
 
-## 7. 연구·확장 기능
+## 연구·확장 기능 / Research & extensions
 
-| 기능 | 공개 상태 | 설명 |
+| 기능 | 현재 구현 | 핵심 역할 |
 |---|---|---|
-| 사면 유사·침식·퇴적 | **RESEARCH FUNCTION** | 사면 경사·유속·토양조건에 따른 침식, 운반 및 퇴적 계산 |
-| 하천 유사이송·퇴적 | **RESEARCH FUNCTION** | 하도 경사·유량·횡단면과 유사 운반능을 고려한 이송·퇴적 계산 |
-| 보존성 물질·염료 추적 | **RESEARCH FUNCTION** | 하천구간 저장량, 유량 및 주입질량을 이용한 농도·질량 이동 추적 |
-| 수질해석 모듈 | **DISABLED / REDEVELOPMENT CANDIDATE** | 질소·인·BOD 등 기존 수질계산 코드는 남아 있으나 현재 활성 빌드에서는 비활성 |
-| Estuary2DV 하구 연구모형 | **EXPERIMENTAL** | K-DRUM Core와 분리된 종·연직(x-z) 하구 수리동역학·염분 실험 연구모형 |
+| [사면 유사·침식·퇴적](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-sed-hill) / [Hillslope sediment, erosion & deposition](https://youngteckhur.github.io/KDRUM-Public/#cap-sed-hill) | 연구 기능 / Research function | 사면의 토양조건·유출과 운반능을 이용해 침식·유사 이동·퇴적을 연구합니다. / Represents hillslope detachment, sediment transport and deposition using soil and runoff conditions. |
+| [하천 유사이송](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-sed-river) / [River sediment transport](https://youngteckhur.github.io/KDRUM-Public/#cap-sed-river) | 연구 기능 / Research function | 하천으로 공급된 유사와 구간 운반능을 비교하여 이송·퇴적을 연구합니다. / Studies river sediment transport and deposition using upstream supply and reach transport capacity. |
+| [보존성 물질·염료 추적](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-dye) / [Conservative material & dye tracking](https://youngteckhur.github.io/KDRUM-Public/#cap-dye) | 연구 기능 / Research function | 주입한 보존성 물질의 질량이 흐름과 저장에 따라 이동하는 과정을 추적합니다. / Tracks injected conservative mass as it moves through flow and storage. |
+| [수질 과정 모듈](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-wq) / [Water-quality process module](https://youngteckhur.github.io/KDRUM-Public/#cap-wq) | 비활성 · 재개발 대상 / Disabled · redevelopment | 질소·인·BOD 등 반응성 수질 과정은 현재 활성 계산·출력 기능과 구분합니다. / Separates historical reactive nutrient/BOD processes from currently active calculations and outputs. |
+| [Estuary2DV 하구 연구모형](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-estuary) / [Estuary2DV estuary research model](https://youngteckhur.github.io/KDRUM-Public/#cap-estuary) | 실험 연구모형 / Experimental research model | 폭평균 종·연직 영역에서 하구 흐름과 염분 성층을 연구하는 별도 모형입니다. / A separate research model for width-averaged longitudinal–vertical estuary flow and salinity stratification. |
 
-## 8. 입력·실행·결과도구
+## 입력·실행·결과도구 / Input, execution & result tools
 
-| 기능 | 공개 상태 | 설명 |
+| 기능 | 현재 구현 | 핵심 역할 |
 |---|---|---|
-| 단일·OpenMP·MPI 병렬계산 | **ESTABLISHED / MODERNIZING** | 단일 실행, 공유메모리 및 분산메모리 실행경로의 결과정합성과 병렬효율을 검증 |
-| NetCDF 통합 결과출력 | **ACTIVE DEVELOPMENT** | 계산 경로별 시간·좌표·변수 정보를 저장. 파일별 격자·출력 시각의 일치 여부 확인 필요 |
-| FloodViewer 결과분석 | **RELEASE CANDIDATE** | 공간분포·시계열·침수심·유속 등 수문·수리 계산결과를 통합 분석 |
-| InputStudio 입력자료 작성·점검 | **ACTIVE DEVELOPMENT** | DEM·유역·흐름방향·하천망·계산격자·토지피복·토양·토심 구축부터 단계별 프로젝트 작성·검증과 엔진 입력자료 생성까지 연결 |
+| [단일·병렬계산(OpenMP·MPI)](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-parallel) / [Serial & parallel execution (OpenMP/MPI)](https://youngteckhur.github.io/KDRUM-Public/#cap-parallel) | 구현 · 성능 개선 / Implemented · performance refinement | 계산 작업을 병렬 배분하고 실행 경로별 결과 일관성과 성능을 비교합니다. / Distributes computational work and compares consistency and performance across execution paths. |
+| [NetCDF 통합 결과 출력](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-netcdf) / [Integrated NetCDF output](https://youngteckhur.github.io/KDRUM-Public/#cap-netcdf) | 구현 완료 / Implemented | 수문·수리 결과를 변수·단위·좌표·시간 정보와 함께 NetCDF로 기록합니다. / Stores hydrologic/hydraulic outputs in NetCDF with variables, units, coordinates and time metadata. |
+| [FloodViewer 결과 분석](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-viewer) / [FloodViewer result analysis](https://youngteckhur.github.io/KDRUM-Public/#cap-viewer) | 공개 준비 중 / Release candidate | 계산 결과의 지도와 시계열을 연결해 침수 전개·수심·유속을 읽습니다. / Links result maps and time series to examine inundation, depth and velocity. |
+| [InputStudio 입력자료 작성·점검](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-inputstudio) / [InputStudio input authoring & checks](https://youngteckhur.github.io/KDRUM-Public/#cap-inputstudio) | 도구 개발 중 / Tool in development | 기존 InputStudio는 공간입력·프로젝트 작성과 실행 전 정합성 점검을 담당합니다. / The existing InputStudio focuses on spatial-input/project authoring and pre-run consistency. |
+| [1D 하천수리 결과 분석 Viewer](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-river-viewer) / [1D river-hydraulics results viewer](https://youngteckhur.github.io/KDRUM-Public/#cap-river-viewer) | 별도 도구 개발 / Separate tool development | 하천망·종단면·횡단면·시계열을 연결하여 1D 수리 결과를 분석합니다. / Links network, longitudinal/cross-section and time-series views for 1D hydraulic result analysis. |
 
-### 별도 개발 중인 결과분석 프로그램
+## 함께 읽기 / Related information
 
-- **1차원 하천수리 결과 뷰어** — 하천 종단·횡단면, 수위·유량 시계열 등 1차원 하천수리 계산결과를 조회·분석하는 별도 프로그램입니다. 현재 개발 중이며 **공개 GitHub 저장소에는 아직 등록하지 않았습니다.**
+[이론·방법론](TECHNICAL_METHODS.md) · [상태와 적용 범위](DEVELOPMENT_STATUS.md) · [공식 다운로드 목록](https://www.water.or.kr/kor/board/index.do?bid=BD_00026&menuId=15_126_128&mode=list)
 
-## MyWater K-Series
+새 K-DRUM Studio는 기존 InputStudio의 단순 명칭 변경이 아니라 별도 통합 작업환경 개발입니다. 입력도구·Viewer의 개발/공개 상태와 수리엔진의 개발 완료를 혼동하지 않습니다.
 
-MyWater는 K-DRUM을 강우 유출해석을 위한 K-Series 기술 SW로 소개하고 있으며, K-water가 웹사이트에서 제공하는 K-Series 소프트웨어는 게시된 이용약관에 따라 외부 사용자도 무료로 이용할 수 있다고 안내합니다.
-
-K-DRUM은 **MyWater 물정보포털 K-Series에서 무료로 내려받아 사용할 수 있으며**, 다운로드 버전과 사용조건은 MyWater에 게시된 최신 안내와 이용약관을 확인해야 합니다.
-
-- MyWater K-Series: https://www.water.or.kr/kor/board/index.do?bid=BD_00026&menuId=15_126_128&mode=list
-- K-Series 기술 SW 이용안내: https://www.water.or.kr/kor/menu/sub.do?menuId=15_126
-
-## Public boundary
-
-This repository does not publish production source code, restricted basin inputs, operational reservoir rules, private validation datasets, internal development identifiers, or unpublished numerical implementation details.
+New K-DRUM Studio is separate integrated-workflow development, not a renaming of InputStudio. GUI/public-release status is independent from hydraulic-engine completion.
