@@ -4,17 +4,103 @@ on:
     branches: [content/full-methodology-review-20261028]
     paths: [.github/workflows/content-workbench-20261028.yml]
 permissions:
-  contents: read
+  contents: write
 jobs:
-  snapshot:
+  materialize:
+    if: github.event.head_commit.message == 'Materialize reviewed 46-feature methodology and current status'
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Archive public website sources for offline content and layout review
-        run: git archive --format=tar.gz HEAD > /tmp/kdrum-public-content-source.tar.gz
-      - uses: actions/upload-artifact@v4
         with:
-          name: staged-public-content-source
-          path: /tmp/kdrum-public-content-source.tar.gz
-          retention-days: 7
+          ref: content/full-methodology-review-20261028
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify and materialize reviewed public explanatory source
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path, PurePosixPath
+          import base64, hashlib, json, lzma
+          root = Path('.').resolve()
+          stage = root / '.github/staged-content-20261028'
+          parts = [stage / f'part{i}.b64' for i in range(1,8)]
+          encoded = ''.join(p.read_text(encoding='ascii') for p in parts)
+          raw = base64.b64decode(encoded, validate=True)
+          digest = lambda b: hashlib.sha256(b).hexdigest()
+          assert digest(raw) == '8a9e3be56550ad083d3aaa0c8db7fed754333238eef3125ac0b2624ac731ac2f', 'Payload digest mismatch'
+          payload = json.loads(lzma.decompress(raw).decode('utf-8'))
+          assert payload['revision'] == '2026-10-28'
+          assert payload['base'] == 'ba904fe0165e4365ff88e7aca834469b3e671b75'
+          allowed = set('''
+          .github/scripts/build-current-docs.cjs
+          .github/scripts/build-site.cjs
+          .github/scripts/capability-guidance.cjs
+          .github/scripts/content-review-notes.cjs
+          .github/scripts/current-content-audit.cjs
+          .github/scripts/current-content.cjs
+          .github/scripts/media-status-consistency.cjs
+          .github/scripts/navigation-layout.cjs
+          .github/scripts/numerical-guide.cjs
+          .github/scripts/site-static-audit.cjs
+          .github/scripts/sync-current-data.cjs
+          CHANGELOG_PUBLIC.md
+          COMMUNITY_CENTER_DESIGN_20261027.md
+          HOMEPAGE_CONTENT_REVIEW_20261028.md
+          HOMEPAGE_GITHUB_UPDATE_REVIEW_20261001.md
+          HOMEPAGE_REFRESH_REVIEW_20261027.md
+          PUBLICATION_MANIFEST.json
+          PUBLICATION_POLICY.md
+          docs/assets/capability-identity.json
+          docs/assets/capability-review.json
+          docs/assets/site-editorial.json
+          docs/assets/site.css
+          docs/assets/site.js
+          docs/assets/theory-current.json
+          '''.split())
+          entries = payload['files']
+          assert len(entries) == len(allowed) == 24
+          assert {f['p'] for f in entries} == allowed
+          pending = []
+          for f in entries:
+              rel = PurePosixPath(f['p'])
+              assert not rel.is_absolute() and '..' not in rel.parts
+              target = root / rel
+              if f['old'] is None:
+                  assert not target.exists(), f'New source already exists: {rel}'
+                  text = f['text']
+              else:
+                  original = target.read_bytes()
+                  assert digest(original) == f['old'], f'Base changed: {rel}'
+                  text = original.decode('utf-8')
+                  end_limit = len(text)
+                  for a, z, replacement in reversed(f['edits']):
+                      assert 0 <= a <= z <= end_limit
+                      text = text[:a] + replacement + text[z:]
+                      end_limit = a
+              data = text.encode('utf-8')
+              assert digest(data) == f['sha'], f'Reconstructed digest mismatch: {rel}'
+              pending.append((target, data))
+          for target, data in pending:
+              target.parent.mkdir(parents=True, exist_ok=True)
+              target.write_bytes(data)
+          print(f'Verified and materialized {len(pending)} public explanatory source files')
+          PY
+      - name: Regenerate all bilingual pages and shared documentation
+        run: |
+          node .github/scripts/build-site.cjs
+          node .github/scripts/site-static-audit.cjs
+          node .github/scripts/media-status-consistency.cjs
+          node .github/scripts/capability-contract.cjs
+      - name: Commit reviewed source and generated derivatives on the review branch only
+        run: |
+          rm -rf .github/staged-content-20261028
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A -- .github/scripts .github/staged-content-20261028 docs '*.md' llms.txt PUBLICATION_MANIFEST.json
+          git diff --cached --stat
+          git diff --cached --quiet && exit 0
+          git commit -m 'Apply reviewed bilingual 46-feature methods, completion status and generated documents'
+          git push origin HEAD:content/full-methodology-review-20261028
