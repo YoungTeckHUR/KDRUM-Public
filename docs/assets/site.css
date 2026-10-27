@@ -251,3 +251,11 @@
 .studio-development-note strong{display:block;color:var(--blue-dark);font-size:1.04rem}
 .studio-development-note p{margin-top:8px;color:var(--muted);font-size:.95rem;line-height:1.65}
 @media(max-width:600px){.studio-development-note{padding:15px 16px}}
+
+/* Keep the 801-1100px desktop home composition compact when English copy wraps.
+   The full-viewport homepage QA requires the home panel height below 1100px.
+   Preserve touch-target sizes, typography, and all feature-detail layouts. */
+@media (min-width:801px) and (max-width:1100px){
+ [data-navigation-layout] #home .hero{padding-top:24px;padding-bottom:18px}
+ [data-navigation-layout] #home .home-introduction{padding-block:12px}
+}
