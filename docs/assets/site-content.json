@@ -404,7 +404,9 @@
       "detailEn": "Restart reads saved grid hydrologic and reservoir states. Unlike iterative warm-up adjustment, HotStart initializes by restoring a stored checkpoint.",
       "diagram": null,
       "diagramCaptionKo": null,
-      "diagramCaptionEn": null
+      "diagramCaptionEn": null,
+      "moreKo": "수문 초기상태를 재사용하여 워밍업 반복을 줄이는 방식과 모든 계산상태를 저장·복원하는 HotStart는 다릅니다. 적설·댐·하천수리 등 복원 범위는 사용하는 기능과 저장 파일을 함께 확인해야 합니다.",
+      "moreEn": "Reusing hydrologic initialization state to avoid repeated warm-up is different from a full HotStart restoration of all states. Verify saved-state coverage for snow, reservoirs and river hydraulics as applicable."
     },
     {
       "id": "dlayer",
@@ -1313,8 +1315,8 @@
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null,
-      "moreKo": "단계별 구축 흐름은 공간격자·유출경로, 강우, 기상·증발산, 검증자료, 프로젝트 제어, 구조물, DWNET, 2D 국부관성/1D–2D 연계, 최종점검을 순차 확인합니다. 작업공간 저장과 실제 엔진 입력자료 생성을 구분하고, 기준안(Base)과 시나리오를 분리해 원본 입력이 의도치 않게 바뀌지 않도록 합니다. 계산 후 결과 분석은 현재 결과 Viewer 기능과 구분합니다.",
-      "moreEn": "The guided build checks spatial grids and flow paths, rainfall, meteorology/ET, validation data, project controls, structures, DWNET, 2D local-inertial/1D–2D coupling and final readiness in sequence. Workspace saving is separated from materializing engine inputs, and Base/scenario isolation protects the original setup from unintended changes. Post-run result interpretation remains distinct from the current result-viewer functions.",
+      "moreKo": "단계별 구축 흐름은 공간격자·유출경로, 강우, 기상·증발산, 검증자료, 프로젝트 제어, 구조물, DWNET, 2D 국부관성/1D–2D 연계, 최종점검을 순차 확인합니다. 작업공간 저장과 실제 엔진 입력자료 생성을 구분하고, 기준안(Base)과 시나리오를 분리해 원본 입력이 의도치 않게 바뀌지 않도록 합니다. 계산 후 결과 분석은 현재 결과 Viewer 기능과 구분합니다. K-DRUM Studio는 프로젝트 작성·모의 준비·실행·결과 검토를 연결하는 통합 작업환경으로 개발 중이며, InputStudio와 별도 Viewer가 이미 하나의 공식 배포 프로그램으로 완성되었다는 뜻은 아닙니다.",
+      "moreEn": "The guided build checks spatial grids and flow paths, rainfall, meteorology/ET, validation data, project controls, structures, DWNET, 2D local-inertial/1D–2D coupling and final readiness in sequence. Workspace saving is separated from materializing engine inputs, and Base/scenario isolation protects the original setup from unintended changes. Post-run result interpretation remains distinct from the current result-viewer functions. K-DRUM Studio is an in-development workflow that connects project authoring, run preparation, execution and result review; it does not imply that InputStudio and separate viewers are already released as one official product.",
       "searchTerms": "시나리오 scenario base domain face mask"
     },
     {

@@ -1,24 +1,64 @@
 {
   "stories": [
     {
-      "id": "radar-rainfall",
-      "year": 2012,
+      "id": "namgang-wildfire-2026",
+      "year": 2026,
       "ko": {
-        "title": "레이더 강우를 이용한 홍수유출 모의",
-        "question": "강우의 시공간 분포를 반영한 유역 홍수유출 모의",
-        "context": "남강 유역을 대상으로 태풍과 대류성 호우 조건에서 레이더 강우를 이용한 홍수유출 모의의 적용성을 살폈습니다.",
-        "method": "레이더 강우를 계산격자에 배분하고, DEM·토지피복·토양도에서 추출한 GIS 수문자료를 입력했습니다. 침투와 지표·지표하 유출을 계산하고 운동파 기반으로 하천망을 따라 유량을 추적했습니다.",
-        "scope": "2012년 논문의 과거 호우사상 모의 연구입니다. 이 적용 사례가 현재 개발 중인 동역학파 하천망이나 2D 범람 기능의 검증을 뜻하지는 않습니다."
+        "title": "산불 피해와 극한호우 유출 영향 분석",
+        "question": "2025년 남강댐 유역의 산불 피해 이후 극한호우 영향",
+        "context": "2026년 공개 학술발표에서는 산불 피해가 발생한 남강댐 유역과 이어진 극한호우를 대상으로 K-DRUM을 활용한 강우유출 영향 분석을 소개했습니다.",
+        "method": "특정 유역의 산불 피해와 극한강우에 따른 유출반응을 검토한 공개 적용 사례입니다.",
+        "scope": "2026년 학술발표에 근거한 활용 사례이며, 새로운 산불 모듈의 정식 공개나 모든 유역에 대한 예측정확도 검증을 의미하지 않습니다."
       },
       "en": {
-        "title": "Flood-runoff simulation using radar rainfall",
-        "question": "Watershed flood-runoff simulation with rainfall varying across space and time",
-        "context": "The study examined radar-driven flood-runoff simulation for typhoon and convective storms in Korea's Namgang watershed.",
-        "method": "Radar rainfall was mapped to computational grids, with hydrologic inputs derived from DEM, land-cover and soil data. Infiltration and surface/subsurface runoff were represented, and flow was routed through the channel network using kinematic waves.",
-        "scope": "This is an offline storm-event application published in 2012. It does not establish validation of the dynamic-wave river-network or 2D floodplain extensions now under development."
+        "title": "Wildfire impacts and extreme-rainfall runoff",
+        "question": "Runoff response after wildfire and extreme rainfall in the Namgang Dam basin",
+        "context": "A public 2026 conference presentation examined K-DRUM rainfall–runoff analysis for the Namgang Dam basin affected by 2025 wildfire and subsequent extreme rainfall.",
+        "method": "This is a basin application examining runoff response under specific wildfire and rainfall conditions.",
+        "scope": "This conference research is not evidence of a newly released wildfire module or validated predictive performance across all basins."
       },
-      "paperTitle": "Development and application of GIS based K-DRUM for flood runoff simulation using radar rainfall",
-      "link": "https://www.sciencedirect.com/science/article/abs/pii/S1570644311000724"
+      "link": "https://www.kwater.or.kr/kiwe/resu/thesView.do?mngtno=A2026019&pageNo=4&s_mid=454",
+      "paperTitle": "분포형 수문 모형(K-DRUM)을 활용한 2025년 남강댐 유역의 산불피해와 이어진 극한 호우가 강우 유출에 미치는 영향 분석"
+    },
+    {
+      "id": "jeju-groundwater-2024",
+      "year": 2024,
+      "ko": {
+        "title": "제주 지표·지하수 연계 연구",
+        "question": "제주 물순환 해석에서 수문·지하수모형의 연계 가능성",
+        "context": "2024년 학술발표에서 제주도 물순환 해석을 위한 K-DRUM·K-GW의 적용성과 연계 개선 방향을 검토했습니다.",
+        "method": "분포형 강우유출모형과 별도 지하수모형의 역할을 구분하고 지표·지하수 연계에 필요한 자료와 해석 범위를 논의했습니다.",
+        "scope": "공개 학술발표에 근거한 연구 사례입니다. K-DRUM 단독으로 완전한 지하수유동을 해석하거나 연계 기능이 공식 배포본에서 검증 완료되었다는 뜻은 아닙니다."
+      },
+      "en": {
+        "title": "Jeju surface-water and groundwater coupling",
+        "question": "Exploring integrated watershed–groundwater analysis",
+        "context": "Public 2024 conference research examined applications of K-DRUM and K-GW in Jeju and opportunities to improve coupling.",
+        "method": "The work distinguished the roles of distributed runoff modelling and a separate groundwater model and considered data and interpretation requirements.",
+        "scope": "This conference application does not mean that K-DRUM alone solves full groundwater flow or that coupling is validated in the official release."
+      },
+      "link": "https://www.kwater.or.kr/kiwe/resu/thesView.do?mngtno=A2024365&pageNo=37&s_mid=454",
+      "paperTitle": "제주 지표-지하수 연계를 위한 K-DRUM과 K-GW의 개선 연구"
+    },
+    {
+      "id": "surface-groundwater",
+      "year": 2017,
+      "ko": {
+        "title": "강우유출과 지하수 흐름의 연계 연구",
+        "question": "강우 종료 후에도 지속되는 하천 유출의 연계 해석",
+        "context": "2017년 학술발표는 장기 물순환과 갈수기 유출 해석을 위해 K-DRUM과 지하수유동모형 MODFLOW를 연계하는 방법을 제시했습니다.",
+        "method": "K-DRUM에서 계산한 심부 침루량을 MODFLOW의 지하수 함양 입력으로 사용하고, MODFLOW의 기저유량을 K-DRUM 하천유출에 반영하는 연계 방안을 설명했습니다.",
+        "scope": "연계 방법과 향후 활용 방향을 제시한 발표자료입니다. 이 기록만으로 정확도 향상이나 현재 배포본의 연계 기능을 확정할 수 없습니다. D층은 기존 다층 유출 구조의 지하수층이며, 장기유출 정확도 향상을 위한 지연 기저유출·하천 침투 연계 확장은 개발 중입니다."
+      },
+      "en": {
+        "title": "Coupling rainfall runoff and groundwater flow",
+        "question": "Coupled analysis of river flow continuing after rainfall ends",
+        "context": "A 2017 conference presentation proposed coupling K-DRUM with MODFLOW for long-term water-cycle and low-flow analysis.",
+        "method": "The proposed exchange passes K-DRUM deep percolation to MODFLOW as groundwater recharge, then returns MODFLOW baseflow to K-DRUM river runoff.",
+        "scope": "The record presents a coupling method and intended future use. It does not establish a measured accuracy improvement or coupling availability in the downloadable version. The D layer is an existing groundwater layer in the multilayer runoff structure; its delayed-baseflow and river-infiltration extensions for long-term runoff accuracy remain in development."
+      },
+      "paperTitle": "강우유출모형(K-DRUM)과 지하수유동모형(MODFLOW)연계에 대한 연구",
+      "link": "https://www.kwater.or.kr/kiwe/resu/thesView.do?mngtno=A2017255&pageNo=252&s_mid=454"
     },
     {
       "id": "long-term-snowmelt",
@@ -41,24 +81,24 @@
       "link": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART001822772"
     },
     {
-      "id": "surface-groundwater",
-      "year": 2017,
+      "id": "radar-rainfall",
+      "year": 2012,
       "ko": {
-        "title": "강우유출과 지하수 흐름의 연계 연구",
-        "question": "강우 종료 후에도 지속되는 하천 유출의 연계 해석",
-        "context": "2017년 학술발표는 장기 물순환과 갈수기 유출 해석을 위해 K-DRUM과 지하수유동모형 MODFLOW를 연계하는 방법을 제시했습니다.",
-        "method": "K-DRUM에서 계산한 심부 침루량을 MODFLOW의 지하수 함양 입력으로 사용하고, MODFLOW의 기저유량을 K-DRUM 하천유출에 반영하는 연계 방안을 설명했습니다.",
-        "scope": "연계 방법과 향후 활용 방향을 제시한 발표자료입니다. 이 기록만으로 정확도 향상이나 현재 배포본의 연계 기능을 확정할 수 없습니다. D층은 기존 다층 유출 구조의 지하수층이며, 장기유출 정확도 향상을 위한 지연 기저유출·하천 침투 연계 확장은 개발 중입니다."
+        "title": "레이더 강우를 이용한 홍수유출 모의",
+        "question": "강우의 시공간 분포를 반영한 유역 홍수유출 모의",
+        "context": "남강 유역을 대상으로 태풍과 대류성 호우 조건에서 레이더 강우를 이용한 홍수유출 모의의 적용성을 살폈습니다.",
+        "method": "레이더 강우를 계산격자에 배분하고, DEM·토지피복·토양도에서 추출한 GIS 수문자료를 입력했습니다. 침투와 지표·지표하 유출을 계산하고 운동파 기반으로 하천망을 따라 유량을 추적했습니다.",
+        "scope": "2012년 논문의 과거 호우사상 모의 연구입니다. 이 적용 사례가 현재 개발 중인 동역학파 하천망이나 2D 범람 기능의 검증을 뜻하지는 않습니다."
       },
       "en": {
-        "title": "Coupling rainfall runoff and groundwater flow",
-        "question": "Coupled analysis of river flow continuing after rainfall ends",
-        "context": "A 2017 conference presentation proposed coupling K-DRUM with MODFLOW for long-term water-cycle and low-flow analysis.",
-        "method": "The proposed exchange passes K-DRUM deep percolation to MODFLOW as groundwater recharge, then returns MODFLOW baseflow to K-DRUM river runoff.",
-        "scope": "The record presents a coupling method and intended future use. It does not establish a measured accuracy improvement or coupling availability in the downloadable version. The D layer is an existing groundwater layer in the multilayer runoff structure; its delayed-baseflow and river-infiltration extensions for long-term runoff accuracy remain in development."
+        "title": "Flood-runoff simulation using radar rainfall",
+        "question": "Watershed flood-runoff simulation with rainfall varying across space and time",
+        "context": "The study examined radar-driven flood-runoff simulation for typhoon and convective storms in Korea's Namgang watershed.",
+        "method": "Radar rainfall was mapped to computational grids, with hydrologic inputs derived from DEM, land-cover and soil data. Infiltration and surface/subsurface runoff were represented, and flow was routed through the channel network using kinematic waves.",
+        "scope": "This is an offline storm-event application published in 2012. It does not establish validation of the dynamic-wave river-network or 2D floodplain extensions now under development."
       },
-      "paperTitle": "강우유출모형(K-DRUM)과 지하수유동모형(MODFLOW)연계에 대한 연구",
-      "link": "https://www.kwater.or.kr/kiwe/resu/thesView.do?mngtno=A2017255&pageNo=252&s_mid=454"
+      "paperTitle": "Development and application of GIS based K-DRUM for flood runoff simulation using radar rainfall",
+      "link": "https://www.sciencedirect.com/science/article/abs/pii/S1570644311000724"
     }
   ],
   "faqs": [
@@ -97,11 +137,11 @@
       "id": "maturity",
       "ko": {
         "question": "확립된 기능과 개발 중인 기능은 어떻게 구분하나요?",
-        "answer": "2026-09-21 기준으로 격자 강우유출, Green-Ampt 침투, 운동파 흐름추적, 장기유출과 적설·융설은 확립된 기능으로 안내합니다. 1D 동역학파 하천망, 2D 범람, 구조물·댐 운영은 개발 중이며, 양방향 1D-2D 교환은 통제된 시험조건에서 개발·검증 중입니다. 유사·추적 기능은 연구 단계이고 수질 기능은 현재 비활성·재개발 단계입니다."
+        "answer": "2026년 10월 27일 최신 개발 저장소를 재검토했으며, 기능별 공개 성숙도 등급은 2026년 10월 1일 검토 기준을 유지합니다. 격자 강우유출, Green-Ampt 침투, 운동파 흐름추적, 장기유출과 적설·융설은 확립된 기능입니다. 1D 동역학파 하천망, 2D 범람, 구조물·댐 운영은 개발 중이고, 양방향 1D–2D 교환은 통제된 시험조건에서 개발·검증 중입니다. 새 코드나 시험용 PR이 있다고 해서 정식 배포·검증 완료로 표시하지 않습니다."
       },
       "en": {
         "question": "Which capabilities are established, and which are still in development?",
-        "answer": "As of 2026-09-21, grid-based rainfall runoff, Green-Ampt infiltration, kinematic routing, long-term runoff and snow processes are presented as established capabilities. Dynamic-wave river networks, 2D flooding, hydraulic structures and dam operation remain in development. Two-way 1D–2D exchange has been verified under controlled test conditions but still requires separate validation for other basins and conditions. Sediment and tracer functions remain research capabilities, while the water-quality module is currently disabled and a redevelopment candidate."
+        "answer": "Development repositories were re-reviewed on October 27, 2026, while the published maturity labels retain the October 1 review baseline. Grid-based rainfall–runoff, Green–Ampt infiltration, kinematic routing, long-term runoff and snow are established. 1D dynamic-wave hydraulics, 2D flooding, structures and dam operations remain in development, and bidirectional 1D–2D exchange has controlled development evidence. New code or draft pull requests do not by themselves establish general release or full validation."
       },
       "sources": [
         "development-status"
@@ -111,11 +151,11 @@
       "id": "download",
       "ko": {
         "question": "K-DRUM의 배포 경로와 버전 범위는 무엇인가요?",
-        "answer": "이 홈페이지는 K-DRUM v3.x 계열의 개발·테스트용 버전을 안내합니다. MyWater K-Series의 정식 배포본과는 구분되며, 포함 기능과 업데이트 시점·주기가 다를 수 있습니다. 이 홈페이지의 프로그램 다운로드 링크는 MyWater 정식 배포 페이지로 연결됩니다. 정식 배포본의 정확한 버전과 이용 조건은 MyWater의 최신 안내를 확인해 주세요. v3.x는 버전 계열을 뜻하며, 개별 파일의 세부 버전은 해당 파일의 안내를 따릅니다."
+        "answer": "이 홈페이지는 K-DRUM v3.x 계열의 기술 개발 현황과 주요 기능을 소개하며 실행파일을 직접 배포하지 않습니다. 공식 프로그램은 MyWater K-Series 배포 목록에서 K-DRUM을 찾아 다운로드할 수 있으며, 이용조건과 실제 배포 버전은 MyWater의 최신 안내를 확인해야 합니다. 개발·시험 기능은 공식 배포본과 포함 범위 및 업데이트 시점이 다를 수 있습니다."
       },
       "en": {
         "question": "Where is K-DRUM distributed, and which version does it cover?",
-        "answer": "The version described on this website is a K-DRUM v3.x test version. It is distinct from the official release distributed through MyWater K-Series; included features, release dates and update schedules may differ. Software download links on this website lead to the official MyWater distribution page. Check MyWater for the exact official release version and terms of use. The label v3.x identifies a version family; consult the information accompanying each file for its specific version."
+        "answer": "This website explains the K-DRUM v3.x development line and its technical capabilities; it does not directly distribute executables. The official program is listed through MyWater K-Series, where users should check the current K-DRUM package and usage terms. Development and test features may differ from the officially distributed version."
       },
       "sources": [
         "mywater-k-series",
@@ -143,11 +183,11 @@
       "id": "related-tools",
       "ko": {
         "question": "K-DRUM 계산엔진, InputStudio, FloodViewer와 Estuary2DV는 어떤 관계인가요?",
-        "answer": "K-DRUM 계산엔진은 수문·수리 계산을 담당합니다. InputStudio는 입력 프로젝트 작성·점검 도구로 개발 중이며, FloodViewer는 지도·시계열 기반 결과분석 도구로 공개 준비 중입니다. NetCDF 통합출력은 개발 중입니다. Estuary2DV는 하구 흐름·염분을 다루는 별도 연구모형이고, 1D 하천수리 결과분석 Viewer도 별도 개발 중입니다."
+        "answer": "K-DRUM Core는 수문·수리 계산을 담당합니다. InputStudio는 입력자료 구축, 프로젝트 작성·사전점검 도구입니다. K-DRUM Studio는 프로젝트 작성부터 모의 준비·실행·결과 검토까지 연결하는 통합 작업환경의 개발 방향이며 별도 완성·공식 배포 기능을 뜻하지 않습니다. FloodViewer는 공개 준비 중인 지도·시계열 결과분석 도구이고, 1D 하천수리 결과분석 Viewer는 별도 개발 중입니다. Estuary2DV는 하구 흐름·염분을 다루는 독립 연구모형입니다."
       },
       "en": {
         "question": "How do the K-DRUM simulation engine, InputStudio, FloodViewer and Estuary2DV relate?",
-        "answer": "The K-DRUM simulation engine performs the hydrologic and hydraulic calculations. InputStudio supports project authoring and input checks and remains in development. FloodViewer provides map- and time-series-based result analysis and is preparing for public release. Integrated NetCDF output remains in development. Estuary2DV is a separate research model for estuary hydrodynamics and salinity, and the 1D river-hydraulics result viewer is also under separate development."
+        "answer": "K-DRUM Core performs the hydrologic and hydraulic calculations. InputStudio prepares inputs and projects. K-DRUM Studio is the development direction for an integrated authoring, run-preparation, execution and result-review environment, not a completed standalone public release. FloodViewer remains a map/time-series release candidate, the 1D river-hydraulics viewer is separately developed, and Estuary2DV is an independent estuary research model."
       },
       "sources": [
         "development-status",
@@ -180,8 +220,8 @@
     },
     "development-status": {
       "title": {
-        "ko": "개발 현황 · 2026-09-21 검토",
-        "en": "Development Status · reviewed 2026-09-21"
+        "ko": "개발 현황 · 2026-10-27 재검토",
+        "en": "Development status · re-reviewed 2026-10-27"
       },
       "url": "https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md"
     },

@@ -33,6 +33,7 @@ Public K-DRUM research supports the following high-level capabilities:
 The current generation builds on the established rainfall-runoff core and organizes K-DRUM as a connected analysis environment:
 
 - **K-DRUM Core** — distributed rainfall-runoff, river-hydraulic and flood-inundation simulation engine
+- **K-DRUM Studio (in development)** — a developing integrated project/run/review workflow, not an officially released consolidated product.
 - **K-DRUM InputStudio** — spatial-input construction, guided project authoring, time series, terrain/river geometry, hydraulic structures, scenarios, consistency checks, and controlled engine-input generation
 - **K-DRUM FloodViewer** — integrated map and time-series analysis of hydrologic and hydraulic simulation results
 - **1D River Hydraulics Results Viewer** — separate viewer for longitudinal/cross-section results and water-level/discharge time series; under development and **not yet published to the public GitHub repositories**
