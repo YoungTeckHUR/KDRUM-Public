@@ -1464,22 +1464,22 @@
             11,
             "Hydraulic solver hierarchy",
             "수리해석 방법 체계",
-            "Established kinematic-wave routing and hydraulic formulations under development",
-            "확립된 운동파 흐름추적과 개발 중인 수리해석 체계"
+            "Established kinematic routing and completed 1D hydraulic formulations",
+            "확립된 운동파 흐름추적과 개발 완료된 1D 하천수리"
           ],
           [
             12,
             "Structures & operations",
             "하천·댐·구조물 운영",
-            "River-network, dam and gate operation extensions under development",
-            "개발 중인 하천망·댐·게이트·운영규칙 확장"
+            "Implemented river structures, reservoir operation and gate-flow calculations",
+            "구현된 하천 수리구조물·저수지 운영·수문 유량 계산"
           ],
           [
             13,
             "1D-2D flood analysis",
             "1D-2D 홍수범람",
-            "River–floodplain coupling verified under controlled tests; multi-resolution extensions remain in development",
-            "통제된 시험조건에서 확인한 하천-범람원 연계와 개발 중인 다중해상도 확장"
+            "Completed 1D–2D coupling and 2D inundation; multi-resolution is selectively supported",
+            "개발 완료된 1D–2D 연계·2D 범람과 선택 적용되는 다중해상도 해석"
           ]
         ]
       ],

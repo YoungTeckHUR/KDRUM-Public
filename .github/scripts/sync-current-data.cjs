@@ -41,6 +41,18 @@ data.media.featureStatus=[
  ['Hydrology/hydraulics implemented · tools and research separate','수문·수리 구현 · 도구·연구 기능 별도']
 ];
 for(const lang of ['ko','en']){const t=data.media.txt[lang];for(const [k,v] of Object.entries(t))if(typeof v==='string')t[k]=v.replace(/22초/g,'약 24초').replace(/22-second/g,'approximately 24-second').replace(/22 seconds/g,'about 24 seconds');t.rVideoText=lang==='ko'?'K-DRUM 타이틀로 시작하는 약 24초 개념영상입니다.':'An approximately 24-second concept video opening on the K-DRUM title.';t.note=lang==='ko'?'기능의 구현 상태, 적용 검증과 공식 배포 여부는 서로 구분합니다. 2026년 9월의 원본 그림은 보존하고 현재 상태를 옆에 안내합니다.':'Implementation, application validation and official distribution are distinct. Original September 2026 illustrations are preserved with current adjacent status labels.';}
+// Editable gallery captions must match the current badges, not the original slide date.
+const captionMap={
+ 11:['Established kinematic routing and completed 1D hydraulic formulations','확립된 운동파 흐름추적과 개발 완료된 1D 하천수리'],
+ 12:['Implemented river structures, reservoir operation and gate-flow calculations','구현된 하천 수리구조물·저수지 운영·수문 유량 계산'],
+ 13:['Completed 1D–2D coupling and 2D inundation; multi-resolution is selectively supported','개발 완료된 1D–2D 연계·2D 범람과 선택 적용되는 다중해상도 해석']
+};
+const gallery=data.media.data.flatMap(group=>group[3]);
+for(const [id,pair] of Object.entries(captionMap)){
+ const card=gallery.find(entry=>entry[0]===Number(id));
+ if(!card)throw Error('Missing current gallery caption '+id);
+ [card[3],card[4]]=pair;
+}
 write('docs/assets/site-content.json',data);write('docs/assets/feature-depth.json',depth);
 console.log('PASS current capability and gallery source synchronized');
 
