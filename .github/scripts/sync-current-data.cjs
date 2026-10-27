@@ -43,3 +43,5 @@ data.media.featureStatus=[
 for(const lang of ['ko','en']){const t=data.media.txt[lang];for(const [k,v] of Object.entries(t))if(typeof v==='string')t[k]=v.replace(/22초/g,'약 24초').replace(/22-second/g,'approximately 24-second').replace(/22 seconds/g,'about 24 seconds');t.rVideoText=lang==='ko'?'K-DRUM 타이틀로 시작하는 약 24초 개념영상입니다.':'An approximately 24-second concept video opening on the K-DRUM title.';t.note=lang==='ko'?'기능의 구현 상태, 적용 검증과 공식 배포 여부는 서로 구분합니다. 2026년 9월의 원본 그림은 보존하고 현재 상태를 옆에 안내합니다.':'Implementation, application validation and official distribution are distinct. Original September 2026 illustrations are preserved with current adjacent status labels.';}
 write('docs/assets/site-content.json',data);write('docs/assets/feature-depth.json',depth);
 console.log('PASS current capability and gallery source synchronized');
+
+require('./current-diagram-status.cjs');

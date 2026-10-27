@@ -162,7 +162,7 @@ function diagram(name,lang){
   body+=text(86,548,L('수위와 월류턱 높이의 관계로 유량 산정','Discharge depends on head relative to crest'),18,600,'start','#486171');
   body+=rect(630,195,510,410,'#edf7f4','#83b9ae',14)+text(656,235,L('게이트·개구부','Gate / opening'),29,700);
   body+=line(670,385,1100,385,'#78bfdc')+rect(860,300,28,185,'#967b59','#75470f',2)+rect(888,410,105,75,'#fff','#967b59',2);
-  body+=text(915,447,L('개구부','Opening'),18,700,'middle')+route('M735 430H850')+text(704,411,L('상류 수위','Upstream level'),18,600);
+  body+=text(940,447,L('개구부','Opening'),18,700,'middle')+route('M735 430H850')+text(704,411,L('상류 수위','Upstream level'),18,600);
   body+=route('M1000 447H1080')+text(1014,426,L('통과 Q','Gate Q'),18,700,'start','#11695d');
   body+=lang==='ko'?text(656,548,'개도·제원·상하류 수위 조건을 함께 사용',18,600,'start','#486171'):(text(885,538,'Use opening, geometry and',16,600,'middle','#486171')+text(885,560,'upstream/downstream levels',16,600,'middle','#486171'));
   body+=text(600,630,L('구조물 형식별 유량관계를 1D 하천수리 또는 2D 범람 계산과 연결','Structure-specific discharge relations connect to 1D river or 2D flood calculations'),19,600,'middle');

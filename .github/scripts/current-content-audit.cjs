@@ -29,3 +29,14 @@ assert.equal(current.theory.chapters.length,6);
 assert.ok(data.media.featureStatus[11][1].includes('개발 완료'));
 assert.ok(data.media.featureStatus[13][1].includes('개발 완료'));
 console.log('PASS 46 bilingual method/status records, completed hydraulics, six added theory chapters, 3-axis availability and current docs');
+
+for(const lang of ['ko','en']){
+ for(const stem of ['model-workflow','river-floodplain']){
+  const svg=fs.readFileSync(path.join(root,'docs/assets/diagrams',stem+'-'+lang+'.svg'),'utf8');
+  assert.ok(!/IN DEVELOPMENT|in development|developing hydraulic|개발 중|개발·검증 단계/.test(svg),stem+' '+lang+' completed SVG labels');
+  assert.ok(lang==='ko'?svg.includes('개발 완료'):/complete|COMPLETED/.test(svg),stem+' '+lang+' current label');
+ }
+ const p=fs.readFileSync(path.join(root,'docs/assets/diagrams/program-workflow-'+lang+'.svg'),'utf8');
+ assert.ok(!/수리 확장 개발|통합 개발 중|INTEGRATION DEV\./.test(p),'Core/output diagram status '+lang);
+}
+console.log('PASS editable overview SVG status matches the reviewed implementation');
