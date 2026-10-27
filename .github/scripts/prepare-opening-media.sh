@@ -11,7 +11,7 @@ if ! command -v ffmpeg >/dev/null 2>&1; then
 fi
 command -v ffmpeg
 command -v ffprobe
-ffmpeg -hide_banner -loglevel error -y -ss 20.5 -i "$source_mp4" -vf scale=1920:1080 -frames:v 1 -q:v 3 "$poster"
+ffmpeg -hide_banner -loglevel error -y -ss 20.5 -i "$source_mp4" -vf scale=1280:720 -frames:v 1 -q:v 3 "$poster"
 ffmpeg -hide_banner -loglevel error -y -loop 1 -framerate 30 -t 1.8 -i "$poster" -i "$source_mp4" -filter_complex '[0:v]format=yuv420p,setsar=1,setpts=PTS-STARTPTS[opening];[1:v]trim=start=0.1,setpts=PTS-STARTPTS,fps=30,format=yuv420p,setsar=1[body];[opening][body]concat=n=2:v=1:a=0[v]' -map '[v]' -r 30 -c:v libx264 -crf 25 -preset medium -pix_fmt yuv420p -movflags +faststart -an "$new_mp4"
 ffmpeg -hide_banner -loglevel error -y -i "$new_mp4" -frames:v 1 -vf 'signalstats,metadata=print:file=/tmp/kdrum_opening_frame_stats.txt' -f null -
 python3 - <<'PY'

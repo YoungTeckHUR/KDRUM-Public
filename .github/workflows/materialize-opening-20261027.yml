@@ -7,7 +7,7 @@ permissions:
   contents: write
 jobs:
   materialize:
-    if: github.event.head_commit.message == 'Retry approved opening media materialization'
+    if: github.event.head_commit.message == 'Retry approved opening media with matched resolution'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
