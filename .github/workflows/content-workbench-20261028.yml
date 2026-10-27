@@ -7,7 +7,7 @@ permissions:
   contents: write
 jobs:
   materialize:
-    if: github.event.head_commit.message == 'Complete diagram status and expanded-method browser verification'
+    if: github.event.head_commit.message == 'Apply diagram corrections after connector-authorized browser workflow update'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Apply bounded source corrections
+      - name: Apply bounded source corrections without editing workflows
         shell: bash
         run: |
           python3 - <<'PY'
@@ -38,11 +38,6 @@ jobs:
           a="${pic?L('작동 방식·그림 해설·확인사항','How it works · figure guide · checks'):L('작동 방식·적용 범위·확인사항','How it works · scope · checks')}"
           assert s.count(a)==1
           p.write_text(s.replace(a,"${L('이론·계산방법·입출력 상세','Theory, methods and input/output details')}"),encoding='utf-8')
-          p,s=read('.github/workflows/homepage-browser-smoke.yml','381e4b4f05fe97cd52aee02b6f007f70703e7855f5e7850bfcc2f4a64fb6157f')
-          a='      - name: Compare laptop typography at six viewport widths'
-          assert s.count(a)==1
-          new='      - name: Verify reviewed methods, lifecycle status and overview SVG text\n        env:\n          BASE_URL: http://127.0.0.1:8000/KDRUM-Public\n          METHOD_AUDIT_DIR: browser-artifacts/methodology\n        run: node .github/scripts/methodology-browser-audit.cjs\n\n'
-          p.write_text(s.replace(a,new+a),encoding='utf-8')
           p,s=read('.github/scripts/current-content-audit.cjs','5e781ce5062662dc429056878b3baa539e6e6285c879fed0853b216aa463bf81')
           s+="""
           for(const lang of ['ko','en']){
@@ -64,11 +59,11 @@ jobs:
           node .github/scripts/site-static-audit.cjs
           node .github/scripts/media-status-consistency.cjs
           node --check .github/scripts/methodology-browser-audit.cjs
-      - name: Commit exact reviewed branch derivatives
+      - name: Commit reviewed source and generated pages only
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- .github/scripts .github/workflows/homepage-browser-smoke.yml docs
+          git add -- .github/scripts docs
           git diff --cached --quiet && exit 0
-          git commit -m 'Synchronize SVG statuses, center structure label and strengthen method screen coverage'
+          git commit -m 'Synchronize SVG statuses, center structure label and clarify method controls'
           git push origin HEAD:content/full-methodology-review-20261028
