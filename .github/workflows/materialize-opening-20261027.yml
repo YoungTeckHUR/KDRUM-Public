@@ -7,7 +7,7 @@ permissions:
   contents: write
 jobs:
   materialize:
-    if: github.event.head_commit.message == 'Prepare approved K-DRUM opening media and regenerate bilingual site'
+    if: github.event.head_commit.message == 'Retry approved opening media materialization'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:

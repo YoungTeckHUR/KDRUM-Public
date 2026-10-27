@@ -5,6 +5,10 @@ out_dir=docs/media/2026-10-27-opening
 new_mp4="$out_dir/KDRUM_OpeningTitle_v1.1_web.mp4"
 poster="$out_dir/KDRUM_OpeningTitle_v1.1_poster.jpg"
 mkdir -p "$out_dir"
+if ! command -v ffmpeg >/dev/null 2>&1; then
+  sudo apt-get update -qq
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
+fi
 command -v ffmpeg
 command -v ffprobe
 ffmpeg -hide_banner -loglevel error -y -ss 20.5 -i "$source_mp4" -vf scale=1920:1080 -frames:v 1 -q:v 3 "$poster"
