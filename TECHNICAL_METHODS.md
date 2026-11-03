@@ -68,7 +68,7 @@ The current dynamic-wave route combines a finite-volume spatial operator with ne
 
 ### 음해 시간적분과 비선형 반복을 구분해 읽습니다 / Separate implicit time stepping from nonlinear solution
 
-현재 1D 음해 경로에는 후진 Euler와 TR-BDF2가 연결되어 있습니다. 후진 Euler는 다음 시점 상태의 잔차를 풀며, TR-BDF2는 사다리꼴 중간단계와 BDF2 후속단계를 결합합니다. 비선형 반복은 상태·수리량·플럭스를 다시 평가하여 잔차를 줄이고, 선형화된 연립계를 풀어 보정량을 구합니다. 음해법도 시간간격이 지나치게 크면 첨두·도달시간이 달라질 수 있으므로 수렴 여부와 시간해상도 민감도를 별도로 확인합니다.
+현재 1D 음해 경로에는 후방 오일러법(Backward Euler)과 TR-BDF2가 연결되어 있습니다. 후방 오일러법은 다음 시점 상태의 잔차를 풀며, TR-BDF2는 사다리꼴 중간단계와 BDF2 후속단계를 결합합니다. 비선형 반복은 상태·수리량·플럭스를 다시 평가하여 잔차를 줄이고, 선형화된 연립계를 풀어 보정량을 구합니다. 음해법도 시간간격이 지나치게 크면 첨두·도달시간이 달라질 수 있으므로 수렴 여부와 시간해상도 민감도를 별도로 확인합니다.
 
 Backward Euler and TR-BDF2 are connected to the present implicit 1D route. Backward Euler solves a new-time residual; TR-BDF2 combines a trapezoidal intermediate stage with a BDF2 stage. Nonlinear iterations reevaluate states, geometry and fluxes, solve linearized systems and reduce residuals. Implicit stability does not eliminate timestep sensitivity in peak magnitude or arrival time.
 
@@ -108,9 +108,9 @@ V [m³], Lf [m], σ: 셀에 들어오면 +, 나가면 −인 부호입니다. / 
 
 ### Full SWE는 두 방향 운동량 이류를 추가로 보존합니다 / Full SWE also evolves horizontal advective momentum
 
-Full SWE의 상태는 수심 h와 두 방향 단위폭 유량 hu, hv입니다. 질량뿐 아니라 운동량의 이류와 정수압 플럭스를 HLL 계열 경계 계산으로 갱신하고 지형·마찰을 소스로 반영합니다. HLL은 양쪽 상태 사이를 지나는 파속 범위를 이용하는 근사 Riemann 방식입니다. 공간 복원과 시간적분 차수 선택은 해상도·마름젖음·경계 처리와 함께 평가해야 합니다. 해당 경로의 지원 격자와 결합 조건이 맞는지도 확인합니다.
+Full SWE는 Full Shallow Water Equations(완전 천수방정식)의 약칭입니다. Full SWE의 상태는 수심 h와 두 방향 단위폭 유량 hu, hv입니다. 질량뿐 아니라 운동량의 이류와 정수압 플럭스를 HLL 계열 경계 계산으로 갱신하고 지형·마찰을 소스로 반영합니다. HLL은 양쪽 상태 사이를 지나는 파속 범위를 이용하는 근사 Riemann 방식입니다. 공간 복원과 시간적분 차수 선택은 해상도·마름젖음·경계 처리와 함께 평가해야 합니다. 해당 경로의 지원 격자와 결합 조건이 맞는지도 확인합니다.
 
-Full SWE evolves depth h and both unit-width discharges hu/hv. HLL-family interface calculations update advective and hydrostatic momentum fluxes along with mass, with terrain/friction sources. HLL approximates the Riemann problem using a bounding wave-speed range. Reconstruction and time order must be assessed with resolution, wet/dry and boundary handling, using supported grid/coupling configurations.
+Full SWE stands for Full Shallow Water Equations. Full SWE evolves depth h and both unit-width discharges hu/hv. HLL-family interface calculations update advective and hydrostatic momentum fluxes along with mass, with terrain/friction sources. HLL approximates the Riemann problem using a bounding wave-speed range. Reconstruction and time order must be assessed with resolution, wet/dry and boundary handling, using supported grid/coupling configurations.
 
 `F(U)=(hu, hu²+gh²/2, huv)ᵀ;   G(U)=(hv, huv, hv²+gh²/2)ᵀ`
 

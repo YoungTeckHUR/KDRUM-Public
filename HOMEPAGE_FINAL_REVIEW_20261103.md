@@ -181,3 +181,14 @@
 ## 공개 반영 승인 및 최신 업그레이드 날짜
 
 2026년 11월 3일 사용자가 날짜를 금일로 수정하는 조건으로 main 병합과 홈페이지 공개 반영을 승인했다. 최신 업그레이드 표시, 국·영문 현행 검토일, 기능·이론 원고 revision, README 및 sitemap 갱신일을 2026-11-03으로 맞췄다. 날짜가 있는 과거 발표자료와 작업기록의 원래 작성일은 보존한다. 날짜 보완 커밋 검사 후 승인된 PR #94를 병합하고 실제 Pages 파일 일치와 공개 검사를 확인한다.
+
+
+## Terminology follow-up — 2026-11-03
+
+- Replaced ambiguous Korean “후진 Euler” with “후방 오일러법(Backward Euler)” in the numerical guide, capability detail, theory source and generated documents. Clarified that time discretization differs from spatial upwind differencing.
+- Replaced “흐리게” with specific numerical damping, smoothed/lowered discharge peaks, and phase/arrival-time errors. This describes possible discretization error, not physical flood attenuation or an intentional relaxation procedure.
+- Added “Full Shallow Water Equations” and the Korean meaning in the bilingual numerical introduction, Full SWE capability detail and detailed theory. Existing English text spelled out the equations but did not explicitly define the abbreviation beside it.
+- Source edits: numerical-guide.cjs, capability-review.json, theory-current.json. Regenerated HTML, capability JSON mirrors, CAPABILITIES.md and TECHNICAL_METHODS.md.
+- Validation: deterministic generation, static routes/content audit, current content/status audit, media status consistency and git diff whitespace checks passed locally. Browser verification is delegated to repository CI because no local Chromium runtime is installed.
+- Theory references: COMSOL knowledge base 1062 (Backward Euler damping); USACE HEC-RAS technical reference, Shallow Water Equations (depth-averaged mass and momentum equations). These references explain terminology, not K-DRUM implementation equivalence.
+- Remaining work: verify PR CI before any publication; no engine or solver behavior changed.
