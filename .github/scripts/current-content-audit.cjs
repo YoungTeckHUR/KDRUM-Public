@@ -40,3 +40,10 @@ for(const lang of ['ko','en']){
  assert.ok(!/수리 확장 개발|통합 개발 중|INTEGRATION DEV\./.test(p),'Core/output diagram status '+lang);
 }
 console.log('PASS editable overview SVG status matches the reviewed implementation');
+
+// The hero and search guide must describe the same completed hydraulic scope.
+for (const file of ['docs/index.html','docs/ko/index.html','docs/seo-kdrum.html']) {
+ const html=fs.readFileSync(path.join(root,file),'utf8');
+ assert.ok(!/active extensions of this hydrologic foundation|하천수리와 홍수범람 해석을 확장하고 있습니다|확립된 수문 기능과 개발·연구 단계의 확장/.test(html),file+' no outdated introductory copy');
+}
+console.log('PASS bilingual introduction and search guide match completed hydraulics');

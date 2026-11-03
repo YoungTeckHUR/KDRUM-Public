@@ -73,7 +73,7 @@ function compose(html,lang,{data}){
  const starts=[
  ['rain-spatial',L('유역 수문 따라가기','Follow watershed hydrology'),L('공간 강우에서 침투·유출 생성과 흐름추적까지 이어서 봅니다.','Follow spatial rainfall through infiltration, runoff generation and routing.')],
  ['wb',L('물수지로 전체 흐름 보기','Read the whole system through water balance'),L('강우·저장·증발산·유출을 같은 기간과 단위로 연결해 봅니다.','Connect rainfall, storage, evapotranspiration and runoff over the same period and units.')],
- ['coupling',L('하천수리·범람 확장 보기','Explore river hydraulics and flooding'),L('개발 완료된 1D 하천수리·2D 범람·양방향 연계의 역할과 계산 방법을 봅니다.','Explore the roles and methods of completed 1D hydraulics, 2D inundation and two-way coupling.')],
+ ['coupling',L('하천수리·범람 보기','Explore river hydraulics and flooding'),L('개발 완료된 1D 하천수리·2D 범람·양방향 연계의 역할과 계산 방법을 봅니다.','Explore the roles and methods of completed 1D hydraulics, 2D inundation and two-way coupling.')],
  ['inputstudio',L('입력부터 결과분석까지','From inputs to result analysis'),L('InputStudio, 출력 형식과 결과 분석 도구를 하나의 작업흐름으로 살펴봅니다.','Explore InputStudio, output formats and viewers as one workflow.')]
 ];
  const startGuide=`<nav class="start-guide" aria-labelledby="start-guide-title"><h3 id="start-guide-title">${L('무엇부터 살펴볼까요?','Where would you like to start?')}</h3><div>${starts.map(([id,title,description])=>`<a href="#cap-${id}"><strong>${title} →</strong><span>${description}</span></a>`).join('')}</div></nav>`;
