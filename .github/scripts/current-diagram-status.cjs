@@ -25,6 +25,9 @@ const changes={
   ['Exchange: controlled development validation · no production certification is implied.','Same exchange volume, opposite signs · apply with basin-specific data and boundaries.']
  ],
  'program-workflow-ko.svg':[
+  ['>별도 개발</text>','>개발 완료</text>'],
+  ['>GitHub에 아직 미공개</text>','>정식 배포 예정</text>'],
+  ['>별도 개발·연구</text>','>지원 도구·연구모형</text>'],
   ['프로그램 연결과 지원 도구 · 각 프로그램의 공개 개발 상태','프로그램 연결과 지원 도구 · 구현 상태와 공식 배포를 구분'],
   ['수리 확장 개발','1D 하천·2D 범람'],
   ['기반 기능 + 확장','수문·수리 구현'],
@@ -32,6 +35,9 @@ const changes={
   ['y="544" font-size="18" font-weight="400" fill="#885112" text-anchor="start">개발 중</text>','y="544" font-size="18" font-weight="400" fill="#885112" text-anchor="start">선택 기능 구현</text>']
  ],
  'program-workflow-en.svg':[
+  ['>SEPARATE DEVELOPMENT + RESEARCH</text>','>SUPPORT TOOLS + RESEARCH</text>'],
+  ['>Separate development</text>','>Development complete</text>'],
+  ['>Not yet public on GitHub</text>','>Official release planned</text>'],
   ['Program relationships and support tools · public development status.','Program relationships · implementation and official availability are distinct.'],
   ['>Hydraulic extensions</text>','>1D river + 2D flood</text>'],
   ['CORE + EXTENSIONS','IMPLEMENTED'],
@@ -44,8 +50,8 @@ const descriptions={
  "model-workflow-en.svg": "Rainfall, terrain, soil and initial states feed distributed hydrology and kinematic routing. Completed 1D river and 2D inundation modules with two-way exchange provide discharge, stage and flood-depth analysis.",
  "river-floodplain-ko.svg": "1D 하천과 2D 범람원 사이의 양방향 체적 교환을 평면도와 단면도로 설명한다. 하천수리, 범람 및 양방향 교환은 개발 완료된 기능이다. 동일한 교환체적을 두 영역에 반대 부호로 반영한다.",
  "river-floodplain-en.svg": "Plan and cross-section views illustrate completed 1D river, 2D inundation and two-way exchange functions. The same exchanged volume is applied with opposite signs to the river and floodplain.",
- "program-workflow-ko.svg": "InputStudio로 입력을 작성하고 K-DRUM Core의 수문·1D·2D 계산 결과를 NetCDF 등으로 출력하여 FloodViewer로 해석한다. 입력 GUI와 통합 작업환경은 개발 중이고, FloodViewer는 공개 준비 중이다. ChannelBed는 선택적 지형 보완 기능, 1D 결과 뷰어는 별도 개발 도구이며 Estuary2DV는 독립 연구모형이다.",
- "program-workflow-en.svg": "InputStudio authors inputs; Core computes hydrology and 1D/2D hydraulics; implemented NetCDF output feeds result analysis. Authoring and integrated GUI tools remain in development and FloodViewer is a release candidate. ChannelBed provides selective terrain support, the 1D viewer is separately developed, and Estuary2DV is an independent research model."
+ "program-workflow-ko.svg": "InputStudio로 입력을 작성하고 K-DRUM Core의 수문·1D·2D 계산 결과를 NetCDF 등으로 출력하여 FloodViewer로 해석한다. 입력 GUI와 통합 작업환경은 개발 중이고, FloodViewer는 공개 준비 중이다. ChannelBed는 선택적 지형 보완 기능, 1D 결과 뷰어는 개발 완료·정식 배포 예정이며 Estuary2DV는 독립 연구모형이다.",
+ "program-workflow-en.svg": "InputStudio authors inputs; Core computes hydrology and 1D/2D hydraulics; implemented NetCDF output feeds result analysis. Authoring and integrated GUI tools remain in development and FloodViewer is a release candidate. ChannelBed provides selective terrain support, the 1D viewer is complete with official distribution planned, and Estuary2DV is an independent research model."
 };
 for(const [file,pairs] of Object.entries(changes)){
  const p=path.join(root,file);let s=fs.readFileSync(p,'utf8');

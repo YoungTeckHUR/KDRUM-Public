@@ -184,11 +184,11 @@
       "id": "related-tools",
       "ko": {
         "question": "K-DRUM 계산엔진, InputStudio, FloodViewer와 Estuary2DV는 어떤 관계인가요?",
-        "answer": "K-DRUM Core는 유역 수문·1D 하천수리·2D 범람·양방향 연계를 계산합니다. 기존 InputStudio는 입력자료·프로젝트 구축을 담당하며 새 K-DRUM Studio는 프로젝트·제어·실행·분석을 통합하는 별도 개발 작업입니다. FloodViewer와 1D Viewer는 각각 평면·시계열 및 종단·횡단 결과분석 도구로, 엔진 개발 완료와 도구 공개 상태는 구분됩니다. NetCDF는 이미 사용하는 결과 저장 형식이고 Estuary2DV는 독립 하구 연구모형입니다."
+        "answer": "K-DRUM Core는 유역 수문·1D 하천수리·2D 범람·양방향 연계를 계산합니다. 기존 InputStudio는 입력자료·프로젝트 구축을 담당하며 새 K-DRUM Studio는 프로젝트·제어·실행·분석을 통합하는 별도 개발 작업입니다. 1차원 하천 뷰어는 개발 완료되었으며 정식 배포 예정입니다. FloodViewer와 1D Viewer는 각각 평면·시계열 및 종단·횡단 결과분석 도구로, 엔진 개발 완료와 도구 공개 상태는 구분됩니다. NetCDF는 이미 사용하는 결과 저장 형식이고 Estuary2DV는 독립 하구 연구모형입니다."
       },
       "en": {
         "question": "How do the K-DRUM simulation engine, InputStudio, FloodViewer and Estuary2DV relate?",
-        "answer": "K-DRUM Core computes watershed hydrology, 1D hydraulics, 2D flooding and two-way exchange. Existing InputStudio prepares inputs/projects; new K-DRUM Studio is separate integrated project/control/run/analysis development. FloodViewer and the 1D Viewer interpret plan-view/time-series and profile/section results; engine completion and tool-release status are distinct. NetCDF is an implemented output format; Estuary2DV is independent estuary research."
+        "answer": "K-DRUM Core computes watershed hydrology, 1D hydraulics, 2D flooding and two-way exchange. Existing InputStudio prepares inputs/projects; new K-DRUM Studio is separate integrated project/control/run/analysis development. The 1D river viewer is development-complete, with official distribution planned. FloodViewer and the 1D Viewer interpret plan-view/time-series and profile/section results; engine completion and tool-release status are distinct. NetCDF is an implemented output format; Estuary2DV is independent estuary research."
       },
       "sources": [
         "development-status",

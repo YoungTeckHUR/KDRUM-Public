@@ -13,6 +13,7 @@ const labels={
  'ACTIVE DEVELOPMENT':['도구 개발 중','Tool in development'],
  'RELEASE CANDIDATE':['공개 준비 중','Release candidate'],
  'SEPARATE DEVELOPMENT':['별도 도구 개발','Separate tool development'],
+ 'COMPLETED / RELEASE PLANNED':['개발 완료 · 정식 배포 예정','Complete · official distribution planned'],
  'RESEARCH FUNCTION':['연구 기능','Research function'],
  'EXPERIMENTAL':['실험 연구모형','Experimental research model'],
  'DISABLED / REDEVELOPMENT':['비활성 · 재개발 대상','Disabled · redevelopment'],

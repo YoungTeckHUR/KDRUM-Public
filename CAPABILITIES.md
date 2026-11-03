@@ -942,16 +942,16 @@ Source data are used to build basin, flow-direction, river and computational-gri
 
 ### 1D 하천수리 결과 분석 Viewer / 1D river-hydraulics results viewer
 
-**별도 도구 개발 / Separate tool development**
+**개발 완료 · 정식 배포 예정 / Complete · official distribution planned**
 
-동일한 하천 지점과 시각을 여러 보기에 연결하여 종단 수위 변화, 횡단면 침수와 시계열을 함께 읽습니다. 관측과 계산을 비교할 때에는 지점·시각·표고 기준을 맞춰야 합니다. 기존 전문 뷰어, C# 전환 후보와 Studio 통합 개발의 구현·검증 범위를 구분하고 서로 완전히 동일하다고 가정하지 않습니다.
+1차원 하천 뷰어는 개발이 완료되었습니다. 동일한 하천 지점과 시각을 하천망·종단면·횡단면·시계열 보기에 연결하고 다지점 결과와 관측자료를 비교합니다. 비교 시 지점·시각·표고 기준을 맞춥니다. 정식 배포는 예정이며, 기존 뷰어의 개발 완료와 C# 전환·Studio 통합 작업의 진행 상태는 별도로 구분합니다.
 
-A common location/time links profile, cross-section and series views. Observed/simulated comparisons require matching sites, times and elevation datums. The established specialist viewer, C# migration candidate and Studio integration have distinct implementation/testing scopes and must not be assumed fully equivalent.
+Development of the 1D river viewer is complete. A common location and time link network, profile, cross-section and time-series views for multi-site and observation comparisons. Match sites, times and elevation datums. Official distribution is planned; completion of the existing viewer is distinct from C# migration and Studio integration work.
 
 입력 / Inputs: 1D 하천망·단면 결과, 수위·유량 시계열, 관측자료와 표시 설정. / 1D network/section results, stage/flow series, observations and display settings.
 
 산출물 / Outputs: 종·횡단면 수위, 지점별 수문곡선과 연동 비교. / Longitudinal/cross-section levels, site hydrographs and synchronized comparisons.
 
-적용 조건 / Check: 그래프가 보인다는 사실과 원본의 모든 편집·연동 기능이 보존됐다는 판단을 구분합니다. 화면 값은 계산 원자료와 대조합니다. / Visible plots do not prove preservation of every editing/synchronization feature; compare displayed values with producer data.
+적용 조건 / Check: 정식 배포 예정입니다. 사용 중인 뷰어 버전과 결과자료의 시간·지점·표고 기준 및 표시값을 확인합니다. / Official distribution is planned. Check the viewer version, result times, locations, elevation datums and displayed values.
 
 [Unidata: NetCDF data model](https://docs.unidata.ucar.edu/netcdf-c/current/netcdf_data_model.html) · [USACE: 1D unsteady-flow hydrodynamics](https://www.hec.usace.army.mil/confluence/rasdocs/ras1dtechref/6.5/theoretical-basis-for-one-dimensional-and-two-dimensional-hydrodynamic-calculations/1d-unsteady-flow-hydrodynamics)

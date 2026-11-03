@@ -24,7 +24,7 @@ Terrain, land cover, soil/depth, forcing and initial states define the hydrologi
 
 ## Tools and research / 도구·연구 구분
 
-Existing InputStudio prepares model inputs; new K-DRUM Studio is separate integrated project/control/run/analysis development. FloodViewer and 1D Viewer have their own release readiness. Sediment/tracer functions remain research-specific, water-quality processes are disabled/redevelopment, and Estuary2DV is an independent experimental x-z model.
+Existing InputStudio prepares model inputs; new K-DRUM Studio is separate integrated project/control/run/analysis development. The 1D river viewer is development-complete, with official distribution planned. FloodViewer has its own release readiness. Sediment/tracer functions remain research-specific, water-quality processes are disabled/redevelopment, and Estuary2DV is an independent experimental x-z model.
 
 ## Distribution / 배포
 

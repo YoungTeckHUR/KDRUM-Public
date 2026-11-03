@@ -12,7 +12,7 @@ const identity=require('../../docs/assets/capability-identity.json');
 assert.deepEqual(data.items.map(i=>i.id).sort(),Object.keys(identity).sort());
 for(const now of data.items){for(const key of ['kind','v'])assert.equal(now[key],identity[now.id][key],now.id+' '+key);}
 assert.equal(data.items.find(i=>i.id==='estuary').g,'transport');
-assert.equal(data.items.find(i=>i.id==='river-viewer').s,'SEPARATE DEVELOPMENT');
+assert.equal(data.items.find(i=>i.id==='river-viewer').s,'COMPLETED / RELEASE PLANNED');
 for(const rel of ['index.html','ko/index.html','media.html','seo-kdrum.html']){const html=fs.readFileSync(path.join(docs,rel),'utf8');assert.equal((html.match(/rel="canonical"/g)||[]).length,1,rel);assert.equal((html.match(/<h1>/g)||[]).length,1,rel);assert.ok(!/experience-v[234]|brand-runtime|tech-description-runtime/.test(html),'No legacy runtime chain');
  for(const match of html.matchAll(/\b(?:href|src)="([^"#]+)"/g)){const value=match[1];if(/^(?:https?:|data:|mailto:|\?)/.test(value))continue;let target=path.resolve(path.dirname(path.join(docs,rel)),value.split(/[?#]/)[0]);assert.ok(target.startsWith(docs+path.sep)||target===docs,value);if(fs.existsSync(target)&&fs.statSync(target).isDirectory())target=path.join(target,'index.html');assert.ok(fs.existsSync(target),rel+' '+value);}
 }

@@ -11,7 +11,7 @@ Current implemented support: warm-up/state save/restart, calibration/evaluation,
 
 Implementation completion is separate from basin-specific validation and official distribution. Do not label completed hydraulics as unfinished simply because performance refinement, new validation or GUI work continues.
 
-Existing InputStudio is an input-authoring tool. New K-DRUM Studio is separate integrated project/control/run/analysis development, not merely a product rename. FloodViewer is a release candidate; the 1D Viewer is separately developed. Sediment/tracer remain research functions, water-quality processes are disabled/redevelopment, and Estuary2DV is experimental.
+Existing InputStudio is an input-authoring tool. New K-DRUM Studio is separate integrated project/control/run/analysis development, not merely a product rename. FloodViewer is a release candidate; the 1D river viewer is development-complete, with official distribution planned. Sediment/tracer remain research functions, water-quality processes are disabled/redevelopment, and Estuary2DV is experimental.
 
 Official executables and terms: https://www.water.or.kr/kor/board/index.do?bid=BD_00026&menuId=15_126_128&mode=list
 This technical repository does not directly distribute production source or executables.

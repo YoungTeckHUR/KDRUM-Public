@@ -47,3 +47,12 @@ for (const file of ['docs/index.html','docs/ko/index.html','docs/seo-kdrum.html'
  assert.ok(!/active extensions of this hydrologic foundation|하천수리와 홍수범람 해석을 확장하고 있습니다|확립된 수문 기능과 개발·연구 단계의 확장/.test(html),file+' no outdated introductory copy');
 }
 console.log('PASS bilingual introduction and search guide match completed hydraulics');
+
+assert.equal(current.review.items['river-viewer'].status,'COMPLETED / RELEASE PLANNED');
+for (const lang of ['ko','en']) {
+ const html=fs.readFileSync(path.join(root,'docs',lang==='ko'?'ko/index.html':'index.html'),'utf8');
+ const p=html.indexOf('data-methodology-for="river-viewer"');
+ assert.ok(p>=0,'1D viewer methodology retained');
+ assert.ok(html.includes(lang==='ko'?'개발 완료 · 정식 배포 예정':'Complete · official distribution planned'));
+}
+console.log('PASS completed 1D viewer and planned official distribution in both languages');

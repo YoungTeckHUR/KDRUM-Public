@@ -95,7 +95,7 @@
 | viewer | FloodViewer 결과 분석 | RELEASE CANDIDATE |
 | inputstudio | InputStudio 입력자료 작성·점검 | ACTIVE DEVELOPMENT |
 | estuary | Estuary2DV 하구 연구모형 | EXPERIMENTAL |
-| river-viewer | 1D 하천수리 결과 분석 Viewer | SEPARATE DEVELOPMENT |
+| river-viewer | 1D 하천수리 결과 분석 Viewer | COMPLETED / RELEASE PLANNED |
 
 ## main 대비 전체 변경 파일
 
@@ -173,3 +173,7 @@
 ## 새 대화창용 인계
 
 작업: K-DRUM 홈페이지 전체 문구 최신화. Draft PR #94와 이 보고서를 기준으로 이어간다. 46개 국·영문 기능, 13개 이론 주제, 32개 관계식과 문서 동기화가 준비되어 있다. 11월 재검토에서 소개 템플릿·검색 소개·범람 확장 링크를 추가 정리했다. 기존 Draft를 재사용하며 중복 PR은 만들지 않는다. Core 대조 SHA와 버전은 위 기준을 따른다. 남은 작업은 보완 커밋 CI 최종 확인, 사용자 검토와 병합/공개 승인이다. 엔진 실제 유역 검증을 이번 홈페이지 검사와 혼동하지 않는다. 승인 전 main·Pages를 변경하지 않는다.
+
+## 11월 3일 개발자 추가 확인 반영
+
+1차원 하천 뷰어는 **개발 완료 · 정식 배포 예정**으로 확정한다. 기존 전문 뷰어의 완료와 C# 전환·Studio 통합 작업의 진행 상태는 구분한다. 국·영문 기능 원본, README 생성기, 상태표, Model Card, 검색 요약, 프로그램 카드, FAQ, 도식·참조그림 캡션과 회귀 검사를 같은 기준으로 수정했다. 기존 별도개발 상태를 강제하던 검사도 개발자 확인에 맞게 변경했다. 로컬 정적·기능 계약·미디어 상태 검사 통과. 보완본 GitHub 화면 검사 결과는 PR Checks에서 확인한다.

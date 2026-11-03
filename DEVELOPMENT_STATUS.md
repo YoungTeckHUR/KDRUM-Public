@@ -23,6 +23,7 @@ Implementation completion, application/observation-based validation and official
 | 도구 개발 중 / Tool in development | 입력·통합 GUI 도구의 개발 / Authoring/integrated GUI development |
 | 공개 준비 중 / Release candidate | 공개 준비 중인 별도 결과 도구 / Separate result tool preparing for release |
 | 별도 도구 개발 / Separate tool development | 별도 개발 결과 도구 / Separately developed result tool |
+| 개발 완료 · 정식 배포 예정 / Complete · official distribution planned | 개발 완료, 정식 배포 예정 / Development complete; official distribution planned |
 | 연구 기능 / Research function | 연구 활용 범위를 구분한 기능 / Research-specific functionality |
 | 실험 연구모형 / Experimental research model | 독립 실험 연구모형 / Separate experimental research model |
 | 비활성 · 재개발 대상 / Disabled · redevelopment | 현행 활성 계산 대상 아님 / Not active in the current calculation build |
@@ -111,7 +112,7 @@ Implementation completion, application/observation-based validation and official
 | [NetCDF 통합 결과 출력 / Integrated NetCDF output](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-netcdf) | **구현 완료 / Implemented** | 파일 확장자만 보고 격자·시간이 같다고 가정하지 않고 차원·단위·결측값·최종 저장시각을 확인합니다. / Check dimensions, units, missing values and final timestamp rather than inferring alignment from the extension. |
 | [FloodViewer 결과 분석 / FloodViewer result analysis](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-viewer) | **공개 준비 중 / Release candidate** | 자동 축 범위·범례·단위와 실제 원자료 값을 대조하고, 부분 결과 표시를 전체 모의 완료로 해석하지 않습니다. / Check axes, legend, units and source values; display of partial results does not establish full-run completion. |
 | [InputStudio 입력자료 작성·점검 / InputStudio input authoring & checks](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-inputstudio) | **도구 개발 중 / Tool in development** | 완성되지 않은 입력을 임의 값으로 채우지 않고, 저장과 입력 생성·실행이 같은 동작인지 구분합니다. / Do not fill incomplete inputs with invented values; distinguish saving, input generation and execution. |
-| [1D 하천수리 결과 분석 Viewer / 1D river-hydraulics results viewer](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-river-viewer) | **별도 도구 개발 / Separate tool development** | 그래프가 보인다는 사실과 원본의 모든 편집·연동 기능이 보존됐다는 판단을 구분합니다. 화면 값은 계산 원자료와 대조합니다. / Visible plots do not prove preservation of every editing/synchronization feature; compare displayed values with producer data. |
+| [1D 하천수리 결과 분석 Viewer / 1D river-hydraulics results viewer](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-river-viewer) | **개발 완료 · 정식 배포 예정 / Complete · official distribution planned** | 정식 배포 예정입니다. 사용 중인 뷰어 버전과 결과자료의 시간·지점·표고 기준 및 표시값을 확인합니다. / Official distribution is planned. Check the viewer version, result times, locations, elevation datums and displayed values. |
 
 ## 검토 근거와 경계 / Review basis
 

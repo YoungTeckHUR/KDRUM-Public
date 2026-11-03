@@ -36,7 +36,7 @@ The current generation builds on the established rainfall-runoff core and organi
 - **K-DRUM Studio (in development)** — separate new integrated project/control/run/analysis development, not simply a renamed InputStudio or an official consolidated release.
 - **K-DRUM InputStudio** — spatial-input construction, guided project authoring, time series, terrain/river geometry, hydraulic structures, scenarios, consistency checks, and controlled engine-input generation
 - **K-DRUM FloodViewer** — integrated map and time-series analysis of hydrologic and hydraulic simulation results
-- **1D River Hydraulics Results Viewer** — separate viewer for longitudinal/cross-section results and water-level/discharge time series; under development and **not yet published to the public GitHub repositories**
+- **1D River Hydraulics Results Viewer** — development complete; links network, longitudinal/cross-section and time-series results. Official distribution is planned.
 - **K-DRUM ChannelBed** — reusable high-resolution terrain, river-geometry, and virtual channel-bed processing
 
 Current hydraulic capabilities include completed 1D networks, branch/confluence hydraulics, 2D local-inertial inundation and bidirectional dynamic-wave 1D/local-inertial 2D exchange, plus Full SWE within supported configurations. Structure, reservoir, state/output and water-balance functions are implemented. See [current implementation scope](DEVELOPMENT_STATUS.md) and [theory/methods](TECHNICAL_METHODS.md).
