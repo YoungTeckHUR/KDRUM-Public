@@ -3,9 +3,9 @@
 ## 기준과 반영 경계
 
 - 저장소: YoungTeckHUR/KDRUM-Public
-- 공개 기준 main: 2b471c5da6f957d19d42b6084d4a86136e5daa12
-- 재검토 출발점: Draft PR #94, 00a4650ddc451d62949c9e492ca39f552c292ec7
-- Core 대조 기준: kwater-rnd/KDRUM-Core main d32da8ab272e423ebe0ce196c9efac3bb11fdcd1, Mod_KDRUM_Version.F90의 v3.0.5.14. 공식 배포버전이나 사용자 보유 실행파일 버전으로 간주하지 않는다.
+- 공개 기준 main: 2b471c5da6f9
+- 재검토 출발점: Draft PR #94, 00a4650ddc45
+- Core 대조 기준: kwater-rnd/KDRUM-Core main d32da8ab272e, Mod_KDRUM_Version.F90의 v3.0.5.14. 공식 배포버전이나 사용자 보유 실행파일 버전으로 간주하지 않는다.
 - 개발자의 1D 하천·2D 범람 개발 완료 확인은 유지한다. 소스의 구현, 유역별 관측/실행 검증, 공식 배포를 별도 표시한다.
 - main 병합, 자동병합 설정, Pages 배포는 수행하지 않는다. 승인 전 Draft 유지.
 
@@ -35,7 +35,8 @@
 - 11월 보완본 로컬: site-static-audit, current-content-audit, capability-contract, media-status-consistency, build-site 구문검사 PASS.
 - 46개 기능×국·영문, 6개 추가 이론장, 구현/적용/배포 3축, 개요 SVG 상태 검사 PASS.
 - 로컬 브라우저 검사 실행 시 Chromium 미설치로 시작 불가. 화면 PASS로 기록하지 않음. 보완 커밋의 GitHub 브라우저 검사 결과를 별도로 확인한다.
-- 변경된 생성파일은 재생성 후 차이가 없는지 확인한다. 공개 후 Live Pages 검증은 승인·배포 이후에만 가능하다.
+- 4개 생성 페이지와 3개 주요 기술문서 재생성 SHA-256 일치 PASS.
+- 11월 보완 커밋의 첫 공개내용 검사는 검토보고서의 전체 길이 커밋 식별자를 차단했다. 식별자를 12자리로 줄여 기존 공개내용 검사 규칙을 유지했다. 공개 후 Live Pages 검증은 승인·배포 이후에만 가능하다.
 
 ## 남은 이슈와 검토 판단
 
