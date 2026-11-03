@@ -130,7 +130,7 @@ readme=readme.replace(/K-DRUM은 K-water가 개발해 온[^\n]+/,'K-DRUM은 K-wa
 readme=readme.replace(/Current hydraulic extensions include[^\n]+/,'Current hydraulic capabilities include completed 1D networks, branch/confluence hydraulics, 2D local-inertial inundation and bidirectional dynamic-wave 1D/local-inertial 2D exchange, plus Full SWE within supported configurations. Structure, reservoir, state/output and water-balance functions are implemented. See [current implementation scope](DEVELOPMENT_STATUS.md) and [theory/methods](TECHNICAL_METHODS.md).');
 readme=readme.replace('current hydraulic development','completed hydraulic capabilities');
 readme=readme.replace('a developing integrated project/run/review workflow, not an officially released consolidated product.','separate new integrated project/control/run/analysis development, not simply a renamed InputStudio or an official consolidated release.');
-readme=readme.replace('**Current public baseline:** v3.x / October 2026','**Current technical review:** v3.x / 2026-10-28. Implementation, validation and distribution are tracked separately.');
+readme=readme.replace('**Current public baseline:** v3.x / October 2026','**Current technical review:** v3.x / 2026-11-03. Implementation, validation and distribution are tracked separately.');
 readme=readme.replace(/- \*\*1D River Hydraulics Results Viewer\*\*[^\n]+/, '- **1D River Hydraulics Results Viewer** — development complete; links network, longitudinal/cross-section and time-series results. Official distribution is planned.');
 write('README.md',readme);
 console.log('PASS current docs generated from 46-item status/method matrix and theory chapters');

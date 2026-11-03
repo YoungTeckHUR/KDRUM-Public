@@ -93,4 +93,4 @@ The current canonical expansion used by this public site is **K-water Distribute
 ---
 
 **Canonical model name:** K-DRUM  
-**Current technical review:** v3.x / 2026-10-28. Implementation, validation and distribution are tracked separately.
+**Current technical review:** v3.x / 2026-11-03. Implementation, validation and distribution are tracked separately.
