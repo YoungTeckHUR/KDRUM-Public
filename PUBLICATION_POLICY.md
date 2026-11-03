@@ -73,3 +73,7 @@ If cross-repository publishing is enabled later:
 - never copy commit messages, source trees, logs, artifacts, or validation directories from a private repository.
 
 **Policy baseline:** 2026-08-13
+
+## Reviewed theory and implementation descriptions
+
+Developer-approved implementation completion and standard governing equations/numerical families may be explained at a public methodological level. Such explanations must distinguish implementation, application validation and actual official distribution. They do not disclose production source, internal tuning values, non-public operating rules, private input data or failure diagnostics. General theory references do not imply identical implementations or performance across software.

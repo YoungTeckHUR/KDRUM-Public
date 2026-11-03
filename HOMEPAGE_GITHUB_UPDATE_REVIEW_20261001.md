@@ -1,5 +1,7 @@
 # K-DRUM Homepage GitHub Update Review — 2026-10-01
 
+> Historical review, superseded for current implementation labels by [2026-10-28 review](HOMEPAGE_CONTENT_REVIEW_20261028.md). Earlier labels are preserved as history, not current availability.
+
 ## Purpose
 
 This review checks the public K-DRUM website against the current integrated Core, InputStudio and sample-basin development state. It updates public descriptions without exposing production source code, private basin inputs, internal solver tuning, development-only diagnostics or restricted operating information.

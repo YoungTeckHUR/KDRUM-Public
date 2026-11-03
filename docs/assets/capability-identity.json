@@ -1,0 +1,183 @@
+{
+  "rain-spatial": {
+    "kind": "process",
+    "v": "rainmap"
+  },
+  "rain-methods": {
+    "kind": "qa",
+    "v": "stations"
+  },
+  "rain-qc": {
+    "kind": "qa",
+    "v": "rainqc"
+  },
+  "rain-summary": {
+    "kind": "report",
+    "v": "rainbars"
+  },
+  "input-precheck": {
+    "kind": "qa",
+    "v": "checklist"
+  },
+  "ga": {
+    "kind": "process",
+    "v": "infiltration"
+  },
+  "runoff": {
+    "kind": "process",
+    "v": "layers"
+  },
+  "continuous": {
+    "kind": "state",
+    "v": "timeline"
+  },
+  "et": {
+    "kind": "process",
+    "v": "et"
+  },
+  "snow": {
+    "kind": "state",
+    "v": "snow"
+  },
+  "warmup": {
+    "kind": "state",
+    "v": "warmup"
+  },
+  "hotstart": {
+    "kind": "state",
+    "v": "restart"
+  },
+  "dlayer": {
+    "kind": "state",
+    "v": "groundwater"
+  },
+  "slope-separate": {
+    "kind": "terrain",
+    "v": "slopes"
+  },
+  "kw-hill": {
+    "kind": "terrain",
+    "v": "hillroute"
+  },
+  "kw-river": {
+    "kind": "terrain",
+    "v": "riverroute"
+  },
+  "river-infil": {
+    "kind": "terrain",
+    "v": "riverinfil"
+  },
+  "channelbed": {
+    "kind": "terrain",
+    "v": "channelbed"
+  },
+  "wb": {
+    "kind": "audit",
+    "v": "waterbalance"
+  },
+  "wb-1d2d": {
+    "kind": "audit",
+    "v": "exchangebalance"
+  },
+  "run-report": {
+    "kind": "report",
+    "v": "report"
+  },
+  "subbasin-report": {
+    "kind": "report",
+    "v": "subbasin"
+  },
+  "optimization": {
+    "kind": "calibration",
+    "v": "metrics"
+  },
+  "subcal": {
+    "kind": "calibration",
+    "v": "subcal"
+  },
+  "output-integrity": {
+    "kind": "report",
+    "v": "integrity"
+  },
+  "dwnet": {
+    "kind": "hydraulic",
+    "v": "dwnet"
+  },
+  "junction": {
+    "kind": "hydraulic",
+    "v": "junction"
+  },
+  "structures": {
+    "kind": "hydraulic",
+    "v": "structure"
+  },
+  "dam-operation": {
+    "kind": "operation",
+    "v": "dam"
+  },
+  "dam-forecast": {
+    "kind": "operation",
+    "v": "forecast"
+  },
+  "dam-scenario": {
+    "kind": "operation",
+    "v": "scenario"
+  },
+  "coupling": {
+    "kind": "hydraulic",
+    "v": "coupling"
+  },
+  "local-inertia": {
+    "kind": "hydraulic",
+    "v": "li2d"
+  },
+  "fullswe": {
+    "kind": "hydraulic",
+    "v": "swe"
+  },
+  "multires": {
+    "kind": "hydraulic",
+    "v": "nestedgrid"
+  },
+  "flood-extras": {
+    "kind": "hydraulic",
+    "v": "floodextras"
+  },
+  "sed-hill": {
+    "kind": "transport",
+    "v": "sedhill"
+  },
+  "sed-river": {
+    "kind": "transport",
+    "v": "sedriver"
+  },
+  "dye": {
+    "kind": "transport",
+    "v": "dye"
+  },
+  "wq": {
+    "kind": "transport",
+    "v": "wq"
+  },
+  "parallel": {
+    "kind": "platform",
+    "v": "parallel"
+  },
+  "netcdf": {
+    "kind": "platform",
+    "v": "netcdf"
+  },
+  "viewer": {
+    "kind": "platform",
+    "v": "viewer"
+  },
+  "inputstudio": {
+    "kind": "platform",
+    "v": "studio"
+  },
+  "estuary": {
+    "kind": "platform",
+    "v": "estuary"
+  },
+  "river-viewer": {}
+}

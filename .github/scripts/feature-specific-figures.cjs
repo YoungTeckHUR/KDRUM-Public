@@ -100,7 +100,7 @@ function diagram(id,lang){const L=(k,e)=>lang==='ko'?k:e;let body,title,subtitle
   body+=text(210,552,L('검증된 공간산출물의 계보 확인','Check spatial lineage'),20,600,'middle','#486171');
   body+=line(370,392,410,392,'#247eaa',true);
   body+=rect(425,190,365,405,'#edf7f4','#83b9ae',14)+text(452,226,L('프로젝트','Project'),28,700)+text(452,252,L('단계별 구축·검증','Guided build + validation'),18,600,'start','#486171');
-  const stages=[[L('01–03','01–03'),L('공간격자·유출경로 · 강우','Grid/flow paths · rainfall'),270]];
+  const stages=[[L('01–03','01–03'),L('공간격자·유출경로 · 강우','Grid/flow paths · rainfall'),300]];
   stages.forEach(([no,label,y])=>{body+=rect(452,y-25,70,50,'#dceef8','#aac7d7',25)+text(487,y+8,no,18,700,'middle')+text(545,y+8,label,20,600);});
   body+=rect(452,330,70,50,'#dceef8','#aac7d7',25)+text(487,363,'04–07',18,700,'middle')+text(545,354,L('기상·검증·제어','Met · validation · controls'),18,600)+text(545,378,L('구조물','Structures'),17,600,'start','#486171');
   body+=rect(452,419,70,50,'#dceef8','#aac7d7',25)+text(487,452,'08–10',18,700,'middle')+text(545,444,'DWNET · 2D/1D–2D',20,600)+text(545,472,L('최종점검','Final check'),18,600,'start','#486171');

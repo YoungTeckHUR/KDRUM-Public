@@ -35,7 +35,14 @@ async function inspectFeature(page,item,lang,width){
  if(pic){const img=card.locator('.feature-reference img');await img.evaluate(i=>i.decode());assert.deepEqual(await img.evaluate(i=>[i.naturalWidth,i.naturalHeight]),[pic.width,pic.height]);assert.ok((await img.getAttribute('src')).endsWith(pic.src));assert.ok((await img.getAttribute('alt')).startsWith(require('./feature-specific-figures.cjs').get(item.id,lang)?.caption||guide.figure));await zoom(page,card.locator('.feature-reference-image'));}
  else { assert.ok(item.id==='wq'||require('./feature-reference-images.cjs').linkedConcepts[item.id],item.id+' has explicit reference links'); }
  const technical=card.locator('.technical-details');assert.equal(await technical.evaluate(e=>e.open),false);await technical.locator(':scope>summary').click();
- assert.equal(await card.locator('.detail-overview').innerText(),item['detail'+suffix]);assert.equal(await card.locator('.detail-status p').innerText(),item['now'+suffix]);assert.equal(await card.locator('.interpretation-check p').innerText(),guide.check);
+ assert.equal(await card.locator('.detail-overview').innerText(),item['detail'+suffix]);const current=require('./current-content.cjs'),reviewed=current.review.items[item.id],status=card.locator('.detail-status.lifecycle-status');
+ assert.equal(await status.getAttribute('data-review-date'),current.review.revision,item.id+' review date');
+ assert.deepEqual(await status.locator('dt').allTextContents(),lang==='ko'?['현재 구현','적용 시 확인','공식 배포']:['Current implementation','Application check','Official distribution'],item.id+' lifecycle axes');
+ assert.equal(await status.locator('dd').nth(0).innerText(),current.label(reviewed.status,lang),item.id+' implementation label');
+ assert.equal(await status.locator('dd').nth(1).innerText(),reviewed[lang].check,item.id+' application conditions');
+ assert.ok((await status.locator('dd').nth(2).innerText()).includes('MyWater'),item.id+' official distribution');
+ assert.equal(await status.locator('dd').nth(2).locator('a').getAttribute('href'),'#download',item.id+' distribution link');
+ assert.equal(await card.locator('.interpretation-check p').innerText(),guide.check);
  assert.deepEqual(await card.locator('ol li').allTextContents(),item['steps'+suffix].map((s,i)=>(lang==='ko'?['입력·상태','처리·계산','결과·활용']:['Input / state','Processing','Output / use'])[i]+' — '+s));
  assert.deepEqual(await card.locator('.related-capabilities a').evaluateAll(els=>els.map(e=>e.getAttribute('href'))),guide.related.map(id=>'#cap-'+id));
  for(const a of await technical.locator('[data-enlarge]').all())await zoom(page,a);

@@ -1,5 +1,7 @@
 # K-DRUM public homepage refresh — 2026-10-27
 
+> Historical review, superseded for current implementation labels by [2026-10-28 review](HOMEPAGE_CONTENT_REVIEW_20261028.md). Earlier labels are preserved as history, not current availability.
+
 ## Source and publication boundary
 
 The content changes are supported by main-line source and existing public scientific/institutional records. Unmerged hydraulic, GUI and Viewer candidates remain development-only evidence. This public-information repository never imports production source or private basin data.
