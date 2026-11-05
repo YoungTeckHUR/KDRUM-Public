@@ -1,6 +1,6 @@
 # K-DRUM 기능별 현재 설명 / Current capability reference
 
-**검토일 / Reviewed: 2026-11-03**
+**검토일 / Reviewed: 2026-11-05**
 
 1D 하천망 수리, 분기·합류, 2D 국부관성 범람과 양방향 1D–2D 연계는 **개발 완료** 기능입니다. Full SWE는 지원하는 격자·경계·연계 조건에 맞춰 사용하는 **개발 완료·선택 적용** 기능입니다. 기능 개선이나 새로운 유역 검증이 계속된다는 이유로 완료된 기능을 개발 중으로 되돌리지 않습니다.
 
@@ -29,6 +29,7 @@ Implementation completion, application/observation-based validation and official
 | [연속·장기모의](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-continuous) / [Continuous / long-term simulation](https://youngteckhur.github.io/KDRUM-Public/#cap-continuous) | 확립된 기능 / Established | 토양수분·적설·심부 저장의 이력을 이어받아 장기간 유역 반응을 계산합니다. / Carries soil water, snow and deep-storage history through continuous long-term simulation. |
 | [증발산·토양수분](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-et) / [Evapotranspiration & soil water](https://youngteckhur.github.io/KDRUM-Public/#cap-et) | 확립된 기능 / Established | 기상에 따른 증발산 수요를 식생·뿌리 분포와 실제 토양 가용수로 제한합니다. / Combines atmospheric evaporative demand with vegetation/root distribution and available soil water. |
 | [적설·융설](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-snow) / [Snow accumulation & melt](https://youngteckhur.github.io/KDRUM-Public/#cap-snow) | 확립된 기능 / Established | 강우·강설 구분, 적설수량의 저장과 경험적 융설을 수문 입력에 연결합니다. / Connects precipitation phase, snow-water storage and empirical melt to hydrologic forcing. |
+| [토양온도·하천수온 연계 모의](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-temperature) / [Coupled soil & river temperature](https://youngteckhur.github.io/KDRUM-Public/#cap-temperature) | 구현 완료 · 정식 배포 예정 / Implemented · official distribution planned | 기온·토양수분·적설과 물의 이동을 연결해 A/B/C/D층 온도와 1D 하천수온을 모의합니다. / Links meteorology, soil moisture, snow and water movement to A/B/C/D soil temperatures and 1D river temperature. |
 | [워밍업·초기상태 안정화](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-warmup) / [Warm-up & initial-state stabilization](https://youngteckhur.github.io/KDRUM-Public/#cap-warmup) | 구현 완료 / Implemented | 초기 토양·유출 상태를 반복 조정하여 모의 시작의 불균형을 줄입니다. / Iteratively adjusts initial soil/runoff states to reduce initialization imbalance. |
 | [상태 저장·재시작 (HotStart)](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-hotstart) / [State save & restart (HotStart)](https://youngteckhur.github.io/KDRUM-Public/#cap-hotstart) | 구현 완료 / Implemented | 저장된 상태를 복원해 계산을 재시작하며, 수문 초기상태 캐시와 구분합니다. / Restores saved state for restart, distinguishing full restart from hydrologic initialization caches. |
 | [D층 지하수 저장·장기유출](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-dlayer) / [D-layer groundwater storage & long-term runoff](https://youngteckhur.github.io/KDRUM-Public/#cap-dlayer) | 구현 완료 / Implemented | 기존 D층의 심부 저장에 지연 복귀·기저유출 반응과 선택적 손실을 연결합니다. / Connects the existing D-layer deep store with delayed return, baseflow response and optional losses. |
@@ -103,3 +104,7 @@ Implementation completion, application/observation-based validation and official
 새 K-DRUM Studio는 기존 InputStudio의 단순 명칭 변경이 아니라 별도 통합 작업환경 개발입니다. 입력도구·Viewer의 개발/공개 상태와 수리엔진의 개발 완료를 혼동하지 않습니다.
 
 New K-DRUM Studio is separate integrated-workflow development, not a renaming of InputStudio. GUI/public-release status is independent from hydraulic-engine completion.
+
+## Thermal extension / 수온 확장
+
+See [trial evidence and limits](THERMAL_VALIDATION.md).

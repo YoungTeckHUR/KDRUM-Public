@@ -90,7 +90,7 @@ async function run(mode='navigation'){
    const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'}),page=await context.newPage(),errors=[];
    page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)errors.push(r.status()+' '+r.url());});
    await ready(page,home(lang));
-   assert.equal(await page.locator('h1:visible').count(),1);assert.equal(await page.locator('.capability').count(),46);assert.equal(await page.locator('.capability:visible').count(),0);assert.equal(await page.locator('[data-workspace-page]:visible').count(),1);assert.ok(await page.locator('#home').isVisible());
+   assert.equal(await page.locator('h1:visible').count(),1);assert.equal(await page.locator('.capability').count(),47);assert.equal(await page.locator('.capability:visible').count(),0);assert.equal(await page.locator('[data-workspace-page]:visible').count(),1);assert.ok(await page.locator('#home').isVisible());
    assert.equal(await page.locator('#home .hero-image img').count(),1);assert.equal(await page.locator('.home-topics article').count(),4);
    assert.equal(await page.locator('link[rel=canonical]').getAttribute('href'),'https://youngteckhur.github.io/KDRUM-Public/'+(lang==='ko'?'ko/':''));
    assert.deepEqual(await page.evaluate(()=>{const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);return ids.filter((id,i)=>ids.indexOf(id)!==i);}),[]);
@@ -112,7 +112,7 @@ async function run(mode='navigation'){
    assert.deepEqual(errors,[]);results.push({lang,width,mode,status:'PASS',homeHeight,contrast:colors});console.log('PASS',mode,lang,width);await context.close();
   }
   if(mode==='navigation'){
-   for(const lang of ['ko','en']){const c=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:900}}),p=await c.newPage();await p.goto(home(lang));assert.equal(await p.locator('.capability:visible').count(),46);await p.locator('#cap-ga>summary').click();await p.locator('#cap-ga .technical-details>summary').click();assert.ok(await p.locator('#cap-ga .detail-overview').isVisible());assert.ok((await p.locator('#cap-ga .feature-reference-image').getAttribute('href')).endsWith('.webp'));await bounds(p,'no-js '+lang);await c.close();}
+   for(const lang of ['ko','en']){const c=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:900}}),p=await c.newPage();await p.goto(home(lang));assert.equal(await p.locator('.capability:visible').count(),47);await p.locator('#cap-ga>summary').click();await p.locator('#cap-ga .technical-details>summary').click();assert.ok(await p.locator('#cap-ga .detail-overview').isVisible());assert.ok((await p.locator('#cap-ga .feature-reference-image').getAttribute('href')).endsWith('.webp'));await bounds(p,'no-js '+lang);await c.close();}
    const p=await browser.newPage();await p.goto(base+'/seo-kdrum.html');assert.equal(await p.locator('.faq').count(),12);assert.equal(await p.locator('link[hreflang]').count(),0);await bounds(p,'FAQ');await p.close();
   }
   if(mode==='details')assert.equal(results.filter(r=>r.id).length,184);

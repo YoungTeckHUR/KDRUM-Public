@@ -1,6 +1,6 @@
 # K-DRUM — current technical information
 
-Reviewed 2026-11-03.
+Reviewed 2026-11-05.
 K-DRUM means K-water Distributed Rainfall-runoff Model.
 
 K-DRUM is a physically based, grid-distributed rainfall–runoff model. The current engine includes completed 1D river-network hydraulics, junctions, 2D local-inertial inundation and bidirectional 1D–2D exchange. Full SWE is development-complete for supported configurations; it is not interchangeable with every coupling/grid combination.

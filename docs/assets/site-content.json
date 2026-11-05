@@ -11,8 +11,8 @@
       "id": "hydrology",
       "ko": "유역 수문·연속모의",
       "en": "Watershed hydrology & state",
-      "descKo": "침투, 토양수분, 지표·지표하 유출, 증발산, 적설·융설과 초기상태를 시간에 따라 연결해 연속적인 유역 물순환을 계산합니다.",
-      "descEn": "Connect infiltration, soil water, surface/subsurface runoff, evapotranspiration, snow and model states as one continuous hydrologic system."
+      "descKo": "침투, 토양수분, 지표·지표하 유출, 증발산, 적설·융설과 초기상태를 시간에 따라 연결해 연속적인 유역 물순환을 계산합니다. 토양온도·하천수온 연계 모의는 정식 배포 전 구현 기능으로 안내합니다.",
+      "descEn": "Connect infiltration, soil water, surface/subsurface runoff, evapotranspiration, snow and model states as one continuous hydrologic system. Coupled soil and river temperature is identified as implemented before official distribution."
     },
     {
       "id": "terrain",
@@ -343,6 +343,35 @@
       "diagram": null,
       "diagramCaptionKo": null,
       "diagramCaptionEn": null
+    },
+    {
+      "id": "temperature",
+      "g": "hydrology",
+      "s": "IMPLEMENTED / RELEASE PLANNED",
+      "kind": "process",
+      "v": "thermal",
+      "ko": "토양온도·하천수온 연계 모의",
+      "en": "Coupled soil & river temperature",
+      "sumKo": "기온·토양수분·적설과 물의 이동을 연결해 A/B/C/D층 온도와 1D 하천수온을 모의합니다.",
+      "sumEn": "Links meteorology, soil moisture, snow and water movement to A/B/C/D soil temperatures and 1D river temperature.",
+      "detailKo": "격자별 토양온도는 수분에 따른 열물성, 대기와 토양 사이 및 토양층 사이의 열전도, 적설의 단열효과를 반영합니다. 융설수·유출수·토양수의 이동에 따른 현열을 하천 유입과 연결하고, 1D 하천에서는 수리계산에서 확정된 물의 이동량으로 열을 전달하며 대기와 선형 열교환을 계산합니다. 초기 온도는 대표 기상 또는 사전 기상을 이용해 생성하고, 시작시각·격자·수분·적설·초기 수리상태가 호환되면 저장한 상태를 재사용합니다.",
+      "detailEn": "Cell-based soil temperatures account for moisture-dependent thermal properties, atmospheric and interlayer conduction, and snow insulation. Sensible heat carried by meltwater, runoff and soil water supplies the river. The 1D river transports heat with accepted hydraulic water volumes and uses linear air–water heat exchange. Initial temperatures can be generated from representative or actual prestart meteorology and reused when start time, grid, moisture, snow and initial hydraulics are compatible.",
+      "nowKo": "토양온도·하천수온 연계 모의: 구현 완료 · 정식 배포 예정.",
+      "nowEn": "Coupled soil & river temperature: Implemented · official distribution planned.",
+      "stepsKo": [
+        "기상·토양수분·적설과 초기 온도",
+        "토양 열전도·물의 현열수송·대기 열교환",
+        "토양 4개 층과 1D 하천수온 NetCDF"
+      ],
+      "stepsEn": [
+        "meteorology, moisture, snow and initial temperatures",
+        "soil conduction, advected sensible heat and air exchange",
+        "four soil layers and 1D river-temperature NetCDF"
+      ],
+      "diagram": null,
+      "diagramCaptionKo": null,
+      "diagramCaptionEn": null,
+      "searchTerms": "지온 지중수온 수온 열전도 열수송 soil river temperature thermal heat initialization"
     },
     {
       "id": "warmup",
@@ -1659,7 +1688,7 @@
   },
   "provenance": {
     "baseline": "Current capability implementation review",
-    "reviewed": "2026-11-03",
+    "reviewed": "2026-11-05",
     "source": "Current implementation and model-developer completion confirmation; implementation, application validation and official distribution are separate."
   }
 }

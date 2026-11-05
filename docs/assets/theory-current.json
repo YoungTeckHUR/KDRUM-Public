@@ -1,5 +1,5 @@
 {
-  "revision": "2026-11-03",
+  "revision": "2026-11-05",
   "chapters": [
     {
       "id": "numerical-processes",
@@ -268,6 +268,31 @@
         "netcdf",
         "openmp",
         "public-scope"
+      ]
+    },
+    {
+      "id": "numerical-thermal",
+      "titleKo": "13 · 토양온도·하천수온의 연결",
+      "titleEn": "13 · Linking soil and river temperatures",
+      "references": [
+        "thermal-evidence"
+      ],
+      "sections": [
+        {
+          "headingKo": "수분과 적설이 토양온도 반응에 영향을 줍니다",
+          "headingEn": "Moisture and snow influence soil-temperature response",
+          "textKo": "격자별 토양온도는 수분에 따른 열물성, 대기와 토양 사이 및 토양층 사이의 열전도, 적설의 단열효과를 반영합니다. 융설수·유출수·토양수의 이동에 따른 현열을 하천 유입과 연결하고, 1D 하천에서는 수리계산에서 확정된 물의 이동량으로 열을 전달하며 대기와 선형 열교환을 계산합니다. 초기 온도는 대표 기상 또는 사전 기상을 이용해 생성하고, 시작시각·격자·수분·적설·초기 수리상태가 호환되면 저장한 상태를 재사용합니다.",
+          "textEn": "Cell-based soil temperatures account for moisture-dependent thermal properties, atmospheric and interlayer conduction, and snow insulation. Sensible heat carried by meltwater, runoff and soil water supplies the river. The 1D river transports heat with accepted hydraulic water volumes and uses linear air–water heat exchange. Initial temperatures can be generated from representative or actual prestart meteorology and reused when start time, grid, moisture, snow and initial hydraulics are compatible.",
+          "equation": "E = ρ c V T",
+          "unitsKo": "E: 현열[J], ρ: 물 밀도[kg/m³], c: 비열[J/(kg·°C)], V: 물 체적[m³], T: 온도[°C]. 식은 공통 기준온도에 대한 열 저장 개념식입니다.",
+          "unitsEn": "E: sensible heat [J], ρ: water density [kg/m³], c: specific heat [J/(kg·°C)], V: volume [m³], T: temperature [°C]. Conceptual storage relative to a common temperature datum."
+        },
+        {
+          "headingKo": "초기화·실행 확인과 관측 정확도 검증을 구분합니다",
+          "headingEn": "Separate initialization and operation checks from observed accuracy",
+          "textKo": "섬진강 시험유역에서 온도 기능의 ON/OFF, 저온·고온, 저온 후 고온 전환, 일조시간 조건을 실행했습니다. 초기 온도를 생성한 실행과 저장 상태를 읽은 실행의 온도 결과 일치도 확인했습니다. 일조시간 시험은 기존 수문·증발산을 통한 간접 반응이며 직접 일사 가열을 검증한 시험이 아닙니다. 개발 후보본에서 기능 구현과 섬진강 시험유역의 동작·기온 변화 반응을 확인했습니다. 정식 배포 예정이며 관측 지온·수온 정확도와 장기 계절 반응은 별도 검증이 필요합니다. 직접 단파·장파복사, 증발·승화 잠열, 하상전도와 동결·하천결빙은 현재 포함하지 않습니다. 온도는 NetCDF로 출력하며 기존 Viewer의 실제 온도 표출은 아직 확인하지 않았습니다.",
+          "textEn": "Seomjin trials covered thermal ON/OFF, cool/warm forcing, a cold-to-warm transition and sunshine-duration scenarios. Generated-state and read-state runs also produced matching temperature outputs. Sunshine-duration cases test indirect hydrologic/ET effects, not direct radiative heating. Implementation and Seomjin trial-basin operation and air-temperature response have been checked in the development candidate. Official distribution is planned. Observed soil/river-temperature accuracy and long-term seasonal behavior require separate validation. Direct shortwave/longwave radiation, evaporation/sublimation latent heat, conductive riverbed exchange and freezing/river ice are not included. Temperature fields are in NetCDF; actual temperature rendering in the existing Viewer remains unverified."
+        }
       ]
     }
   ]

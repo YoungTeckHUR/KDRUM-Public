@@ -1,5 +1,6 @@
 /* Entry copy describes a visitor's question; availability remains in the status badge. */
 const cases={
+'temperature':['기상·토양·유출 변화에 따른 지온과 하천수온 반응을 분석할 때','When examining soil and river-temperature responses to meteorology and runoff'],
 'rain-spatial':['지역마다 비가 다르게 내리는 유역을 해석할 때','When rainfall varies across the watershed'],
 'rain-methods':['관측소 강우를 IDW로 공간배분할 때','When mapping station rainfall with IDW'],
 'rain-qc':['강우의 공간 분포와 입력 품질을 함께 검토할 때','When reviewing rainfall distribution and input quality'],

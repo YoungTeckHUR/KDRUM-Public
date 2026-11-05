@@ -1,6 +1,6 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'../..'),docs=path.join(root,'docs');
-const data=require('../../docs/assets/site-content.json');assert.equal(data.items.length,46);assert.equal(new Set(data.items.map(i=>i.id)).size,46);
+const data=require('../../docs/assets/site-content.json');assert.equal(data.items.length,47);assert.equal(new Set(data.items.map(i=>i.id)).size,47);
 require('./capability-contract.cjs').validate(data);
 const generator=fs.readFileSync(path.join(root,'.github/scripts/navigation-layout.cjs'),'utf8');
 const detailTemplate=generator.slice(generator.indexOf('function capability('),generator.indexOf('function sections('));
@@ -19,6 +19,6 @@ for(const rel of ['index.html','ko/index.html','media.html','seo-kdrum.html']){c
 const js=fs.readFileSync(path.join(docs,'assets/site.js'),'utf8');assert.ok(!/MutationObserver|setInterval|setTimeout/.test(js));
 assert.equal(fs.readdirSync(path.join(docs,'assets/diagrams')).filter(n=>n.endsWith('.svg')).length,12);
 require('./current-content.cjs').validate(data);
-assert.ok(fs.readFileSync(path.join(root,'DEVELOPMENT_STATUS.md'),'utf8').includes('2026-11-03'));
+assert.ok(fs.readFileSync(path.join(root,'DEVELOPMENT_STATUS.md'),'utf8').includes('2026-11-05'));
 require('./current-content-audit.cjs');
-console.log('PASS static routes, local assets, stable capability IDs/statuses, reviewed public labels/groups, bilingual descriptions, separate unpublished viewer, 46 entries, 12 diagrams, one runtime');
+console.log('PASS static routes, local assets, stable capability IDs/statuses, reviewed public labels/groups, bilingual descriptions, separate unpublished viewer, 47 entries, 12 diagrams, one runtime');

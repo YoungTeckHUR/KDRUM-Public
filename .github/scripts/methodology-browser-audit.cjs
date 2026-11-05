@@ -18,9 +18,9 @@ async function run(){
    const home=base+(lang==='ko'?'/ko/':'/');
    async function go(hash){await page.goto(home+'#'+hash);await page.waitForFunction(()=>document.documentElement.dataset.siteReady==='true');await page.evaluate(()=>document.fonts.ready);}
    await go('cap-dwnet');
-   assert.equal(await page.locator('[data-methodology-for]').count(),46);
-   assert.equal(await page.locator('.lifecycle-status').count(),46);
-   for(const id of ['dwnet','local-inertia','coupling','fullswe']){
+   assert.equal(await page.locator('[data-methodology-for]').count(),47);
+   assert.equal(await page.locator('.lifecycle-status').count(),47);
+   for(const id of ['dwnet','local-inertia','coupling','fullswe','temperature']){
     await go('cap-'+id);const card=page.locator('#cap-'+id);await card.locator('.technical-details').evaluate(e=>e.open=true);
     assert.equal(await card.getAttribute('data-status'),review.items[id].status);
     assert.equal(await card.locator('.lifecycle-status dt').count(),3);

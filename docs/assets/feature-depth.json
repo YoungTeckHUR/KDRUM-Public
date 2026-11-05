@@ -274,5 +274,11 @@
     "principleEn": "Development of the 1D river viewer is complete. A common location and time link network, profile, cross-section and time-series views for multi-site and observation comparisons. Match sites, times and elevation datums. Official distribution is planned; completion of the existing viewer is distinct from C# migration and Studio integration work.",
     "exampleKo": "정식 배포 예정입니다. 사용 중인 뷰어 버전과 결과자료의 시간·지점·표고 기준 및 표시값을 확인합니다.",
     "exampleEn": "Official distribution is planned. Check the viewer version, result times, locations, elevation datums and displayed values."
+  },
+  "temperature": {
+    "principleKo": "격자별 토양온도는 수분에 따른 열물성, 대기와 토양 사이 및 토양층 사이의 열전도, 적설의 단열효과를 반영합니다. 융설수·유출수·토양수의 이동에 따른 현열을 하천 유입과 연결하고, 1D 하천에서는 수리계산에서 확정된 물의 이동량으로 열을 전달하며 대기와 선형 열교환을 계산합니다. 초기 온도는 대표 기상 또는 사전 기상을 이용해 생성하고, 시작시각·격자·수분·적설·초기 수리상태가 호환되면 저장한 상태를 재사용합니다.",
+    "principleEn": "Cell-based soil temperatures account for moisture-dependent thermal properties, atmospheric and interlayer conduction, and snow insulation. Sensible heat carried by meltwater, runoff and soil water supplies the river. The 1D river transports heat with accepted hydraulic water volumes and uses linear air–water heat exchange. Initial temperatures can be generated from representative or actual prestart meteorology and reused when start time, grid, moisture, snow and initial hydraulics are compatible.",
+    "exampleKo": "개발 후보본에서 기능 구현과 섬진강 시험유역의 동작·기온 변화 반응을 확인했습니다. 정식 배포 예정이며 관측 지온·수온 정확도와 장기 계절 반응은 별도 검증이 필요합니다. 직접 단파·장파복사, 증발·승화 잠열, 하상전도와 동결·하천결빙은 현재 포함하지 않습니다. 온도는 NetCDF로 출력하며 기존 Viewer의 실제 온도 표출은 아직 확인하지 않았습니다.",
+    "exampleEn": "Implementation and Seomjin trial-basin operation and air-temperature response have been checked in the development candidate. Official distribution is planned. Observed soil/river-temperature accuracy and long-term seasonal behavior require separate validation. Direct shortwave/longwave radiation, evaporation/sublimation latent heat, conductive riverbed exchange and freezing/river ice are not included. Temperature fields are in NetCDF; actual temperature rendering in the existing Viewer remains unverified."
   }
 }

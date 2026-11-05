@@ -1,6 +1,6 @@
 # K-DRUM 개선·확장 계획 / Refinement and extension roadmap
 
-**Reviewed: 2026-11-03**
+**Reviewed: 2026-11-05**
 
 ## Completed calculation foundation / 완료된 계산 기능
 

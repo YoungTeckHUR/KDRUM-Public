@@ -1,6 +1,6 @@
 # K-DRUM 구현 상태와 적용 범위 / Implementation and application scope
 
-**검토일 / Reviewed: 2026-11-03**
+**검토일 / Reviewed: 2026-11-05**
 
 1D 하천망 수리, 분기·합류, 2D 국부관성 범람과 양방향 1D–2D 연계는 **개발 완료** 기능입니다. Full SWE는 지원하는 격자·경계·연계 조건에 맞춰 사용하는 **개발 완료·선택 적용** 기능입니다. 기능 개선이나 새로운 유역 검증이 계속된다는 이유로 완료된 기능을 개발 중으로 되돌리지 않습니다.
 
@@ -14,6 +14,7 @@ Implementation completion, application/observation-based validation and official
 
 | 표시 / Label | 의미 / Meaning |
 |---|---|
+| 구현 완료 · 정식 배포 예정 / Implemented · official distribution planned | 기능 구현·시험유역 동작 확인, 정식 배포 예정 / Implemented and trial-basin operation checked; official distribution planned |
 | 확립된 기능 / Established | 공개 연구와 사용 계보가 있는 기반 기능 / Established scientific and application foundation |
 | 구현 완료 / Implemented | 현행 계산·입출력 경로에 구현 / Implemented in current calculation or data paths |
 | 개발 완료 / Development complete | 개발자 완료 확인과 현행 구현을 대조한 완료 기능 / Completion confirmed by the model developer and checked against current implementation |
@@ -47,6 +48,7 @@ Implementation completion, application/observation-based validation and official
 | [연속·장기모의 / Continuous / long-term simulation](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-continuous) | **확립된 기능 / Established** | 여러 해의 증발산·물수지를 비교할 때 분석기간, 자료 결측, 초기·최종 저장을 통일합니다. / Compare multi-year evapotranspiration and balance using aligned periods, gap handling and storage endpoints. |
 | [증발산·토양수분 / Evapotranspiration & soil water](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-et) | **확립된 기능 / Established** | 기상 수요식과 실제 수분 제한을 구분합니다. 물이 없는 층에서 증발산을 무제한 차감하지 않는지 물수지로 확인합니다. / Distinguish the demand calculation from moisture limitation and check that extraction is consistent with layer water availability. |
 | [적설·융설 / Snow accumulation & melt](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-snow) | **확립된 기능 / Established** | 적설수량(mm 물깊이)과 적설심(cm 눈깊이)을 혼동하지 않습니다. 융설량은 가용 적설 저장을 넘을 수 없습니다. / Distinguish water-equivalent depth from physical snow depth; melt cannot exceed available snow storage. |
+| [토양온도·하천수온 연계 모의 / Coupled soil & river temperature](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-temperature) | **구현 완료 · 정식 배포 예정 / Implemented · official distribution planned** | 개발 후보본에서 기능 구현과 섬진강 시험유역의 동작·기온 변화 반응을 확인했습니다. 정식 배포 예정이며 관측 지온·수온 정확도와 장기 계절 반응은 별도 검증이 필요합니다. 직접 단파·장파복사, 증발·승화 잠열, 하상전도와 동결·하천결빙은 현재 포함하지 않습니다. 온도는 NetCDF로 출력하며 기존 Viewer의 실제 온도 표출은 아직 확인하지 않았습니다. / Implementation and Seomjin trial-basin operation and air-temperature response have been checked in the development candidate. Official distribution is planned. Observed soil/river-temperature accuracy and long-term seasonal behavior require separate validation. Direct shortwave/longwave radiation, evaporation/sublimation latent heat, conductive riverbed exchange and freezing/river ice are not included. Temperature fields are in NetCDF; actual temperature rendering in the existing Viewer remains unverified. |
 | [워밍업·초기상태 안정화 / Warm-up & initial-state stabilization](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-warmup) | **구현 완료 / Implemented** | 목표유량, 관측 시점과 모의 시작시각의 의미를 맞추고, 준비기간 결과를 분석기간 통계와 구분합니다. / Align target-flow timing with initialization and separate warm-up outputs from analysis-period statistics. |
 | [상태 저장·재시작 (HotStart) / State save & restart (HotStart)](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-hotstart) | **구현 완료 / Implemented** | 연속 실행과 재시작 실행을 같은 조건에서 비교하여 저장량·유량·시간축의 일치성을 확인합니다. / Compare uninterrupted and restarted runs under identical conditions for storage, discharge and time consistency. |
 | [D층 지하수 저장·장기유출 / D-layer groundwater storage & long-term runoff](https://youngteckhur.github.io/KDRUM-Public/ko/#cap-dlayer) | **구현 완료 / Implemented** | 기존 D층을 새로 추가한 기능으로 설명하지 않습니다. 감수곡선과 장기 물수지를 함께 사용해 유역별 계수를 검토합니다. / Do not treat the D layer itself as newly introduced. Assess basin-specific response using recession curves and long-term balance. |

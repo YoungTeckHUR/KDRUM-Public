@@ -93,4 +93,8 @@ The current canonical expansion used by this public site is **K-water Distribute
 ---
 
 **Canonical model name:** K-DRUM  
-**Current technical review:** v3.x / 2026-11-03. Implementation, validation and distribution are tracked separately.
+**Current technical review:** v3.x / 2026-11-05. Implementation, validation and distribution are tracked separately.
+
+## Soil and river temperature / 토양온도·하천수온
+
+Optional coupled A/B/C/D soil and 1D river-temperature calculations are implemented in a development candidate, with trial-basin operation checked and official distribution planned. [Scope and trial evidence](THERMAL_VALIDATION.md).

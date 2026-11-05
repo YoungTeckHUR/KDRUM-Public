@@ -1,6 +1,6 @@
 # K-DRUM 기능·입력·계산·출력 / Capabilities, inputs, methods and outputs
 
-**검토일 / Reviewed: 2026-11-03**
+**검토일 / Reviewed: 2026-11-05**
 
 1D 하천망 수리, 분기·합류, 2D 국부관성 범람과 양방향 1D–2D 연계는 **개발 완료** 기능입니다. Full SWE는 지원하는 격자·경계·연계 조건에 맞춰 사용하는 **개발 완료·선택 적용** 기능입니다. 기능 개선이나 새로운 유역 검증이 계속된다는 이유로 완료된 기능을 개발 중으로 되돌리지 않습니다.
 
@@ -223,6 +223,28 @@ Temperature partitions rain and snowfall, with snowfall retained as snow-water e
 SWE·Psnow·M을 동일 구간의 물환산 깊이로 집계한 설명식이며, M의 실제 경험식과 구분합니다. / Interval water-equivalent snow budget; this expression is distinct from the empirical calculation of M.
 
 [K-DRUM: long-term snowmelt application (2013)](https://doi.org/10.12652/Ksce.2013.33.6.2237)
+
+### 토양온도·하천수온 연계 모의 / Coupled soil & river temperature
+
+**구현 완료 · 정식 배포 예정 / Implemented · official distribution planned**
+
+격자별 토양온도는 수분에 따른 열물성, 대기와 토양 사이 및 토양층 사이의 열전도, 적설의 단열효과를 반영합니다. 융설수·유출수·토양수의 이동에 따른 현열을 하천 유입과 연결하고, 1D 하천에서는 수리계산에서 확정된 물의 이동량으로 열을 전달하며 대기와 선형 열교환을 계산합니다. 초기 온도는 대표 기상 또는 사전 기상을 이용해 생성하고, 시작시각·격자·수분·적설·초기 수리상태가 호환되면 저장한 상태를 재사용합니다.
+
+Cell-based soil temperatures account for moisture-dependent thermal properties, atmospheric and interlayer conduction, and snow insulation. Sensible heat carried by meltwater, runoff and soil water supplies the river. The 1D river transports heat with accepted hydraulic water volumes and uses linear air–water heat exchange. Initial temperatures can be generated from representative or actual prestart meteorology and reused when start time, grid, moisture, snow and initial hydraulics are compatible.
+
+입력 / Inputs: 기온 등 기상자료, A/B/C/D층의 두께·수분·적설 상태, 수리계산에서 확정된 하천 저장량·유량과 유입수 온도. 선택적으로 초기 온도 생성용 기상을 사용합니다. / Meteorological forcing including air temperature; A/B/C/D thickness, moisture and snow states; accepted hydraulic storage/fluxes and inflow temperatures. Optional meteorology supports thermal initialization.
+
+산출물 / Outputs: A/B/C/D층 토양온도와 1D 하천수온의 공간·시간별 NetCDF 결과, 초기 온도 상태의 생성·재사용. / Spatial and temporal NetCDF fields for A/B/C/D soil temperatures and 1D river temperature, plus generated and reusable thermal initial states.
+
+적용 조건 / Check: 개발 후보본에서 기능 구현과 섬진강 시험유역의 동작·기온 변화 반응을 확인했습니다. 정식 배포 예정이며 관측 지온·수온 정확도와 장기 계절 반응은 별도 검증이 필요합니다. 직접 단파·장파복사, 증발·승화 잠열, 하상전도와 동결·하천결빙은 현재 포함하지 않습니다. 온도는 NetCDF로 출력하며 기존 Viewer의 실제 온도 표출은 아직 확인하지 않았습니다. / Implementation and Seomjin trial-basin operation and air-temperature response have been checked in the development candidate. Official distribution is planned. Observed soil/river-temperature accuracy and long-term seasonal behavior require separate validation. Direct shortwave/longwave radiation, evaporation/sublimation latent heat, conductive riverbed exchange and freezing/river ice are not included. Temperature fields are in NetCDF; actual temperature rendering in the existing Viewer remains unverified.
+
+대표 관계식 / Representative relationship:
+
+`E = ρ c V T;  ΔE = heat in − heat out + atmospheric exchange`
+
+E: 현열[J], ρ: 물 밀도[kg/m³], c: 비열[J/(kg·°C)], V: 물 체적[m³], T: 온도[°C]. 식은 공통 기준온도에 대한 열 저장 개념식입니다. / E: sensible heat [J], ρ: water density [kg/m³], c: specific heat [J/(kg·°C)], V: volume [m³], T: temperature [°C]. Conceptual storage relative to a common temperature datum.
+
+[K-DRUM soil and river temperature: scope and trial results (2026-11-05)](https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/THERMAL_VALIDATION.md)
 
 ### 워밍업·초기상태 안정화 / Warm-up & initial-state stabilization
 
