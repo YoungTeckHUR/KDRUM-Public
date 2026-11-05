@@ -13,8 +13,8 @@ async function run(){
    const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce',permissions:['clipboard-read','clipboard-write']}),page=await context.newPage(),errors=[];
    page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)errors.push(r.status()+' '+r.url());});
    const home=base+(lang==='ko'?'/ko/':'/');await page.goto(home);await page.waitForFunction(()=>document.documentElement.dataset.siteReady==='true');
-   assert.equal(await page.locator('.capability:visible').count(),5,'Initial accepted category/layout is preserved');assert.equal(await page.locator('.capability').count(),46);
-   assert.equal(await page.locator('#feature-group option').count(),9);assert.ok((await page.locator('#feature-group option').first().innerText()).includes('46'));
+   assert.equal(await page.locator('.capability:visible').count(),5,'Initial accepted category/layout is preserved');assert.equal(await page.locator('.capability').count(),47);
+   assert.equal(await page.locator('#feature-group option').count(),9);assert.ok((await page.locator('#feature-group option').first().innerText()).includes('47'));
    if(width===390||width===1440)await page.locator('#capabilities').screenshot({path:path.join(out,lang+'-'+width+'-search.png')});
    const query=page.locator('#feature-search'),group=page.locator('#feature-group');
    await query.fill('NetCDF');assert.equal(await group.inputValue(),'');assert.ok(await page.locator('#cap-netcdf').isVisible(),'Global search crosses the default category');
@@ -24,7 +24,7 @@ async function run(){
    await group.selectOption(ga.g);assert.ok(await page.locator('#cap-ga').isVisible());await group.selectOption('forcing');assert.equal(await page.locator('#cap-ga').isVisible(),false,'Explicit category refines results');
    await query.fill('NetCDF');assert.equal(await group.inputValue(),'');assert.ok(await page.locator('#cap-netcdf').isVisible(),'A new query searches globally');
    await query.fill('zz-no-such-feature-20260919');assert.equal(await page.locator('.capability:visible').count(),0);assert.ok(await page.locator('#no-results').isVisible());
-   await page.locator('#feature-reset').click();assert.equal(await query.inputValue(),'');assert.equal(await group.inputValue(),'');assert.equal(await page.locator('.capability:visible').count(),46);assert.ok(await query.evaluate(el=>el===document.activeElement));
+   await page.locator('#feature-reset').click();assert.equal(await query.inputValue(),'');assert.equal(await group.inputValue(),'');assert.equal(await page.locator('.capability:visible').count(),47);assert.ok(await query.evaluate(el=>el===document.activeElement));
    // User-entered strings are data, never HTML or regular-expression programs.
    await query.fill('<img src=x onerror=alert(1)>');assert.equal(await page.locator('.capability:visible').count(),0);assert.equal(await page.locator('img[src="x"]').count(),0);await page.locator('#feature-reset').click();
    // Preserve Korean input-method composition until the completed input is available.
@@ -47,7 +47,7 @@ async function run(){
    await page.locator('.site-nav a[href="#results"]').click();await page.waitForFunction(lang=>document.querySelector('.language a[lang="'+lang+'"]').hash==='#results',lang);
    assert.deepEqual(errors,[]);checks.push({language:lang,width,status:'PASS',globalSearch:true,bilingualSearch:true,normalization:true,categoryRefinement:true,reset:true,imeComposition:true,sameHashReentry:true,clipboard:'granted and denied paths',languageContext:true});await context.close();
   }
-  for(const lang of ['ko','en']){const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}}),page=await context.newPage();await page.goto(base+(lang==='ko'?'/ko/':'/'));assert.equal(await page.locator('.capability:visible').count(),46);assert.equal(await page.locator('#feature-reset').isVisible(),false);await page.locator('#cap-ga summary').click();assert.notEqual(await page.locator('#cap-ga').getAttribute('open'),null);assert.equal(await page.locator('#cap-ga [data-share-feature]').getAttribute('href'),'#cap-ga');await overflow(page,'no-JS '+lang);checks.push({language:lang,javascript:false,status:'PASS'});await context.close();}
+  for(const lang of ['ko','en']){const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}}),page=await context.newPage();await page.goto(base+(lang==='ko'?'/ko/':'/'));assert.equal(await page.locator('.capability:visible').count(),47);assert.equal(await page.locator('#feature-reset').isVisible(),false);await page.locator('#cap-ga summary').click();assert.notEqual(await page.locator('#cap-ga').getAttribute('open'),null);assert.equal(await page.locator('#cap-ga [data-share-feature]').getAttribute('href'),'#cap-ga');await overflow(page,'no-JS '+lang);checks.push({language:lang,javascript:false,status:'PASS'});await context.close();}
   assert.equal(checks.length,14);console.log('NAVIGATION PASS: 12 bilingual/six-width cases and 2 no-JS cases; search, reset, sharing, denied-clipboard fallback and language/deep-link continuity.');
  }finally{fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({checks},null,2));await browser.close();}
 }

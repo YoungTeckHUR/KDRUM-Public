@@ -68,7 +68,7 @@ const linkedConcepts={
  inputstudio: [['@program-workflow','입력 작성에서 계산까지','From input preparation to model execution']]
 };
 const galleryConcepts={ga:'concept-ga',runoff:'concept-runoff',et:'concept-et'};
-const omittedConcepts={wq:'The water-quality module is disabled; retain the availability explanation without depicting an active result.'};
+const omittedConcepts={temperature:'Dedicated thermal illustration is rendered by thermal-feature.cjs',wq:'The water-quality module is disabled; retain the availability explanation without depicting an active result.'};
 function getReference(id,lang,prefix=''){
  if(id==='@program-workflow')return {src:prefix+'assets/diagrams/program-workflow-'+lang+'.svg',width:960,height:600,caption:lang==='ko'?'입력 작성, 계산, 결과 저장과 분석 도구의 역할 및 개발 상태입니다.':'Roles and development states of input preparation, computation, output storage and analysis tools.'};
  const concept=concepts[id];if(!concept)return null;

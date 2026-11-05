@@ -179,5 +179,9 @@
     "kind": "platform",
     "v": "estuary"
   },
-  "river-viewer": {}
+  "river-viewer": {},
+  "temperature": {
+    "kind": "process",
+    "v": "thermal"
+  }
 }

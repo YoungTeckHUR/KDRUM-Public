@@ -34,7 +34,7 @@ async function run(){
     for(const k of ['body','detail','program'])assert.equal(m[k].size,16,lang+' '+width+' '+k+' 16px');
     assert.equal(m.feature.size,18);assert.equal(m.subheading.size,16);assert.equal(m.badge.size,13);assert.equal(m.caption.size,14);
     assert.ok(m.body.line>=27);equalRows(m.cards,lang+' '+width+' initial cards');await reflow(page,lang+' '+width);
-    await page.locator('#feature-group').selectOption('');equalRows((await metrics(page)).cards,lang+' '+width+' all 46 cards');await reflow(page,lang+' '+width+' all cards');
+    await page.locator('#feature-group').selectOption('');equalRows((await metrics(page)).cards,lang+' '+width+' all 47 cards');await reflow(page,lang+' '+width+' all cards');
     await page.locator('#feature-group').selectOption('forcing');
     const rows=await page.locator('.concept-card').evaluateAll(cards=>cards.map(c=>{const r=c.getBoundingClientRect(),link=c.querySelector('.concept-links').getBoundingClientRect();return {y:r.top+scrollY,h:link.top-r.top};}));equalRows(rows,lang+' '+width+' concept links');
    }
@@ -61,7 +61,7 @@ async function run(){
   }
  }
  for(const lang of ['ko','en']){
-  const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}}),page=await context.newPage();await page.goto(base+(lang==='ko'?'/ko/':'/'));assert.equal(await page.locator('.capability:visible').count(),46);await page.locator('#cap-ga summary').click();await reflow(page,lang+' no-JS');supplement.push({lang,test:'no-JS',result:'PASS'});await context.close();
+  const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}}),page=await context.newPage();await page.goto(base+(lang==='ko'?'/ko/':'/'));assert.equal(await page.locator('.capability:visible').count(),47);await page.locator('#cap-ga summary').click();await reflow(page,lang+' no-JS');supplement.push({lang,test:'no-JS',result:'PASS'});await context.close();
  }
  for(const width of [390,1440])for(const suffix of ['/media.html?lang=ko','/media.html?lang=en','/seo-kdrum.html']){
   const page=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});await page.goto(base+suffix);await page.waitForFunction(()=>document.documentElement.dataset.siteReady==='true');await reflow(page,suffix+' '+width);supplement.push({page:suffix,width,result:'PASS'});await page.close();

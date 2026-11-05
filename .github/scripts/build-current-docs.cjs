@@ -22,6 +22,7 @@ const intro=`**검토일 / Reviewed: ${review.revision}**
 Implementation completion, application/observation-based validation and official distribution are distinct. Consult MyWater for actual package versions and terms; do not infer universal accuracy or distribution from implementation alone.`;
 let status='# K-DRUM 구현 상태와 적용 범위 / Implementation and application scope\n\n'+intro+'\n\n## 상태 표시 / Status labels\n\n| 표시 / Label | 의미 / Meaning |\n|---|---|\n';
 const definitions={
+ 'IMPLEMENTED / RELEASE PLANNED':'기능 구현·시험유역 동작 확인, 정식 배포 예정 / Implemented and trial-basin operation checked; official distribution planned',
  'ESTABLISHED':'공개 연구와 사용 계보가 있는 기반 기능 / Established scientific and application foundation',
  'IMPLEMENTED':'현행 계산·입출력 경로에 구현 / Implemented in current calculation or data paths',
  'COMPLETED':'개발자 완료 확인과 현행 구현을 대조한 완료 기능 / Completion confirmed by the model developer and checked against current implementation',
@@ -44,7 +45,7 @@ let atlas='# K-DRUM 기능별 현재 설명 / Current capability reference\n\n'+
 let capabilities='# K-DRUM 기능·입력·계산·출력 / Capabilities, inputs, methods and outputs\n\n'+intro+'\n\n홈페이지는 기능별 개요를 먼저 보이고, 이론·입력·관계식·산출물·적용조건은 세부 내용을 펼쳐 확인하도록 구성합니다. / The website keeps overviews compact and reveals theory, inputs, representative equations, outputs and checks in expandable details.\n';
 for(const g of data.groups){atlas+=`\n## ${g.ko} / ${g.en}\n\n| 기능 | 현재 구현 | 핵심 역할 |\n|---|---|---|\n`;capabilities+=`\n## ${g.ko} / ${g.en}\n`;for(const it of data.items.filter(i=>i.g===g.id)){const r=review.items[it.id];atlas+=`| [${it.ko}](${site}ko/#cap-${it.id}) / [${it.en}](${site}#cap-${it.id}) | ${label(r.status,'ko')} / ${label(r.status,'en')} | ${clean(r.ko.summary)} / ${clean(r.en.summary)} |\n`;capabilities+=`\n### ${it.ko} / ${it.en}\n\n**${label(r.status,'ko')} / ${label(r.status,'en')}**\n\n${r.ko.mechanism}\n\n${r.en.mechanism}\n\n입력 / Inputs: ${r.ko.inputs} / ${r.en.inputs}\n\n산출물 / Outputs: ${r.ko.outputs} / ${r.en.outputs}\n\n적용 조건 / Check: ${r.ko.check} / ${r.en.check}\n`;if(r.equation)capabilities+=`\n대표 관계식 / Representative relationship:\n\n\`${r.equation}\`\n\n${r.ko.symbols} / ${r.en.symbols}\n`;capabilities+='\n'+r.references.map(id=>{const ref=review.references[id];return `[${ref.label}](${ref.url})`;}).join(' · ')+'\n';}}
 atlas+='\n## 함께 읽기 / Related information\n\n[이론·방법론](TECHNICAL_METHODS.md) · [상태와 적용 범위](DEVELOPMENT_STATUS.md) · [공식 다운로드 목록]('+release+')\n\n새 K-DRUM Studio는 기존 InputStudio의 단순 명칭 변경이 아니라 별도 통합 작업환경 개발입니다. 입력도구·Viewer의 개발/공개 상태와 수리엔진의 개발 완료를 혼동하지 않습니다.\n\nNew K-DRUM Studio is separate integrated-workflow development, not a renaming of InputStudio. GUI/public-release status is independent from hydraulic-engine completion.\n';
-write('CAPABILITY_ATLAS.md',atlas);write('CAPABILITIES.md',capabilities);
+atlas+='\n## Thermal extension / 수온 확장\n\nSee [trial evidence and limits](THERMAL_VALIDATION.md).\n';write('CAPABILITY_ATLAS.md',atlas);write('CAPABILITIES.md',capabilities);
 let theoryDoc='# K-DRUM 이론·수치방법 / Theory and numerical methodology\n\n**Reviewed: '+review.revision+'**\n\n다음 식은 지배관계와 보존·해석 원리를 설명합니다. 입력파일의 비공개 형식이나 내부 조정값을 나열하지 않습니다. 외부 참고문헌은 일반 이론의 근거이며 외부 모형과 K-DRUM의 구현·성능이 동일하다는 뜻은 아닙니다.\n\nEquations explain governing principles and interpretation. External references support theory; they do not establish identical implementation or performance between K-DRUM and other models.\n\n운동파·확산파·국부관성·동역학파는 유지하는 물리항의 차이이고, 유한체적·차분·양해·음해는 수치해법의 차이입니다.\n\nKinematic, diffusion, local-inertial and dynamic waves describe equation approximations; finite-volume/difference and explicit/implicit describe numerical methods.\n';
 for(const c of theory.chapters){theoryDoc+=`\n## ${c.titleKo} / ${c.titleEn}\n`;for(const s of c.sections){theoryDoc+=`\n### ${s.headingKo} / ${s.headingEn}\n\n${s.textKo}\n\n${s.textEn}\n`;if(s.equation)theoryDoc+=`\n\`${s.equation}\`\n\n${s.unitsKo} / ${s.unitsEn}\n`;}
 theoryDoc+='\n'+c.references.map(id=>{const r=review.references[id];return `[${r.label}](${r.url})`;}).join(' · ')+'\n';}
@@ -130,10 +131,10 @@ readme=readme.replace(/K-DRUM은 K-water가 개발해 온[^\n]+/,'K-DRUM은 K-wa
 readme=readme.replace(/Current hydraulic extensions include[^\n]+/,'Current hydraulic capabilities include completed 1D networks, branch/confluence hydraulics, 2D local-inertial inundation and bidirectional dynamic-wave 1D/local-inertial 2D exchange, plus Full SWE within supported configurations. Structure, reservoir, state/output and water-balance functions are implemented. See [current implementation scope](DEVELOPMENT_STATUS.md) and [theory/methods](TECHNICAL_METHODS.md).');
 readme=readme.replace('current hydraulic development','completed hydraulic capabilities');
 readme=readme.replace('a developing integrated project/run/review workflow, not an officially released consolidated product.','separate new integrated project/control/run/analysis development, not simply a renamed InputStudio or an official consolidated release.');
-readme=readme.replace('**Current public baseline:** v3.x / October 2026','**Current technical review:** v3.x / 2026-11-03. Implementation, validation and distribution are tracked separately.');
+readme=readme.replace('**Current public baseline:** v3.x / October 2026','**Current technical review:** v3.x / 2026-11-05. Implementation, validation and distribution are tracked separately.');
 readme=readme.replace(/- \*\*1D River Hydraulics Results Viewer\*\*[^\n]+/, '- **1D River Hydraulics Results Viewer** — development complete; links network, longitudinal/cross-section and time-series results. Official distribution is planned.');
 write('README.md',readme);
-console.log('PASS current docs generated from 46-item status/method matrix and theory chapters');
+console.log('PASS current docs generated from 47-item status/method matrix and theory chapters');
 
 // Refresh the unused legacy atlas metadata without making it a readiness authority.
 const legacyPath=path.join(root,'docs/assets/capability-atlas.js');

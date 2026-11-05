@@ -15,7 +15,7 @@ function duplicateSentences(data){
  return duplicates;
 }
 function validate(data){
- assert.equal(data.items.length,46);assert.equal(new Set(data.items.map(i=>i.id)).size,46);
+ assert.equal(data.items.length,47);assert.equal(new Set(data.items.map(i=>i.id)).size,47);
  for(const item of data.items){
   for(const lang of ['Ko','En']){
    for(const field of ['sum','detail','now'])assert.ok(typeof item[field+lang]==='string'&&item[field+lang].trim(),`${item.id}: ${field+lang} is required`);
@@ -28,7 +28,7 @@ function validate(data){
   assert.ok(Object.hasOwn(item,'diagram'),item.id+' explicit diagram or null required');
   assert.equal(item.diagram,diagramScope[item.id]||null,item.id+' individually reviewed diagram mapping');
  }
- for(const lang of ['Ko','En'])assert.equal(new Set(data.items.map(i=>i['detail'+lang])).size,46,lang+' duplicated capability overview');
+ for(const lang of ['Ko','En'])assert.equal(new Set(data.items.map(i=>i['detail'+lang])).size,47,lang+' duplicated capability overview');
  assert.deepEqual(duplicateSentences(data),[],'Cross-capability repeated prose requires explicit review');
 }
 module.exports={validate,duplicateSentences,diagramScope};
@@ -38,5 +38,5 @@ if(require.main===module){
  for(const mutate of [d=>delete d.items[0].detailKo,d=>d.items[0].detailEn='',d=>d.items[1].detailKo=d.items[0].detailKo,d=>delete d.items[0].diagram,d=>d.items.find(i=>i.id==='hotstart').diagram='grid-water-cycle']){
   const broken=structuredClone(data);mutate(broken);assert.throws(()=>validate(broken));
  }
- console.log('PASS 46 bilingual individual details, scoped diagrams, zero repeated cross-item prose, five negative controls');
+ console.log('PASS 47 bilingual individual details, scoped diagrams, zero repeated cross-item prose, five negative controls');
 }

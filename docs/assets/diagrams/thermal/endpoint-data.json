@@ -1,0 +1,17 @@
+{
+  "reviewed": "2026-11-05",
+  "trial_period": "2020-07-29 00:00–12:00",
+  "metric": "warm minus baseline at 12 h, deg C",
+  "forcing": "post-initial air temperature and dewpoint +15 deg C; first record retained",
+  "soil_cell_output_position_1based": 60,
+  "soil": {
+    "A": 5.6757965,
+    "B": 1.3896446,
+    "C": 0.2219543,
+    "D": 0.000816345
+  },
+  "river_cell_output_position_1based": 49434,
+  "river_cell": 0.4426861,
+  "river_mean_548_wet_cells": 2.9064604,
+  "source": "THERMAL_VALIDATION.md; recorded Seomjin trials; no observed-temperature accuracy claim"
+}
