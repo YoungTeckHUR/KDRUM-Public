@@ -36,3 +36,5 @@ Before publication, inspect the latest PR head and all repository checks. Resolv
 ## First browser check and correction
 
 The initial English desktop home exceeded the existing compact-height limit after adding longer copy and a third action. Shortened the home copy and retained two actions (overview and temperature), preserving the existing height requirement. The navigation still provides resources/download access. Browser checks are rerun on the corrected head.
+
+The corrected homepage passed navigation, height, contrast and all 188 bilingual feature/viewport cases. The final case-count assertion still expected the historical 184 cases (46 × 2 languages × 2 widths). It now derives the required count from the capability inventory and viewport list, without reducing coverage. Full CI is rerun so the subsequent methodology and layout checks also execute.

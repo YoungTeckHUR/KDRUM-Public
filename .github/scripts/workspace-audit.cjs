@@ -115,7 +115,7 @@ async function run(mode='navigation'){
    for(const lang of ['ko','en']){const c=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:900}}),p=await c.newPage();await p.goto(home(lang));assert.equal(await p.locator('.capability:visible').count(),47);await p.locator('#cap-ga>summary').click();await p.locator('#cap-ga .technical-details>summary').click();assert.ok(await p.locator('#cap-ga .detail-overview').isVisible());assert.ok((await p.locator('#cap-ga .feature-reference-image').getAttribute('href')).endsWith('.webp'));await bounds(p,'no-js '+lang);await c.close();}
    const p=await browser.newPage();await p.goto(base+'/seo-kdrum.html');assert.equal(await p.locator('.faq').count(),12);assert.equal(await p.locator('link[hreflang]').count(),0);await bounds(p,'FAQ');await p.close();
   }
-  if(mode==='details')assert.equal(results.filter(r=>r.id).length,184);
+  if(mode==='details')assert.equal(results.filter(r=>r.id).length,data.items.length * widths.length * 2);
  }finally{fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(results,null,2));await browser.close();}
  return results;
 }
