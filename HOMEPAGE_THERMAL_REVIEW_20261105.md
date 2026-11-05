@@ -32,3 +32,7 @@ Remaining scientific work: observed temperature accuracy, long seasonal response
 ## Handoff / next action
 
 Before publication, inspect the latest PR head and all repository checks. Resolve any failures, merge the approved homepage change, then verify Pages deployment and actual bilingual thermal copy/assets. After publication the live entry is /ko/#cap-temperature (English: /#cap-temperature). Official installer feature scope remains governed by MyWater.
+
+## First browser check and correction
+
+The initial English desktop home exceeded the existing compact-height limit after adding longer copy and a third action. Shortened the home copy and retained two actions (overview and temperature), preserving the existing height requirement. The navigation still provides resources/download access. Browser checks are rerun on the corrected head.
