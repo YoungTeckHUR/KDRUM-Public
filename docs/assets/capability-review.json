@@ -696,7 +696,7 @@
       "ko": {
         "summary": "실측·가상 횡단면과 하천망을 이용하여 1차원 수위·유량을 계산합니다.",
         "inputs": "횡단면 X–Z, 종단 하상고·하천 연결, 조도, 상류·측방 유입과 하류 수위·구조물.",
-        "mechanism": "1D 하천수리 기능은 개발 완료되었습니다. 국부관성 경로와 이류 운동량을 포함하는 동역학파 경로를 선택 목적에 맞춰 구분합니다. 동역학파는 단면 수리량과 공유 경계의 보존형 플럭스를 하천망에 연결하며, 현재 음해 계산 경로는 후진 Euler·TR-BDF2와 비선형 반복을 사용합니다. 실측 단면의 상대 형상을 유지하면서 종단 하상고에 배치하므로 단순 직사각형 하도로 일괄 치환하는 방식과 다릅니다.",
+        "mechanism": "1D 하천수리 기능은 개발 완료되었습니다. 국부관성 경로와 이류 운동량을 포함하는 동역학파 경로를 선택 목적에 맞춰 구분합니다. 동역학파는 단면 수리량과 공유 경계의 보존형 플럭스를 하천망에 연결하며, 현재 음해 계산 경로는 후방 오일러법(Backward Euler)·TR-BDF2와 비선형 반복을 사용합니다. 실측 단면의 상대 형상을 유지하면서 종단 하상고에 배치하므로 단순 직사각형 하도로 일괄 치환하는 방식과 다릅니다.",
         "outputs": "하천망 수위·유량·유속, 종단·횡단 수리상태와 저장량.",
         "check": "배수위·역류·급변류의 표현은 선택한 방정식과 경계조건에 달려 있습니다. 실제 유역 적용은 단면·표고 기준과 관측수위·유량으로 확인합니다.",
         "symbols": "A [m²], Q [m³/s], I₁: 단면 정수압 적분[m³], ql [m²/s]. 두 번째 식은 비등단면·마찰·측방항을 묶어 쓴 보존형 개요입니다. Sf는 무차원 마찰경사이며 Sgeom·Slat는 단위 길이당 운동량 소스입니다."
@@ -892,7 +892,7 @@
       "ko": {
         "summary": "이류 운동량을 포함하는 완전 천수방정식으로 선택한 2D 수리영역을 해석합니다.",
         "inputs": "지원되는 수리격자·지형, 수심·두 방향 유량, 조도, 경계·소스.",
-        "mechanism": "Full SWE 계산 경로는 질량과 두 수평방향 운동량을 보존형으로 갱신합니다. 현재 구현에는 HLL 계열 경계 플럭스와 공간·시간 정확도 선택, 지형·마찰·마름·젖음 처리가 포함됩니다. 기본 국부관성 범람과 별도의 선택 경로이므로 지원하는 전체영역·격자·경계·연계 조합을 맞추어 사용합니다. 이류를 포함한다고 모든 경우에 자동으로 더 정확해지는 것은 아닙니다.",
+        "mechanism": "Full SWE는 Full Shallow Water Equations(완전 천수방정식)의 약칭입니다. Full SWE 계산 경로는 질량과 두 수평방향 운동량을 보존형으로 갱신합니다. 현재 구현에는 HLL 계열 경계 플럭스와 공간·시간 정확도 선택, 지형·마찰·마름·젖음 처리가 포함됩니다. 기본 국부관성 범람과 별도의 선택 경로이므로 지원하는 전체영역·격자·경계·연계 조합을 맞추어 사용합니다. 이류를 포함한다고 모든 경우에 자동으로 더 정확해지는 것은 아닙니다.",
         "outputs": "수심·유속벡터·운동량 변화, 급격한 흐름 전이와 침수 결과.",
         "check": "작은 격자와 빠른 유속은 시간간격을 제한합니다. 국부관성 결과와 비교할 때 입력·경계·해상도를 동일하게 놓습니다.",
         "symbols": "h [m], u·v [m/s]. F·G는 질량·운동량 플럭스, S는 지형·마찰·외부 소스입니다."
@@ -900,7 +900,7 @@
       "en": {
         "summary": "Solves the full shallow-water equations, including advective momentum, for supported 2D configurations.",
         "inputs": "Supported hydraulic grid/terrain, depth and directional discharge, roughness, boundaries and sources.",
-        "mechanism": "The Full SWE path conservatively updates mass and both horizontal momentum components. Its implementation includes HLL-family fluxes, spatial/time-order options, terrain, friction and wet/dry treatment. It is a separate selectable path, requiring supported domain/grid/boundary/coupling combinations. Retaining advection does not automatically improve every application.",
+        "mechanism": "Full SWE stands for Full Shallow Water Equations. The Full SWE path conservatively updates mass and both horizontal momentum components. Its implementation includes HLL-family fluxes, spatial/time-order options, terrain, friction and wet/dry treatment. It is a separate selectable path, requiring supported domain/grid/boundary/coupling combinations. Retaining advection does not automatically improve every application.",
         "outputs": "Depth, velocity vectors, momentum response, flow transitions and inundation.",
         "check": "Small cells and high velocities constrain the timestep. Compare against local inertia using matched inputs, boundaries and resolution.",
         "symbols": "h [m], u/v [m/s]; F/G are mass and momentum fluxes and S includes terrain, friction and external sources."

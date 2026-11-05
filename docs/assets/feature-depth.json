@@ -150,7 +150,7 @@
     "exampleEn": "Inspect final timestamp, units, spatial/time reference, invalid values and finalization together."
   },
   "dwnet": {
-    "principleKo": "1D 하천수리 기능은 개발 완료되었습니다. 국부관성 경로와 이류 운동량을 포함하는 동역학파 경로를 선택 목적에 맞춰 구분합니다. 동역학파는 단면 수리량과 공유 경계의 보존형 플럭스를 하천망에 연결하며, 현재 음해 계산 경로는 후진 Euler·TR-BDF2와 비선형 반복을 사용합니다. 실측 단면의 상대 형상을 유지하면서 종단 하상고에 배치하므로 단순 직사각형 하도로 일괄 치환하는 방식과 다릅니다.",
+    "principleKo": "1D 하천수리 기능은 개발 완료되었습니다. 국부관성 경로와 이류 운동량을 포함하는 동역학파 경로를 선택 목적에 맞춰 구분합니다. 동역학파는 단면 수리량과 공유 경계의 보존형 플럭스를 하천망에 연결하며, 현재 음해 계산 경로는 후방 오일러법(Backward Euler)·TR-BDF2와 비선형 반복을 사용합니다. 실측 단면의 상대 형상을 유지하면서 종단 하상고에 배치하므로 단순 직사각형 하도로 일괄 치환하는 방식과 다릅니다.",
     "principleEn": "Development of the 1D hydraulic capability is complete. Local-inertial and dynamic-wave paths are distinguished by their treatment of advective momentum. The dynamic-wave network combines section metrics and conservative interface fluxes; its implicit path uses Backward Euler/TR-BDF2 and nonlinear iteration. Measured section shape is retained while being placed on longitudinal bed elevations rather than universally replaced by rectangles.",
     "exampleKo": "배수위·역류·급변류의 표현은 선택한 방정식과 경계조건에 달려 있습니다. 실제 유역 적용은 단면·표고 기준과 관측수위·유량으로 확인합니다.",
     "exampleEn": "Backwater, reversal and rapidly varying flow depend on selected equations/boundaries. Assess real-basin application using section/datum consistency and observed stage/flow."
@@ -198,8 +198,8 @@
     "exampleEn": "Assess local-inertial assumptions where advection or rapid transitions matter, together with wet/dry, roughness, timestep sensitivity and balance."
   },
   "fullswe": {
-    "principleKo": "Full SWE 계산 경로는 질량과 두 수평방향 운동량을 보존형으로 갱신합니다. 현재 구현에는 HLL 계열 경계 플럭스와 공간·시간 정확도 선택, 지형·마찰·마름·젖음 처리가 포함됩니다. 기본 국부관성 범람과 별도의 선택 경로이므로 지원하는 전체영역·격자·경계·연계 조합을 맞추어 사용합니다. 이류를 포함한다고 모든 경우에 자동으로 더 정확해지는 것은 아닙니다.",
-    "principleEn": "The Full SWE path conservatively updates mass and both horizontal momentum components. Its implementation includes HLL-family fluxes, spatial/time-order options, terrain, friction and wet/dry treatment. It is a separate selectable path, requiring supported domain/grid/boundary/coupling combinations. Retaining advection does not automatically improve every application.",
+    "principleKo": "Full SWE는 Full Shallow Water Equations(완전 천수방정식)의 약칭입니다. Full SWE 계산 경로는 질량과 두 수평방향 운동량을 보존형으로 갱신합니다. 현재 구현에는 HLL 계열 경계 플럭스와 공간·시간 정확도 선택, 지형·마찰·마름·젖음 처리가 포함됩니다. 기본 국부관성 범람과 별도의 선택 경로이므로 지원하는 전체영역·격자·경계·연계 조합을 맞추어 사용합니다. 이류를 포함한다고 모든 경우에 자동으로 더 정확해지는 것은 아닙니다.",
+    "principleEn": "Full SWE stands for Full Shallow Water Equations. The Full SWE path conservatively updates mass and both horizontal momentum components. Its implementation includes HLL-family fluxes, spatial/time-order options, terrain, friction and wet/dry treatment. It is a separate selectable path, requiring supported domain/grid/boundary/coupling combinations. Retaining advection does not automatically improve every application.",
     "exampleKo": "작은 격자와 빠른 유속은 시간간격을 제한합니다. 국부관성 결과와 비교할 때 입력·경계·해상도를 동일하게 놓습니다.",
     "exampleEn": "Small cells and high velocities constrain the timestep. Compare against local inertia using matched inputs, boundaries and resolution."
   },
