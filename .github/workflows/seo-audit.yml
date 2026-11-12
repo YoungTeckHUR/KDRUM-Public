@@ -19,7 +19,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           from html.parser import HTMLParser
-          from datetime import date
+          from datetime import date, datetime, timezone, timedelta
           from urllib.parse import urlsplit
           import xml.etree.ElementTree as ET
           import re
@@ -79,7 +79,7 @@ jobs:
               assert url.startswith(base), 'GitHub Pages project base path missing'
               modified = entry.findtext('s:lastmod', namespaces=ns)
               assert re.fullmatch(r'\d{4}-\d{2}-\d{2}', modified)
-              assert date.fromisoformat(modified) <= date.today()
+              assert date.fromisoformat(modified) <= datetime.now(timezone(timedelta(hours=9))).date()
               links = entry.findall('x:link', ns)
               expected = cluster if url in (base, base + 'ko/') else {}
               assert len(links) == len(expected)
