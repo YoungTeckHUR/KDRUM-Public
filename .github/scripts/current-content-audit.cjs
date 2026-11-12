@@ -1,11 +1,11 @@
-/* Explicit 2026-11-05 review contract: protect accuracy, not obsolete status labels. */
+/* Explicit 2026-11-13 review contract: protect accuracy, not obsolete status labels. */
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'../..');
 const current=require('./current-content.cjs');
 const data=require('../../docs/assets/site-content.json');
 current.validate(data);
-assert.equal(current.review.revision,'2026-11-05');
+assert.equal(current.review.revision,'2026-11-13');
 for(const lang of ['ko','en']){
  const file=path.join(root,'docs',lang==='ko'?'ko/index.html':'index.html');
  const html=fs.readFileSync(file,'utf8');
@@ -22,7 +22,7 @@ for(const lang of ['ko','en']){
  assert.ok(html.includes('netcdf')&&html.includes('MyWater'));
 }
 for(const name of ['DEVELOPMENT_STATUS.md','CAPABILITY_ATLAS.md','CAPABILITIES.md','MODEL_CARD.md','TECHNICAL_METHODS.md','ROADMAP.md','llms.txt','docs/llms.txt']){
- const s=fs.readFileSync(path.join(root,name),'utf8');assert.ok(s.includes('2026-11-05'),name+' dated current review');
+ const s=fs.readFileSync(path.join(root,name),'utf8');assert.ok(s.includes('2026-11-13'),name+' dated current review');
  assert.ok(!s.includes('public maturity baseline reviewed 2026-10-01'),name+' no frozen status baseline');
 }
 assert.equal(current.theory.chapters.length,7);

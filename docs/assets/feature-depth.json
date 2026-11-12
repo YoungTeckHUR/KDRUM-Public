@@ -68,8 +68,8 @@
   "hotstart": {
     "principleKo": "재시작은 저장 시점의 상태를 복원하여 이후 구간을 계산하는 기능입니다. 수문 준비상태만 재사용하는 캐시는 준비운전을 줄이지만 적설·댐·하천 등 모든 상태를 동일하게 이어받는 전체 재시작과 같지 않습니다. 복원 대상과 시작시각을 확인하고 불일치한 상태는 무리하게 혼용하지 않습니다.",
     "principleEn": "Restart resumes from a saved state and time. A cache of hydrologic warm-up state can shorten initialization but is not equivalent to restoring every snow, reservoir and hydraulic variable. Check restored scope and time identity rather than combining incompatible states.",
-    "exampleKo": "연속 실행과 재시작 실행을 같은 조건에서 비교하여 저장량·유량·시간축의 일치성을 확인합니다.",
-    "exampleEn": "Compare uninterrupted and restarted runs under identical conditions for storage, discharge and time consistency."
+    "exampleKo": "선택한 장시간 모의에서 분할 재시작과 연속 실행의 출력 일치를 확인했습니다. 저장 형식·초기상태·재개 시각을 맞춰 비교해야 하며 모든 모드·유역의 동일한 결과를 보장하지는 않습니다.",
+    "exampleEn": "Selected long-duration runs matched resumed and uninterrupted outputs. Saved-state format, initialization and restart times must agree; the results do not establish equivalence for every mode or basin."
   },
   "dlayer": {
     "principleKo": "D층은 원래 다층 유출 구조에 포함된 저장층입니다. 현행 확장 경로는 저장량에 따른 지연 복귀와 선택적인 심부손실을 가용 저장량 이내로 계산하여 장기 저유량 반응을 표현합니다. 상부 토양·하천과의 교환은 내부 이동이며, 영역 밖 심부손실은 외부 손실로 따로 집계합니다. 공간적인 대수층 수두장을 푸는 지하수유동모형과는 해석 차원이 다릅니다.",
@@ -230,8 +230,8 @@
   "dye": {
     "principleKo": "물에 포함된 질량을 유입·유출과 함께 갱신하고 가용 물의 체적으로 나누어 농도를 계산합니다. 농도 변화는 유입 질량뿐 아니라 희석·저장 변화에도 영향을 받습니다. 보존성 추적은 생화학적 반응이나 오염물질 분해를 자동 포함하지 않으므로 비활성 수질 과정 모듈과 구분합니다.",
     "principleEn": "Solute mass is updated with inflow/outflow and divided by water volume to obtain concentration. Concentration reflects dilution and changing storage as well as mass loading. Conservative tracking does not automatically include biochemical reactions or degradation and is distinct from the disabled water-quality process module.",
-    "exampleKo": "물의 양이 작아지는 구간에서 농도의 민감성을 확인하고 주입·유출·저장의 질량 합계를 대조합니다.",
-    "exampleEn": "Inspect sensitivity at low water volume and reconcile injected, exported and stored mass."
+    "exampleKo": "선택한 335시간 하천 결합운영에서 보존성 Dye 수송과 재시작을 확인했습니다. 주입·유출·저장 질량을 대조하되 이를 사면·토양 전체 물질이동, 반응성 수질 또는 완전한 하상변동 검증으로 확대 해석하지 않습니다.",
+    "exampleEn": "Selected 335-hour coupled river operation and restart exercised conservative Dye transport. Reconcile injected, exported and stored mass; do not infer complete soil/slope transport, reactive water quality or sediment morphodynamic validation."
   },
   "wq": {
     "principleKo": "반응성 수질은 이송 외에 생성·소멸·반응속도와 외부 부하를 계산해야 합니다. 현재 활성 빌드에서는 해당 과정이 비활성 상태이므로 유사·보존성 추적자의 결과를 질소·인·BOD 결과로 안내하지 않습니다. 추후 재개발 시 반응식·단위·시간간격과 독립 수질자료에 대한 검증이 필요합니다.",
@@ -242,8 +242,8 @@
   "parallel": {
     "principleKo": "OpenMP는 공유메모리 스레드, MPI는 프로세스 간 분할을 사용합니다. 흐름방향의 선후관계나 하천망 연결 때문에 모든 작업을 독립적으로 나눌 수는 없습니다. 현재 점검한 소스 패키지는 OMP 중심이며, 과거 MPI 연구 성과와 실행파일별 지원 방식은 구분해야 합니다. 스레드를 늘릴 때는 계산 이득뿐 아니라 대기·동기화·입출력 비용도 평가합니다.",
     "principleEn": "OpenMP uses shared-memory threads and MPI distributes work across processes. Routing dependencies and network connectivity limit independent work. The source package reviewed here is OMP-focused; historical MPI evidence is distinguished from support in a particular executable. More threads require evaluating synchronization, waiting and I/O costs as well as arithmetic gains.",
-    "exampleKo": "동일 입력·컴퓨터·출력조건에서 시간과 결과를 비교합니다. 코어 수만으로 속도 향상 배수를 단정하지 않습니다.",
-    "exampleEn": "Compare both outputs and timings using the same input, host and output configuration; core count alone does not determine speedup."
+    "exampleKo": "동일 장비·4개 성능 코어·6시간 섬진강 통제 시험에서 v3.0.5.18의 총 경과시간 중앙값이 이전 버전보다 30.7% 짧았습니다. 입력·장비·모드별 결과는 달라지며 스레드 수에 따른 성능 향상을 일반화하지 않습니다.",
+    "exampleEn": "A controlled six-hour Seomjin comparison on four performance cores recorded 30.7% lower median elapsed time with v3.0.5.18 than with its predecessor. Results vary by inputs, hardware and execution mode; more threads do not guarantee a similar gain."
   },
   "netcdf": {
     "principleKo": "차원은 배열의 축, 변수는 수심·유량 등의 값, 속성은 단위·좌표계·의미를 설명합니다. 같은 NetCDF 형식이어도 유역 격자와 범람 격자, 저장 간격과 시간 기준이 다를 수 있습니다. 진행 중 파일과 정상 마감 파일의 상태를 구분하고 분석 도구가 실제 축과 결측 표시를 읽도록 연결합니다.",
@@ -254,31 +254,31 @@
   "viewer": {
     "principleKo": "원자료의 변수와 시각을 읽어 지도에 표시하고 선택지점의 시간 변화를 연결합니다. 최대수심 지도와 특정 시각의 수심은 서로 다른 결과이며, 색상 범위와 결측·마른 영역 표시도 해석에 영향을 줍니다. Viewer는 모형을 대신 계산하는 프로그램이 아니며, 기존 FloodViewer와 신규 통합 Studio의 지원 범위는 사용 버전별로 구분합니다.",
     "principleEn": "Maps display source variables at their actual times and link to selected-location series. Maximum depth differs from depth at one timestamp; color scale and missing/dry-cell handling affect interpretation. A viewer does not replace the solver, and standalone FloodViewer support differs from the new integrated Studio by version.",
-    "exampleKo": "자동 축 범위·범례·단위와 실제 원자료 값을 대조하고, 부분 결과 표시를 전체 모의 완료로 해석하지 않습니다.",
-    "exampleEn": "Check axes, legend, units and source values; display of partial results does not establish full-run completion."
+    "exampleKo": "rc2.21 정본에 VWorld 관련 수정과 Windows 포터블 패키징이 반영되었습니다. 실제 위성·Hybrid 지도 수신, 사용자 PC 실행 및 전체 결과 호환성은 별도로 확인해야 합니다.",
+    "exampleEn": "Canonical rc2.21 includes VWorld-related fixes and Windows portable packaging. Live satellite/hybrid delivery, user-PC execution and broad result compatibility require separate verification."
   },
   "inputstudio": {
     "principleKo": "원자료로부터 유역·흐름방향·하천망·계산격자를 구축하고, 시계열과 수리조건을 프로젝트에 연결합니다. 작업공간 저장과 계산엔진 입력파일 생성을 구분하며 기준안과 시나리오를 분리해 관리합니다. 새 K-DRUM Studio는 프로젝트·제어·실행·분석을 통합하는 별도 개발 작업이며, 기존 InputStudio를 단순히 새 제품명으로 바꿔 부르지 않습니다.",
     "principleEn": "Source data are used to build basin, flow-direction, river and computational-grid inputs, then connected to forcing and hydraulic settings. Workspace persistence is distinguished from engine-input generation, with baseline/scenario isolation. The new K-DRUM Studio is separate integrated project/control/run/analysis work, not merely a renamed InputStudio.",
-    "exampleKo": "완성되지 않은 입력을 임의 값으로 채우지 않고, 저장과 입력 생성·실행이 같은 동작인지 구분합니다.",
-    "exampleEn": "Do not fill incomplete inputs with invented values; distinguish saving, input generation and execution."
+    "exampleKo": "새 K-DRUM Studio P11.10.11-dev는 공간정보 범례·실측단면–DEM 비교와 지도 캐시 보완의 후보 검사·Windows 빌드를 마쳤지만, Draft 상태로 정본에 병합되지 않았습니다. 기존 InputStudio와 정식 배포를 혼동하지 않습니다.",
+    "exampleEn": "The new Studio P11.10.11-dev candidate passed scoped legend, surveyed-section/DEM comparison, map-cache and Windows build checks, but remains an unmerged draft. Distinguish it from the existing InputStudio and official releases."
   },
   "estuary": {
     "principleKo": "평면 x–y 범람과 달리 종·연직 x–z 단면에서 수직 방향 염분·흐름 차이를 다룹니다. 폭평균·정수압 가정과 해당 버전의 수송·혼합 표현을 사용하며 Core의 기본 1D·2D 홍수 기능과 구분됩니다. 염수 침입과 성층 해석에는 조위·염분·형상·혼합 자료가 필요합니다.",
     "principleEn": "Unlike plan-view x–y inundation, this model examines vertical salinity/flow structure on an x–z section. Width-averaged/hydrostatic assumptions and version-specific transport/mixing make it distinct from the completed Core river/flood solvers. Salt intrusion and stratification require tidal, salinity, geometry and mixing information.",
-    "exampleKo": "2DV를 일반적인 평면 2D 또는 완전 3D 모형으로 설명하지 않고, 별도 연구 검증범위를 표시합니다.",
-    "exampleEn": "Do not describe 2DV as standard plan-view 2D or a full 3D model; retain its research validation scope."
+    "exampleKo": "Estuary2DV v0.1.1 연구 소스는 2026-11-10 정본에 반영되었습니다. 실행파일 등록, 사용자 유역 정확도 검증 및 일반 Core 모의에 대한 포괄적 지원은 별도 확인 대상입니다.",
+    "exampleEn": "Estuary2DV v0.1.1 research source was promoted on 10 November 2026. Executable registration, user-basin accuracy and general Core production support remain separate checks."
   },
   "river-viewer": {
     "principleKo": "1차원 하천 뷰어는 개발이 완료되었습니다. 동일한 하천 지점과 시각을 하천망·종단면·횡단면·시계열 보기에 연결하고 다지점 결과와 관측자료를 비교합니다. 비교 시 지점·시각·표고 기준을 맞춥니다. 정식 배포는 예정이며, 기존 뷰어의 개발 완료와 C# 전환·Studio 통합 작업의 진행 상태는 별도로 구분합니다.",
     "principleEn": "Development of the 1D river viewer is complete. A common location and time link network, profile, cross-section and time-series views for multi-site and observation comparisons. Match sites, times and elevation datums. Official distribution is planned; completion of the existing viewer is distinct from C# migration and Studio integration work.",
-    "exampleKo": "정식 배포 예정입니다. 사용 중인 뷰어 버전과 결과자료의 시간·지점·표고 기준 및 표시값을 확인합니다.",
-    "exampleEn": "Official distribution is planned. Check the viewer version, result times, locations, elevation datums and displayed values."
+    "exampleKo": "v3.5.2 정본에 공간지도·VWorld 및 Windows 포터블 배포 구성이 반영되었습니다. 개발 완료·정식 배포 예정이며 사용자 PC의 실제 데이터·배경지도 호환성은 별도로 확인합니다.",
+    "exampleEn": "Canonical v3.5.2 includes spatial/VWorld and Windows portable-package work. Development is complete with official distribution planned; real-data and basemap compatibility on user machines remain to be checked."
   },
   "temperature": {
     "principleKo": "격자별 토양온도는 수분에 따른 열물성, 대기와 토양 사이 및 토양층 사이의 열전도, 적설의 단열효과를 반영합니다. 융설수·유출수·토양수의 이동에 따른 현열을 하천 유입과 연결하고, 1D 하천에서는 수리계산에서 확정된 물의 이동량으로 열을 전달하며 대기와 선형 열교환을 계산합니다. 초기 온도는 대표 기상 또는 사전 기상을 이용해 생성하고, 시작시각·격자·수분·적설·초기 수리상태가 호환되면 저장한 상태를 재사용합니다.",
     "principleEn": "Cell-based soil temperatures account for moisture-dependent thermal properties, atmospheric and interlayer conduction, and snow insulation. Sensible heat carried by meltwater, runoff and soil water supplies the river. The 1D river transports heat with accepted hydraulic water volumes and uses linear air–water heat exchange. Initial temperatures can be generated from representative or actual prestart meteorology and reused when start time, grid, moisture, snow and initial hydraulics are compatible.",
-    "exampleKo": "개발 후보본에서 기능 구현과 섬진강 시험유역의 동작·기온 변화 반응을 확인했습니다. 정식 배포 예정이며 관측 지온·수온 정확도와 장기 계절 반응은 별도 검증이 필요합니다. 직접 단파·장파복사, 증발·승화 잠열, 하상전도와 동결·하천결빙은 현재 포함하지 않습니다. 온도는 NetCDF로 출력하며 기존 Viewer의 실제 온도 표출은 아직 확인하지 않았습니다.",
-    "exampleEn": "Implementation and Seomjin trial-basin operation and air-temperature response have been checked in the development candidate. Official distribution is planned. Observed soil/river-temperature accuracy and long-term seasonal behavior require separate validation. Direct shortwave/longwave radiation, evaporation/sublimation latent heat, conductive riverbed exchange and freezing/river ice are not included. Temperature fields are in NetCDF; actual temperature rendering in the existing Viewer remains unverified."
+    "exampleKo": "Core v3.0.5.18 정본에서 섬진강 335시간 결합운영과 재시작 시험을 확인했습니다. 실행은 완료되었지만 운영 보고서에는 물수지 경고(2.416%)가 남아 있으며 관측 지온·수온 정확도와 장기 계절 반응은 별도 검증이 필요합니다. 직접 단파·장파복사, 증발·승화 잠열, 하상전도와 동결·하천결빙은 포함하지 않습니다. 온도 NetCDF의 기존 Viewer 실제 표출과 MyWater 공식 배포본 포함 여부는 확인되지 않았습니다.",
+    "exampleEn": "Canonical Core v3.0.5.18 includes Seomjin 335-hour coupled-operation and restart evidence. The run completed with a reported 2.416% water-balance warning; observed soil/river-temperature accuracy and seasonal behavior remain unverified. Direct shortwave/longwave radiation, evaporation/sublimation latent heat, conductive riverbed exchange and freezing/river ice are excluded. Actual temperature rendering in the existing Viewer and inclusion in the MyWater release remain unverified."
   }
 }

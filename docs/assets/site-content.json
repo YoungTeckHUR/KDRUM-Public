@@ -1688,7 +1688,7 @@
   },
   "provenance": {
     "baseline": "Current capability implementation review",
-    "reviewed": "2026-11-05",
+    "reviewed": "2026-11-13",
     "source": "Current implementation and model-developer completion confirmation; implementation, application validation and official distribution are separate."
   }
 }
