@@ -1,5 +1,13 @@
 # 토양온도·하천수온 / Soil and river temperature
 
+## 2026-11-13 정본 개발 현황 / Latest canonical-development status
+
+2026년 11월 12일 기준 Core **v3.0.5.18**의 실제 섬진강 335시간 결합 실행에서 유역 운동파·선택 1D 하천수리·토양/하천수온·보존성 Dye가 함께 실행되고 지원 재시작을 비교했습니다. **완료된 실행에도 물수지 경고(2.416%)가 보고**되었습니다. 이는 관측 온도 정확도 인증이 아니며, 기존 Viewer의 실제 온도 표시 및 MyWater 공식 배포 포함을 보장하지 않습니다. / Canonical development Core **v3.0.5.18** exercised coupled watershed routing, selected river hydraulics, soil/river temperature and conservative Dye during a 335-hour Seomjin run with selected restart checks. **The completed run retained a 2.416% water-balance warning.** This is neither observation-based thermal accuracy certification nor confirmation of temperature rendering or inclusion in the current MyWater package.
+
+[최신 개발·검증 현황 / Latest development and evidence](DEVELOPMENT_UPDATE_20261113.md).
+
+## 2026-11-05 최초 시험기록 / Original trial evidence (retained)
+
 Updated 2026-11-05. 기능 구현 · 시험유역 동작 확인 · 정식 배포 예정.
 Implemented in a development candidate; trial-basin operation checked; official distribution planned.
 This feature is not presented as part of the current MyWater installer.

@@ -1,5 +1,14 @@
 # K-DRUM Public Information Changelog
 
+## 2026-11-13 — Core v3.0.5.18, Viewer and Studio readiness synchronization
+
+- Added a bilingual, public-level [November development and validation snapshot](DEVELOPMENT_UPDATE_20261113.md) covering the canonical Core, 1D/2D result viewers, separate Studio draft and experimental Estuary2DV.
+- Updated 47 Korean/English capability records and seven theory chapters without changing feature identities, disabled functions or existing implementation-completion labels.
+- Clarified that the selected 335-hour coupled Seomjin run completed with a **reported 2.416% water-balance warning**; observed-temperature accuracy and official MyWater distribution remain separate.
+- Recorded a controlled six-hour/4-core Razer performance result (30.7% lower median elapsed time) strictly as a case-specific benchmark, not a general prediction.
+- Preserved original 2026-11-05 thermal sensitivity evidence, adding a dated follow-up rather than rewriting measured data.
+- Corrected program-level labels: 1D Viewer v3.5.2 development-complete, 2D FloodViewer rc2.21 release candidate and P11.10.11-dev Studio an **unmerged draft**.
+
 ## 2026-10-28 — Full implementation and methodology review
 
 - Corrected completed 1D river/2D flood capabilities and distinguished implementation from application validation and official release.

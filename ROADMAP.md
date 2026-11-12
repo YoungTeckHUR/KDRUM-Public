@@ -1,12 +1,18 @@
 # K-DRUM 개선·확장 계획 / Refinement and extension roadmap
 
-**Reviewed: 2026-11-05**
+**Reviewed: 2026-11-13**
 
 ## Completed calculation foundation / 완료된 계산 기능
 
 1D river-network hydraulics, 2D local-inertial inundation and two-way exchange are complete; they are not future milestones. Full SWE is complete within supported configurations. Existing watershed hydrology, state/output and conservation functions provide the foundation.
 
 1D 하천수리·2D 국부관성 범람·양방향 연계는 완료 기능이며 향후 개발 예정 항목으로 다시 표시하지 않습니다. Full SWE는 지원 구성 안에서 선택합니다.
+
+## 2026-11-13 development snapshot / 최신 개발 현황
+
+See [development and validation update](DEVELOPMENT_UPDATE_20261113.md) for the separately scoped Core, Viewer, Studio and 2DV results.
+
+최신 Core·Viewer·Studio·2DV의 구현과 조건부 검증은 [최신 개발·검증 현황](DEVELOPMENT_UPDATE_20261113.md)에서 확인합니다.
 
 ## Further work / 후속 개선
 

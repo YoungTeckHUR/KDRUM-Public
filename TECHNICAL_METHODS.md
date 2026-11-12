@@ -1,6 +1,6 @@
 # K-DRUM 이론·수치방법 / Theory and numerical methodology
 
-**Reviewed: 2026-11-05**
+**Reviewed: 2026-11-13**
 
 다음 식은 지배관계와 보존·해석 원리를 설명합니다. 입력파일의 비공개 형식이나 내부 조정값을 나열하지 않습니다. 외부 참고문헌은 일반 이론의 근거이며 외부 모형과 K-DRUM의 구현·성능이 동일하다는 뜻은 아닙니다.
 
@@ -232,8 +232,8 @@ E: 현열[J], ρ: 물 밀도[kg/m³], c: 비열[J/(kg·°C)], V: 물 체적[m³]
 
 ### 초기화·실행 확인과 관측 정확도 검증을 구분합니다 / Separate initialization and operation checks from observed accuracy
 
-섬진강 시험유역에서 온도 기능의 ON/OFF, 저온·고온, 저온 후 고온 전환, 일조시간 조건을 실행했습니다. 초기 온도를 생성한 실행과 저장 상태를 읽은 실행의 온도 결과 일치도 확인했습니다. 일조시간 시험은 기존 수문·증발산을 통한 간접 반응이며 직접 일사 가열을 검증한 시험이 아닙니다. 개발 후보본에서 기능 구현과 섬진강 시험유역의 동작·기온 변화 반응을 확인했습니다. 정식 배포 예정이며 관측 지온·수온 정확도와 장기 계절 반응은 별도 검증이 필요합니다. 직접 단파·장파복사, 증발·승화 잠열, 하상전도와 동결·하천결빙은 현재 포함하지 않습니다. 온도는 NetCDF로 출력하며 기존 Viewer의 실제 온도 표출은 아직 확인하지 않았습니다.
+섬진강 시험유역에서 온도 기능의 ON/OFF, 저온·고온, 저온 후 고온 전환, 일조시간 조건을 실행했습니다. 초기 온도를 생성한 실행과 저장 상태를 읽은 실행의 온도 결과 일치도 확인했습니다. 일조시간 시험은 기존 수문·증발산을 통한 간접 반응이며 직접 일사 가열을 검증한 시험이 아닙니다. Core v3.0.5.18 정본에서 섬진강 335시간 결합운영과 재시작 시험을 확인했습니다. 실행은 완료되었지만 운영 보고서에는 물수지 경고(2.416%)가 남아 있으며 관측 지온·수온 정확도와 장기 계절 반응은 별도 검증이 필요합니다. 직접 단파·장파복사, 증발·승화 잠열, 하상전도와 동결·하천결빙은 포함하지 않습니다. 온도 NetCDF의 기존 Viewer 실제 표출과 MyWater 공식 배포본 포함 여부는 확인되지 않았습니다.
 
-Seomjin trials covered thermal ON/OFF, cool/warm forcing, a cold-to-warm transition and sunshine-duration scenarios. Generated-state and read-state runs also produced matching temperature outputs. Sunshine-duration cases test indirect hydrologic/ET effects, not direct radiative heating. Implementation and Seomjin trial-basin operation and air-temperature response have been checked in the development candidate. Official distribution is planned. Observed soil/river-temperature accuracy and long-term seasonal behavior require separate validation. Direct shortwave/longwave radiation, evaporation/sublimation latent heat, conductive riverbed exchange and freezing/river ice are not included. Temperature fields are in NetCDF; actual temperature rendering in the existing Viewer remains unverified.
+Seomjin trials covered thermal ON/OFF, cool/warm forcing, a cold-to-warm transition and sunshine-duration scenarios. Generated-state and read-state runs also produced matching temperature outputs. Sunshine-duration cases test indirect hydrologic/ET effects, not direct radiative heating. Canonical Core v3.0.5.18 includes Seomjin 335-hour coupled-operation and restart evidence. The run completed with a reported 2.416% water-balance warning; observed soil/river-temperature accuracy and seasonal behavior remain unverified. Direct shortwave/longwave radiation, evaporation/sublimation latent heat, conductive riverbed exchange and freezing/river ice are excluded. Actual temperature rendering in the existing Viewer and inclusion in the MyWater release remain unverified.
 
 [K-DRUM soil and river temperature: scope and trial results (2026-11-05)](https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/THERMAL_VALIDATION.md)

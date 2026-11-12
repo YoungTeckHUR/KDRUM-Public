@@ -1,6 +1,6 @@
 # K-DRUM 기능·입력·계산·출력 / Capabilities, inputs, methods and outputs
 
-**검토일 / Reviewed: 2026-11-05**
+**검토일 / Reviewed: 2026-11-13**
 
 1D 하천망 수리, 분기·합류, 2D 국부관성 범람과 양방향 1D–2D 연계는 **개발 완료** 기능입니다. Full SWE는 지원하는 격자·경계·연계 조건에 맞춰 사용하는 **개발 완료·선택 적용** 기능입니다. 기능 개선이나 새로운 유역 검증이 계속된다는 이유로 완료된 기능을 개발 중으로 되돌리지 않습니다.
 
@@ -236,7 +236,7 @@ Cell-based soil temperatures account for moisture-dependent thermal properties, 
 
 산출물 / Outputs: A/B/C/D층 토양온도와 1D 하천수온의 공간·시간별 NetCDF 결과, 초기 온도 상태의 생성·재사용. / Spatial and temporal NetCDF fields for A/B/C/D soil temperatures and 1D river temperature, plus generated and reusable thermal initial states.
 
-적용 조건 / Check: 개발 후보본에서 기능 구현과 섬진강 시험유역의 동작·기온 변화 반응을 확인했습니다. 정식 배포 예정이며 관측 지온·수온 정확도와 장기 계절 반응은 별도 검증이 필요합니다. 직접 단파·장파복사, 증발·승화 잠열, 하상전도와 동결·하천결빙은 현재 포함하지 않습니다. 온도는 NetCDF로 출력하며 기존 Viewer의 실제 온도 표출은 아직 확인하지 않았습니다. / Implementation and Seomjin trial-basin operation and air-temperature response have been checked in the development candidate. Official distribution is planned. Observed soil/river-temperature accuracy and long-term seasonal behavior require separate validation. Direct shortwave/longwave radiation, evaporation/sublimation latent heat, conductive riverbed exchange and freezing/river ice are not included. Temperature fields are in NetCDF; actual temperature rendering in the existing Viewer remains unverified.
+적용 조건 / Check: Core v3.0.5.18 정본에서 섬진강 335시간 결합운영과 재시작 시험을 확인했습니다. 실행은 완료되었지만 운영 보고서에는 물수지 경고(2.416%)가 남아 있으며 관측 지온·수온 정확도와 장기 계절 반응은 별도 검증이 필요합니다. 직접 단파·장파복사, 증발·승화 잠열, 하상전도와 동결·하천결빙은 포함하지 않습니다. 온도 NetCDF의 기존 Viewer 실제 표출과 MyWater 공식 배포본 포함 여부는 확인되지 않았습니다. / Canonical Core v3.0.5.18 includes Seomjin 335-hour coupled-operation and restart evidence. The run completed with a reported 2.416% water-balance warning; observed soil/river-temperature accuracy and seasonal behavior remain unverified. Direct shortwave/longwave radiation, evaporation/sublimation latent heat, conductive riverbed exchange and freezing/river ice are excluded. Actual temperature rendering in the existing Viewer and inclusion in the MyWater release remain unverified.
 
 대표 관계식 / Representative relationship:
 
@@ -280,7 +280,7 @@ Restart resumes from a saved state and time. A cache of hydrologic warm-up state
 
 산출물 / Outputs: 복원된 모의상태, 재시작 실행과 연속 계산 비교 결과. / Restored states and resumed results that can be compared with an uninterrupted run.
 
-적용 조건 / Check: 연속 실행과 재시작 실행을 같은 조건에서 비교하여 저장량·유량·시간축의 일치성을 확인합니다. / Compare uninterrupted and restarted runs under identical conditions for storage, discharge and time consistency.
+적용 조건 / Check: 선택한 장시간 모의에서 분할 재시작과 연속 실행의 출력 일치를 확인했습니다. 저장 형식·초기상태·재개 시각을 맞춰 비교해야 하며 모든 모드·유역의 동일한 결과를 보장하지는 않습니다. / Selected long-duration runs matched resumed and uninterrupted outputs. Saved-state format, initialization and restart times must agree; the results do not establish equivalence for every mode or basin.
 
 대표 관계식 / Representative relationship:
 
@@ -848,7 +848,7 @@ Solute mass is updated with inflow/outflow and divided by water volume to obtain
 
 산출물 / Outputs: 농도 시계열, 질량 유출입과 잔존 질량. / Concentration series, transported mass and remaining mass.
 
-적용 조건 / Check: 물의 양이 작아지는 구간에서 농도의 민감성을 확인하고 주입·유출·저장의 질량 합계를 대조합니다. / Inspect sensitivity at low water volume and reconcile injected, exported and stored mass.
+적용 조건 / Check: 선택한 335시간 하천 결합운영에서 보존성 Dye 수송과 재시작을 확인했습니다. 주입·유출·저장 질량을 대조하되 이를 사면·토양 전체 물질이동, 반응성 수질 또는 완전한 하상변동 검증으로 확대 해석하지 않습니다. / Selected 335-hour coupled river operation and restart exercised conservative Dye transport. Reconcile injected, exported and stored mass; do not infer complete soil/slope transport, reactive water quality or sediment morphodynamic validation.
 
 대표 관계식 / Representative relationship:
 
@@ -886,7 +886,7 @@ Unlike plan-view x–y inundation, this model examines vertical salinity/flow st
 
 산출물 / Outputs: 실험적 종·연직 흐름·염분 분포와 성층 변화. / Experimental x–z flow/salinity fields and stratification changes.
 
-적용 조건 / Check: 2DV를 일반적인 평면 2D 또는 완전 3D 모형으로 설명하지 않고, 별도 연구 검증범위를 표시합니다. / Do not describe 2DV as standard plan-view 2D or a full 3D model; retain its research validation scope.
+적용 조건 / Check: Estuary2DV v0.1.1 연구 소스는 2026-11-10 정본에 반영되었습니다. 실행파일 등록, 사용자 유역 정확도 검증 및 일반 Core 모의에 대한 포괄적 지원은 별도 확인 대상입니다. / Estuary2DV v0.1.1 research source was promoted on 10 November 2026. Executable registration, user-basin accuracy and general Core production support remain separate checks.
 
 [K-DRUM: current capability status and scope](https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md)
 
@@ -904,7 +904,7 @@ OpenMP uses shared-memory threads and MPI distributes work across processes. Rou
 
 산출물 / Outputs: 계산시간·병렬 효율, 실행방식별 유량·저장·물수지 비교. / Timing, parallel efficiency and comparisons of flow, storage and balance between modes.
 
-적용 조건 / Check: 동일 입력·컴퓨터·출력조건에서 시간과 결과를 비교합니다. 코어 수만으로 속도 향상 배수를 단정하지 않습니다. / Compare both outputs and timings using the same input, host and output configuration; core count alone does not determine speedup.
+적용 조건 / Check: 동일 장비·4개 성능 코어·6시간 섬진강 통제 시험에서 v3.0.5.18의 총 경과시간 중앙값이 이전 버전보다 30.7% 짧았습니다. 입력·장비·모드별 결과는 달라지며 스레드 수에 따른 성능 향상을 일반화하지 않습니다. / A controlled six-hour Seomjin comparison on four performance cores recorded 30.7% lower median elapsed time with v3.0.5.18 than with its predecessor. Results vary by inputs, hardware and execution mode; more threads do not guarantee a similar gain.
 
 대표 관계식 / Representative relationship:
 
@@ -942,7 +942,7 @@ Maps display source variables at their actual times and link to selected-locatio
 
 산출물 / Outputs: 지도·시계열·최대값과 관심지점 변화 비교. / Maps, series, maxima and selected-location comparisons.
 
-적용 조건 / Check: 자동 축 범위·범례·단위와 실제 원자료 값을 대조하고, 부분 결과 표시를 전체 모의 완료로 해석하지 않습니다. / Check axes, legend, units and source values; display of partial results does not establish full-run completion.
+적용 조건 / Check: rc2.21 정본에 VWorld 관련 수정과 Windows 포터블 패키징이 반영되었습니다. 실제 위성·Hybrid 지도 수신, 사용자 PC 실행 및 전체 결과 호환성은 별도로 확인해야 합니다. / Canonical rc2.21 includes VWorld-related fixes and Windows portable packaging. Live satellite/hybrid delivery, user-PC execution and broad result compatibility require separate verification.
 
 [Unidata: NetCDF data model](https://docs.unidata.ucar.edu/netcdf-c/current/netcdf_data_model.html)
 
@@ -958,7 +958,7 @@ Source data are used to build basin, flow-direction, river and computational-gri
 
 산출물 / Outputs: 입력 프로젝트, 검사 결과와 엔진용 입력자료. / Authored projects, diagnostics and engine-compatible inputs.
 
-적용 조건 / Check: 완성되지 않은 입력을 임의 값으로 채우지 않고, 저장과 입력 생성·실행이 같은 동작인지 구분합니다. / Do not fill incomplete inputs with invented values; distinguish saving, input generation and execution.
+적용 조건 / Check: 새 K-DRUM Studio P11.10.11-dev는 공간정보 범례·실측단면–DEM 비교와 지도 캐시 보완의 후보 검사·Windows 빌드를 마쳤지만, Draft 상태로 정본에 병합되지 않았습니다. 기존 InputStudio와 정식 배포를 혼동하지 않습니다. / The new Studio P11.10.11-dev candidate passed scoped legend, surveyed-section/DEM comparison, map-cache and Windows build checks, but remains an unmerged draft. Distinguish it from the existing InputStudio and official releases.
 
 [K-DRUM: current capability status and scope](https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_STATUS.md)
 
@@ -974,6 +974,6 @@ Development of the 1D river viewer is complete. A common location and time link 
 
 산출물 / Outputs: 종·횡단면 수위, 지점별 수문곡선과 연동 비교. / Longitudinal/cross-section levels, site hydrographs and synchronized comparisons.
 
-적용 조건 / Check: 정식 배포 예정입니다. 사용 중인 뷰어 버전과 결과자료의 시간·지점·표고 기준 및 표시값을 확인합니다. / Official distribution is planned. Check the viewer version, result times, locations, elevation datums and displayed values.
+적용 조건 / Check: v3.5.2 정본에 공간지도·VWorld 및 Windows 포터블 배포 구성이 반영되었습니다. 개발 완료·정식 배포 예정이며 사용자 PC의 실제 데이터·배경지도 호환성은 별도로 확인합니다. / Canonical v3.5.2 includes spatial/VWorld and Windows portable-package work. Development is complete with official distribution planned; real-data and basemap compatibility on user machines remain to be checked.
 
 [Unidata: NetCDF data model](https://docs.unidata.ucar.edu/netcdf-c/current/netcdf_data_model.html) · [USACE: 1D unsteady-flow hydrodynamics](https://www.hec.usace.army.mil/confluence/rasdocs/ras1dtechref/6.5/theoretical-basis-for-one-dimensional-and-two-dimensional-hydrodynamic-calculations/1d-unsteady-flow-hydrodynamics)
