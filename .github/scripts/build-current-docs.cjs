@@ -86,7 +86,7 @@ write('ROADMAP.md',`# K-DRUM 개선·확장 계획 / Refinement and extension ro
 
 1D 하천수리·2D 국부관성 범람·양방향 연계는 완료 기능이며 향후 개발 예정 항목으로 다시 표시하지 않습니다. Full SWE는 지원 구성 안에서 선택합니다.
 
-## Further work / 후속 개선
+## 2026-11-13 development snapshot / 최신 개발 현황\n\nSee [development and validation update](DEVELOPMENT_UPDATE_20261113.md) for the separately scoped Core, Viewer, Studio and 2DV results.\n\n최신 Core·Viewer·Studio·2DV의 구현과 조건부 검증은 [최신 개발·검증 현황](DEVELOPMENT_UPDATE_20261113.md)에서 확인합니다.\n\n## Further work / 후속 개선
 
 Refine computational performance and diagnostics without conflating speed with numerical accuracy. Expand basin-specific application evidence through measured geometry, observed stage/flow and inundation comparisons. Improve user-facing setup, error recovery and result interpretation in the new K-DRUM Studio, keeping prior InputStudio and separate Viewer provenance clear.
 
@@ -115,7 +115,7 @@ Implementation completion is separate from basin-specific validation and officia
 
 Existing InputStudio is an input-authoring tool. New K-DRUM Studio is separate integrated project/control/run/analysis development, not merely a product rename. FloodViewer is a release candidate; the 1D river viewer is development-complete, with official distribution planned. Sediment/tracer remain research functions, water-quality processes are disabled/redevelopment, and Estuary2DV is experimental.
 
-Official executables and terms: ${release}
+Core v3.0.5.18 was reviewed on 2026-11-12: a selected 335-hour coupled run completed with a recorded 2.416% water-balance warning. Studio remains an unmerged candidate. Details: https://github.com/YoungTeckHUR/KDRUM-Public/blob/main/DEVELOPMENT_UPDATE_20261113.md\n\nOfficial executables and terms: ${release}
 This technical repository does not directly distribute production source or executables.
 Korean homepage: ${site}ko/
 English homepage: ${site}
@@ -131,7 +131,7 @@ readme=readme.replace(/K-DRUM은 K-water가 개발해 온[^\n]+/,'K-DRUM은 K-wa
 readme=readme.replace(/Current hydraulic extensions include[^\n]+/,'Current hydraulic capabilities include completed 1D networks, branch/confluence hydraulics, 2D local-inertial inundation and bidirectional dynamic-wave 1D/local-inertial 2D exchange, plus Full SWE within supported configurations. Structure, reservoir, state/output and water-balance functions are implemented. See [current implementation scope](DEVELOPMENT_STATUS.md) and [theory/methods](TECHNICAL_METHODS.md).');
 readme=readme.replace('current hydraulic development','completed hydraulic capabilities');
 readme=readme.replace('a developing integrated project/run/review workflow, not an officially released consolidated product.','separate new integrated project/control/run/analysis development, not simply a renamed InputStudio or an official consolidated release.');
-readme=readme.replace('**Current public baseline:** v3.x / October 2026','**Current technical review:** v3.x / 2026-11-05. Implementation, validation and distribution are tracked separately.');
+readme=readme.replace(/\*\*Current technical review:\*\*[^\n]*/,`**Current technical review:** v3.x / ${review.revision}. Implementation, validation and distribution are tracked separately.`);
 readme=readme.replace(/- \*\*1D River Hydraulics Results Viewer\*\*[^\n]+/, '- **1D River Hydraulics Results Viewer** — development complete; links network, longitudinal/cross-section and time-series results. Official distribution is planned.');
 write('README.md',readme);
 console.log('PASS current docs generated from 47-item status/method matrix and theory chapters');

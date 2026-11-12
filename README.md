@@ -93,8 +93,8 @@ The current canonical expansion used by this public site is **K-water Distribute
 ---
 
 **Canonical model name:** K-DRUM  
-**Current technical review:** v3.x / 2026-11-05. Implementation, validation and distribution are tracked separately.
+**Current technical review:** v3.x / 2026-11-13. Implementation, validation and distribution are tracked separately.
 
 ## Soil and river temperature / 토양온도·하천수온
 
-Optional coupled A/B/C/D soil and 1D river-temperature calculations are implemented in a development candidate, with trial-basin operation checked and official distribution planned. [Scope and trial evidence](THERMAL_VALIDATION.md).
+Optional coupled A/B/C/D soil and 1D river-temperature calculations are implemented in canonical development Core v3.0.5.18. The 335-hour coupled Seomjin run completed with a documented 2.416% water-balance warning; observation-based thermal accuracy and inclusion in the MyWater installer are not established. Official distribution is planned. [Trial evidence and limitations](THERMAL_VALIDATION.md) · [Latest development status](DEVELOPMENT_UPDATE_20261113.md).
